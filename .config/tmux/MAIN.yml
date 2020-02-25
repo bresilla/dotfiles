@@ -1,0 +1,9 @@
+name: MAIN
+windows:
+- name: main
+  layout: ad64,215x40,0,0,7
+  panes:
+  - commands:
+    - clear
+    focus: true
+    root: /home/bresilla

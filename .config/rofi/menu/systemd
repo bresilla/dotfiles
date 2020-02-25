@@ -1,0 +1,30 @@
+#!/bin/bash
+FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
+# BACKGROUND=$(xrdb -query | grep 'color0:'| awk 'NR==1{print $NF}')
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#FFFFFF}; bckgrd: ${BACKGROUND:-#000000};}")
+
+useradmin=$(echo -e "user\nroot" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p ">> ")
+setts="list-unit-files --no-pager --type=service --no-legend"
+case "$useradmin" in
+    "user")
+        selected=$(systemctl --user $setts | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "UPU: " | awk '{print $1;}')
+        com="systemctl --user"
+        ;;
+    "root")
+        selected=$(doas systemctl $setts | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "UPS: " | awk '{print $1;}')
+        com="doas systemctl"
+        ;;
+esac
+
+selected=$(echo $selected | awk '{print $1;}')
+[[ -z $selected ]] && exit 1
+
+action=$(echo -e "status\nstart\nstop\nrestart" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p ">> ")
+case "$action" in
+    "status")
+        dunstify -u low -b "$($com status $selected)"
+        ;;
+    "start"|"stop"|"restart")
+        $com $action $selected
+        ;;
+esac

@@ -1,0 +1,23 @@
+#!/bin/bash
+FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#000000};}")
+bookmarks=$1
+
+if [ -z "$3" ];
+	then BROWSER="firefox"
+else
+	BROWSER=$3
+fi
+
+output=$(cat $bookmarks | awk '{print $1}' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ')
+choice=$?
+    
+if [ $choice -ne 0 ]; then
+    	echo "$choice"
+else
+	url=$(cat $bookmarks | grep "$output" | awk '{print $2}');
+	echo $url
+    if [ ${#url} -gt 0 ]; then
+        $BROWSER $url
+    fi
+fi

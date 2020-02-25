@@ -1,0 +1,42 @@
+#!/bin/bash
+#  Description
+#  -----------
+#  Using Wolfram Alpha in command line. See <http://developer.run/37> for description and more ideas.
+#  Author: [Dmitry](http://dmi3.net) [Source](https://github.com/dmi3/bin)
+
+#  Requirements
+#  ------------
+#  You can use text only api and **optionaly** use [terminal that supports images](https://sw.kovidgoyal.net/kitty/)
+#  **or** `sudo apt-get install imagemagick` to view images
+# Get one at https://products.wolframalpha.com/api/ as WOLFID
+# Use `VIEWER="display"` from imagemagick if terminal does not support images or default is "kitty +kitten icat"
+
+#  Usage
+#  ------------
+#      ➤ wa helsinki to dublin plane
+#      2 hours 20 minutes
+#      ➤ wa time in dublin
+#      5:37:57 pm GMT; Friday, January 27, 2017
+#      ➤ wa 15.36 english money to eur
+#      14.35 euros
+#      ➤ wa days till nov 16
+#      293 days
+#      ➤ wa 154Mbit/s to MB/s
+#      19.2 megabytes per second
+#      ➤ wa brick red hex
+#      #AB0303
+#      ➤ wa weather in moscow
+#      9 degrees Celsius and cloudy, with light winds✖
+#      ➤ wa plot x=y^2
+#      [...draws plot if supported]
+#      ➤ # many many more usages... https://www.wolframalpha.com/examples/
+
+
+VIEWER="display"
+WOLFID=$(echo $wolfid)
+
+RESPONSE=$(curl -s "https://api.wolframalpha.com/v1/result?appid=$WOLFID&units=metric&" --data-urlencode "i=$*")
+
+[[ "No short answer available" = "$RESPONSE" ]] && curl -s "https://api.wolframalpha.com/v1/simple?appid=$WOLFID&units=metric&foreground=white&background=#161716" --data-urlencode "i=$*" | $VIEWER
+
+echo $RESPONSE

@@ -1,0 +1,6 @@
+bib_safe(){ biber --tool --output_encoding=ascii --output_safechars $BIB; }
+get_doi(){ pdftotext $1 - | grep -i "doi"; }
+tex2pdf(){ ls $1 | entr latexmk -quiet -bibtex -f -pdf $1; latexmk -bibtex -c; }
+img4ppr(){ convert -units PixelsPerInch $1 -quality 100 -density 300 $1.jpg; }
+iten(){ translate --sl=it --tl=en "$@"; }
+enit(){ translate --sl=en --tl=it "$@"; }

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#000000};}")
+
+wifi=$(nmcli device wifi list | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'wifi: ' | cut -f2);
+[[ -z $wifi ]] && exit 1
+if [[ $(echo $wifi | awk '{print $1;}') == "*" ]] ; then
+    wifi=$(echo $wifi | awk '{print $2;}')
+else
+    wifi=$(echo $wifi | awk '{print $1;}')
+fi
+
+action=$(echo -e "connect\nreconnect\ndisconnect" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p ">> ")
+
+echo $action $wifi
+
+case "$actionn" in
+    "disconnect")
+        nmcli device disconnect
+        ;;
+    "connect")
+        nmcli device wifi connect $wifi
+        ;;
+    "reconnect")
+        nmcli device disconnect & sleep 2 & nmcli device wifi connect $wifi
+        ;;
+esac

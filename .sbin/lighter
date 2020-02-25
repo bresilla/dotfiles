@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+MONITOR1=eDP1
+MONITOR2=DP1
+confile="/tmp/lighter"
+step="0.02"
+
+[[ ! -e $confile ]] && echo 1 > $confile && exit
+var=$(cat $confile)
+
+if (( $(echo "$var >= .1" | bc -l) && $(echo "$var <= 1" | bc -l) )); then
+    if [[ $1 == "up" ]]; then
+        var=$(echo $var + $step | bc)
+        echo $var > $confile
+        xrandr --output eDP1 --brightness $var & xrandr --output DP1 --brightness $var
+    elif [[ $1 == "down" ]]; then
+        var=$(echo $var - $step | bc)
+        echo $var > $confile
+        xrandr --output eDP1 --brightness $var & xrandr --output DP1 --brightness $var
+    fi
+elif (( $(echo "$var < .1" | bc -l) )); then
+    echo ".1" > $confile && exit
+else
+    var=1
+    echo "$var" > $confile && exit
+fi
+echo $var
+

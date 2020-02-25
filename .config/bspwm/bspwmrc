@@ -1,0 +1,56 @@
+#! /bin/sh
+monitor1=eDP1
+monitor2=DP1
+btops &
+
+###############################################################################################################################
+#|||	SETTINGS
+###############################################################################################################################
+bspc config border_width         0
+bspc config normal_border_color "#000000"
+bspc config focused_border_color "#000000"
+bspc config presel_feedback_color "#000000"
+bspc config window_gap          14
+bspc config split_ratio          0.51
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config focus_follows_pointer   true
+bspc config pointer_follows_focus   true
+bspc config pointer_follows_monitor true
+bspc config auto_alternate true
+bspc config pointer_action1 move
+bspc config remove_unplugged_monitors true
+bspc config remove_disabled_monitors true
+
+
+###############################################################################################################################
+#|||	WORKSPACES & MONITORS
+###############################################################################################################################
+# bspc monitor $monitor1 -d 1 2 3 4 5
+# bspc monitor $monitor2 -d 1 2 3 4 5
+
+
+###############################################################################################################################
+#|||	ASSIGNMENTS
+###############################################################################################################################
+bspc rule -a kitty state=floating sticky
+bspc rule -a cool-retro-term state=floating sticky
+bspc rule -a til state=tiled
+bspc rule -a feh state=floating
+bspc rule -a sxiv state=floating
+bspc rule -a mpv state=floating
+bspc rule -a MPlayer state=floating
+bspc rule -a matplotlib state=floating
+bspc rule -a URxvt state=floating
+bspc rule -a Oblogout state=fullscreen
+bspc rule -a Zathura state=tiled
+bspc rule -a URxvt:launcher state=floating center sticky
+bspc rule -a LAUNCHER state=floating center sticky
+bspc rule -a Boomer state=fullscreen sticky
+bspc rule -a Screenkey manage=off
+
+
+###############################################################################################################################
+#|||	SCRIPTS
+###############################################################################################################################
+bash ~/.startup &

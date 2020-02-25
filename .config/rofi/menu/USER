@@ -1,0 +1,61 @@
+#!/bin/bash
+FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
+# BACKGROUND=$(xrdb -query | grep 'color0:'| awk 'NR==1{print $NF}')
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#FFFFFF}; bckgrd: ${BACKGROUND:-#000000};}")
+
+proj=projects
+file=documents
+cont=contacts
+locl=local
+pass=password
+clip=clipboard
+note=notes
+task=tasks
+usem=applist
+
+another=$(echo "$file
+$pass
+$note
+$cont
+$clip
+$task
+$proj
+$usem" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
+
+if [ "$another" == "$file" ] ; then
+	exec ~/.config/rofi/menu/locate
+
+elif [ "$another" == "$task" ] ; then
+  exec ~/.config/rofi/menu/task
+
+elif [ "$another" == "$note" ] ; then
+  exec ~/.config/rofi/menu/note
+
+elif [ "$another" == "$locl" ] ; then
+	exec ~/.config/rofi/menu/marks $HOME/Sets/.notes/localhost.wiki
+
+elif [ "$another" == "$clip" ] ; then
+	rofi "${ROFI_OPTIONS[@]}" -modi "clipboard:greenclip print" -show clipboard
+
+elif [ "$another" == "$usem" ] ; then
+    appname=$(cat ~/.config/applist |  grep "\S" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'apps:')
+    grep -Fxq $appname ~/.config/applist && sed -i "/$appname\b/d" ~/.config/applist || echo $appname >> ~/.config/applist
+
+elif [ "$another" == "$cont" ] ; then
+    exec ~/.config/rofi/menu/contacts
+
+elif [ "$another" == "$proj" ] ; then
+    pather=$(proji ls | head -n-1 | tail -n+4 | cut -d "|" -f3-5 | tr "|" "\t" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'projects:' | cut -f2)
+    nameer=$(basename $pather)
+    [[ $pather ]] && sed -e "s|.*root.*|    root: $pather|" -e "1cname: \"$nameer\"" /home/bresilla/.config/tmux/PRO.yml > /home/bresilla/.config/tmux/prot.yml && \
+        tmass -l /home/bresilla/.config/tmux load prot && kitty --class=til tmux attach -t $nameer
+
+elif [ "$another" == "$pass" ] ; then
+    exec ~/.config/rofi/menu/pass
+
+elif [ -z "$another" ] ; then
+	echo "variable empty" && exit 1
+
+else
+  exec nohup $another > /dev/null 2>&1 &
+fi

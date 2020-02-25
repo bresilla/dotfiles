@@ -1,0 +1,292 @@
+[colors]
+    accent = #EDD080
+    bckgrd = #121212
+    select = #161A1B
+
+    background =            ${xrdb:color0:self.bckgrd}
+    background-alt =        ${self.select}
+    foreground =            ${xrdb:color6:#A5ffffff}
+    foreground-alt =        ${xrdb:color7:#222}
+    primary =               ${xrdb:color1:self.accent}
+    secondary =             ${xrdb:color2:#222}
+    alert =                 ${xrdb:color3:#bd2c40}
+    white =                 #FFFFFF
+    grey =                  #AAAAAA
+    transparent =           #00000000
+
+
+[global/wm]
+    margin-top = 0
+    margin-bottom = 0
+
+
+[settings]
+    throttle-output = 5
+    throttle-output-for = 10
+    throttle-input-for = 30
+    screenchange-reload = true
+    radius = 10
+    font = Iosevka Term SS01:size=12;4
+    bargapp= 10
+    barwidth = 100%
+    barheigh = 40
+
+
+[bar/left]
+    monitor = ${env:MONITOR}
+    monitor-strict = true
+    fixed-center = true
+    dpi = 96
+    bottom = false
+    width = 800
+    height = ${settings.barheigh}
+    offset-x = 4
+    offset-y = 4
+    background = ${colors.background}
+    foreground = ${colors.foreground}
+    overline-size = 0
+    overline-color = #f00
+    underline-size = 2
+    underline-color = #00f
+    border-top-size = ${settings.bargapp}
+    border-left-size = ${settings.bargapp}
+    border-right-size = ${settings.bargapp}
+    border-bottom-size = 0
+    border-color = ${colors.transparent}
+    radius-top = ${settings.radius}
+    radius-bottom = ${settings.radius}
+    spacing = 2
+    padding-left = 2
+    padding-right = 2
+    module-margin-left = 2
+    module-margin-right = 2
+    font-0 = ${settings.font}
+    font-1 = unifont:size=12;1
+    font-2 = FontAwesome:size=12;3
+    font-3 = NotoSans-Regular:size=12;-1
+    font-4 = MaterialIcons:size=16;5
+    tray-position = left
+    tray-padding = 4
+    modules-center = time volume wlan signal speed
+
+
+[bar/right]
+    monitor = ${env:MONITOR}
+    monitor-strict = true
+    fixed-center = true
+    dpi = 96
+    bottom = false
+    width = 800
+    height = ${settings.barheigh}
+    offset-x = 3036
+    offset-y = 4
+    background = ${colors.background}
+    foreground = ${colors.foreground}
+    overline-size = 0
+    overline-color = #f00
+    underline-size = 2
+    underline-color = #00f
+    border-top-size = ${settings.bargapp}
+    border-left-size = ${settings.bargapp}
+    border-right-size = ${settings.bargapp}
+    border-bottom-size = 0
+    border-color = ${colors.transparent}
+    radius-top = ${settings.radius}
+    radius-bottom = ${settings.radius}
+    spacing = 2
+    padding-left = 2
+    padding-right = 2
+    module-margin-left = 2
+    module-margin-right = 2
+    font-0 = ${settings.font}
+    font-1 = unifont:size=12;1
+    font-2 = FontAwesome:size=12;3
+    font-3 = NotoSans-Regular:size=12;-1
+    font-4 = MaterialIcons:size=16;5
+    tray-position = right
+    tray-padding = 4
+    modules-center = cpu memory filesystem docdisk light battery date
+
+
+[module/title]
+    type = internal/xwindow
+    format = <label>
+    ;format-foreground = ${colors.foreground}
+
+
+[module/cpu]
+    format-label = internal/cpu
+    format = <label>
+    type = internal/cpu
+    interval = 2
+    label = " %percentage%%"
+    format-foreground = ${colors.foreground}
+
+
+[module/memory]
+    type = internal/memory
+    interval = 2
+    label = " %percentage_used%%"
+    format-foreground = ${colors.foreground}
+
+
+[module/temperature]
+    type = internal/temperature
+    warn-temperature = 65
+    format = <label>
+    format-warn = <label-warn>
+    label = %temperature%
+    label-warn = %temperature%!!!
+
+
+[module/wlan]
+    type = internal/network
+    interface = wlp2s0
+    interval = 5.0
+    label-connected =  %essid%
+    format-connected = <label-connected>
+    label-disconnected = "%{A1:connman-gtk &:}%{A}"
+    label-disconnected-foreground = #5b
+    ramp-signal-0 = 
+    ramp-signal-1 = 
+    ramp-signal-2 = 
+    ramp-signal-3 = 
+    ramp-signal-4 = 
+    ramp-signal-foreground = ${colors.foreground}
+    format-connected-foreground = ${colors.foreground}
+
+[module/signal]
+    type = internal/network
+    interface = wlp2s0
+    interval = 5.0
+    label-connected =  %signal%
+    format-connected = <label-connected>
+    ramp-signal-foreground = ${colors.foreground}
+    format-connected-foreground = ${colors.foreground}
+
+
+[module/speed]
+    type = internal/network
+    interface = wlp2s0
+    interval = 5.0
+    format-connected = <label-connected>
+    label-connected = %upspeed%     %downspeed%
+    ramp-signal-foreground = ${colors.foreground}
+    format-connected-foreground = ${colors.foreground}
+
+
+[module/date]
+    type = internal/date
+    interval = 1.0
+    date = %d/%m/%Y
+    time = %H:%M
+    label = %date%
+    format = <label>
+    format-foreground = ${colors.foreground}
+
+[module/time]
+    type = internal/date
+    interval = 1.0
+    time = %H:%M
+    label = %time%
+    format = <label>
+    format-foreground = ${colors.foreground}
+
+
+[module/volume]
+    type = internal/alsa
+    format-volume = <ramp-volume><label-volume>
+    format-muted = <label-muted>
+    format-volume-foreground = ${colors.foreground}
+    label-volume = %percentage%
+    label-muted =   M
+    label-muted-foreground = #aaa
+    ramp-volume-0 = 
+    ramp-volume-1 = 
+    ramp-volume-2 = 
+    ramp-headphones-0 = 
+
+
+[module/pomo]
+    type = custom/script
+    interval = 1
+    exec = pomo status | awk '{print substr($3,1,6)}' | grep -o '[0-9]\+' | sed 'N;s/\n/ : /'
+    label = "  %output%"
+    format-foreground = ${colors.foreground}
+
+
+[module/light]
+    type = internal/backlight
+    card = intel_backlight
+    enable-scroll = true
+    format = <label>
+    label =  %percentage%%
+    label-foreground = ${colors.foreground}
+
+
+[module/battery]
+    type = internal/battery
+    battery = BAT0
+    adapter = AC
+    full-at = 98
+    time-format = %H:%M
+    label-charging = %percentage%%
+    label-discharging = %percentage%%
+    format-charging = <animation-charging><label-charging>
+    format-discharging = <animation-discharging><label-discharging>
+    format-charging-foreground = ${colors.foreground}
+    label-charging-foreground = ${colors.foreground}
+    format-discharging-foreground = ${colors.foreground}
+    label-discharging-foreground = ${colors.foreground}
+    format-full-prefix = " "
+    format-full-prefix-foreground = ${colors.foreground}
+    label-full-foreground = ${colors.foreground}
+    animation-charging-0 = 
+    animation-charging-1 = 
+    animation-charging-2 = 
+    animation-charging-3 = 
+    animation-charging-4 = 
+    animation-charging-foreground = ${colors.foreground}
+    animation-charging-framerate = 500
+    animation-discharging-0 = 
+    animation-discharging-1 = 
+    animation-discharging-2 = 
+    animation-discharging-3 = 
+    animation-discharging-4 = 
+    animation-discharging-framerate = 1000
+    animation-discharging-foreground = ${colors.foreground}
+    click-left = bash ~/.startup -r
+
+
+[module/jgmenu]
+    type = custom/text
+    content-padding = 2
+    content = menu
+    click-left = "jgmenu_run >/dev/null 2>&1 &"
+
+[module/filesystem]
+    type = internal/fs
+    mount-0 = /
+    interval = 10
+    fixed-values = true
+    spacing = 4
+    format-mounted = <label-mounted>
+    format-unmounted = <label-unmounted>
+    label-mounted =  %percentage_used%%
+    label-mounted-foreground = ${colors.foreground}
+    label-unmounted = %mountpoint%: not mounted
+    label-unmounted-foreground = ${colors.foreground}
+
+
+[module/docdisk]
+    type = internal/fs
+    mount-0 = /home/bresilla/DATA
+    interval = 10
+    fixed-values = true
+    spacing = 4
+    format-mounted = <label-mounted>
+    format-unmounted = <label-unmounted>
+    label-mounted =  %percentage_used%%
+    label-mounted-foreground = ${colors.foreground}
+    label-unmounted = %mountpoint%: not mounted
+    label-unmounted-foreground = ${colors.foreground}

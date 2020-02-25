@@ -1,0 +1,74 @@
+alt + space
+    bash ~/.config/rofi/menu/USER
+super + alt + {Escape,Delete,Insert}
+    bash ~/.config/rofi/menu/{power,CONFIG,screenshot}
+super + space
+    bash ~/.config/rofi/menu/BROWSE
+mode_switch + space
+    bash ~/.config/rofi/menu/ROOT
+super + alt + space; {c,Return}
+    {code,kitty --class=til tmux}
+
+{super,alt} + Escape
+    bspc node -{c,k}
+{super,alt} + Delete
+    pkill -USR1 -x sxhkd && ~/.startup
+
+{_,super} + dead_circumflex
+    termop {kitty, cool-retro-term} MAIN 2500 1050
+#    tmass -l /home/bresilla/.config/tmux load MAIN; tdrop -m -w 66% -h 50% -x 17% -y 25% -n MAIN -f "-e tmux attach -t MAIN" {kitty, cool-retro-term}
+{_,super} + dead_acute
+    termop {kitty, cool-retro-term} NOTE 3500 1900
+#    tmass -l /home/bresilla/.config/tmux load NOTE; tdrop -m -w 80% -h 80% -x 10% -y 10% -n NOTE -f "-e tmux attach -t NOTE" {kitty, cool-retro-term}
+mode_switch + Return
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(print -rl -- $commands | sort -u | fzy)'
+
+ctrl + Escape
+    /home/bresilla/.cargo/bin/xcursorlocate
+
+XF86Search
+    pkill boomer; boomer
+{super,alt} + XF86Search
+    /home/bresilla/.config/rofi/menu/monitors
+{super,alt} + Tab
+    bspc desktop -f last
+
+super + alt + {Left,Right}
+    bspc desktop -f {prev,next}.local
+super + alt + {Down,Up}
+    bspc monitor -f {prev,next}
+{super,alt} + {Left,Down,Up,Right}
+    /home/bresilla/.config/bspwm/scripts/{focus,move} {west,south,north,east}
+
+{super,alt} + @button{6,5,4,7}
+    /home/bresilla/.config/bspwm/scripts/{focus,move} {west,south,north,east}
+{_, ctrl} + {super+alt} + @button{6,5,4,7}
+    /home/bresilla/.config/bspwm/scripts/resize {b,s} {Left,Down,Up,Right}
+
+{super+alt} + shift + {Left,Right}
+    bspc node -d {prev,next} --follow
+{super+alt} + shift + {Down,Up}
+    bspc node -m {prev,next} --follow
+
+{super,alt,alt+super} + ~Return
+    bspc node -t {tiled,fullscreen,floating}
+{super,alt,alt+super} + ~BackSpace
+    bspc node -g {locked,private,sticky}
+
+mod3 + {space, Left,Right}
+    /home/bresilla/.config/sxhkd/scripts/mpv {cycle, backwards, forewards}
+
+mod3 + XF86Audio{Prev,Next}
+    mpc seekthrough {-10,+10}
+XF86Audio{Prev,Next,Play}
+    playerctl {previous,next,play-pause} & mpc -q {prev,next,toggle}
+XF86Audio{Raise,Lower}Volume
+    pulsemixer --change-volume {+,-}5
+XF86AudioMute
+    pulsemixer --toggle-mute
+XF86MonBrightness{Up,Down}
+    light -{A,U} 2
+alt + super + XF86MonBrightness{Up,Down}
+    lighter {up,down}
+
+

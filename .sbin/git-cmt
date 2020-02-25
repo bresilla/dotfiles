@@ -1,0 +1,129 @@
+#!/bin/bash
+########################################
+# Usage
+########################################
+# See https://github.com/markchalloner/git-cmt for more detail.
+
+usage() {
+	cat <<-EOF
+usage: $(basename-git "$0") [command] [--break] [-v <version>]
+
+    Commands:
+        release         - major
+        prerele         - none
+        feature         - minor
+        refract         - minor
+        hotfix          - patch
+        bugfix          - patch
+        support         - none
+        format          - none
+
+    Versions:
+        major           Tag the next major version
+        minor           Tag the next minor version
+        patch           Tag the next patch version
+
+    Changelog:
+        Added
+        Changed
+        Deprecated
+        Removed
+        Fixed
+        Security
+
+Automatic semantic versioning. Requires a valid CHANGELOG.md.
+	EOF
+	exit
+}
+
+########################################
+# Helper functions
+########################################
+
+function basename-git() {
+    basename "$1" | tr '-' ' ' | sed 's/.sh$//g'
+}
+
+########################################
+# Main fnctions
+########################################
+
+
+########################################
+# Run
+########################################
+
+# Set home
+readonly DIR_HOME="${HOME}./config"
+
+# Use XDG Base Directories if possible
+# (see http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+DIR_CONF="${XDG_CONFIG_HOME:-${HOME}./config}/.git-cmt"
+
+# Set vars
+DIR_ROOT="$(git rev-parse --show-toplevel 2> /dev/null)"
+
+# Set (and load) user config
+if [ -f "${DIR_ROOT}/.gitcmt" ]
+then
+    FILE_CONF="${DIR_ROOT}/.gitcmt"
+    source "${FILE_CONF}"
+elif [ -f "${DIR_CONF}/config" ]
+then
+    FILE_CONF="${DIR_CONF}/config"
+    # shellcheck source=config.example
+    source "${FILE_CONF}"
+else
+    # No existing config file was found; use default
+    FILE_CONF="${DIR_HOME}/.git-cmt/config"
+fi
+
+GIT_HASH="$(git rev-parse HEAD 2> /dev/null)"
+GIT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
+
+# Parse args
+action=
+version=
+breaking=0
+while :
+do
+    case "$1" in
+        --break)
+            breaking=1
+            ;;
+        -v)
+            version=$2
+            shift
+            validate-build "$version"
+            ;;
+        ?*)
+            action=$1
+            ;;
+        *)
+            break
+            ;;
+    esac
+    shift
+done
+
+case "$action" in
+    release)
+        version-major "$pre_release" "$build"
+        ;;
+    minor)
+        version-minor "$pre_release" "$build"
+        ;;
+    patch|next)
+        version-patch "$pre_release" "$build"
+        ;;
+    pre-release)
+        [ -n "$pre_release" ] || usage
+        version-pre-release "$pre_release" "$build"
+        ;;
+    help)
+        usage
+        ;;
+    *)
+        usage
+        ;;
+esac

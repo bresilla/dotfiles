@@ -1,0 +1,112 @@
+label = "cmake"
+name = "cmake"
+
+[[file]]
+  destination = ".clang-format"
+  template = "cmake/.clang-format"
+
+[[file]]
+  destination = ".clang-tidy"
+  template = "cmake/.clang-tidy"
+
+[[file]]
+  destination = ".editorconfig"
+  template = "cmake/.editorconfig"
+
+[[file]]
+  destination = ".envrc"
+  template = "cmake/.envrc"
+
+[[file]]
+  destination = ".gitignore"
+  template = "cmake/.gitignore"
+
+[[file]]
+  destination = ".gitmodules"
+  template = "cmake/.gitmodules"
+
+[[file]]
+  destination = ".travis.yml"
+  template = "cmake/.travis.yml"
+
+[[file]]
+  destination = "AUTHORS.md"
+  template = "AUTHORS.md"
+
+[[file]]
+  destination = "CHANGELOG.md"
+  template = "CHANGELOG.md"
+
+[[file]]
+  destination = "CMakeLists.txt"
+  template = "cmake/CMakeLists.txt"
+
+[[file]]
+  destination = "CONDUCT.md"
+  template = "CONDUCT.md"
+
+[[file]]
+  destination = "CONTRIBUTING.md"
+  template = "CONTRIBUTING.md"
+
+[[file]]
+  destination = "LICENSE.md"
+  template = "LICENSE.md"
+
+[[file]]
+  destination = "README.md"
+  template = "README.md"
+
+[[file]]
+  destination = "shell.nix"
+  template = "cmake/shell.nix"
+
+[[folder]]
+  destination = ".github/"
+  template = "cmake/.github"
+
+[[folder]]
+  destination = ".vscode/"
+  template = "cmake/.vscode"
+
+[[folder]]
+  destination = "cmake/"
+  template = "cmake/cmake"
+
+[[folder]]
+  destination = "configs/"
+  template = ""
+
+[[folder]]
+  destination = "external/"
+  template = "cmake/external"
+
+[[folder]]
+  destination = "include/"
+  template = "cmake/include"
+
+[[folder]]
+  destination = "source/"
+  template = "cmake/source"
+
+[[folder]]
+  destination = "tests/"
+  template = "cmake/tests"
+
+[[script]]
+  name = "readme.sh"
+  type = "post"
+  runAsSudo = false
+  execNumber = 2
+
+[[script]]
+  name = "direnv.sh"
+  type = "post"
+  runAsSudo = false
+  execNumber = 3
+
+[[script]]
+  name = "git.sh"
+  type = "post"
+  runAsSudo = false
+  execNumber = 4

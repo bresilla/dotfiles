@@ -1,0 +1,13 @@
+#SUDO
+alias virsh="doas virsh"
+alias chroot="doas chroot"
+alias chroot="doas schroot"
+alias mount="doas mount"
+alias umount="doas umount"
+alias nmap="doas nmap"
+alias lxc="doas lxc"
+alias hotspot="doas hotspot"
+alias bandwhich="doas bandwhich"
+alias ufw="doas ufw"
+alias btrfs="doas btrfs"
+alias tent="doas tent"

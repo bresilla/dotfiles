@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+if [ "$1" == "cycle" ] ; then
+    echo '{ "command": ["cycle", "pause"] }' | socat - /home/bresilla/.config/mpv/control
+elif [ "$1" == "forewards" ] ; then
+    echo '{ "command": ["seek", "10"] }' | socat - /home/bresilla/.config/mpv/control
+elif [ "$1" == "backwards" ] ; then
+    echo '{ "command": ["seek", "-10"] }' | socat - /home/bresilla/.config/mpv/control
+else
+    echo "WROONG"
+fi
