@@ -6,3 +6,13 @@ function dotback(){ sleep ${2:-10} && scr=~/TEMP/$(date +%s).png && scrot -d 1 $
 function flix(){ peerflix $@ --mpv; }
 
 alias asci='asciinema'
+
+fhistory() {
+    local cols sep
+    cols=$(( COLUMNS / 3 ))
+    sep='{::}'
+    tmpfile=$(mktemp /tmp/ffhist.XXXXX)
+    cp -f ~/.mozilla/firefox/13kgbp7a.default/places.sqlite $tmpfile
+    sqlite3 -separator $sep $tmpfile "select substr(title, 1, $cols), url from moz_places
+    where url not like '%google%search%' order by visit_count desc, last_visit_date desc;" | awk -F $sep '{printf "%-'$cols's \x1b[36m%s\x1b[m\n", $1, $2}' | rofit | sed 's#.*\(https*://\)#\1#'
+}

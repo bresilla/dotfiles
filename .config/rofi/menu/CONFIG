@@ -1,6 +1,6 @@
 #!/bin/bash
-FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_full -theme-str "*{accent: ${FOREGROUND:-#000000};}")
+source ~/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_full -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 edit_with="kitty --class=til"
 
 another=$(echo "CONFIGS

@@ -67,7 +67,7 @@ function __promptline_cwd {
 
 function __promptline_left_prompt {
     #HOST
-    prefix="${accentBG}${space}" suffix="${space}${background}${accentTX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
+    prefix="${foreground}${accentBG}${space}" suffix="${space}${background}${accentTX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
     #USER
     prefix="${greyBG}${arrFL}${blackTX}${greyBG}${space}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$USER" "$suffix"
     #SUDO WARN
@@ -121,7 +121,7 @@ function __one_line_prompt {
 
 function __breakline() {
     COLS="${COLUMNS:-80}"
-    local WORD="- "
+    local WORD="─"
     if [[ -n "$WORD" ]] ; then
         local LINE=''
         while (( ${#LINE} < COLS ))
@@ -155,11 +155,11 @@ function __promptline {
     local endARR=""
     local defaultFG="${IN}0${EN}"
     local defaultBG="${IN}49${EN}"
-    local foreground="${IN}38;5;15${EN}"
+    local foreground="${IN}38;5;0${EN}"
     local background="${IN}48;5;0${EN}"
     local blackTX="${IN}38;5;0${EN}"
-    local accentBG="${IN}48;5;1${EN}"
-    local accentTX="${IN}38;5;1${EN}"
+    local accentBG="${IN}48;5;6${EN}"
+    local accentTX="${IN}38;5;6${EN}"
     local accent2BG="${IN}48;5;2${EN}"
     local accent2TX="${IN}38;5;2${EN}"
     local accent3BG="${IN}48;5;3${EN}"

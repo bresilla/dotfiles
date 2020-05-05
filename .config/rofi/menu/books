@@ -1,0 +1,17 @@
+#!/bin/bash
+source ~/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+
+browse(){
+	selected=$(ls "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "books: ")
+	[[ -z "$selected" ]] && exit
+	if [[ -f "$1/$selected" ]]; then
+		zathura $1/$selected
+    else [[ -d "$1/$selected" ]];
+		browse "$1/$selected"
+	fi
+}
+
+
+
+browse /home/bresilla/data/STUDY/BOOKS &

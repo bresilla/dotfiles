@@ -1,0 +1,11 @@
+Description=Control spotifyd deamon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/doas /home/bresilla/dots/.sbin/hotspot wlp2s0 wlp2s0 algorithm dyhere024
+Restart=on-failure
+# Other restart options: always, on-abort, etc
+
+[Install]
+WantedBy=default.target

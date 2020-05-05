@@ -16,7 +16,7 @@ selected=$(echo $selected | awk '{print $1;}')
 [[ -z $selected ]] && exit 1
 $com status --no-pager $selected
 
-action=$(echo -e "start\nstop\nrestart\nenable\ndisable" | fzy)
+action=$(echo -e "restart\nstart\nstop\nenable\ndisable" | fzy)
 case "$action" in
     "start"|"stop"|"restart"|"disable"|"enable")
         $com $action $selected

@@ -1,5 +1,6 @@
 #SUDO
 alias virsh="doas virsh"
+alias virt-viewer="doas virt-viewer"
 alias chroot="doas chroot"
 alias chroot="doas schroot"
 alias mount="doas mount"

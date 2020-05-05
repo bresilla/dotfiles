@@ -2,4 +2,4 @@
 FILEPATH=$(readlink -f "$1")
 bash $HOME/dots/.config/zathura/genzathrc > $HOME/.config/zathura/zathurarc
 #bash $HOME/Dots/.config/zathura/genzathrc > $HOME/Dots/.config/zathura/zathurarc
-/usr/bin/zathura "$FILEPATH" &
+/usr/bin/zathura --config-dir="$HOME/.config/zathura/" "$FILEPATH" &

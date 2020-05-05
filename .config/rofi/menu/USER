@@ -1,7 +1,6 @@
 #!/bin/bash
-FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
-# BACKGROUND=$(xrdb -query | grep 'color0:'| awk 'NR==1{print $NF}')
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#FFFFFF}; bckgrd: ${BACKGROUND:-#000000};}")
+source ~/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
 proj=projects
 file=documents
@@ -12,10 +11,12 @@ clip=clipboard
 note=notes
 task=tasks
 usem=applist
+book=books
 
 another=$(echo "$file
 $pass
 $note
+$book
 $cont
 $clip
 $task
@@ -27,6 +28,9 @@ if [ "$another" == "$file" ] ; then
 
 elif [ "$another" == "$task" ] ; then
   exec ~/.config/rofi/menu/task
+
+elif [ "$another" == "$book" ] ; then
+  exec ~/.config/rofi/menu/books
 
 elif [ "$another" == "$note" ] ; then
   exec ~/.config/rofi/menu/note

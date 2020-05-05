@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
-FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#000000};}")
+source ~/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
 TASK=$(task | tail -n+4 | head -n-2 | awk '{print $0}' | column -t -s $'\t' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'task: ' | awk '{print $1}') 
 

@@ -50,7 +50,7 @@
     develop = checkout develop
     module = submodule
     clone = clone --recursive
-    publish = "!f(){ git push origin --follow-tags $1 && hub browse; }; f"
+    publish = push origin --follow-tags
     fuse = "!f(){ current=$(git branch --show-current); git checkout $1 && git merge $current && git checkout $current; }; f"
     sshify = "!f(){ [[ $(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '/com/ {print $1}') == "https:" ]] && gitname=$(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '{print $4,$5}' | sed 's! !/!g') && git remote set-url origin git@github.com:$gitname.git; }; f"
     get = "!f(){ INPUT=${1:-$(xsel --clipboard)}; NAMEEE=$(echo $INPUT | cut -d/ -f1-5); git clone --recursive $NAMEEE; }; f"

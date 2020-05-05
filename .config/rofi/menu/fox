@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+source ~/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+BROWSER=firefox
+
+
+PLACES_PATH="/home/bresilla/dots/.other/.mozilla/firefox/13kgbp7a.default/places.sqlite"
+DB_PATH=$(mktemp /tmp/ffhist.XXXXX)
+cp -f $PLACES_PATH $DB_PATH
+
+QUERY="
+SELECT
+    url, title FROM moz_places
+WHERE
+    url NOT LIKE '%google%search%'
+ORDER BY
+    visit_count DESC,
+    last_visit_date DESC;
+"
+
+SEP="∙"
+ENTRY=$(
+sqlite3 "$DB_PATH" "$QUERY" | \
+    sed -E 's/^https?:\/\///' | \
+    sed -E "s/\\/?\\|/ $SEP /" | \
+    sed -E "s/$SEP $//" | \
+    rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: "
+)
+
+URL=$( echo "$ENTRY" | sed "s/$SEP.*//g" )
+
+if [ "$URL" = "" ]; then
+    exit 0
+fi
+
+xdg-open "https://$URL"

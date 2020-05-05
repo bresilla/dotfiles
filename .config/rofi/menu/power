@@ -1,7 +1,7 @@
 #!/bin/bash
-FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
+source ~/.cache/wal/colors.sh
 PADDINGS="40% 0 0 37%"
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${FOREGROUND:-#000000}; spacing: $PADDINGS;}")
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${color6:-#FFFFFF}; spacing: $PADDINGS;}")
 
 power_off=""
 reboot=""
@@ -13,7 +13,7 @@ options="$power_off\n$reboot\n$lock\n$suspend\n$log_out"
 chosen="$(echo -e "$options" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)"
 
 PADDINGS="40% 0 0 46%"
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${FOREGROUND:-#000000}; spacing: $PADDINGS;}")
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${color6:-#FFFFFF}; spacing: $PADDINGS;}")
 YESNO="\n"
 
 case $chosen in

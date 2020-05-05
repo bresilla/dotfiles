@@ -1,20 +1,24 @@
 [colors]
-    accent = #EDD080
     bckgrd = #121212
-    select = #161A1B
+    forgrd = #ffffff
 
-    background =            ${self.bckgrd}
-    background-alt =        ${self.select}
-    foreground =            ${xrdb:color6:#A5ffffff}
-    foreground-alt =        ${xrdb:color7:#222}
-    primary =               ${xrdb:color1:self.accent}
-    secondary =             ${xrdb:color2:#222}
-    alert =                 ${xrdb:color3:#bd2c40}
-    light =                 ${xrdb:color15:#ffffff}
-    white =                 #FFFFFF
-    grey =                  #AAAAAA
-    transparent =           #00000000
+    bg = ${xrdb:color.background:#000000}
+    fg = ${xrdb:color.foreground:#ffffff}
+    transparent = #00000000
+    shade8 = ${xrdb:color8:#222}
+    shade7 = ${xrdb:color7:#222}
+    shade1 = ${xrdb:color6:#222}
+    shade2 = ${xrdb:color5:#222}
+    shade3 = ${xrdb:color4:#222}
+    shade4 = ${xrdb:color3:#222}
+    shade5 = ${xrdb:color2:#222}
+    shade6 = ${xrdb:color1:#222}
 
+    main_sg = #60000000
+    main_bg = ${xrdb:color.background:self.fg}
+    main_fg = ${xrdb:color6:self.fg}
+    element_fg = ${xrdb:color.background:self.fg}
+    element_bg = ${xrdb:color6:self.fg}
 
 [global/wm]
     margin-top = 0
@@ -25,12 +29,19 @@
     throttle-output = 5
     throttle-output-for = 10
     throttle-input-for = 30
-    screenchange-reload = true
+    screenchange-reload = false
     font = Iosevka Term SS01:size=12;4
-    bargapp= 10
-    radius = 14
-    barwidth = 100%
-    barheigh = 48
+
+    compositing-background = source
+    compositing-foreground = over
+    compositing-overline = over
+    compositing-underline = over
+    compositing-border = over
+
+    radius = 0
+    barheigh = 32
+    element-padding = 2
+    element-spacing = 1
 
 
 [bar/main]
@@ -39,66 +50,52 @@
     fixed-center = true
     dpi = 96
     bottom = false
-    width = ${settings.barwidth}
     height = ${settings.barheigh}
-    offset-x = 0
-    offset-y = 0
-    background = ${colors.background}
-    foreground = ${colors.light}
-    overline-size = 0
-    overline-color = #f00
-    underline-size = 2
-    underline-color = #00f
-    border-top-size = ${settings.bargapp}
-    border-left-size = ${settings.bargapp}
-    border-right-size = ${settings.bargapp}
-    border-bottom-size = 0
-    border-color = ${colors.transparent}
+    offset-x = 10
+    offset-y = 10
+    width = 100%:-20
+    background = ${colors.main_bg}
+    foreground = ${colors.main_fg}
+    border-color = ${colors.main_bg}
+    border-size = 6
     radius-top = ${settings.radius}
     radius-bottom = ${settings.radius}
-    spacing = 2
-    padding-left = 5
-    padding-right = 5
-    module-margin-left = 2
-    module-margin-right = 2
+    module-margin-right = ${settings.element-spacing}
     font-0 = ${settings.font}
     font-1 = unifont:size=10;1
     font-2 = FontAwesome:size=10;3
     font-3 = FontAwesome Pro:size=10;3
     font-4 = Iosevka Nerd Font:style=Medium:size=16;3
     font-5 = MaterialIcons:size=16;5
+    font-6 = Siji:size=8;2
     tray-position = right
-    tray-padding = 4
-    modules-left = time date pomo wlan signal speed hotspot wireguard
-    modules-center =
-    modules-right = gpu cpu memory sda1 sda2 nvme light battery volume
-
+    tray-padding = ${settings.element-padding}
+    modules-left = volume battery light wlan signal speed hotspot wireguard
+    modules-center = mpd title
+    modules-right = audit cpu memory gpu sda1 sda2 nvme date time pomo
 
 [bar/workspaces]
     monitor = ${env:MONITOR}
     monitor-strict = true
     dpi = 96
     bottom = true
-    width = ${settings.barwidth}
-    height = 4
+    width = 100%
+    height = 2
     background = ${colors.transparent}
-    foreground = ${colors.foreground}
     border-top-size = 0
     border-bottom-size = 0
-    border-color = ${colors.transparent}
     font-0 = Monoisome:size=10;4
     font-1 = FontAwesome:pixelsize=10;3
     font-5 = unifont:size=14;1
     modules-center = BSP
 
-
 [module/BSP]
     type = internal/bspwm
     pin-workspaces = true
     format = <label-state> <label-mode>
-    label-mode-background = ${colors.foreground}
+    label-mode-background = ${colors.main_bg}
     label-focused = "_"
-    label-focused-background = ${colors.foreground}
+    label-focused-background = ${colors.element_bg}
     label-focused-padding = 3
     label-occupied = "_"
     label-occupied-background = #808080
@@ -138,10 +135,30 @@
     bar-progress-empty-foreground = #44
 
 
+[module/search]
+	type = custom/script
+	exec = echo "             search:              "
+	interval = 60
+	label = %output%
+	format = <label>
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
+
+[module/mpris]
+    type = custom/script
+	interval = 2
+    exec = /home/bresilla/.config/polybar/scripts/mpris -f '{icon} {:artist:t18:{artist}:}{:artist: - :}{:t20:{title}:}  %{A1:/home/bresilla/.config/polybar/scripts/mpris previous:} ⏮ %{A} %{A1:/home/bresilla/.config/polybar/scripts/mpris play-pause:} {icon-reversed} %{A} %{A1:/home/bresilla/.config/polybar/scripts/mpris next:} ⏭ %{A}'
+    tail = true
+
+
+
 [module/title]
     type = internal/xwindow
     format = <label>
-    ;format-foreground = ${colors.foreground}
+    # format-foreground = ${colors.element_fg}
+    # format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 [module/cpu]
@@ -150,14 +167,18 @@
     type = internal/cpu
     interval = 2
     label = " %percentage%%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 [module/memory]
     type = internal/memory
     interval = 2
     label = " %percentage_used%%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 [module/temperature]
@@ -174,16 +195,22 @@
     exec = /home/bresilla/.config/polybar/scripts/bluetooth
     tail = true
     interval = 600
-    format-foreground = ${colors.foreground}
     label = " %output%"
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
+
 
 [module/wireguard]
     type = custom/script
     exec = /home/bresilla/.config/polybar/scripts/wireguard
     interval = 5
     click-left = /home/bresilla/.config/polybar/scripts/wireguard --toggle &
-    format-foreground = ${colors.foreground}
     label = " %output%"
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
+
 
 [module/wlan]
     type = internal/network
@@ -192,14 +219,18 @@
     label-connected =  %essid%
     format-connected = <label-connected>
     label-disconnected = "%{A1:connman-gtk &:}%{A}"
-    label-disconnected-foreground = #5b
+    format-disconnected-foreground = ${colors.element_fg}
+    format-disconnected-background = ${colors.element_bg}
+    format-disconnected-padding = ${settings.element-padding}
     ramp-signal-0 = 
     ramp-signal-1 = 
     ramp-signal-2 = 
     ramp-signal-3 = 
     ramp-signal-4 = 
-    ramp-signal-foreground = ${colors.foreground}
-    format-connected-foreground = ${colors.foreground}
+    format-connected-foreground = ${colors.element_fg}
+    format-connected-background = ${colors.element_bg}
+    format-connected-padding = ${settings.element-padding}
+
 
 [module/signal]
     type = internal/network
@@ -207,9 +238,9 @@
     interval = 5.0
     label-connected =  %signal%
     format-connected = <label-connected>
-    ramp-signal-foreground = ${colors.foreground}
-    format-connected-foreground = ${colors.foreground}
-
+    format-connected-foreground = ${colors.element_fg}
+    format-connected-background = ${colors.element_bg}
+    format-connected-padding = ${settings.element-padding}
 
 [module/speed]
     type = internal/network
@@ -217,9 +248,9 @@
     interval = 5.0
     format-connected = <label-connected>
     label-connected = %upspeed%     %downspeed%
-    ramp-signal-foreground = ${colors.foreground}
-    format-connected-foreground = ${colors.foreground}
-
+    format-connected-foreground = ${colors.element_fg}
+    format-connected-background = ${colors.element_bg}
+    format-connected-padding = ${settings.element-padding}
 
 [module/date]
     type = internal/date
@@ -228,7 +259,11 @@
     time = %H:%M
     label = %date%
     format = <label>
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
+
+
 
 [module/time]
     type = internal/date
@@ -236,17 +271,26 @@
     time = %H:%M
     label = %time%
     format = <label>
-    format-foreground = ${colors.foreground}
-
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 [module/volume]
     type = internal/alsa
+
     format-volume =  <label-volume>
-    format-muted = <label-muted>
-    format-volume-foreground = ${colors.foreground}
-    label-volume = %percentage%
-    label-muted =   M
-    label-muted-foreground = #aaa
+    format-volume-background = ${colors.element_bg}
+    format-volume-foreground = ${colors.element_fg}
+    format-volume-padding = ${settings.element-padding}
+
+    label-volume = %percentage%%
+
+    format-muted-prefix = ""
+    format-muted-background = ${colors.element_bg}
+    format-muted-foreground = ${colors.element_fg}
+    format-muted-padding = ${settings.element-padding}
+    label-muted = " M"
+
 
 
 [module/spotify]
@@ -254,7 +298,9 @@
     interval = 1
     exec = /home/bresilla/.config/polybar/scripts/spotify
     label = "%output%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 [module/hotspot]
@@ -262,7 +308,9 @@
     interval = 1
     exec = if [[ -e /tmp/hotspot.all.lock ]]; then [[ -z $(wispot list) ]] && exit 1 || wispot list | tail -n+2 | wc -l; fi
     label = " %output%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 [module/arandr]
@@ -270,28 +318,36 @@
     interval = 1
     exec = var=$(cat /tmp/lighter) && echo $(echo "$var * 100"| bc) | awk -F'.' '{print $1}'
     label = " %output%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 [module/updates]
     type = custom/script
     exec = /home/bresilla/.config/polybar/scripts/update
     interval = 600
-    format-foreground = ${colors.foreground}
     label = " %output%"
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 [module/kernel]
     type = custom/script
     interval = 3600
     exec = dkms status | wc -l
     label = " %output%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 [module/audit]
     type = custom/script
     interval = 3600
     exec = arch-audit | wc -l
     label = " %output%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 
@@ -300,7 +356,9 @@
     interval = 1
     exec = pomo status | awk '{print substr($3,1,6)}' | grep -o '[0-9]\+' | sed 'N;s/\n/:/'
     label = " %output%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 [module/gpu]
@@ -308,7 +366,9 @@
     interval = 1
     exec = if [[ $(cat /proc/acpi/bbswitch | awk 'NF>1{print $NF}') == ON ]]; then optirun nvidia-smi | sed -n '9p' | awk '{print $13}'; else echo NO; fi;
     label = " %output%"
-    format-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 
@@ -318,26 +378,37 @@
     enable-scroll = true
     format = <label>
     label =  %percentage%%
-    label-foreground = ${colors.foreground}
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
 
 
 [module/battery]
     type = internal/battery
+    full-at = 99
     battery = BAT0
     adapter = AC
-    full-at = 98
-    label-charging = %percentage%%
-    label-discharging = %percentage%%
-    format-charging =  <label-charging>
-    format-discharging =  <label-discharging>
-    format-charging-foreground = ${colors.foreground}
-    label-charging-foreground = ${colors.foreground}
-    format-discharging-foreground = ${colors.foreground}
-    label-discharging-foreground = ${colors.foreground}
-    format-full-prefix = " "
-    label-full-foreground = ${colors.foreground}
-    format-full-prefix-foreground = ${colors.foreground}
+    poll-interval = 2
+    time-format = %H:%M
 
+    format-charging = <label-charging>
+    format-charging-background = ${colors.element_bg}
+    format-charging-foreground = ${colors.element_fg}
+    format-charging-padding = ${settings.element-padding}
+
+    format-discharging = <label-discharging>
+    format-discharging-background = ${colors.element_bg}
+    format-discharging-foreground = ${colors.element_fg}
+    format-discharging-padding = ${settings.element-padding}
+
+    format-full = <label-full>
+    format-full-background = ${colors.element_bg}
+    format-full-foreground = ${colors.element_fg}
+    format-full-padding = ${settings.element-padding}
+
+    label-charging =  %percentage%%
+    label-discharging =  %percentage%%
+    label-full =  %percentage%%
 
 [module/sda1]
     type = internal/fs
@@ -348,9 +419,14 @@
     format-mounted = <label-mounted>
     format-unmounted = <label-unmounted>
     label-mounted =  %percentage_used%%
-    label-mounted-foreground = ${colors.foreground}
+    label-mounted-foreground = ${colors.element_fg}
+    label-mounted-background = ${colors.element_bg}
+    label-mounted-padding = ${settings.element-padding}
     label-unmounted = %mountpoint%: not mounted
-    label-unmounted-foreground = ${colors.foreground}
+    label-unmounted-foreground = ${colors.element_fg}
+    label-unmounted-background = ${colors.element_bg}
+    label-unmounted-padding = ${settings.element-padding}
+
 
 [module/sda2]
     type = internal/fs
@@ -361,9 +437,13 @@
     format-mounted = <label-mounted>
     format-unmounted = <label-unmounted>
     label-mounted =  %percentage_used%%
-    label-mounted-foreground = ${colors.foreground}
+    label-mounted-foreground = ${colors.element_fg}
+    label-mounted-background = ${colors.element_bg}
+    label-mounted-padding = ${settings.element-padding}
     label-unmounted = %mountpoint%: not mounted
-    label-unmounted-foreground = ${colors.foreground}
+    label-unmounted-foreground = ${colors.element_fg}
+    label-unmounted-background = ${colors.element_bg}
+    label-unmounted-padding = ${settings.element-padding}
 
 
 
@@ -376,6 +456,10 @@
     format-mounted = <label-mounted>
     format-unmounted = <label-unmounted>
     label-mounted =  %percentage_used%%
-    label-mounted-foreground = ${colors.foreground}
+    label-mounted-foreground = ${colors.element_fg}
+    label-mounted-background = ${colors.element_bg}
+    label-mounted-padding = ${settings.element-padding}
     label-unmounted = %mountpoint%: not mounted
-    label-unmounted-foreground = ${colors.foreground}
+    label-unmounted-foreground = ${colors.element_fg}
+    label-unmounted-background = ${colors.element_bg}
+    label-unmounted-padding = ${settings.element-padding}

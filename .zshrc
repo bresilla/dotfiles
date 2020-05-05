@@ -203,6 +203,3 @@ TRAPALRM() {
 # zplugin load zdharma/history-search-multi-word
 
 [[ -n "${$(task ids)/[ ]*\n/}" ]] && task | tail -n+4 | head -n-2
-
-#COD - completion daemon
-source <(cod init $$ zsh)

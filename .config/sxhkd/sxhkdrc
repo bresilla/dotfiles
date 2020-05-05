@@ -12,7 +12,7 @@ super + alt + space; {c,Return}
 {super,alt} + Escape
     bspc node -{c,k}
 {super,alt} + Delete
-    pkill -USR1 -x sxhkd && ~/.startup
+    {pkill -USR1 -x sxhkd && ~/.startup; systemctl --user restart wallpaper.service}
 
 {_,super} + dead_circumflex
     termop {kitty, cool-retro-term} MAIN 2500 1050
