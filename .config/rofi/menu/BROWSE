@@ -1,28 +1,32 @@
 #!/bin/bash
-FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
-# BACKGROUND=$(xrdb -query | grep 'color0:'| awk 'NR==1{print $NF}')
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#FFFFFF}; bckgrd: ${BACKGROUND:-#000000};}")
+source ~/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 BROWSER=firefox
 
 srch=search
 mark=bookmarks
-tube=youtube
+hist=history
 
-another=$(echo "$mark
-$srch" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
+another=$(echo "\
+$hist
+$mark
+$srch\
+" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
 
 if [ "$another" == "$srch" ] ; then
 	surfraw -browser=$BROWSER $(sr -elvi | awk -F'-' '{print $1}' | sed '/:/d' | awk '{$1=$1};1' | rofi "${ROFI_OPTIONS[@]}" -kb-row-select 'Tab' -kb-row-tab 'Control+space' -dmenu -i -p 'bangs: ')
 
-#elif [ "$another" == "$tube" ] ; then
-#	exec ~/.config/rofi/menu/uplay
+elif [ "$another" == "$hist" ] ; then
+    exec ~/.config/rofi/menu/fox
 
 elif [ "$another" == "$mark" ] ; then
-  exec ~/.config/rofi/menu/buku
+    LINK=$(buku --nc -p -f 4 | awk -F'\t' '{print $1 "\t\t\t\t" $3 "\t\t" $4 "\t\t" $2}' | tail -n +2 | column -t -s $'\t' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'buku: ' | sed 's/ .*//;s/[^0-9]//g') 
+    [[ -z $LINK ]] && exit 1
+    buku -o $LINK
 
 elif [ -z "$another" ] ; then
-	surfraw -browser=$BROWSER $(sr -elvi | awk -F'-' '{print $1}' | sed '/:/d' | awk '{$1=$1};1' | rofi "${ROFI_OPTIONS[@]}" -kb-row-select 'Tab' -kb-row-tab 'Control+space' -dmenu -i -p 'bangs: ')
+    exec ~/.config/rofi/menu/fox
 
 else
 	$BROWSER "https://duckduckgo.com/?q=$another"

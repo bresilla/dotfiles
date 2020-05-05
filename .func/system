@@ -27,6 +27,7 @@ alias mv='amv -g -u'
 alias rm='rm -rf'
 alias rn='mv -v'
 function mk(){ mkdir -p "$(dirname "$1")" && touch "$1"; }
+function keys(){ xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }' }
 
 
 alias ls='exa -F'

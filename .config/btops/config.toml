@@ -1,0 +1,13 @@
+# Simple, numeric min max setup.
+#
+# There will always be 5 desktops present.
+# Once the first 5 are occupied, a new desktop
+# will be appended.  This will continue until 
+# there are 10 desktops present.  Empty desktops
+# will be removed until there are 5 remaining.
+
+min = 5
+max = 10
+remove-empty = true
+append-when-occupied = true
+renamers = ["numeric"]

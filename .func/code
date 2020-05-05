@@ -14,7 +14,7 @@ function cdp(){ cd $(pro ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4); }
 
 function finder(){ file=$(find ${1:-$PWD} -name "*" -type f | fzp); [[ -n $file ]] && nvim $file; }
 function search(){ rg $@; }
-function replace(){ rg -l $1 | xargs sed -i "s/$1/$2/g" *;}
+function replace(){ rg -l $1 | xargs sed -i "s@$1@$2@g" *;}
 
 function compile(){ [[ $(ls -A build/) ]] && rm -rf build/*; cmake -H. -Bbuild -DHUNTER_STATUS_DEBUG=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=${1:-FastDebug} ${2:-""} 2>&1 | bat; }
 function build(){ cmake --build build/ --target; }

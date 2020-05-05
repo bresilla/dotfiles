@@ -13,11 +13,11 @@ wat=$(echo - | awk "{printf \"%.1f\", $(($(cat /sys/class/power_supply/BAT0/curr
 cpu=${cpu%.*}
 mem=${mem%.*}
 
-foreground="#[fg=colour15]"
+foreground="#[fg=colour0]"
 blackTX="#[fg=colour0]"
 blackBG="#[bg=colour0]"
-accentTX="#[fg=colour1]"
-accentBG="#[bg=colour1]"
+accentTX="#[fg=colour6]"
+accentBG="#[bg=colour6]"
 orangeBG="#[bg=colour208]"
 orangeTX="#[fg=colour208]"
 redBG="#[bg=colour124]"

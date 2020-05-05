@@ -42,21 +42,21 @@ let g:airline#themes#jellybeans#palette = {}
 let s:modified = { 'airline_c': [ '#ffb964', '', 215, '', '' ] }
 
 " Normal mode
-let s:N1 = [ s:gui07 , s:gui0D , s:cterm07 , s:cterm09  ]
-let s:N2 = [ s:guiWhite , s:gui01 , s:ctermWhite , s:cterm01  ]
+let s:N1 = [ s:gui07 , s:gui0D , s:cterm00 , s:cterm06  ]
+let s:N2 = [ s:guiWhite , s:gui01 , s:cterm00 , s:cterm01  ]
 let s:N3 = [ s:gui02 , s:gui00 , s:cterm02 , s:cterm00  ]
 let g:airline#themes#jellybeans#palette.normal = airline#themes#generate_color_map(s:N1, s:N2, s:N3)
 let g:airline#themes#jellybeans#palette.normal_modified = s:modified
 
 " Insert mode
-let s:I1 = [ s:guiWhite , s:gui0B , s:ctermWhite , s:cterm08  ]
+let s:I1 = [ s:guiWhite , s:gui0B , s:cterm00 , s:cterm08  ]
 let s:I2 = s:N2
-let s:I3 = [ s:guiWhite , s:gui01 , s:ctermWhite , s:cterm00  ]
+let s:I3 = [ s:guiWhite , s:gui01 , s:cterm00 , s:cterm00  ]
 let g:airline#themes#jellybeans#palette.insert = airline#themes#generate_color_map(s:I1, s:I2, s:I3)
 let g:airline#themes#jellybeans#palette.insert_modified = s:modified
 
 " Visual mode
-let s:V1 = [ s:guiWhite , s:gui08 , s:ctermWhite , s:cterm0B ]
+let s:V1 = [ s:guiWhite , s:gui08 , s:cterm00 , s:cterm0B ]
 let s:V2 = s:N2
 let s:V3 = s:I3
 let g:airline#themes#jellybeans#palette.visual = airline#themes#generate_color_map(s:V1, s:V2, s:V3)

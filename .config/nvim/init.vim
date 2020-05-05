@@ -10,13 +10,13 @@ call plug#begin()
     Plug 'honza/vim-snippets'             	"snippets collection
     Plug 'ntpeters/vim-better-whitespace' 	"whitespace detection
     Plug 'lfilho/cosco.vim'               	"add semicolon or comma n the end
-    Plug 'lilydjwg/colorizer'             	"show hex colors
     "WORKSPACE
     Plug 'vim-ctrlspace/vim-ctrlspace'    	"a better workspace manager
     Plug 'benmills/vimux'                 	"run shell comands in a tmux pane
     Plug 'christoomey/vim-tmux-navigator'
 	Plug 'voldikss/vim-floaterm'		  	"terminal
-	Plug 'ingolemo/vim-bufferclose'
+    Plug 'ingolemo/vim-bufferclose'
+    Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
     Plug '907th/vim-auto-save'            	"vim autsave plugin
     Plug 'editorconfig/editorconfig-vim'  	"EDITOR-CONFIG settings
     "THEME
@@ -34,7 +34,6 @@ call plug#begin()
     "VIEWS
 	Plug 'scrooloose/nerdtree'            	"side-bar file manager
     Plug 'ryanoasis/vim-devicons'         	"icons for nerdtree
-    Plug 'zgpio/tree.nvim'                  "better file browser
     Plug 'mcchrish/nnn.vim'
     Plug 'junegunn/goyo.vim'
 	Plug 'mox-mox/vim-localsearch'		  	"vim localsearch
@@ -227,8 +226,8 @@ let g:tagbar_sort = 0
 
 
 " === INDENTATION LINES === "
-let g:indentLine_char_list = ['|']
-let g:indentLine_color_term = 236
+let g:indentLine_char_list = ['⋮']
+let g:indentLine_color_term = 9
 let g:indentLine_setConceal = 2
 " default ''.
 " n for Normal mode
@@ -284,8 +283,8 @@ nmap     <leader>f <Plug>CtrlSFPrompt
 
 
 " === FLOAT-TERM === "
-noremap  <silent> <Insert>           :FloatermToggle<CR>i
-noremap! <silent> <Insert>           <Esc>:FloatermToggle<CR>i
+noremap  <silent> <Insert>           :FloatermToggle<CR>
+noremap! <silent> <Insert>           <Esc>:FloatermToggle<CR>
 tnoremap <silent> <Insert>           <C-\><C-n>:FloatermToggle<CR>
 let g:floaterm_position = 'center'
 let g:floaterm_width = float2nr(&columns/1.5)
@@ -385,8 +384,10 @@ autocmd FileType cpp map <F7> <ESC><Esc>:!ninja -C build<CR>
 autocmd FileType cpp map <F8> <ESC><Esc>:!rm -rf build/*<CR>:!cmake -H. -Bbuild -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Debug -GNinja<CR>
 autocmd FileType cpp map <F9> <ESC><Esc>:!rm -rf build/*<CR>:!cmake -H. -Bbuild -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=FastDebug -GNinja<CR>
 "GO
-autocmd FileType go nnoremap <F7> <ESC><Esc>:!go build source/main.go<CR>
-autocmd FileType go inoremap <F7> <ESC><Esc>:!go build source/main.go<CR>
+autocmd FileType go map <F7> <ESC><Esc>:!go build source/main.go<CR>
+autocmd FileType go map <C-F7> <ESC><Esc>:!go run source/main.go<CR>
+"RUST
+autocmd FileType rust map <F7> <ESC><Esc>:!cargo run<CR>
 
 
 
@@ -400,7 +401,7 @@ highlight ALEError ctermbg=0 ctermfg=196 cterm=bold
 highlight ALEErrorSign ctermbg=196 ctermfg=231 cterm=bold
 let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {
-    \ 'rust': ['ra_lsp_server'],
+    \ 'rust': ['rust-analyzer'],
     \ 'go': ['gopls'],
     \ 'nim': ['nimlsp'],
 	\ 'cpp': ['clangtidy'],
@@ -423,7 +424,7 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useFloatingHover = 1
 let g:LanguageClient_hoverPreview = "Never"
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['ra_lsp_server'],
+    \ 'rust': ['rust-analyzer'],
     \ 'go': ['gopls'],
     \ 'nim': ['nimlsp'],
     \ 'python': ['/usr/local/bin/pyls'],
@@ -452,7 +453,6 @@ let g:markdown_syntax_conceal = 0
 
 " === DEOPLETE === "
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
 " let g:deoplete#sources._ = ['buffer', 'member', 'tag', 'file', 'omni', 'ultisnips']
 call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)
 call deoplete#custom#var('tabnine',{'line_limit': 500,'max_num_results': 5})
@@ -517,7 +517,11 @@ autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)
 
 
 " === AUTOSAVE === "
+autocmd FileType markdown let b:auto_save = 1
+autocmd FileType scss let b:auto_save = 1
+autocmd FileType html let b:auto_save = 1
 autocmd FileType go let b:auto_save = 1
+autocmd FileType rust let b:auto_save = 1
 autocmd FileType cpp let b:auto_save = 1
 autocmd FileType hpp let b:auto_save = 1
 autocmd FileType h let b:auto_save = 1
@@ -566,116 +570,88 @@ endfunction
 
 
 " === HIGHLIGHTS === "
-function! s:highlightuser()
+function! DarkTheme()
     "background
+    set background=dark
     highlight Normal ctermbg=0
+    highlight StatusLine ctermbg=6 ctermfg=0
 	"visual select
-    highlight Visual ctermbg=236 cterm=bold
+    highlight Visual ctermbg=9 cterm=bold
 	"cursor
-    highlight Search ctermfg=231 ctermbg=9
-    highlight CursorLine ctermbg=16 cterm=bold
-    highlight CursorColumn ctermbg=16 cterm=bold
-    highlight Cursor ctermfg=7 ctermbg=7
+    highlight Search ctermfg=7 ctermbg=9
+    highlight CursorLine ctermbg=0 cterm=bold
+    highlight CursorColumn ctermbg=0 cterm=bold
+    highlight Cursor ctermfg=7 ctermbg=6
     "similar words
-    highlight illuminatedWord ctermbg=16 cterm=bold,underline
+    highlight illuminatedWord ctermbg=0 cterm=bold,underline
     "squicky lines "~" hide
     highlight EndOfBuffer ctermfg=0 ctermbg=0
     "splits and number backgrounds
-    highlight VertSplit ctermbg=black ctermfg=16    "vertical split colorscheme
+    highlight VertSplit ctermbg=0 ctermfg=6    "vertical split colorscheme
     highlight foldcolumn ctermbg=0                 " colum before numbers
-    highlight LineNr ctermbg=0 ctermfg=1
-    highlight CursorLineNR ctermbg=16 ctermfg=1 cterm=bold
+    highlight LineNr ctermbg=0 ctermfg=6
+    highlight SignColumn  ctermbg=0
+    highlight CursorLineNR ctermbg=0 ctermfg=1 cterm=bold
     "special characters of endline
-    highlight NonText ctermfg=236
+    highlight NonText ctermfg=9
     "completion menu
-    highlight Pmenu ctermbg=16 ctermfg=231
+    highlight Pmenu ctermbg=0 ctermfg=15
     highlight PmenuSel ctermbg=0 ctermfg=9 cterm=bold
     highlight PmenuSbar ctermbg=0
     highlight PmenuThumb ctermbg=0
     "other
     highlight MatchParen ctermfg=231 ctermbg=1 cterm=bold
+    "ctrlspace
+    highlight CtrlSpaceStatus ctermbg=6 ctermfg=0
 endfunction
 
-
-
-" === FOCUS === "
-"change color on focus lost
-function! s:beactive()
-    highlight CursorLine ctermbg=16
-    highlight CursorColumn ctermbg=16
-    highlight CursorLineNR ctermbg=16
-    " set number
-    highlight LineNr ctermfg=1
-    highlight CursorLineNR ctermfg=1
-    highlight NonText ctermfg=236
-    "syntax on
-endfunction
-function! s:bepassive()
-    highlight CursorLine ctermbg=NONE
-    highlight CursorColumn ctermbg=NONE
-    highlight CursorLineNR ctermbg=NONE
-    " set nonumber
-    highlight LineNr ctermfg=0
-    highlight CursorLineNR ctermfg=0
-    highlight NonText ctermfg=0
-    "syntax off
-endfunction
-au FocusLost * silent! call s:bepassive()
-au FocusGained * silent! call s:beactive()
-
+" function! LightTheme()
+    " "background
+    " set background=light
+    " highlight Normal ctermbg=15
+    " highlight Normal ctermfg=0
+	" "visual select
+    " highlight Visual ctermbg=236 cterm=bold
+	" "cursor
+    " highlight Search ctermfg=231 ctermbg=9
+    " highlight CursorLine ctermbg=249 cterm=bold
+    " highlight CursorColumn ctermbg=249 cterm=bold
+    " highlight Cursor ctermfg=15 ctermbg=6
+    " "similar words
+    " highlight illuminatedWord ctermbg=249 cterm=bold,underline
+    " "squicky lines "~" hide
+    " highlight EndOfBuffer ctermfg=15 ctermbg=15
+    " "splits and number backgrounds
+    " highlight VertSplit ctermbg=15 ctermfg=249    "vertical split colorscheme
+    " highlight foldcolumn ctermbg=15                 " colum before numbers
+    " highlight LineNr ctermbg=15 ctermfg=1
+    " highlight CursorLineNR ctermbg=249 ctermfg=1 cterm=bold
+    " "special characters of endline
+    " highlight NonText ctermfg=236
+    " "completion menu
+    " highlight Pmenu ctermbg=16 ctermfg=231
+    " highlight PmenuSel ctermbg=15 ctermfg=9 cterm=bold
+    " highlight PmenuSbar ctermbg=15
+    " highlight PmenuThumb ctermbg=15
+    " "other
+    " highlight MatchParen ctermfg=231 ctermbg=1 cterm=bold
+" endfunction
 
 
 " === AIRLINE THEME === "
 let g:airline_powerline_fonts=1
-let g:airline_theme='deus'
+" let g:airline_theme='deus'
+let g:airline_theme='jellybeans'
 let g:airline#extensions#tabline#enabled = 1 " set tabs/buffers in the top
 let g:airline_section_z=airline#section#create(['%{noscrollbar#statusline(15,"─","■")} ']) "Ø ×⊙
 let g:airline_exclude_preview = 1
 
 
-
-" === SYNTAX === "
-function! s:syntaxuser()
-    highlight Normal ctermfg=231 ctermbg=16 cterm=NONE
-    highlight Boolean ctermfg=219 ctermbg=NONE cterm=NONE
-    highlight Character ctermfg=219 ctermbg=NONE cterm=NONE
-    highlight Comment ctermfg=103 ctermbg=NONE cterm=NONE
-    highlight Conditional ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight Constant ctermfg=NONE ctermbg=NONE cterm=NONE
-    highlight Define ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight DiffAdd ctermfg=231 ctermbg=64 cterm=bold
-    highlight DiffDelete ctermfg=88 ctermbg=NONE cterm=NONE
-    highlight DiffChange ctermfg=231 ctermbg=23 cterm=NONE
-    highlight DiffText ctermfg=231 ctermbg=24 cterm=bold
-    highlight ErrorMsg ctermfg=231 ctermbg=203 cterm=NONE
-    highlight WarningMsg ctermfg=231 ctermbg=203 cterm=NONE
-    highlight Float ctermfg=219 ctermbg=NONE cterm=NONE
-    highlight Function ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight Identifier ctermfg=51 ctermbg=NONE cterm=NONE
-    highlight Keyword ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight Label ctermfg=111 ctermbg=NONE cterm=NONE
-    highlight NonText ctermfg=60 ctermbg=17 cterm=NONE
-    highlight Number ctermfg=219 ctermbg=NONE cterm=NONE
-    highlight Operator ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight PreProc ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight Special ctermfg=231 ctermbg=NONE cterm=NONE
-    highlight SpecialKey ctermfg=60 ctermbg=23 cterm=NONE
-    highlight Statement ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight StorageClass ctermfg=51 ctermbg=NONE cterm=NONE
-    highlight String ctermfg=111 ctermbg=NONE cterm=NONE
-    highlight Tag ctermfg=203 ctermbg=NONE cterm=NONE
-    highlight Title ctermfg=231 ctermbg=NONE cterm=bold
-    highlight Todo ctermfg=103 ctermbg=NONE cterm=inverse,bold
-    highlight Type ctermfg=NONE ctermbg=NONE cterm=NONE
-    highlight Underlined ctermfg=NONE ctermbg=NONE cterm=underline
-endfunction
-
-
-
 " === THEME === "
 colorscheme one
-call s:highlightuser()
-
+let g:one_allow_italics = 1
+highlight Normal ctermbg=0
+call DarkTheme()
 
 
 " === REMOVE HABITS === "

@@ -1,14 +1,14 @@
 #!/bin/bash
-FOREGROUND=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
 PADDINGS="40% 0 0 40%"
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${FOREGROUND:-#000000}; spacing: $PADDINGS;}")
+source ~/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${color6:-#FFFFFF}; spacing: $PADDINGS;}")
 
 zoom=""
-color=""
+theme=""
 record=""
 screenshot=""
 
-options="$zoom\n$color\n$record\n$screenshot"
+options="$zoom\n$theme\n$record\n$screenshot"
 chosen="$(echo -e "$options" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)"
 
 PADDINGS="40% 0 0 46%"
@@ -24,9 +24,16 @@ case $chosen in
             slop -r crosshair
         fi
         ;;
-    $color)
+    $theme)
         # pastel pick | pastel format hex | xclip -sel clip
-        xcolor | xclip -sel clip
+        # xcolor | xclip -sel clip
+        disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
+        sleep .2
+        if [ "$disp" == "" ] ; then
+            sed -i '5s/.*/do wal -i $file --saturate 0.3/' /home/bresilla/.sbin/loopwall && systemctl --user restart wallpaper.service
+        elif [ "$disp" == "" ] ; then
+            sed -i '5s/.*/do wal -l -i $file --saturate 0.3/' /home/bresilla/.sbin/loopwall && systemctl --user restart wallpaper.service
+        fi
         ;;
     $record)
         disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)

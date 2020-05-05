@@ -1,0 +1,15 @@
+[Unit]
+Description=A spotify playing daemon
+Documentation=https://github.com/Spotifyd/spotifyd
+Wants=sound.target
+After=sound.target
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+EnvironmentFile=/home/bresilla/dots/.other/variables
+ExecStart=/usr/bin/spotifyd -u ${spotname} -p ${spotpass} -v softvol -b pulseaudio -d XPS --no-daemon
+Restart=always
+
+[Install]
+WantedBy=default.target

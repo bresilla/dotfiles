@@ -22,7 +22,7 @@
 export BROWSER=firefox
 export EDITOR=nvim
 export TERMINAL=kitty
-export MANPATH=$(manpath)
+# export MANPATH=$(manpath)
 
 
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
