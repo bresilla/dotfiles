@@ -37,6 +37,7 @@ export GOBIN="$GOPATH/bin"
 
 export UBUNTUPATH="/opt/chroot/ubuntu"
 export TZ='Europe/Berlin'
+export VIM="/usr/share/nvim/"
 
 
 export WINEPREFIX=/opt/wine

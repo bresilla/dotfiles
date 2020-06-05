@@ -6,8 +6,8 @@ super + space
     bash ~/.config/rofi/menu/BROWSE
 mode_switch + space
     bash ~/.config/rofi/menu/ROOT
-super + alt + space; {c,Return}
-    {code,kitty --class=til tmux}
+super + alt + space; {c,Return, a}
+    {code,kitty --class=til tmux, alacritty}
 
 {super,alt} + Escape
     bspc node -{c,k}

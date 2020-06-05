@@ -10,6 +10,8 @@ alias docker='supdock'
 alias dev='devenv'
 alias pro='proji'
 
+function lines(){ find . -type f | xargs wc -l; }
+
 function cdp(){ cd $(pro ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4); }
 
 function finder(){ file=$(find ${1:-$PWD} -name "*" -type f | fzp); [[ -n $file ]] && nvim $file; }

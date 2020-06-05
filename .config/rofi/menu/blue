@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source ~/.cache/wal/colors.sh
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
 wifi=$(nmcli device wifi list | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'wifi: ' | cut -f2);
 [[ -z $wifi ]] && exit 1

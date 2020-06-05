@@ -39,9 +39,3 @@ shopt -s histappend
 ###THEME
 source ~/.config/promptline
 #--------------------------------------------------------------------------------------------------------------------
-
-source /home/bresilla/.config/broot/launcher/bash/br
-
-[[ -f ~/.resh/shellrc ]] && source ~/.resh/shellrc
-
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh

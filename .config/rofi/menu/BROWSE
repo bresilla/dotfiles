@@ -1,6 +1,6 @@
 #!/bin/bash
 source ~/.cache/wal/colors.sh
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 BROWSER=firefox
 
 srch=search
@@ -26,9 +26,12 @@ elif [ "$another" == "$mark" ] ; then
     buku -o $LINK
 
 elif [ -z "$another" ] ; then
-    exec ~/.config/rofi/menu/fox
+    #https://github.com/BelkaDev/RofiFtw
+    handler=$(dirname $0)/duckduck
+    rofi "${ROFI_OPTIONS[@]}" -modi blocks -show blocks -blocks-wrap $handler -display-blocks "SEARCH" 2>/dev/null
+    [ -f "/tmp/ddgrofi.tmp" ] && $BROWSER "https://duckduckgo.com/?q=$(cat "/tmp/ddgrofi.tmp")" || exit 0
 
 else
 	$BROWSER "https://duckduckgo.com/?q=$another"
-  #exec nohup $another > /dev/null 2>&1 &
+    #exec nohup $another > /dev/null 2>&1 &
 fi

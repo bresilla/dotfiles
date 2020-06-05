@@ -49,6 +49,7 @@
     master = checkout master
     develop = checkout develop
     module = submodule
+    check = checkout
     clone = clone --recursive
     publish = push origin --follow-tags
     fuse = "!f(){ current=$(git branch --show-current); git checkout $1 && git merge $current && git checkout $current; }; f"

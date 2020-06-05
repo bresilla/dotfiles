@@ -16,9 +16,9 @@
 
     main_sg = #60000000
     main_bg = ${xrdb:color.background:self.fg}
-    main_fg = ${xrdb:color6:self.fg}
+    main_fg = ${xrdb:color1:self.fg}
     element_fg = ${xrdb:color.background:self.fg}
-    element_bg = ${xrdb:color6:self.fg}
+    element_bg = ${xrdb:color1:self.fg}
 
 [global/wm]
     margin-top = 0

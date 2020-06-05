@@ -19,9 +19,8 @@ if dein#load_state('~/.config/dein')
 endif
 
 call dein#add('wsdjeg/dein-ui.vim')
+call dein#add('rhysd/vim-healthcheck')
 
 source $HOME/.config/nvim/gen.vim
-source $HOME/.config/nvim/keys.vim
-source $HOME/.config/nvim/term.vim
 source $HOME/.config/nvim/plug.vim
 source $HOME/.config/nvim/theme.vim
