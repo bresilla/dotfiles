@@ -1,5 +1,4 @@
 " === FLOAT-TERM === "
-call dein#add('voldikss/vim-floaterm')		  "terminal
 noremap  <silent> <Insert>           :FloatermToggle<CR>
 noremap! <silent> <Insert>           <Esc>:FloatermToggle<CR>
 tnoremap <silent> <Insert>           <C-\><C-n>:FloatermToggle<CR>
@@ -9,28 +8,35 @@ let g:floaterm_width = float2nr(&columns/1.5)
 let g:floaterm_height = float2nr(winheight(0)/1.5)
 let g:floaterm_wintitle = 0
 let g:floaterm_autoclose = 1
-" FLOAT FZF
-" function! floaterm#wrapper#fzf#(cmd) abort
-" let s:fzf_tmpfile = tempname()
-" let cmd = a:cmd . ' > ' . s:fzf_tmpfile
-" return [cmd, {'on_exit': funcref('s:fzf_callback')}, v:false]
-" endfunction
-
-" function! s:fzf_callback(...) abort
-" if filereadable(s:fzf_tmpfile)
-" let filenames = readfile(s:fzf_tmpfile)
-" if !empty(filenames)
-" if has('nvim')
-" call floaterm#window#hide_floaterm(bufnr('%'))
-" endif
-" for filename in filenames
-" execute g:floaterm_open_command . ' ' . fnameescape(filename)
-" endfor
-" endif
-" endif
-" endfunction
-command! FZF FloatermNew fzf
 
 
-" === VIMUX === "
-call dein#add('benmills/vimux')                 "run shell comands in a tmux pane
+" === ASYNC RUNNER === "
+let g:asyncrun_open = 6
+function! s:runner_proc(opts)
+  let curr_bufnr = floaterm#curr()
+  if has_key(a:opts, 'silent') && a:opts.silent == 1
+    call floaterm#hide()
+  endif
+  let cmd = 'cd ' . shellescape(getcwd())
+  call floaterm#terminal#send(curr_bufnr, [cmd])
+  call floaterm#terminal#send(curr_bufnr, [a:opts.cmd])
+  stopinsert
+  if &filetype == 'floaterm' && g:floaterm_autoinsert
+    call floaterm#util#startinsert()
+  endif
+endfunction
+
+let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
+let g:asyncrun_runner.floaterm = function('s:runner_proc')
+let g:asynctasks_term_pos = "floaterm"
+
+function! FloatNormalKeys()
+    noremap <silent><f5> :AsyncTask file-run<cr>
+    noremap <silent><f9> :AsyncTask file-build<cr>
+endfunction
+function! FloatMappedKeys()
+    noremap  <silent><f5>           :FloatermToggle<CR>
+    noremap  <silent><f9>           :FloatermToggle<CR>
+endfunction
+autocmd BufEnter * :call FloatNormalKeys()
+autocmd BufEnter TERMINAL :call FloatMappedKeys()

@@ -6,7 +6,7 @@ super + space
     bash ~/.config/rofi/menu/BROWSE
 mode_switch + space
     bash ~/.config/rofi/menu/ROOT
-super + alt + space; {c,Return, a}
+ctrl + Return; {c,Return, a}
     {code,kitty --class=til tmux, alacritty}
 
 {super,alt} + Escape
@@ -23,14 +23,14 @@ super + alt + space; {c,Return, a}
 mode_switch + Return
     kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(print -rl -- $commands | sort -u | fzy)'
 
-ctrl + Escape
-    /home/bresilla/.cargo/bin/xcursorlocate
 
 XF86Search
     pkill boomer; boomer
 {super,alt} + XF86Search
     /home/bresilla/.config/rofi/menu/monitors
 {super,alt} + Tab
+    bspc desktop -f last
+super + alt + space
     bspc desktop -f last
 
 super + alt + {Left,Right}

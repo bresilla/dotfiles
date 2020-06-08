@@ -31,10 +31,9 @@ vnoremap c "_c
 map <S-Up> <Nop>
 map <S-Down> <Nop>
 
-
+let mapleader = "\<Space>"
 
 " === WHICH KEY === "
-call dein#add('liuchengxu/vim-which-key')
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 set timeoutlen=500
 
@@ -47,15 +46,16 @@ let g:which_key_map =  {}
 " Define a separator
 let g:which_key_sep = '→'
 " set timeoutlen=100
-
-" Not a fan of floating windows for this
-let g:which_key_use_floating_win = 0
+let g:which_key_vertical = 0
+let g:which_key_use_floating_win = 1
+let g:which_key_floating_opts = { 'row': '1' }
 
 " Change the colors if you want
 highlight default link WhichKey          Operator
 highlight default link WhichKeySeperator DiffAdded
 highlight default link WhichKeyGroup     Identifier
 highlight default link WhichKeyDesc      Function
+highlight default link WhichKeyFloating  Pmenu
 
 " Hide status line
 autocmd! FileType which_key
@@ -70,8 +70,10 @@ let g:which_key_map['S'] = [ ':SSave'                     , 'save session' ]
 let g:which_key_map['T'] = [ ':Rg'                        , 'search text' ]
 let g:which_key_map['v'] = [ '<C-W>v'                     , 'split right']
 let g:which_key_map['W'] = [ 'w'                          , 'write' ]
-let g:which_key_map['u'] = [ ':call dein#install()'       , 'DEIN UPDATE' ]
+let g:which_key_map['u'] = [ ':PlugUpdate'                , 'PLUG UPDATE' ]
 
+let g:which_key_map['/'] = 'which_key_ignore'
+let g:which_key_map['<CR>'] = 'which_key_ignore'
 
 " Group mappings
 
@@ -107,16 +109,17 @@ let g:which_key_map.m = {
 
 " b is for buffer
 let g:which_key_map.b = {
-      \ 'name' : '+buffer' ,
-      \ '1' : ['b1'        , 'buffer 1']        ,
-      \ '2' : ['b2'        , 'buffer 2']        ,
-      \ 'd' : ['bd'        , 'delete-buffer']   ,
-      \ 'f' : ['bfirst'    , 'first-buffer']    ,
-      \ 'h' : ['Startify'  , 'home-buffer']     ,
-      \ 'l' : ['blast'     , 'last-buffer']     ,
-      \ 'n' : ['bnext'     , 'next-buffer']     ,
-      \ 'p' : ['bprevious' , 'previous-buffer'] ,
-      \ '?' : ['Buffers'   , 'fzf-buffer']      ,
+      \ 'name' : '+bookmarks' ,
+      \ 'b' : [':BookmarkToggle'        , 'BookmarkToggle'],
+      \ 'i' : [':BookmarkAnnotate'        , 'BookmarkAnnotate'],
+      \ 'a' : [':BookmarkShowAll'        , 'BookmarkShowAll'],
+      \ 'j' : [':BookmarkNext'        , 'BookmarkNext'],
+      \ 'k' : [':BookmarkPrev'        , 'BookmarkPrev'],
+      \ 'c' : [':BookmarkClear'        , 'BookmarkClear'],
+      \ 'x' : [':BookmarkClearAll'        , 'BookmarkClearAll'],
+      \ 'l' : [':BookmarkMoveUp'        , 'BookmarkMoveUp'],
+      \ 'h' : [':BookmarkMoveDown'        , 'BookmarkMoveDown'],
+      \ 'g' : [':BookmarkMoveToLine'        , 'BookmarkMoveToLine'],
       \ }
 
 " s is for search
@@ -227,8 +230,7 @@ let g:which_key_map.t = {
       \ 'p' : [':FloatermNew python'                            , 'python'],
       \ 'r' : [':FloatermNew ranger'                            , 'ranger'],
       \ 't' : [':FloatermToggle'                                , 'toggle'],
-      \ 'y' : [':FloatermNew ytop'                              , 'ytop'],
-      \ 's' : [':FloatermNew --cmd="ncdu ."'                              , 'ncdu'],
+      \ 's' : [':FloatermNew --cmd="ncdu ."'                    , 'ncdu'],
       \ }
 
 " w is for wiki
@@ -253,3 +255,5 @@ let g:which_key_map.w = {
       \ }
 
 call which_key#register('<Space>', "g:which_key_map")
+
+nmap <leader><leader> :Clap buffers<CR>

@@ -9,7 +9,6 @@ filetype plugin indent on
 
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[3 q"
-let mapleader = "\<Space>"
 
 set nocompatible
 set hidden

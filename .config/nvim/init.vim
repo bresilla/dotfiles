@@ -1,27 +1,121 @@
 if &compatible
   set nocompatible
 endif
-" Add the dein installation directory into runtimepath
-set runtimepath+=~/.config/dein/repos/github.com/Shougo/dein.vim
+source $HOME/.config/nvim/gen.vim
 
-if dein#load_state('~/.config/dein')
-  call dein#begin('~/.config/dein')
-
-  call dein#add('~/.config/dein/repos/github.com/Shougo/dein.vim')
-  call dein#add('Shougo/deoplete.nvim')
-  if !has('nvim')
-    call dein#add('roxma/nvim-yarp')
-    call dein#add('roxma/vim-hug-neovim-rpc')
-  endif
-
-  call dein#end()
-  call dein#save_state()
+if empty(glob('~/.config/nvim/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call dein#add('wsdjeg/dein-ui.vim')
+function init#lang_plugs()
+    Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+    if has('nvim')
+        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    else
+        Plug 'Shougo/deoplete.nvim'
+        Plug 'roxma/nvim-yarp'
+        Plug 'roxma/vim-hug-neovim-rpc'
+    endif
+    Plug 'ncm2/float-preview.nvim'
+    Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+    Plug 'w0rp/ale'                       "syntax checker for vim
+    Plug 'sheerun/vim-polyglot'           "A collection of language packs for Vim
+    Plug 'SirVer/ultisnips'               "snipets engine
+    Plug 'honza/vim-snippets'             "snippets collection
+    Plug 'lfilho/cosco.vim'               "add semicolon or comma n the end
+    Plug 'tpope/vim-commentary'
+    Plug 'ntpeters/vim-better-whitespace' "whitespace detection
+    Plug 'khzaw/vim-conceal'              "better symbols like lambda, rise power ...
+endfunction
 
-source $HOME/.config/nvim/gen.vim
-source $HOME/.config/nvim/keys.vim
-source $HOME/.config/nvim/term.vim
-source $HOME/.config/nvim/plug.vim
+function init#space_plugs()
+    Plug 'vim-ctrlspace/vim-ctrlspace'    "a better workspace manager
+    Plug 'liuchengxu/vim-clap'			  "interactive floating finder and dispatcher
+    Plug 'scrooloose/nerdtree'            "side-bar file manager
+    Plug 'ryanoasis/vim-devicons'         "icons for nerdtree
+    Plug 'liuchengxu/vista.vim'            "tagbar
+    Plug 'yggdroot/indentline'            "indentation (characters)
+    Plug '907th/vim-auto-save'            "vim autsave plugin
+    Plug 'MattesGroeger/vim-bookmarks'
+    Plug 'ingolemo/vim-bufferclose'
+    Plug 'editorconfig/editorconfig-vim'  "EDITOR-CONFIG settings
+    Plug 'mbbill/undotree'                "show a tree of undos
+endfunction
+
+function init#navi_plugs()
+    Plug 'easymotion/vim-easymotion'      "jump to any location
+    Plug 'svermeulen/vim-subversive'      "subsiitute motion
+    Plug 'matze/vim-move'                 "move lines with alt-arrow
+    Plug 'gcavallanti/vim-noscrollbar'    "scrollbar-like for statusline
+    Plug 'terryma/vim-multiple-cursors'
+    Plug 'svermeulen/vim-macrobatics'     "better vim record
+    Plug 'jiangmiao/auto-pairs'           "auto close brackets and parenthesis
+    Plug 'luochen1990/rainbow'            "colored brackets
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'yuttie/comfortable-motion.vim'  "comfortable scroll
+    Plug 'tpope/vim-repeat'               " '.' for better repeat functioalities
+    Plug 'tpope/vim-surround'              "manipulating sorround objects
+endfunction
+
+function init#tools_plugs()
+    Plug 'tpope/vim-abolish'              "better renamer substituter
+    Plug 'rrethy/vim-illuminate'          "highlightusert same words as cursor
+    Plug 'wellle/targets.vim'             "more objects to operate functions
+    Plug 'godlygeek/tabular'              "text aligner
+    Plug 'haya14busa/incsearch.vim'
+    Plug 'kana/vim-fakeclip'              "better clipboard
+    Plug 'direnv/direnv'
+endfunction
+
+function init#git_plugs()
+    Plug 'airblade/vim-gitgutter'         "show differences (GIT)
+    Plug 'tpope/vim-fugitive'             "git wrapper
+    Plug 'whiteinge/diffconflicts'
+endfunction
+
+function init#term_plugs()
+    Plug 'voldikss/vim-floaterm'		  "terminal
+    Plug 'skywind3000/asynctasks.vim'
+    Plug 'skywind3000/asyncrun.vim'
+    Plug 'benmills/vimux'                 "run shell comands in a tmux pane
+endfunction
+
+function init#key_plugs()
+    Plug 'liuchengxu/vim-which-key'
+endfunction
+
+function init#theme_plugs()
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'edkolev/promptline.vim'
+    Plug 'powerline/fonts'                "patched powerline-fonts
+    Plug 'rakr/vim-one'                   "Atom ONE theme
+    Plug 'dylanaraps/wal.vim'
+endfunction
+
+call plug#begin('~/.config/plug')
+" ==== TOOLS ==== "
+    "language
+    call init#lang_plugs()
+    "workspace
+    call init#space_plugs()
+    "navigation
+    call init#navi_plugs()
+    "tools
+    call init#tools_plugs()
+    "git
+    call init#git_plugs()
+" ==== TERMS ==== "
+    call init#term_plugs()
+" ==== KEYS ==== "
+    call init#key_plugs()
+" ==== THEMES ==== "
+    call init#theme_plugs()
+call plug#end()
+
 source $HOME/.config/nvim/theme.vim
+source $HOME/.config/nvim/keys.vim
+source $HOME/.config/nvim/tools.vim
+source $HOME/.config/nvim/term.vim

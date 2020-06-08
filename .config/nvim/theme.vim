@@ -1,10 +1,3 @@
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('vim-airline/vim-airline')
-call dein#add('edkolev/promptline.vim')
-call dein#add('powerline/fonts')                "patched powerline-fonts
-call dein#add('rakr/vim-one')                   "Atom ONE theme
-call dein#add('dylanaraps/wal.vim')
-
 " === HIGHLIGHTS === "
 function! DarkTheme()
     "background
@@ -37,6 +30,8 @@ function! DarkTheme()
     highlight PmenuThumb ctermbg=0
     "other
     highlight MatchParen ctermfg=231 ctermbg=1 cterm=bold
+    highlight FloatermBorder ctermfg=1 ctermbg=0
+    highlight Floaterm ctermbg=0
     "ctrlspace
     highlight CtrlSpaceStatus ctermbg=1 ctermfg=0
 endfunction
@@ -52,98 +47,83 @@ call DarkTheme()
 
 " === AIRLINE THEME === "
 let g:airline_powerline_fonts=1
-" let g:airline_theme='deus'
 let g:airline#extensions#tabline#enabled = 1 " set tabs/buffers in the top
 let g:airline_section_z=airline#section#create(['%{noscrollbar#statusline(15,"─","■")} ']) "Ø ×⊙
 let g:airline_exclude_preview = 1
-let g:airline_theme='jellybeans'
+let g:airline_theme='dark'
 
 
-" Color palette
-let s:gui00 = "#151515"
-let s:gui01 = "#1E1E29"
-let s:gui02 = "#4f5b66"
-let s:gui03 = "#65737e"
-let s:gui04 = "#a7adba"
-let s:gui05 = "#c0c5ce"
-let s:gui06 = "#cdd3de"
-let s:gui07 = "#d8dee9"
-let s:gui08 = "#870000"
-let s:gui09 = "#f99157"
-let s:gui0A = "#fac863"
-let s:gui0B = "#437019"
-let s:gui0C = "#5fb3b3"
-let s:gui0D = "#0d61ac"
-let s:gui0E = "#c594c5"
-let s:gui0F = "#ab7967"
+let s:term_black = 0
+let s:term_red = 1
+let s:term_green = 2
+let s:term_yellow = 3
+let s:term_blue = 4
+let s:term_purple = 5
+let s:term_grey = 8
+let s:term_white = 15
 
-let s:cterm00 = "0"
-let s:cterm01 = "1"
-let s:cterm02 = "2"
-let s:cterm03 = "3"
-let s:cterm04 = "4"
-let s:cterm05 = "5"
-let s:cterm06 = "6"
-let s:cterm07 = "7"
-let s:cterm08 = "8"
-let s:cterm09 = "9"
-let s:cterm0A = "10"
-let s:cterm0B = "11"
-let s:cterm0C = "12"
-let s:cterm0D = "13"
-let s:cterm0E = "14"
-let s:cterm0F = "15"
+let g:airline#themes#dark#palette = {}
 
-let s:guiWhite = "#ffffff"
-let s:guiGray = "#666666"
-let s:ctermWhite = "15"
-let s:ctermGray = "7"
+let s:airline_a_normal   = [ '#00005f' , '#dfff00' , s:term_black , s:term_red ]
+let s:airline_b_normal   = [ '#ffffff' , '#444444' , s:term_black , s:term_white ]
+let s:airline_c_normal   = [ '#9cffd3' , '#202020' , s:term_red , s:term_black ]
+let g:airline#themes#dark#palette.normal = airline#themes#generate_color_map(s:airline_a_normal, s:airline_b_normal, s:airline_c_normal)
+let g:airline#themes#dark#palette.normal_modified = airline#themes#generate_color_map(s:airline_a_normal, s:airline_b_normal, s:airline_a_normal)
 
-let g:airline#themes#jellybeans#palette = {}
-let s:modified = { 'airline_c': [ '#ffb964', '', 215, '', '' ] }
+let s:airline_a_insert = [ '#00005f' , '#00dfff' , s:term_black  , s:term_blue  ]
+let s:airline_b_insert = s:airline_b_normal
+let s:airline_c_insert = [ '#ffffff' , '#000080' , s:term_blue, '' ]
+let g:airline#themes#dark#palette.insert = airline#themes#generate_color_map(s:airline_a_insert, s:airline_b_insert, s:airline_c_insert)
+let g:airline#themes#dark#palette.insert_modified = g:airline#themes#dark#palette.normal_modified
 
-" Normal mode
-let s:N1 = [ s:gui07 , s:gui0D , s:cterm00 , s:cterm01  ]
-let s:N2 = [ s:guiWhite , s:gui01 , s:cterm00 , s:cterm01  ]
-let s:N3 = [ s:gui02 , s:gui00 , s:cterm02 , s:cterm00  ]
-let g:airline#themes#jellybeans#palette.normal = airline#themes#generate_color_map(s:N1, s:N2, s:N3)
-let g:airline#themes#jellybeans#palette.normal_modified = s:modified
+let s:airline_a_replace = [ '#000000' , '#ffaf00' , s:term_yellow, s:term_yellow ]
+let s:airline_b_replace = s:airline_b_normal
+let s:airline_c_replace = [ '#ffffff' , '#5f0000' ,  s:term_green, '' ]
+let g:airline#themes#dark#palette.replace = airline#themes#generate_color_map(s:airline_a_replace, s:airline_b_replace, s:airline_c_replace)
+let g:airline#themes#dark#palette.replace_modified = g:airline#themes#dark#palette.normal_modified
 
-" Insert mode
-let s:I1 = [ s:guiWhite , s:gui0B , s:cterm00 , s:cterm08  ]
-let s:I2 = s:N2
-let s:I3 = [ s:guiWhite , s:gui01 , s:cterm00 , s:cterm00  ]
-let g:airline#themes#jellybeans#palette.insert = airline#themes#generate_color_map(s:I1, s:I2, s:I3)
-let g:airline#themes#jellybeans#palette.insert_modified = s:modified
+let s:airline_a_visual = [ '#000000' , '#ffaf00' , s:term_black, s:term_green ]
+let s:airline_b_visual = s:airline_b_normal
+let s:airline_c_visual = [ '#ffffff' , '#5f0000' ,  s:term_green, '' ]
+let g:airline#themes#dark#palette.visual = airline#themes#generate_color_map(s:airline_a_visual, s:airline_b_visual, s:airline_c_visual)
+let g:airline#themes#dark#palette.visual_modified = g:airline#themes#dark#palette.normal_modified
 
-" Visual mode
-let s:V1 = [ s:guiWhite , s:gui08 , s:cterm00 , s:cterm0B ]
-let s:V2 = s:N2
-let s:V3 = s:I3
-let g:airline#themes#jellybeans#palette.visual = airline#themes#generate_color_map(s:V1, s:V2, s:V3)
-let g:airline#themes#jellybeans#palette.visual_modified = s:modified
 
-" Replace mode
-let s:R1 = [ s:gui08 , s:gui01 , s:cterm08, s:cterm00 ]
-let s:R2 = s:N2
-let s:R3 = s:I3
-let g:airline#themes#jellybeans#palette.replace = airline#themes#generate_color_map(s:R1, s:R2, s:R3)
-let g:airline#themes#jellybeans#palette.replace_modified = s:modified
 
-" Inactive mode
-let s:IN1 = [ s:guiGray , s:gui01 , s:ctermGray , s:cterm01 ]
-let s:IN2 = [ s:gui02 , s:gui00 , s:cterm02 , s:cterm00 ]
-let s:IN3 = [ s:gui02 , s:gui00 , s:cterm02 , s:cterm00 ]
-let g:airline#themes#jellybeans#palette.inactive = airline#themes#generate_color_map(s:IN1, s:IN2, s:IN3)
-let g:airline#themes#jellybeans#palette.inactive_modified = s:modified
+let s:airline_a_inactive = [ '#4e4e4e' , '#1c1c1c' , s:term_white, s:term_black ]
+let s:airline_b_inactive = [ '#4e4e4e' , '#262626' , s:term_white, s:term_black ]
+let s:airline_c_inactive = [ '#9cffd3' , '#202020' , s:term_white, s:term_black ]
+let g:airline#themes#dark#palette.inactive = airline#themes#generate_color_map(s:airline_a_inactive, s:airline_b_inactive, s:airline_c_inactive)
+let g:airline#themes#dark#palette.inactive_modified = g:airline#themes#dark#palette.normal_modified
 
-" CtrlP
-if !get(g:, 'loaded_ctrlp', 0)
-  finish
-endif
+let s:airline_a_commandline = [ '#0000ff' , '#0cff00' , s:term_black  , s:term_red ]
+let s:airline_b_commandline = [ '#ffffff' , '#444444' , s:term_white , s:term_black ]
+let s:airline_c_commandline = [ '#9cffd3' , '#202020' , s:term_black  , s:term_white ]
+let g:airline#themes#dark#palette.commandline = airline#themes#generate_color_map(s:airline_a_commandline, s:airline_b_commandline, s:airline_c_commandline)
+let g:airline#themes#dark#palette.commandline_modified = g:airline#themes#dark#palette.normal_modified
 
-let s:CP1 = [ s:guiWhite , s:gui01 , s:cterm00 , s:cterm01  ]
-let s:CP2 = [ s:guiWhite , s:gui03 , s:cterm00 , s:cterm01  ]
-let s:CP3 = [ s:guiWhite , s:gui0D , s:cterm00 , s:cterm04  ]
+let g:airline#themes#dark#palette.accents = { 'red': [ '#ff0000' , '' , 160 , ''  ] }
 
-let g:airline#themes#jellybeans#palette.ctrlp = airline#extensions#ctrlp#generate_color_map(s:CP1, s:CP2, s:CP3)
+let s:WI = [ '#282C34', '#E5C07B', s:term_black, s:term_yellow ]
+let g:airline#themes#dark#palette.normal.airline_warning = [ s:WI[0], s:WI[1], s:WI[2], s:WI[3] ]
+let g:airline#themes#dark#palette.normal_modified.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.insert.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.insert_modified.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.visual.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.visual_modified.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.replace.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.replace_modified.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.commandline.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+let g:airline#themes#dark#palette.commandline_modified.airline_warning = g:airline#themes#dark#palette.normal.airline_warning
+
+let s:ER = [ '#282C34', '#E06C75', s:term_black, s:term_red ]
+let g:airline#themes#dark#palette.normal.airline_error = [ s:ER[0], s:ER[1], s:ER[2], s:ER[3] ]
+let g:airline#themes#dark#palette.normal_modified.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.insert.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.insert_modified.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.visual.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.visual_modified.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.replace.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.replace_modified.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.commandline.airline_error = g:airline#themes#dark#palette.normal.airline_error
+let g:airline#themes#dark#palette.commandline_modified.airline_error = g:airline#themes#dark#palette.normal.airline_error
