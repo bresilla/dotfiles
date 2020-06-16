@@ -149,7 +149,7 @@ bindkey -M vicmd '^f' run_find
 bindkey -M viins '^f' run_find
 bindkey '^f' run_find
 
-function run_compile(){ compile FastDebug && build; zle reset-prompt; zle redisplay; }
+function run_compile(){ run; zle reset-prompt; zle redisplay; }
 zle -N run_compile
 bindkey -M viins '^o' run_compile
 bindkey -M vicmd '^o' run_compile

@@ -2,38 +2,38 @@
 function! DarkTheme()
     "background
     set background=dark
-    highlight Normal ctermbg=0
-    highlight StatusLine ctermbg=1 ctermfg=0
+    highlight Normal guibg=0 ctermbg=0
+    highlight StatusLine ctermbg=1 ctermfg=0 guibg=1 guifg=0
 	"visual select
-    highlight Visual ctermbg=9 cterm=bold
+    highlight Visual ctermbg=9 cterm=bold guibg=9 gui=bold
 	"cursor
-    highlight Search ctermfg=7 ctermbg=9
-    highlight CursorLine ctermbg=0 cterm=bold
-    highlight CursorColumn ctermbg=0 cterm=bold
-    highlight Cursor ctermfg=7 ctermbg=1
+    highlight Search ctermfg=7 ctermbg=9 guifg=7 guibg=9
+    highlight CursorLine ctermbg=0 cterm=bold guibg=0 gui=bold
+    highlight CursorColumn ctermbg=0 cterm=bold guibg=0 gui=bold
+    highlight Cursor ctermfg=7 ctermbg=1 guifg=7 guibg=1
     "similar words
-    highlight illuminatedWord ctermbg=0 cterm=bold,underline
+    highlight illuminatedWord ctermbg=0 cterm=bold,underline guibg=0 gui=bold,underline
     "squicky lines "~" hide
-    highlight EndOfBuffer ctermfg=0 ctermbg=0
+    highlight EndOfBuffer ctermfg=0 ctermbg=0 guifg=0 guibg=0
     "splits and number backgrounds
-    highlight VertSplit ctermbg=0 ctermfg=1    "vertical split colorscheme
-    highlight foldcolumn ctermbg=0                 " colum before numbers
-    highlight LineNr ctermbg=0 ctermfg=1
-    highlight SignColumn  ctermbg=0
-    highlight CursorLineNR ctermbg=0 ctermfg=1 cterm=bold
+    highlight VertSplit ctermbg=0 ctermfg=1 guibg=0 guifg=1
+    highlight foldcolumn ctermbg=0 guibg=0
+    highlight LineNr ctermbg=0 ctermfg=1 guibg=0 guifg=1
+    highlight SignColumn  ctermbg=0 guibg=0
+    highlight CursorLineNR ctermbg=0 ctermfg=1 cterm=bold guibg=0 guifg=1 gui=bold
     "special characters of endline
-    highlight NonText ctermfg=9
+    highlight NonText ctermfg=9 guifg=9
     "completion menu
-    highlight Pmenu ctermbg=0 ctermfg=15
-    highlight PmenuSel ctermbg=0 ctermfg=9 cterm=bold
-    highlight PmenuSbar ctermbg=0
-    highlight PmenuThumb ctermbg=0
+    highlight Pmenu ctermbg=0 ctermfg=15 guibg=0 guifg=15
+    highlight PmenuSel ctermbg=0 ctermfg=9 cterm=bold guibg=0 guifg=9 gui=bold
+    highlight PmenuSbar ctermbg=0 guibg=0
+    highlight PmenuThumb ctermbg=0 guibg=0
     "other
-    highlight MatchParen ctermfg=231 ctermbg=1 cterm=bold
-    highlight FloatermBorder ctermfg=1 ctermbg=0
-    highlight Floaterm ctermbg=0
+    highlight MatchParen ctermfg=231 ctermbg=1 cterm=bold  guifg=231 guibg=1 gui=bold
+    highlight FloatermBorder ctermfg=1 ctermbg=0 guifg=1 guibg=0
+    highlight Floaterm ctermbg=0  guibg=0
     "ctrlspace
-    highlight CtrlSpaceStatus ctermbg=1 ctermfg=0
+    highlight CtrlSpaceStatus ctermbg=1 ctermfg=0 guibg=1 guifg=0
 endfunction
 
 
@@ -43,6 +43,37 @@ colorscheme one
 let g:one_allow_italics = 1
 highlight Normal ctermbg=0
 call DarkTheme()
+
+
+" === FOCUS === "
+"change color on focus lost
+function! s:beactive()
+    " set number
+    " set relativenumber
+    highlight LineNr ctermbg=0 ctermfg=1
+    " syntax on
+endfunction
+function! s:bepassive()
+    " set norelativenumber
+    " set nonumber
+    highlight LineNr ctermbg=0 ctermfg=8
+    " syntax off
+endfunction
+au FocusLost * silent! call s:bepassive()
+au FocusGained * silent! call s:beactive()
+
+
+
+" === VIM FADE === "
+let g:vimade = {}
+let g:vimade.fadelevel = 0.6
+let g:vimade.enablesigns = 1
+let g:vimade.colbufsize = 20
+let g:vimade.rowbufsize = 20
+let g:vimade.checkinterval = 100
+let g:vimade.enablefocusfading = 1
+let g:vimade.detecttermcolors = 1
+
 
 
 " === AIRLINE THEME === "

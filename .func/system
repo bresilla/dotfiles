@@ -75,7 +75,7 @@ function open(){ nohup mimeo $1 > /dev/null 2>&1 &!; }
 function note(){ nvim $(notes list | fzp); }
 function phone(){ sshfs -p 1234 bresilla@$1:/storage/emulated/0 /home/bresilla/OnePlus; }
 function diskspeed() { doas dd if=$1 of=/dev/null bs=512k count=16k iflag=direct; }
-function rofit(){ rofi -theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#000000};}" -dmenu -i -p '>>>'; }
+# function rofit(){ rofi -theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#000000};}" -dmenu -i -p '>>>'; }
 function showpath() { echo $PATH | tr ':' '\n' | rofit; }
 function snip(){ PREV=$(fc -lrn | head -n 1); sh -c "pet new `printf %q "$PREV"`"; }
 function killer(){ n=$(ps -ef | sed 1d | tux -m | awk '{print $2}'); [[ -n $n ]] && doas kill $n; }

@@ -71,7 +71,7 @@
     tray-position = right
     tray-padding = ${settings.element-padding}
     modules-left = volume battery light wlan signal speed hotspot wireguard
-    modules-center = mpd title
+    modules-center = title
     modules-right = audit cpu memory gpu sda1 sda2 nvme date time pomo
 
 [bar/workspaces]

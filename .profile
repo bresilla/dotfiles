@@ -30,6 +30,7 @@ export MONITOR1=eDP1
 export MONITOR2=DP1
 
 export CARGO_HOME="/opt/bin/cargo"
+export RUSTUP_HOME="/opt/bin/rustup"
 export NIMBLE_DIR="/opt/bin/nimble"
 export GOPATH="/opt/bin/go"
 export GOBIN="$GOPATH/bin"

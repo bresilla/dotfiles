@@ -1,3 +1,6 @@
+" === LEADER === "
+let mapleader = "\<Space>"
+
 " === NAVIGATION === "
 "navigation panes
 map <C-M-Pagedown> :tabn<CR>
@@ -6,6 +9,7 @@ map <C-Up> <C-k>
 map <C-Down> <C-j>
 map <C-Left> <C-h>
 map <C-Right> <C-l>
+
 "move vertically on soft lines
 nnoremap j gj
 nnoremap k gk
@@ -17,9 +21,11 @@ vnoremap <Down> gj
 vnoremap <Up> gk
 inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
+
 "move horizontally
-map <home> ^
+map <home> %
 map <end> $
+
 "go to last tab
 nmap - :e #<cr>
 
@@ -31,7 +37,20 @@ vnoremap c "_c
 map <S-Up> <Nop>
 map <S-Down> <Nop>
 
-let mapleader = "\<Space>"
+" === CHANGE CASE === "
+inoremap <M-u> <ESC>viw~
+nnoremap <M-u> viw~<ESC>
+
+map <leader><CR> :RofiFiles<CR>
+
+" === CHANGE CASE === "
+vnoremap < <gv
+vnoremap > >gv
+
+
+" === COMMENTARY === "
+map <silent> # :Commentary<CR>
+
 
 " === WHICH KEY === "
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
@@ -62,20 +81,28 @@ autocmd! FileType which_key
 autocmd  FileType which_key set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 
 " Single mappings
-let g:which_key_map['.'] = [ ':e $MYVIMRC'                , 'open init' ]
-let g:which_key_map['='] = [ '<C-W>='                     , 'balance windows' ]
-let g:which_key_map['h'] = [ '<C-W>s'                     , 'split below']
-let g:which_key_map['q'] = [ 'q'                          , 'quit' ]
-let g:which_key_map['S'] = [ ':SSave'                     , 'save session' ]
-let g:which_key_map['T'] = [ ':Rg'                        , 'search text' ]
-let g:which_key_map['v'] = [ '<C-W>v'                     , 'split right']
-let g:which_key_map['W'] = [ 'w'                          , 'write' ]
-let g:which_key_map['u'] = [ ':PlugUpdate'                , 'PLUG UPDATE' ]
+let g:which_key_map['.'] = [ ':e $MYVIMRC'                      , 'open init' ]
+let g:which_key_map['='] = [ '<C-W>='                           , 'balance windows' ]
+let g:which_key_map['h'] = [ '<C-W>s'                           , 'split below']
+let g:which_key_map['q'] = [ 'q'                                , 'quit' ]
+let g:which_key_map['S'] = [ ':CtrlSpaceSaveWorkspace'          , 'save session' ]
+let g:which_key_map['T'] = [ ':Rg'                              , 'search text' ]
+let g:which_key_map['v'] = [ '<C-W>v'                           , 'split right']
+let g:which_key_map['W'] = [ 'w'                                , 'write' ]
+let g:which_key_map['f'] = [ '<Plug>(easymotion-overwin-f)'     , 'easy motion']
 
+" let g:which_key_map['<CR>'] = 'which_key_ignore'
 let g:which_key_map['/'] = 'which_key_ignore'
-let g:which_key_map['<CR>'] = 'which_key_ignore'
 
 " Group mappings
+
+" p is for actions
+let g:which_key_map.p = {
+      \ 'name' : '+vim-plug' ,
+      \ 'u' : [':PlugUpdate'                , 'Update'],
+      \ 'c' : [':PlugClean'                 , 'Clean'],
+      \ }
+
 
 " a is for actions
 let g:which_key_map.a = {
@@ -221,16 +248,12 @@ let g:which_key_map.l = {
 " t is for terminal
 let g:which_key_map.t = {
       \ 'name' : '+terminal' ,
-      \ ';' : [':FloatermNew --wintype=popup --height=6'        , 'terminal'],
       \ 'f' : [':FloatermNew fzf'                               , 'fzf'],
       \ 'g' : [':FloatermNew lazygit'                           , 'git'],
       \ 'd' : [':FloatermNew lazydocker'                        , 'docker'],
-      \ 'n' : [':FloatermNew node'                              , 'node'],
       \ 'N' : [':FloatermNew nnn'                               , 'nnn'],
-      \ 'p' : [':FloatermNew python'                            , 'python'],
-      \ 'r' : [':FloatermNew ranger'                            , 'ranger'],
       \ 't' : [':FloatermToggle'                                , 'toggle'],
-      \ 's' : [':FloatermNew --cmd="ncdu ."'                    , 'ncdu'],
+      \ 's' : [':FloatermNew ncdu .'                            , 'ncdu'],
       \ }
 
 " w is for wiki
@@ -255,5 +278,3 @@ let g:which_key_map.w = {
       \ }
 
 call which_key#register('<Space>', "g:which_key_map")
-
-nmap <leader><leader> :Clap buffers<CR>

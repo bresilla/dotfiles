@@ -91,6 +91,14 @@ layout_nim() {
   PATH_add bin
 }
 
+local_vimrc() {
+  local extravim="$(find_up .vimrc)"
+  if [ -n "$extravim" ]; then
+    echo "Adding extra .vimrc: ${extravim}"
+    path_add EXTRA_VIM $extravim
+  fi
+}
+
 export_function() {
   local name=$1
   local alias_dir=$PWD/.direnv/functions
@@ -118,7 +126,7 @@ export_alias() {
     local target="$alias_dir/$name"
     mkdir -p "$alias_dir"
     PATH_add "$alias_dir"
-    echo "#!/usr/bin/env bash -e" > "$target"
+    echo "#!/usr/bin/sh" > "$target"
     echo "$@" >> "$target"
     chmod +x "$target"
 }

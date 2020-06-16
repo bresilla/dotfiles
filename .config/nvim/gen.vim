@@ -15,6 +15,7 @@ set hidden
 set encoding=utf8
 set guifont=Monoisome\ 12
 set t_Co=256
+" set termguicolors
 set laststatus=2
 set clipboard+=unnamedplus              " system clipboard
 set viminfo=""
@@ -79,12 +80,6 @@ set sidescrolloff=10                    " Leave 10 characters of horizontal buff
 set cursorline
 set cursorcolumn                        " column before numbers
 set signcolumn="yes"
-
-
-" === WHERE YOU LEFT ===""
-"go to last position you were editing
-au BufWinLeave * silent! mkview
-au BufWinEnter * silent! loadview
 
 
 " === FOLDING === "

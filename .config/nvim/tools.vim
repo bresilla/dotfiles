@@ -1,4 +1,26 @@
 " ======================== LANGUAGE ==================== "
+" === DEOPLETE & FLOAT-PRE & FLOAT-PREVV === "
+let g:deoplete#enable_at_startup = 1
+" let g:deoplete#sources._ = ['buffer', 'member', 'tag', 'file', 'omni', 'ultisnips']
+call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)
+call deoplete#custom#option('auto_complete_delay', 200)
+"autocomplete popup - nvigation keys and enter to select
+inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+"floating window
+" let g:float_preview#docked = 0
+let g:float_preview#auto_close = 1
+function! DisableExtras()
+    call nvim_win_set_option(g:float_preview#win, 'number', v:false)
+    call nvim_win_set_option(g:float_preview#win, 'relativenumber', v:false)
+    call nvim_win_set_option(g:float_preview#win, 'cursorline', v:false)
+endfunction
+autocmd User FloatPreviewWinOpen call DisableExtras()
+
+
+
 " === LANGUAGE CLIENT === "
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
@@ -24,31 +46,41 @@ nnoremap <C-tab> :call LanguageClient#textDocument_hover()<CR>
 nnoremap <tab> :call LanguageClient_textDocument_definition()<cr>
 nnoremap <bs> :call LanguageClient_textDocument_rename()<cr>
 nnoremap <f12> :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/i
+let g:LanguageClient_diagnosticsDisplay = {
+    \ 1: {
+        \ "name": "Error",
+        \ "texthl": "ALEError",
+        \ "signText": "×",
+        \ "signTexthl": "ALEErrorSign",
+        \ "virtualTexthl": "Error",
+    \ },
+    \ 2: {
+        \ "name": "Warning",
+        \ "texthl": "ALEWarning",
+        \ "signText": "!",
+        \ "signTexthl": "ALEWarningSign",
+        \ "virtualTexthl": "Todo",
+    \ },
+    \ 3: {
+        \ "name": "Information",
+        \ "texthl": "ALEInfo",
+        \ "signText": "i",
+        \ "signTexthl": "ALEInfoSign",
+        \ "virtualTexthl": "Todo",
+    \ },
+    \ 4: {
+        \ "name": "Hint",
+        \ "texthl": "ALEInfo",
+        \ "signText": "➤",
+        \ "signTexthl": "ALEInfoSign",
+        \ "virtualTexthl": "Todo",
+    \ },
+\ }
 
 
 
-" === DEOPLETE & FLOAT-PRE & FLOAT-PREVV === "
-let g:deoplete#enable_at_startup = 1
-" let g:deoplete#sources._ = ['buffer', 'member', 'tag', 'file', 'omni', 'ultisnips']
-call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)
-call deoplete#custom#option('auto_complete_delay', 200)
-"autocomplete popup - nvigation keys and enter to select
-inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-"floating window
-" let g:float_preview#docked = 0
-let g:float_preview#auto_close = 1
-function! DisableExtras()
-    call nvim_win_set_option(g:float_preview#win, 'number', v:false)
-    call nvim_win_set_option(g:float_preview#win, 'relativenumber', v:false)
-    call nvim_win_set_option(g:float_preview#win, 'cursorline', v:false)
-endfunction
-autocmd User FloatPreviewWinOpen call DisableExtras()
 
-
-
+"
 " === TAB NINE === "
 call deoplete#custom#var('tabnine',{'line_limit': 500,'max_num_results': 5})
 
@@ -57,10 +89,10 @@ call deoplete#custom#var('tabnine',{'line_limit': 500,'max_num_results': 5})
 " === ALE === "
 let g:ale_sign_error = '×'
 let g:ale_sign_warning = '!'
-highlight ALEWarning ctermbg=0 ctermfg=220 cterm=bold
-highlight ALEWarningSign ctermbg=220 ctermfg=231 cterm=bold
-highlight ALEError ctermbg=0 ctermfg=196 cterm=bold
-highlight ALEErrorSign ctermbg=196 ctermfg=231 cterm=bold
+highlight ALEWarning ctermbg=0 ctermfg=184 cterm=bold
+highlight ALEWarningSign ctermbg=0 ctermfg=184 cterm=bold
+highlight ALEError ctermbg=0 ctermfg=124 cterm=bold
+highlight ALEErrorSign ctermbg=0 ctermfg=124 cterm=bold
 let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {
             \ 'rust': ['rust-analyzer'],
@@ -80,10 +112,6 @@ au TabLeave * silent! <Plug>(ale_fix)
 au BufLeave * silent! <Plug>(ale_fix)
 
 
-" === SNIPETTS === "
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-
 
 "semicolons
 autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)
@@ -95,8 +123,8 @@ map <silent> # :Commentary<CR>
 
 
 " ======================== WORKSPACE ==================== "
-" === CTRLSPACE === "
-set showtabline=0
+" === cTRLSPACE === "
+" set showtabline=0
 nnoremap <f1> :CtrlSpaceSaveWorkspace<CR>
 let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
@@ -135,6 +163,11 @@ let g:clap_search_box_border_style = 'nil'
 let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
 " let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
 
+let g:clap_provider_books = {
+    \ 'source': [':BookmarkShowAll'],
+    \ 'sink': 'e',
+\ }
+
 
 " === FILEMANAGER === "
 let NERDTreeQuitOnOpen=1                "automatically clone nerd tre after open
@@ -143,6 +176,7 @@ let g:NERDTreeMinimalUI = 1
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 au VimEnter * NERDTreeRefreshRoot
+noremap <C-i>  :NERDTreeToggle<CR>
 
 
 
@@ -224,11 +258,9 @@ nnoremap <C-U> :UndotreeToggle<CR> :UndotreeFocus<CR>
 
 
 
-
 " ======================== NAVIGATION ==================== "
 " === EASY MOTION === "
 let g:EasyMotion_do_mapping = 0
-nmap <leader><CR> <Plug>(easymotion-overwin-f)
 hi EasyMotionTarget ctermfg=15 cterm=bold,underline
 hi link EasyMotionTarget2First EasyMotionTarget
 hi EasyMotionTarget2Second ctermfg=2 cterm=underline
@@ -270,15 +302,16 @@ let g:comfortable_motion_interval = 1000.0 / 60
 
 
 " === MULTIPLE CURSORS === "
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_start_word_key      = '<C-n>'
-let g:multi_cursor_select_all_word_key = '<A-n>'
-let g:multi_cursor_start_key           = 'g<C-n>'
-let g:multi_cursor_select_all_key      = 'g<A-n>'
-let g:multi_cursor_next_key            = '<C-n>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
+let g:VM_default_mappings = 0
+let g:VM_mouse_mappings = 1
+let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '<M-d>'           " replace C-n
+let g:VM_maps['Find Subword Under'] = '<M-d>'           " replace visual C-n
+let g:VM_maps["Add Cursor Down"]    = '<M-S-Down>'
+let g:VM_maps["Add Cursor Up"]      = '<M-S-Up>'
+let g:VM_maps["Add Cursor At Pos"]  = '<CR>'
+"" let g:VM_maps["Select Cursor Up"]   = '<M-S-Up>'        " start selecting up
+"" let g:VM_maps["Select Cursor Down"] = '<M-S-Down>'      " start selecting down
 
 
 " === RECORDING === "
@@ -299,17 +332,20 @@ let g:rainbow_active = 1
 
 " ======================== TOOLS ==================== "
 "go to last position you were editing
-au BufWinLeave * silent! mkview
-au BufWinEnter * silent! loadview
+" au BufWinLeave * silent! mkview
+" au BufWinEnter * silent! loadview
 
+
+
+" === DIRENV === "
+if exists("$EXTRA_VIM")
+  for path in split($EXTRA_VIM, ':')
+    exec "source ".path
+  endfor
+endif
 
 
 " ======================== GIT ==================== "
-function tools#git_plugs()
-    Plug 'airblade/vim-gitgutter'         "show differences (GIT)
-    Plug 'tpope/vim-fugitive'             "git wrapper
-    Plug 'whiteinge/diffconflicts'
-endfunction
 highlight GitGutterAdd    ctermfg=34 ctermbg=0
 highlight GitGutterChange ctermfg=184 ctermbg=0
 highlight GitGutterDelete ctermfg=124 ctermbg=0

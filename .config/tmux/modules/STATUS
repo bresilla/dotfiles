@@ -57,7 +57,7 @@ network="$accentTX$accentBG $foreground$netspeed$accentBG "
 
 RIGHT_STATUS="$power$proc$memo$spacer$network"
 
-main="$accentBG$foreground $BLD$tmu$NLD $accentTX$grayBG"
+main="$accentBG$foreground $tmu $accentTX$grayBG"
 
 cdr="$sealTX"
 LEFT_STATUS="$main$battery$cdr"
