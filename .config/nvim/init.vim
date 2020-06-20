@@ -34,7 +34,8 @@ endfunction
 
 function init#space_plugs()
     Plug 'vim-ctrlspace/vim-ctrlspace'                  "a better workspace manager
-    Plug 'liuchengxu/vim-clap'			                "interactive floating finder and dispatcher
+    " TODO Plug 'xolox/vim-session'
+    Plug 'liuchengxu/vim-clap'                          "interactive floating finder and dispatcher
     Plug 'scrooloose/nerdtree'                          "side-bar file manager
     Plug '~/.config/plug/tree-linux'
     Plug 'ryanoasis/vim-devicons'                       "icons for nerdtree
@@ -65,6 +66,7 @@ function init#navi_plugs()
     Plug 'tpope/vim-repeat'                             " '.' for better repeat functioalities
     Plug 'tpope/vim-surround'                            "manipulating sorround objects
     Plug 'brooth/far.vim'                               "Find and Replace
+    Plug 'andymass/vim-matchup'                         "modern matchit and matchparen replacement
 endfunction
 
 function init#tools_plugs()
@@ -101,9 +103,10 @@ function init#theme_plugs()
     Plug 'vim-airline/vim-airline'	                    "airline theme
     Plug 'vim-airline/vim-airline-themes'
     Plug 'edkolev/promptline.vim'
+    Plug 'machakann/vim-highlightedyank'                "flash on yank
+    Plug 'ap/vim-css-color'
     Plug 'powerline/fonts'                              "patched powerline-fonts
     Plug 'rakr/vim-one'                                 "Atom ONE theme
-    Plug 'dylanaraps/wal.vim'
     Plug 'TaDaa/vimade'                                 "Fade inctive window
 endfunction
 

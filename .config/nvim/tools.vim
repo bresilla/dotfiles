@@ -21,6 +21,37 @@ autocmd User FloatPreviewWinOpen call DisableExtras()
 
 
 
+" === ALE === "
+let g:ale_sign_error = '×'
+let g:ale_sign_warning = '!'
+highlight ALEWarning ctermbg=15 ctermfg=1 cterm=bold
+highlight ALEWarningSign ctermbg=0 ctermfg=184 cterm=bold
+highlight ALEWarningLine ctermbg=1 ctermfg=0 cterm=italic,bold
+highlight ALEError ctermbg=15 ctermfg=1 cterm=bold
+highlight ALEErrorSign ctermbg=0 ctermfg=124 cterm=bold
+highlight ALEErrorLine ctermbg=1 ctermfg=0 cterm=italic,bold
+highlight ALEInfo ctermbg=15 ctermfg=1 cterm=bold
+highlight ALEInfoSign ctermbg=0 ctermfg=124 cterm=bold
+highlight ALEInfoLine ctermbg=1 ctermfg=0 cterm=italic,bold
+let g:ale_linters = {
+            \ 'rust': ['cargo-clippy', 'rustfmt'],
+            \ 'go': ['gopls'],
+            \ 'nim': ['nimlsp'],
+            \ 'cpp': ['clangtidy'],
+            \ 'python': ['/usr/local/bin/pyls']
+            \ }
+let g:ale_fixers = {
+            \ 'rust': ['rustfmt'],
+            \ 'cpp': ['clang-format'],
+            \ }
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 1
+let g:airline#extensions#ale#enabled = 1
+let g:ale_fix_on_save = 1
+au TabLeave * silent! <Plug>(ale_fix)
+au BufLeave * silent! <Plug>(ale_fix)
+
+
 " === LANGUAGE CLIENT === "
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
@@ -41,75 +72,45 @@ let g:LanguageClient_serverCommands = {
             \       server.runlinter = true;
             \       run(server);']
             \ }
-" \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-nnoremap <C-tab> :call LanguageClient#textDocument_hover()<CR>
-nnoremap <tab> :call LanguageClient_textDocument_definition()<cr>
-nnoremap <bs> :call LanguageClient_textDocument_rename()<cr>
-nnoremap <f12> :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/i
 let g:LanguageClient_diagnosticsDisplay = {
     \ 1: {
         \ "name": "Error",
         \ "texthl": "ALEError",
         \ "signText": "×",
         \ "signTexthl": "ALEErrorSign",
-        \ "virtualTexthl": "Error",
+        \ "virtualTexthl": "ALEErrorLine",
     \ },
     \ 2: {
         \ "name": "Warning",
         \ "texthl": "ALEWarning",
         \ "signText": "!",
         \ "signTexthl": "ALEWarningSign",
-        \ "virtualTexthl": "Todo",
+        \ "virtualTexthl": "ALEWarningLine",
     \ },
     \ 3: {
         \ "name": "Information",
         \ "texthl": "ALEInfo",
         \ "signText": "i",
         \ "signTexthl": "ALEInfoSign",
-        \ "virtualTexthl": "Todo",
+        \ "virtualTexthl": "ALEInfoLine",
     \ },
     \ 4: {
         \ "name": "Hint",
         \ "texthl": "ALEInfo",
-        \ "signText": "➤",
+        \ "signText": ">",
         \ "signTexthl": "ALEInfoSign",
-        \ "virtualTexthl": "Todo",
+        \ "virtualTexthl": "ALEInfoLine",
     \ },
 \ }
+" let g:LanguageClient_useVirtualText = "All"
+" let g:LanguageClient_hoverPreview = "Always"
+set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+let g:LanguageClient_windowLogMessageLevel = "Log"
 
 
 
-
-"
 " === TAB NINE === "
 call deoplete#custom#var('tabnine',{'line_limit': 500,'max_num_results': 5})
-
-
-
-" === ALE === "
-let g:ale_sign_error = '×'
-let g:ale_sign_warning = '!'
-highlight ALEWarning ctermbg=0 ctermfg=184 cterm=bold
-highlight ALEWarningSign ctermbg=0 ctermfg=184 cterm=bold
-highlight ALEError ctermbg=0 ctermfg=124 cterm=bold
-highlight ALEErrorSign ctermbg=0 ctermfg=124 cterm=bold
-let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = {
-            \ 'rust': ['rust-analyzer'],
-            \ 'go': ['gopls'],
-            \ 'nim': ['nimlsp'],
-            \ 'cpp': ['clangtidy'],
-            \ 'python': ['/usr/local/bin/pyls']
-            \ }
-let g:ale_fixers = {
-            \ 'cpp': ['clang-format'],
-            \ }
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 1
-" let g:ale_fix_on_save = 1
-nmap <F10> <Plug>(ale_fix)
-au TabLeave * silent! <Plug>(ale_fix)
-au BufLeave * silent! <Plug>(ale_fix)
 
 
 
@@ -118,14 +119,17 @@ autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)
 autocmd FileType rust nmap <silent> , <Plug>(cosco-commaOrSemiColon)
 
 
+
 " === COMMENTER === "
 map <silent> # :Commentary<CR>
 
 
+" === WHITESPACE === "
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+
 " ======================== WORKSPACE ==================== "
 " === cTRLSPACE === "
-" set showtabline=0
-nnoremap <f1> :CtrlSpaceSaveWorkspace<CR>
 let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 " let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
@@ -147,7 +151,6 @@ map <C-Pageup> :CtrlSpaceGoUp<CR>
 
 
 " === VIM CLAP === "
-nmap <leader><leader> :Clap buffers<CR>
 let g:clap_theme = 'atom_dark'
 let g:clap_theme = {
             \'input': {'ctermbg': '1', 'ctermfg': '15', 'cterm': 'bold'},
@@ -160,11 +163,10 @@ let g:clap_layout = { 'relative': 'editor' }
 let g:clap_open_action = { 'ctrl-x': 'vsplit' }
 let g:clap_search_box_border_symbols = {'nil': ['█', '█'], 'curve': ['', ''], 'arrow': ['', '']}
 let g:clap_search_box_border_style = 'nil'
-let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
 " let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
-
-let g:clap_provider_books = {
-    \ 'source': [':BookmarkShowAll'],
+let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
+let g:clap_provider_src = {
+    \ 'source': 'find src/',
     \ 'sink': 'e',
 \ }
 
@@ -176,7 +178,6 @@ let g:NERDTreeMinimalUI = 1
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 au VimEnter * NERDTreeRefreshRoot
-noremap <C-i>  :NERDTreeToggle<CR>
 
 
 
@@ -268,7 +269,6 @@ hi EasyMotionTarget2Second ctermfg=2 cterm=underline
 
 
 " === SEARCH SETTINGS === "
-let g:better_whitespace_enabled=1
 let g:incsearch#auto_nohlsearch = 1
 map / <Plug>(incsearch-forward)
 map <leader>/ <Plug>(incsearch-forward)

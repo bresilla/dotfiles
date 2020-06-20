@@ -5,3 +5,5 @@ function portgraph(){ doas lsof -n -F | ./lsofgraph | dot -Tjpg > /tmp/a.jpg; }
 function portmon(){ doas lsof -Pnl -i4; }
 function openports(){ doas netstat -tulpn; }
 function wifis(){ nmcli -t -f ssid dev wifi; }
+
+alias myip='curl http://ipecho.net/plain; echo'

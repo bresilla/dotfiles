@@ -41,11 +41,24 @@ map <S-Down> <Nop>
 inoremap <M-u> <ESC>viw~
 nnoremap <M-u> viw~<ESC>
 
-map <leader><CR> :RofiFiles<CR>
 
 " === CHANGE CASE === "
 vnoremap < <gv
 vnoremap > >gv
+
+
+" === NERD-TREE === "
+nnoremap <silent> <tab> :NERDTreeToggle <CR>
+nnoremap <silent> <C-tab> :NERDTreeToggle <CR>
+map <leader><tab> :NERDTreeToggle<CR>
+
+
+" === CLAP === "
+map <leader><leader> :Clap src<CR>
+map <leader><CR> :RofiFiles<CR>
+map <C-i> :Clap grep<CR>
+map <M-i> :Clap grep ++query=<cword><CR>
+
 
 
 " === COMMENTARY === "
@@ -209,40 +222,10 @@ let g:which_key_map.g = {
 " l is for language server protocol
 let g:which_key_map.l = {
       \ 'name' : '+lsp' ,
-      \ '.' : [':CocConfig'                          , 'config'],
-      \ ';' : ['<Plug>(coc-refactor)'                , 'refactor'],
-      \ 'a' : ['<Plug>(coc-codeaction)'              , 'line action'],
-      \ 'A' : ['<Plug>(coc-codeaction-selected)'     , 'selected action'],
-      \ 'b' : [':CocNext'                            , 'next action'],
-      \ 'B' : [':CocPrev'                            , 'prev action'],
-      \ 'c' : [':CocList commands'                   , 'commands'],
-      \ 'd' : ['<Plug>(coc-definition)'              , 'definition'],
-      \ 'D' : ['<Plug>(coc-declaration)'             , 'declaration'],
-      \ 'e' : [':CocList extensions'                 , 'extensions'],
-      \ 'f' : ['<Plug>(coc-format-selected)'         , 'format selected'],
-      \ 'F' : ['<Plug>(coc-format)'                  , 'format'],
-      \ 'h' : ['<Plug>(coc-float-hide)'              , 'hide'],
-      \ 'i' : ['<Plug>(coc-implementation)'          , 'implementation'],
-      \ 'I' : [':CocList diagnostics'                , 'diagnostics'],
-      \ 'j' : ['<Plug>(coc-float-jump)'              , 'float jump'],
-      \ 'l' : ['<Plug>(coc-codelens-action)'         , 'code lens'],
-      \ 'n' : ['<Plug>(coc-diagnostic-next)'         , 'next diagnostic'],
-      \ 'N' : ['<Plug>(coc-diagnostic-next-error)'   , 'next error'],
-      \ 'o' : ['<Plug>(coc-openlink)'                , 'open link'],
-      \ 'O' : [':CocList outline'                    , 'outline'],
-      \ 'p' : ['<Plug>(coc-diagnostic-prev)'         , 'prev diagnostic'],
-      \ 'P' : ['<Plug>(coc-diagnostic-prev-error)'   , 'prev error'],
-      \ 'q' : ['<Plug>(coc-fix-current)'             , 'quickfix'],
-      \ 'r' : ['<Plug>(coc-rename)'                  , 'rename'],
-      \ 'R' : ['<Plug>(coc-references)'              , 'references'],
-      \ 's' : [':CocList -I symbols'                 , 'references'],
-      \ 'S' : [':CocList snippets'                   , 'snippets'],
-      \ 't' : ['<Plug>(coc-type-definition)'         , 'type definition'],
-      \ 'u' : [':CocListResume'                      , 'resume list'],
-      \ 'U' : [':CocUpdate'                          , 'update CoC'],
-      \ 'v' : [':Vista!!'                            , 'tag viewer'],
-      \ 'z' : [':CocDisable'                         , 'disable CoC'],
-      \ 'Z' : [':CocEnable'                          , 'enable CoC'],
+      \ 'l' : [':call LanguageClient_contextMenu()'                         , 'menu'],
+      \ 'd' : [':call LanguageClient_textDocument_definition()'             , 'definition'],
+      \ 'h' : [':call LanguageClient#textDocument_hover()'                  , 'hover'],
+      \ 'r' : [':call LanguageClient_textDocument_rename()'                 , 'rename'],
       \ }
 
 " t is for terminal

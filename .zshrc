@@ -98,6 +98,7 @@ zle-keymap-select(){ set_vi_mode_cursor; zle reset-prompt; }
 
 zle-line-init(){ zle -K $DEFAULT_VI_MODE; }
 
+
 zle -N zle-line-init
 zle -N zle-keymap-select
 
@@ -143,6 +144,18 @@ bindkey -M vicmd '^k' run_killer
 bindkey -M viins '^k' run_killer
 bindkey '^k' run_killer
 
+function fzi_grep() {
+    selected=$(
+        FZF_DEFAULT_COMMAND="rg --files" fzf -m -e --ansi --phony --reverse \
+        --bind "ctrl-a:select-all" --bind "f12:execute-silent:(subl -b {})" \
+        --bind "change:reload:rg -i -l --hidden --no-ignore-vcs {q} || true" \
+        --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
+    [[ -n $selected ]] && nvim $selected; }
+zle -N fzi_grep
+bindkey -M vicmd '^i' fzi_grep
+bindkey -M viins '^i' fzi_grep
+bindkey '^i' fzi_grep
+
 function run_find(){ finder; zle reset-prompt; zle redisplay; }
 zle -N run_find
 bindkey -M vicmd '^f' run_find
@@ -171,6 +184,16 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+#--------------------------------------------------------------------------------------------------------------------
+###RE-ENTER SAME DIRECTORY
+recd(){
+    if [ -z ${cdre+x} ]; then
+        export cdre="cdre";
+        cd .. && cd - ;
+    fi
+}
+
 #--------------------------------------------------------------------------------------------------------------------
 ###MODULES
 autoload -U colors && colors

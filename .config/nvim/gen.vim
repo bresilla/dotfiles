@@ -2,6 +2,7 @@ let g:python_host_prog='/usr/bin/python'
 let g:python3_host_prog='/usr/bin/python3'
 
 syntax on
+syntax enable
 filetype on
 filetype indent on
 filetype plugin on
@@ -13,9 +14,9 @@ let &t_EI = "\e[3 q"
 set nocompatible
 set hidden
 set encoding=utf8
+set showtabline=0
 set guifont=Monoisome\ 12
 set t_Co=256
-" set termguicolors
 set laststatus=2
 set clipboard+=unnamedplus              " system clipboard
 set viminfo=""
@@ -28,8 +29,9 @@ set sidescroll=1
 set scrollopt+=hor
 set showbreak=↪\
 set ruler
-set showcmd                             " display incomplete commands
 set showmode                            " display current modes<Paste>
+set noshowcmd                           " to get rid of display of last command
+set shortmess+=F                        " to get rid of the file name displayed in the command line bar
 set number                              " show numbers
 set relativenumber
 set display+=lastline

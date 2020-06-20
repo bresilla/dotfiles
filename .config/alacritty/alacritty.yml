@@ -3,25 +3,25 @@ window:
     columns: 0
     lines: 0
   padding:
-    x: 25
-    y: 25
+    x: 15
+    y: 15
 dynamic_padding: true
 draw_bold_text_with_bright_colors: true
 
 font:
   normal:
-    family: Iosevka Term SS01
+    family: PragmataPro Mono
     style: Regular
   bold:
-    family: Iosevka Term SS01
+    family: PragmataPro Mono
     style: Bold
   italic:
-    family: Iosevka Term SS01
+    family: PragmataPro Mono
     style: Italic
-  size: 8.0
+  size: 6.0
   offset:
     x: 0
-    y: 0
+    y: 6
   use_thin_strokes: true
 
 colors:
