@@ -34,7 +34,7 @@ highlight ALEInfo ctermbg=15 ctermfg=1 cterm=bold
 highlight ALEInfoSign ctermbg=0 ctermfg=124 cterm=bold
 highlight ALEInfoLine ctermbg=1 ctermfg=0 cterm=italic,bold
 let g:ale_linters = {
-            \ 'rust': ['cargo-clippy', 'rustfmt'],
+            \ 'rust': ['cargo-clippy'],
             \ 'go': ['gopls'],
             \ 'nim': ['nimlsp'],
             \ 'cpp': ['clangtidy'],
@@ -47,7 +47,7 @@ let g:ale_fixers = {
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 1
 let g:airline#extensions#ale#enabled = 1
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 au TabLeave * silent! <Plug>(ale_fix)
 au BufLeave * silent! <Plug>(ale_fix)
 
@@ -166,7 +166,7 @@ let g:clap_search_box_border_style = 'nil'
 " let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
 let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
 let g:clap_provider_src = {
-    \ 'source': 'find src/',
+    \ 'source': 'find src/ -type f',
     \ 'sink': 'e',
 \ }
 

@@ -152,21 +152,15 @@ function fzi_grep() {
         --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
     [[ -n $selected ]] && nvim $selected; }
 zle -N fzi_grep
-bindkey -M vicmd '^i' fzi_grep
-bindkey -M viins '^i' fzi_grep
-bindkey '^i' fzi_grep
+bindkey -M vicmd '^o' fzi_grep
+bindkey -M viins '^o' fzi_grep
+bindkey '^o' fzi_grep
 
 function run_find(){ finder; zle reset-prompt; zle redisplay; }
 zle -N run_find
 bindkey -M vicmd '^f' run_find
 bindkey -M viins '^f' run_find
 bindkey '^f' run_find
-
-function run_compile(){ run; zle reset-prompt; zle redisplay; }
-zle -N run_compile
-bindkey -M viins '^o' run_compile
-bindkey -M vicmd '^o' run_compile
-bindkey '^o' run_compile
 
 push-line-and-clear() { zle .push-line; zle .clear-screen }
 zle -N push-line-and-clear
@@ -175,7 +169,7 @@ bindkey '^L' push-line-and-clear
 # CTRL-Z starts previously suspended process.
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
-    bg 
+    bg
     zle redisplay
     fg &>/dev/null
   else

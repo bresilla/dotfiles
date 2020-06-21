@@ -34,7 +34,6 @@ endfunction
 
 function init#space_plugs()
     Plug 'vim-ctrlspace/vim-ctrlspace'                  "a better workspace manager
-    " TODO Plug 'xolox/vim-session'
     Plug 'liuchengxu/vim-clap'                          "interactive floating finder and dispatcher
     Plug 'scrooloose/nerdtree'                          "side-bar file manager
     Plug '~/.config/plug/tree-linux'

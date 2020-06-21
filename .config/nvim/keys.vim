@@ -49,15 +49,14 @@ vnoremap > >gv
 
 " === NERD-TREE === "
 nnoremap <silent> <tab> :NERDTreeToggle <CR>
-nnoremap <silent> <C-tab> :NERDTreeToggle <CR>
-map <leader><tab> :NERDTreeToggle<CR>
 
 
 " === CLAP === "
 map <leader><leader> :Clap src<CR>
+map <leader><leader><leader> :Clap grep<CR>
+map <leader><tab> :Clap grep ++query<CR>
 map <leader><CR> :RofiFiles<CR>
-map <C-i> :Clap grep<CR>
-map <M-i> :Clap grep ++query=<cword><CR>
+map <C-o> :Clap grep<CR>
 
 
 

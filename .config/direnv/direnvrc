@@ -24,6 +24,18 @@ use_docker(){
     fi
 }
 
+use_nix() {
+    if [[ -f .shell.nix ]]; then
+        NIXFILE=$PWD/.shell.nix
+    fi
+    direnv_load nix-shell --show-trace $NIXFILE --run "$(join_args "$direnv" dump)"
+    if [[ -f .shell.nix ]]; then
+        watch_file $NIXFILE
+    else
+        watch_file default.nix shell.nix
+    fi
+}
+
 
 layout_viper() {
     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'

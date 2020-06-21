@@ -1,0 +1,12 @@
+/build/
+/bin/
+/lib/
+/vendor/
+
+.cs_files
+.notifier
+/.undodir/
+/.direnv/
+/.clangd/
+.gdb_history
+compile_commands.json
