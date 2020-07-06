@@ -1,5 +1,8 @@
 alias s='sudo -E nvim'
+alias \$=''
 alias v='nvim'
+
+alias home='home-manager'
 
 alias ups="doas systemctl"
 alias upu="systemctl --user"
@@ -10,12 +13,11 @@ alias suspend='systemctl suspend'
 #ALTERNATIVES
 alias vim='nvim'
 alias mutt='neomutt'
-alias ping="mtr"
 
 #PACKAGE_MANAGER
 alias pack='unset GOPATH; unset GOBIN && yay'
-alias mirror="doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu"
-function branch(){ doas pacman-mirrors --api -S $@ && mirror; }
+alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
+alias branch='doas pacman-mirrors --api -S'
 
 #WM
 alias refresh='pkill -USR1 -x sxhkd && bash ~/.startup -r'
@@ -26,8 +28,6 @@ alias cp='acp -g -r -p'
 alias mv='amv -g -u'
 alias rm='rm -rf'
 alias rn='mv -v'
-function mkcd(){ mkdir "$1" && cd "$1"; }
-function keys(){ xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'; }
 
 
 alias ls='exa -F'
@@ -39,7 +39,7 @@ alias lu='dutree -d1 --usage -x .git -x .direnv'
 alias df='dfc -dTomw -p -/dev/loop,tmp,dev,run,one'
 alias lsblk='lsblk -f'
 alias dd='dd status=progress'
-alias ncdu='doas ncdu --color=dark \
+alias z='doas /usr/bin/ncdu --color=dark \
     --exclude /home \
     --exclude /opt \
     --exclude /nix \
@@ -50,41 +50,33 @@ alias ncdu='doas ncdu --color=dark \
     --exclude /var/lib/lxd'
 
 #LOGS
-# function syslog(){ bat "/var/log/syslog" }
+alias syslog='bat "/var/log/syslog"'
 
 ##PROGRAMS
-function fzp(){ fzf --preview="head -$LINES {}"; }
-function fzi() {
-    selected=$(
+alias fzp='fzf --preview="head -$LINES {}"'
+alias fzi='selected=$(
         FZF_DEFAULT_COMMAND="rg --files" fzf -m -e --ansi --phony --reverse \
         --bind "ctrl-a:select-all" --bind "f12:execute-silent:(subl -b {})" \
         --bind "change:reload:rg -i -l --hidden --no-ignore-vcs {q} || true" \
         --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
-    [[ -n $selected ]] && nvim $selected;
-}
-function _shko(){ shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"; }
+    [[ -n $selected ]] && nvim $selected'
+
+alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
 alias x='dtrx --one-entry=rename'
 alias ari='aria2c'
 alias mix='ncpamixer'
 alias inxi='optirun inxi -Fxxxz'
 
 ##HISTORY
-function hister(){ fc -lrn 0 | tux -e | clip; }
-function delete_hister(){ name=$(tac $HISTFILE | fzy); [[ -n $name ]] && LC_ALL=C sed -i "/$name/d" $HISTFILE; }
+alias hister='fc -lrn 0 | tux -e | clip'
+alias delete_hister='name=$(tac $HISTFILE | fzy); [[ -n $name ]] && LC_ALL=C sed -i "/$name/d" $HISTFILE'
 
 ##FILES
 alias own='doas chown -R $USER:$USER'
 alias exe='chmod u+x'
 alias dxe='chmod u-x'
 
-#FUNCTIONS
-function open(){ nohup mimeo $1 > /dev/null 2>&1 &!; }
-function diskspeed() { doas dd if=$1 of=/dev/null bs=512k count=16k iflag=direct; }
-# function rofit(){ rofi -theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${FOREGROUND:-#000000};}" -dmenu -i -p '>>>'; }
-function showpath() { echo $PATH | tr ':' '\n' | fzy; }
-function snip(){ PREV=$(fc -lrn | head -n 1); sh -c "pet new `printf %q "$PREV"`"; }
-function killer(){ n=$(ps -ef | sed 1d | tux -m | awk '{print $2}'); [[ -n $n ]] && doas kill $n; }
-
-#WINDOW MANAGER
-function class(){ xprop |awk '/WM_CLASS/{print $4}'; }
-function configs(){ name=$(fd -E ".git" -t f -H . '/home/bresilla/dots/' | fzp); [[ -n $name ]] && nvim $name; }
+##OTHER
+alias open='nohup mimeo $1 > /dev/null 2>&1 &!'
+alias snip='PREV=$(fc -lrn | head -n 1); sh -c "pet new `printf %q "$PREV"`"'
+alias killer'n=$(ps -ef | sed 1d | tux -m | awk "{print $2}"); [[ -n $n ]] && doas kill $n'

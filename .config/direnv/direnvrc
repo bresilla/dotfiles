@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export INDIRENV=true;
 
 use_ros(){
@@ -37,32 +39,6 @@ use_nix() {
 }
 
 
-layout_viper() {
-    local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
-    CONDAPATH="/opt/conda/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
-
-    if [ -f environment.yml ]; then
-        local env_name =$(grep name: environment.yml | sed -e 's/name: //' | cut -d "'" -f 2 | cut -d '"' -f 2)
-        source activate ${env_name}
-        PATH="/opt/conda/envs/${env_name}/bin:$PATH"
-        printf "\n${GREEN}environment specified${NC}\nusing environment: ${BLUE}${conda_env}${NC}\n\n";
-    else
-        CONDALOC="$PWD/.direnv/bin"
-        conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
-        if [[ -d "$CONDALOC" ]]; then
-            source activate $PWD/.direnv
-            # PATH="$CONDALOC:$PATH"
-            conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
-            printf "\n${GREEN}environment specified${NC}\nusing environment: ${BLUE}${conda_env}${NC}\n\n";
-        else
-            conda create -p $PWD/.direnv python=${1:-3.7}
-            source activate $PWD/.direnv
-            # PATH="$CONDALOC:$PATH"
-        fi
-    fi;
-}
-
-
 layout_conda() {
     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
     CONDAPATH="/opt/conda/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
@@ -79,9 +55,21 @@ layout_conda() {
     elif [ -f environment.yml ]; then
         local env_name =$(grep name: environment.yml | sed -e 's/name: //' | cut -d "'" -f 2 | cut -d '"' -f 2)
         source activate ${env_name}
+        PATH="/opt/conda/envs/${env_name}/bin:$PATH"
         printf "\n${GREEN}environment specified${NC}\nusing environment: ${BLUE}${conda_env}${NC}\n\n";
     else
-        printf "\n${RED}no environment specified${NC}\nusing base environment\n\n";
+        CONDALOC="$PWD/.direnv/bin"
+        conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
+        if [[ -d "$CONDALOC" ]]; then
+            source activate $PWD/.direnv
+            # PATH="$CONDALOC:$PATH"
+            conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
+            printf "\n${GREEN}local folder environment${NC}\nusing environment: ${BLUE}${conda_env}${NC}\n\n";
+        else
+            conda create -p $PWD/.direnv python=${1:-3.7}
+            source activate $PWD/.direnv
+            # PATH="$CONDALOC:$PATH"
+        fi
     fi;
 }
 
@@ -93,6 +81,7 @@ layout_go() {
 
 layout_rust() {
   export CARGO_HOME="$PWD/vendor/"
+  export RUSTUP_HOME="$PWD/vendor/rustup"
   PATH_add "$PWD/vendor/bin"
   PATH_add bin
 }

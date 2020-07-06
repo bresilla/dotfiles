@@ -52,10 +52,11 @@ nnoremap <silent> <tab> :NERDTreeToggle <CR>
 
 
 " === CLAP === "
-map <leader><leader> :Clap src<CR>
-map <leader><leader><leader> :Clap grep<CR>
-map <leader><tab> :Clap grep ++query<CR>
-map <leader><CR> :RofiFiles<CR>
+map <leader><leader> :Clap files<CR>
+map <leader><CR> :Clap grep2<CR>
+map <leader>+ :Clap grep2 ++query=<cword><CR>
+map <leader><tab> :Clap tags<CR>
+" map <leader><CR> :RofiFiles<CR>
 map <C-o> :Clap grep<CR>
 
 

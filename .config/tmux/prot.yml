@@ -1,4 +1,4 @@
-name: "realsense_cpp"
+name: "mso"
 windows:
 - name: nvim
   layout: e094,304x64,0,0,25
@@ -6,4 +6,4 @@ windows:
   - commands:
     - nvim
     focus: true
-    root:  /home/bresilla/data/code/UNIVERSITY/realsense_cpp  
+    root:  /home/bresilla/code/PROJECTS/OTHER/mso             

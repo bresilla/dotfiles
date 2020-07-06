@@ -1,4 +1,4 @@
-# Defined in /home/bresilla/.config/fish/functions/s.fish @ line 2
-function s --description 'alias s=shko -c --short && cd (cat ~/.config/shko/settings/chdir)'
-	shko -c --short && cd (cat ~/.config/shko/settings/chdir) $argv;
+# Defined in - @ line 1
+function s --wraps='sudo -E nvim' --description 'alias s sudo -E nvim'
+  sudo -E nvim $argv;
 end

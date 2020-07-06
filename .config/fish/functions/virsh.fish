@@ -1,4 +1,4 @@
 # Defined in - @ line 1
-function virsh --description 'alias virsh sudo virsh'
-	sudo virsh $argv;
+function virsh --wraps='doas virsh' --description 'alias virsh doas virsh'
+  doas virsh $argv;
 end

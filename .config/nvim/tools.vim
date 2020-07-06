@@ -24,30 +24,33 @@ autocmd User FloatPreviewWinOpen call DisableExtras()
 " === ALE === "
 let g:ale_sign_error = '×'
 let g:ale_sign_warning = '!'
-highlight ALEWarning ctermbg=15 ctermfg=1 cterm=bold
-highlight ALEWarningSign ctermbg=0 ctermfg=184 cterm=bold
-highlight ALEWarningLine ctermbg=1 ctermfg=0 cterm=italic,bold
 highlight ALEError ctermbg=15 ctermfg=1 cterm=bold
 highlight ALEErrorSign ctermbg=0 ctermfg=124 cterm=bold
 highlight ALEErrorLine ctermbg=1 ctermfg=0 cterm=italic,bold
-highlight ALEInfo ctermbg=15 ctermfg=1 cterm=bold
-highlight ALEInfoSign ctermbg=0 ctermfg=124 cterm=bold
-highlight ALEInfoLine ctermbg=1 ctermfg=0 cterm=italic,bold
+highlight ALEWarning cterm=italic,bold
+highlight ALEWarningSign ctermbg=0 ctermfg=184 cterm=bold
+highlight ALEWarningLine ctermbg=0 ctermfg=237 cterm=italic
+highlight ALEInfo cterm=italic,bold
+highlight ALEInfoSign ctermbg=0 ctermfg=69 cterm=bold
+highlight ALEInfoLine ctermbg=0 ctermfg=237 cterm=italic
 let g:ale_linters = {
             \ 'rust': ['cargo-clippy'],
             \ 'go': ['gopls'],
-            \ 'nim': ['nimlsp'],
             \ 'cpp': ['clangtidy'],
+            \ 'nim': ['nimlsp'],
             \ 'python': ['/usr/local/bin/pyls']
             \ }
 let g:ale_fixers = {
+            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
             \ 'rust': ['rustfmt'],
             \ 'cpp': ['clang-format'],
             \ }
+let g:ale_linters_explicit=1
+let g:ale_set_balloons= 1
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 1
 let g:airline#extensions#ale#enabled = 1
-" let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 1
 au TabLeave * silent! <Plug>(ale_fix)
 au BufLeave * silent! <Plug>(ale_fix)
 
@@ -166,7 +169,7 @@ let g:clap_search_box_border_style = 'nil'
 " let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
 let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
 let g:clap_provider_src = {
-    \ 'source': 'find src/ -type f',
+    \ 'source': 'find {src,include} -type f',
     \ 'sink': 'e',
 \ }
 
@@ -212,7 +215,7 @@ autocmd FileType cpp let b:auto_save = 1
 autocmd FileType hpp let b:auto_save = 1
 autocmd FileType h let b:auto_save = 1
 autocmd FileType cmake let b:auto_save = 1
-let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost", "FocusGained"]
+let g:auto_save_events = ["FocusLost", "FocusGained"]
 let g:auto_save_write_all_buffers = 1
 " let g:auto_save_presave_hook = 'call AbortIfNotGitDirectory()'
 " function! AbortIfNotGitDirectory()

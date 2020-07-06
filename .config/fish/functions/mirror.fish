@@ -1,4 +1,4 @@
 # Defined in - @ line 1
-function mirror --description 'alias mirror sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu'
-	sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu $argv;
+function mirror --wraps='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu' --description 'alias mirror doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
+  doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu $argv;
 end

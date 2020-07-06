@@ -41,7 +41,7 @@
     radius = 0
     barheigh = 32
     element-padding = 2
-    element-spacing = 1
+    element-spacing = 0
 
 
 [bar/main]
@@ -70,6 +70,7 @@
     font-6 = Siji:size=8;2
     tray-position = right
     tray-padding = ${settings.element-padding}
+    ;separator = |
     modules-left = volume battery light wlan signal speed hotspot wireguard
     modules-center = title
     modules-right = audit cpu memory gpu sda1 sda2 nvme date time pomo

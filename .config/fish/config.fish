@@ -8,6 +8,10 @@ function fish_right_prompt
     env FISH_VERSION=$FISH_VERSION PROMPTLINE_LAST_EXIT_CODE=$status bash ~/.config/promptline right $fish_bind_mode (__fish_git_prompt)
 end
 
+function _shko
+    shko -c --short 19 && cd (cat ~/.config/shko/settings/chdir)
+end
+
 set -g __fish_git_prompt_show_informative_status 1
 set -g __fish_git_prompt_hide_untrackedfiles 1
 set -g __fish_git_prompt_color_branch magenta
@@ -29,7 +33,7 @@ set -g __fish_prompt_normal (set_color normal)
 
 function sh_aliases \
     --description 'import bash aliases to .fish function files.'
-    for file in ~/.func/*
+    for file in ~/.alias/*
         for a in (cat $file  | grep "^alias")
             set aname (echo $a | sed 's/alias \(.*\)=\(\'\|\"\).*/\1/')
             set command (echo $a | sed 's/alias \(.*\)=\(\'\|\"\)\(.*\)\2/\3/')
@@ -45,4 +49,4 @@ function sh_aliases \
 end
 
 ###DIRENV
-# direnv hook fish | source
+direnv hook fish | source

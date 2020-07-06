@@ -1,0 +1,4 @@
+# Defined in - @ line 1
+function mopi --wraps='docker run -d --rm --user $UID:$GID -v /run/user/$UID/pulse:/run/user/105/pulse -p 6600:6600 -p 6680:6680 bresilla/mopidy mopidy -o spotify/username=$spotname -o spotify/password=$spotpass -o spotify/client_id=$spotid -o spotify/client_secret=$spotsecret' --description 'alias mopi docker run -d --rm --user $UID:$GID -v /run/user/$UID/pulse:/run/user/105/pulse -p 6600:6600 -p 6680:6680 bresilla/mopidy mopidy -o spotify/username=$spotname -o spotify/password=$spotpass -o spotify/client_id=$spotid -o spotify/client_secret=$spotsecret'
+  docker run -d --rm --user $UID:$GID -v /run/user/$UID/pulse:/run/user/105/pulse -p 6600:6600 -p 6680:6680 bresilla/mopidy mopidy -o spotify/username=$spotname -o spotify/password=$spotpass -o spotify/client_id=$spotid -o spotify/client_secret=$spotsecret $argv;
+end

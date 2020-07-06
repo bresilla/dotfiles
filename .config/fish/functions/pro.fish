@@ -1,4 +1,4 @@
 # Defined in - @ line 1
-function pro --description 'alias pro proji'
-	proji  $argv;
+function pro --wraps=proji --description 'alias pro proji'
+  proji  $argv;
 end

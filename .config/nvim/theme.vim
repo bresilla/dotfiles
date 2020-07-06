@@ -21,7 +21,7 @@ function! DarkTheme()
     highlight SignColumn  ctermbg=0 guibg=0
     highlight CursorLineNR ctermbg=0 ctermfg=1 cterm=bold guibg=0 guifg=1 gui=bold
     "special characters of endline
-    highlight NonText ctermfg=9 guifg=9
+    highlight NonText ctermbg=0 ctermfg=9 guifg=9 guibg=0
     "completion menu
     highlight Pmenu ctermbg=0 ctermfg=15 guibg=0 guifg=15
     highlight PmenuSel ctermbg=0 ctermfg=9 cterm=bold guibg=0 guifg=9 gui=bold

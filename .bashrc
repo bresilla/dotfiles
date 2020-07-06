@@ -5,8 +5,8 @@
 source ~/.cache/wal/colors.sh
 
 #--------------------------------------------------------------------------------------------------------------------
-###FUNCTIONS
-[ -d ~/.func ] && for file in ~/.func/*; do source "$file" ; done
+###ALIASES
+[ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
 ###PROFILE
 [[ -e ~/.profile ]] && source ~/.profile
 ###DIRENV
@@ -35,10 +35,13 @@ shopt -s checkwinsize
 shopt -s expand_aliases
 shopt -s histappend
 
+###HISTORY STAFF
+HISTFILE=~/.config/bash_history
+
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
 source ~/.config/promptline
-#--------------------------------------------------------------------------------------------------------------------
+
 
 #--------------------------------------------------------------------------------------------------------------------
 ###RE-ENTER SAME DIRECTORY
@@ -48,4 +51,3 @@ recd(){
         cd .. && cd - ;
     fi
 }
-

@@ -1,0 +1,9 @@
+alias dnsinuse='nmcli dev show | grep IP4.DNS'
+alias findip='doas arp-scan --localnet'
+alias netspeed=' wget --output-document=/dev/null http://speedtest.wdc01.softlayer.com/downloads/test500.zip'
+alias portgraph='doas lsof -n -F | ./lsofgraph | dot -Tjpg > /tmp/a.jpg'
+alias portmon='doas lsof -Pnl -i4'
+alias openports='doas netstat -tulpn'
+alias wifis='nmcli -t -f ssid dev wifi'
+
+alias myip='curl http://ipecho.net/plain; echo'

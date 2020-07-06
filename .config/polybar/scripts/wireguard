@@ -6,8 +6,10 @@ case "$1" in
 --toggle)
     if [ "$connection_status" = "wg0" ]; then
         doas wg-quick down wg0 2>/dev/null
+        systemctl --user restart spotifyd.service
     else
         doas wg-quick up wg0 2>/dev/null
+        systemctl --user restart spotifyd.service
     fi
     ;;
 *)
@@ -18,4 +20,3 @@ case "$1" in
     fi
     ;;
 esac
-

@@ -1,10 +1,6 @@
 # -------------------------------------------------------------------------------------------------------------------------------------------
 #                 GLOBAL
 # -------------------------------------------------------------------------------------------------------------------------------------------
-set(VCPKG_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vcpkg")
-set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
-
-
 # VERSION AND NAME
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
@@ -108,14 +104,13 @@ message ("BUILD TYPE: ${CMAKE_BUILD_TYPE}\n")
 # -------------------------------------------------------------------------------------------------------------------------------------------
 #                   EXTERNAL LIB
 # -------------------------------------------------------------------------------------------------------------------------------------------
-include_directories("${VCPKG_ROOT}/installed/x64-linux/include/")
-
 find_package(Curses REQUIRED)
-find_path(FMT_INC fmt)
-include_directories(${FMT_INC})
 find_package(fmt CONFIG REQUIRED)
+find_package(OpenCV CONFIG REQUIRED)
+find_package(realsense2 REQUIRED )
+find_package(Armadillo REQUIRED)
 
-set(EXTLIB ncurses fmt::fmt fmt::fmt-header-only)
+set(EXTLIB ncurses fmt::fmt fmt::fmt-header-only ${OpenCV_LIBS} realsense2 armadillo)
 foreach(EXT ${EXTLIB})
     message("external library ${EXT} added")
 endforeach()
@@ -128,7 +123,13 @@ function (add_source_lib NAME)
     file(GLOB HEAD_FILES "${INC_SRC}/${NAME}/*.h" "${INC_SRC}/${NAME}/*.hpp")
     file(GLOB CODE_FILES "${SRC_SRC}/${NAME}/*.c" "${SRC_SRC}/${NAME}/*.cpp")
     add_library(${NAME} ${HEAD_FILES} ${CODE_FILES})
-    target_include_directories(${NAME} PRIVATE ${INC_SRC} SYSTEM INTERFACE ${INC_SRC})
+    target_include_directories(${NAME}
+        PRIVATE
+            ${INC_SRC}
+            ${wxWidgets_USE_FILE}
+        SYSTEM INTERFACE
+            ${INC_SRC}
+        )
     target_link_libraries(${NAME}
         PRIVATE
             ${EXTLIB}

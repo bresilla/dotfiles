@@ -1,4 +1,4 @@
 # Defined in - @ line 1
-function own --description 'alias own sudo chown -R $USER'
-	sudo chown -R $USER $argv;
+function own --wraps='doas chown -R $USER:$USER' --description 'alias own doas chown -R $USER:$USER'
+  doas chown -R $USER:$USER $argv;
 end

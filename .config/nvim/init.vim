@@ -109,7 +109,7 @@ function init#theme_plugs()
     Plug 'TaDaa/vimade'                                 "Fade inctive window
 endfunction
 
-call plug#begin('~/.config/plug')
+call plug#begin('~/.config/plug_vim')
 " ==== TOOLS ==== "
     "language
     call init#lang_plugs()

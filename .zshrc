@@ -7,8 +7,8 @@ source ~/.cache/wal/colors.sh
 #--------------------------------------------------------------------------------------------------------------------
 ###SCRIPTS PATH
 export FPATH=~/.config/zsh:$FPATH
-###FUNCTIONS
-[ -d ~/.func ] && for file in ~/.func/*; do source "$file" ; done
+###ALIASES
+[ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
 ###PROFILE
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 ###DIRENV
@@ -64,18 +64,6 @@ setopt hist_reduce_blanks
 setopt hist_ignore_space
 setopt interactive_comments
 setopt no_beep
-
-#--------------------------------------------------------------------------------------------------------------------
-###history completion with what you typed
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-
-bindkey '^[[A'  up-line-or-beginning-search    # Arrow up
-bindkey '^[OA'  up-line-or-beginning-search
-bindkey '^[[B'  down-line-or-beginning-search  # Arrow down
-bindkey '^[OB'  down-line-or-beginning-search
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -191,7 +179,7 @@ recd(){
 #--------------------------------------------------------------------------------------------------------------------
 ###MODULES
 autoload -U colors && colors
-autoload compinit && compinit
+autoload compinit && compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 
 # TMOUT=1
 TRAPALRM() {
@@ -207,8 +195,8 @@ TRAPALRM() {
 [ -d ~/.config/zsh/autosuggestions ] && source ~/.config/zsh/autosuggestions/zsh-autosuggestions.zsh
 [ -d ~/.config/zsh/syntax ] && source ~/.config/zsh/syntax/zsh-syntax-highlighting.zsh
 #[ -d ~/.config/zsh/almostontop ] && source ~/.config/zsh/almostontop/almostontop.plugin.zsh
-# [ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-history-substring-search.zsh
-# [ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
+[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-history-substring-search.zsh
+[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
 [ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
 [ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
 [ -d ~/.config/zsh/goto ] && source ~/.config/zsh/goto/goto.sh
@@ -219,17 +207,4 @@ TRAPALRM() {
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
 [ -f ~/.config/promptline ] && source ~/.config/promptline
-
-
-
-#--------------------------------------------------------------------------------------------------------------------
-# Added by Zplugin's installer
-# source "$HOME/.zplugin/bin/zplugin.zsh"
-# autoload -Uz _zplugin
-# (( ${+_comps} )) && _comps[zplugin]=_zplugin
-### End of Zplugin installer's chunk
-# zplugin light zsh-users/zsh-autosuggestions
-# zplugin light zdharma/fast-syntax-highlighting
-# zplugin load zdharma/history-search-multi-word
-
-[[ -n "${$(task ids)/[ ]*\n/}" ]] && task | tail -n+4 | head -n-2
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

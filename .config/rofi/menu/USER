@@ -1,6 +1,7 @@
 #!/bin/bash
 source ~/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+edit_with="kitty --class=til"
 
 proj=projects
 file=documents
@@ -43,7 +44,8 @@ elif [ "$another" == "$clip" ] ; then
 
 elif [ "$another" == "$usem" ] ; then
     appname=$(cat ~/.config/applist |  grep "\S" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'apps:')
-    grep -Fxq $appname ~/.config/applist && sed -i "/$appname\b/d" ~/.config/applist || echo $appname >> ~/.config/applist
+    [[ -n $appname ]] && $edit_with -e nvim ~/.config/applist
+    # grep -Fxq $appname ~/.config/applist && sed -i "/$appname\b/d" ~/.config/applist || echo $appname >> ~/.config/applist
 
 elif [ "$another" == "$cont" ] ; then
     exec ~/.config/rofi/menu/contacts
