@@ -51,6 +51,7 @@ alias z='doas /usr/bin/ncdu --color=dark \
 
 #LOGS
 alias syslog='bat "/var/log/syslog"'
+alias lc="wc -l"
 
 ##PROGRAMS
 alias fzp='fzf --preview="head -$LINES {}"'

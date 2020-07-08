@@ -32,7 +32,7 @@ function __promptline_vcs_branch {
         return
         fi
     fi
-    return 1 
+    return 1
 }
 
 function __is_in_container {
@@ -67,25 +67,25 @@ function __promptline_cwd {
 
 function __promptline_left_prompt {
     #HOST
-    prefix="${foreground}${accentBG}${space}" suffix="${space}${background}${accentTX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
+    prefix="${blackTX}${accentBG}${space}" suffix="${space}${blackBG}${accentTX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
     #USER
-    prefix="${greyBG}${arrFL}${blackTX}${greyBG}${space}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$USER" "$suffix"
+    prefix="${whiteBG}${arrFL}${blackTX}${whiteBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$USER" "$suffix"
     #SUDO WARN
-    prefix="${redBG}${arrFL}${foreground}${redBG}${space}" suffix="${space}${redTX}"; [[ -n $(__sudo_warning) ]] && printf "%s" "$prefix" "$(__sudo_warning)" "$suffix"
+    prefix="${redBG}${arrFL}${blackTX}${redBG}${space}" suffix="${space}${redTX}"; [[ -n $(__sudo_warning) ]] && printf "%s" "$prefix" "$(__sudo_warning)" "$suffix"
     #CONTAINER
-    prefix="${background}${arrFL}${blackTX}${accentBG}${arrFL}${foreground}${accentBG}" suffix="${accentTX}"; [[ -n $(__is_in_container) ]] && printf "%s" "$prefix" "$(__is_in_container)" "$suffix"
-    [[ -n $(__is_in_container) ]] && endARR="$arrEL$redBG$blackTX$arrFL$redBG$redTX$background$arrFL$greyTX"
+    prefix="${blackBG}${arrFL}${blackTX}${accentBG}${arrFL}${blackTX}${accentBG}" suffix="${accentTX}"; [[ -n $(__is_in_container) ]] && printf "%s" "$prefix" "$(__is_in_container)" "$suffix"
+    [[ -n $(__is_in_container) ]] && endARR="$arrEL$redBG$blackTX$arrFL$redBG$redTX$blackBG$arrFL$greyTX"
     #PATH
     [[ $(__promptline_vcs_branch) = "master" ]] && conTX=$accentTX
-    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${darkTX}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd)" "$suffix"
+    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd)" "$suffix"
 }
 
 function __promptline_right_prompt {
     #WARN
-    prefix="${space}${redTX}${arrFR}${redBG}${blackTX}" suffix="${space}${blackTX}${arrFR}${darkTX}${background}"; [[ $last_exit_code -gt 0 ]] && printf "%s" "$prefix " $last_exit_code "$suffix"
+    prefix="${space}${redTX}${arrFR}${redBG}${blackTX}" suffix="${space}${blackTX}${arrFR}${greyTX}${blackBG}"; [[ $last_exit_code -gt 0 ]] && printf "%s" "$prefix " $last_exit_code "$suffix"
     #GIT
     [[ $(__promptline_vcs_branch) = "master" ]] && conTX=$accentTX
-    prefix="${conTX}${arrER}${space}" suffix="${space}${darkTX}";
+    prefix="${conTX}${arrER}${space}" suffix="${space}${greyTX}";
     if [[ -n $(__promptline_vcs_branch) ]]; then
         if [[ -n ${ZSH_VERSION-} ]]; then
             printf "%s" "$prefix${conTX}" '$GITSTATUS_PROMPT' "$suffix"
@@ -94,11 +94,11 @@ function __promptline_right_prompt {
         fi
     fi
     #CMD TIME
-    prefix="${greyTX}${arrER}${arrFR}${blackTX}${greyBG}${space}" suffix="${space}${blackTX}${arrER}"; [[ -n $timer_show ]] && printf "%s" "$prefix" "$timer_show" "$suffix"
+    prefix="${whiteTX}${arrER}${arrFR}${blackTX}${whiteBG}${space}" suffix="${space}${blackTX}${arrER}"; [[ -n $timer_show ]] && printf "%s" "$prefix" "$timer_show" "$suffix"
     #LOAD AVERAGE
-    prefix="${greyTX}${arrFR}${blackTX}${greyBG}${space}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__load_average)" "$suffix"
+    prefix="${whiteTX}${arrFR}${blackTX}${whiteBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__load_average)" "$suffix"
     #VIM MODE
-    prefix="${accentTX}${arrFR}${foreground}${accentBG}${space}" suffix="${space}${defaultBG}${defaultFG}";
+    prefix="${accentTX}${arrFR}${blackTX}${accentBG}${space}" suffix="${space}${defaultBG}${defaultFG}";
     if [[ -n ${ZSH_VERSION-} ]]; then
         vimode='${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}'
         printf "%s" "$prefix" $vimode "$suffix"
@@ -155,29 +155,21 @@ function __promptline {
     local endARR=""
     local defaultFG="${IN}0${EN}"
     local defaultBG="${IN}49${EN}"
-    local foreground="${IN}38;5;0${EN}"
-    local background="${IN}48;5;0${EN}"
+    local blackBG="${IN}48;5;0${EN}"
     local blackTX="${IN}38;5;0${EN}"
+    local whiteBG="${IN}48;5;15${EN}"
+    local whiteTX="${IN}38;5;15${EN}"
     local accentBG="${IN}48;5;1${EN}"
     local accentTX="${IN}38;5;1${EN}"
-    local accent2BG="${IN}48;5;2${EN}"
-    local accent2TX="${IN}38;5;2${EN}"
-    local accent3BG="${IN}48;5;3${EN}"
-    local accent3TX="${IN}38;5;3${EN}"
-    local accent4BG="${IN}48;5;4${EN}"
-    local accent4TX="${IN}38;5;4${EN}"
-    local primeTX="${IN}38;5;1${EN}"
-    local secondTX="${IN}38;5;2${EN}"
-    local greyBG="${IN}48;5;7${EN}"
-    local greyTX="${IN}38;5;7${EN}"
-    local darkTX="${IN}38;5;59${EN}"
+    local greyBG="${IN}48;5;244${EN}"
+    local greyTX="${IN}38;5;244${EN}"
     local redTX="${IN}38;5;124${EN}"
     local redBG="${IN}48;5;124${EN}"
     local blueTX="${IN}38;5;27${EN}"
     local blueBG="${IN}48;5;27${EN}"
     local greenTX="${IN}38;5;40${EN}"
     local greenBG="${IN}48;5;40${EN}"
-    local conTX=$darkTX
+    local conTX=$greyTX
     local NLD="\e[0m"
     local BLD="\e[32;1m"
 

@@ -52,13 +52,13 @@ function! s:beactive()
     " set relativenumber
     highlight LineNr ctermbg=0 ctermfg=15
     " syntax on
-    set laststatus=2
+    " set laststatus=2
 endfunction
 function! s:bepassive()
     " set norelativenumber
     " set nonumber
     highlight LineNr ctermbg=0 ctermfg=7
-    set laststatus=1
+    " set laststatus=1
     " syntax off
 endfunction
 au FocusLost * silent! call s:bepassive()

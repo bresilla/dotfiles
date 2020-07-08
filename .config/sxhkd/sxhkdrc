@@ -70,5 +70,3 @@ XF86MonBrightness{Up,Down}
     light -{A,U} 2
 alt + super + XF86MonBrightness{Up,Down}
     lighter {up,down}
-
-

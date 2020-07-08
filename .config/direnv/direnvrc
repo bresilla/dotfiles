@@ -38,6 +38,16 @@ use_nix() {
     fi
 }
 
+nix-profile(){
+    local profile=$PWD/.direnv/nix-profile
+    mkdir -p .direnv
+
+    rm -f "$profile"
+    nix-build --out-link "$profile" profile.nix
+    watch_file profile.nix
+    load_prefix "$profile"
+}
+
 
 layout_conda() {
     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
