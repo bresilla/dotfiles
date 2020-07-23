@@ -31,7 +31,7 @@
    anchor: 				north;
    location: 			north;
    y-offset: 			@fromtop;
-    border-radius:      8px;
+    /* border-radius:      8px; */
 }
 
 #mainbox {
@@ -43,13 +43,13 @@
    dynamic: 			true;
    scrollbar: 			false;
    padding: 			10px;
-   border:              5px;
+   /* border:              5px; */
    background: 			@background;
 }
 
 #element {
     padding: 			10px 25px 10px 25px;
-    border-radius:      4px;
+    /* border-radius:      4px; */
 }
 
 #element.normal.normal {
@@ -119,6 +119,6 @@
 #entry {
    background-color: 	@background-alt;
    text-color:			@foreground;
-   border-radius:       4px;
+   /* border-radius:       4px; */
    padding: 			10 0 10 10;
 }

@@ -1,13 +1,13 @@
 [user]
-	email = trim.bresilla@gmail.com
-	name = Trim Bresilla
+    email = trim.bresilla@gmail.com
+    name = Trim Bresilla
 [core]
     pager = delta --dark --plus-color="#012800" --minus-color="#340001" --theme="OneHalfDark"
-	quotepath = false
-	commitGraph = true
+    quotepath = false
+    commitGraph = true
 
 [credential]
-	helper = cache --timeout=10000
+    helper = cache --timeout=10000
 
 [color]
     ui = true
@@ -35,7 +35,7 @@
 [merge]
     log = true
     ff = false
-	tool = diffconflicts
+    tool = diffconflicts
 [mergetool "diffconflicts"]
     cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
     trustExitCode = true
@@ -49,6 +49,7 @@
     master = checkout master
     develop = checkout develop
     module = submodule
+    check = checkout
     clone = clone --recursive
     publish = push origin --follow-tags
     fuse = "!f(){ current=$(git branch --show-current); git checkout $1 && git merge $current && git checkout $current; }; f"
@@ -62,5 +63,6 @@
     branches = branch -a
     conflicts = !git diff --name-only --diff-filter=U
     fix = !git mergetool --tool=diffconflicts
+    root = rev-parse --show-toplevel
 [gc]
-	writeCommitGraph = true
+    writeCommitGraph = true

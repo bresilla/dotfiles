@@ -1,6 +1,6 @@
 #!/bin/bash
 source ~/.cache/wal/colors.sh
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color6:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
 search='results?search_query='
 playlist='&sp=EgIQA0IECAESAA%253D%253D'

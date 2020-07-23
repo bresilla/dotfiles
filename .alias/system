@@ -1,0 +1,83 @@
+alias s='sudo -E nvim'
+alias \$=''
+alias v='nvim'
+
+alias home='home-manager'
+
+alias ups="doas systemctl"
+alias upu="systemctl --user"
+alias clip='xclip -sel clip'
+alias suspend='systemctl suspend'
+# alias ssh='TERM=xterm-color ssh'
+
+#ALTERNATIVES
+alias vim='nvim'
+alias mutt='neomutt'
+
+#PACKAGE_MANAGER
+alias pack='unset GOPATH; unset GOBIN && yay'
+alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
+alias branch='doas pacman-mirrors --api -S'
+
+#WM
+alias refresh='pkill -USR1 -x sxhkd && bash ~/.startup -r'
+alias dotfile='/usr/bin/git --git-dir=$HOME/dots --work-tree=$HOME'
+
+#SYSTEM
+alias cp='acp -g -r -p'
+alias mv='amv -g -u'
+alias rm='rm -rf'
+alias rn='mv -v'
+
+
+alias ls='exa -F'
+alias ll='exa -liSHF --header --git --group-directories-first --tree -L1'
+alias la='exa -laiSHF --header --git --group-directories-first --tree -L1'
+alias lt='exa -liSHF --header --git --tree -L2'
+alias lu='dutree -d1 --usage -x .git -x .direnv'
+
+alias df='dfc -dTomw -p -/dev/loop,tmp,dev,run,one'
+alias lsblk='lsblk -f'
+alias dd='dd status=progress'
+alias z='doas /usr/bin/ncdu --color=dark \
+    --exclude /home \
+    --exclude /opt \
+    --exclude /nix \
+    --exclude /var/lib/libvirt \
+    --exclude /var/lib/docker \
+    --exclude /var/lib/flatpak \
+    --exclude /var/lib/snapd \
+    --exclude /var/lib/lxd'
+
+#LOGS
+alias syslog='bat "/var/log/syslog"'
+alias lc="wc -l"
+
+##PROGRAMS
+alias fzp='fzf --preview="head -$LINES {}"'
+alias fzi='selected=$(
+        FZF_DEFAULT_COMMAND="rg --files" fzf -m -e --ansi --phony --reverse \
+        --bind "ctrl-a:select-all" --bind "f12:execute-silent:(subl -b {})" \
+        --bind "change:reload:rg -i -l --hidden --no-ignore-vcs {q} || true" \
+        --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
+    [[ -n $selected ]] && nvim $selected'
+
+alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
+alias x='dtrx --one-entry=rename'
+alias ari='aria2c'
+alias mix='ncpamixer'
+alias inxi='optirun inxi -Fxxxz'
+
+##HISTORY
+alias hister='fc -lrn 0 | tux -e | clip'
+alias delete_hister='name=$(tac $HISTFILE | fzy); [[ -n $name ]] && LC_ALL=C sed -i "/$name/d" $HISTFILE'
+
+##FILES
+alias own='doas chown -R $USER:$USER'
+alias exe='chmod u+x'
+alias dxe='chmod u-x'
+
+##OTHER
+alias open='nohup mimeo $1 > /dev/null 2>&1 &!'
+alias snip='PREV=$(fc -lrn | head -n 1); sh -c "pet new `printf %q "$PREV"`"'
+alias killer'n=$(ps -ef | sed 1d | tux -m | awk "{print $2}"); [[ -n $n ]] && doas kill $n'

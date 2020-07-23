@@ -13,35 +13,35 @@ wat=$(echo - | awk "{printf \"%.1f\", $(($(cat /sys/class/power_supply/BAT0/curr
 cpu=${cpu%.*}
 mem=${mem%.*}
 
-foreground="#[fg=colour0]"
 blackTX="#[fg=colour0]"
 blackBG="#[bg=colour0]"
-accentTX="#[fg=colour6]"
-accentBG="#[bg=colour6]"
+whiteTX="#[fg=colour15]"
+whiteBG="#[bg=colour15]"
+accentTX="#[fg=colour1]"
+accentBG="#[bg=colour1]"
 orangeBG="#[bg=colour208]"
 orangeTX="#[fg=colour208]"
 redBG="#[bg=colour124]"
 redTX="#[fg=colour124]"
 greenBG="#[bg=colour40]"
 greenTX="#[fg=colour40]"
-grayBG="#[bg=colour7]"
-grayTX="#[fg=colour7]"
-sealTX="#[fg=colour59]"
+grayBG="#[bg=colour244]"
+grayTX="#[fg=colour244]"
 defaBG="#[bg=default]"
 defaTX="#[fg=default]"
 BLD="#[bold]"
 NLD="#[nobold]"
 
-[[ $bat -le 10 ]] && grayBG=$redBG grayTX=$redTX accentBG=$redBG accentTX=$redTX foreground=$blackTX
+[[ $bat -le 10 ]] && grayBG=$redBG whiteTX=$redTX accentBG=$redBG accentTX=$redTX
 
 if [ $(cat /proc/acpi/bbswitch | awk 'NF>1{print $NF}') == ON ]; then
-    power="$sealTX $redTX$BLD$wat W $NLD"
+    power="$grayTX $redTX$BLD$wat W $NLD"
 else
-    power="$sealTX $wat W "
+    power="$grayTX $wat W "
 fi
 
-battery="$redTX  $blackTX$bat% $grayTX$defaBG"
-[[ "$chrg" != "Discharging" ]] && battery="$blackTX  $blackTX$bat% $grayTX$defaBG"
+battery="$redTX  $blackTX$bat% $whiteTX$defaBG"
+[[ "$chrg" != "Discharging" ]] && battery="$blackTX  $blackTX$bat% $whiteTX$defaBG"
 
 memo="$greyTX$greyBG $blackTX$mem% "
 spacer="$blackTX$blackBG"
@@ -51,15 +51,15 @@ if (( cpu > 80 )); then
 elif (( cpu > 50 )); then
     proc="$orangeTX$blackTX$orangeBG $BLD$cpu% "
 else
-    proc="$grayTX$grayBG $blackTX$cpu% "
+    proc="$whiteTX$whiteBG $blackTX$cpu% "
 fi
-network="$accentTX$accentBG $foreground$netspeed$accentBG "
+network="$accentTX$accentBG $blackTX$netspeed$accentBG "
 
 RIGHT_STATUS="$power$proc$memo$spacer$network"
 
-main="$accentBG$foreground $BLD$tmu$NLD $accentTX$grayBG"
+main="$accentBG$blackTX $tmu $accentTX$whiteBG"
 
-cdr="$sealTX"
+cdr="$grayTX"
 LEFT_STATUS="$main$battery$cdr"
 
 if [ "$1" == "RIGHT" ] ;then

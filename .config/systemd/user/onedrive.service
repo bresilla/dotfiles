@@ -1,0 +1,13 @@
+Description=Control spotifyd deamon
+After=network.target
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sleep 2
+ExecStart=rclone --vfs-cache-mode writes mount one: /home/bresilla/sync/onedrive
+ExecStop=fusermount -u /home/bresilla/sync/onedrive
+Restart=on-failure
+# Other restart options: always, on-abort, etc
+
+[Install]
+WantedBy=default.target

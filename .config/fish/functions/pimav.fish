@@ -1,0 +1,4 @@
+# Defined in - @ line 1
+function pimav --wraps='mavproxy.py --master udp:"$pi":14560 --out "$pi":14550 --out "$pi":14551 --out "$pi":14552 --out "$pi":14553 --out "$pi":14554 --out "$pi":14555 --out "$pi":14556 --out "$pi":14557 --out "$pi":14558 --out "$pi":14559 --out "$2":14550 --out "$3":14550 --out "$4":14550' --description 'alias pimav mavproxy.py --master udp:"$pi":14560 --out "$pi":14550 --out "$pi":14551 --out "$pi":14552 --out "$pi":14553 --out "$pi":14554 --out "$pi":14555 --out "$pi":14556 --out "$pi":14557 --out "$pi":14558 --out "$pi":14559 --out "$2":14550 --out "$3":14550 --out "$4":14550'
+  mavproxy.py --master udp:"$pi":14560 --out "$pi":14550 --out "$pi":14551 --out "$pi":14552 --out "$pi":14553 --out "$pi":14554 --out "$pi":14555 --out "$pi":14556 --out "$pi":14557 --out "$pi":14558 --out "$pi":14559 --out "$2":14550 --out "$3":14550 --out "$4":14550 $argv;
+end

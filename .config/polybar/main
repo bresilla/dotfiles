@@ -16,9 +16,9 @@
 
     main_sg = #60000000
     main_bg = ${xrdb:color.background:self.fg}
-    main_fg = ${xrdb:color6:self.fg}
+    main_fg = ${xrdb:color1:self.fg}
     element_fg = ${xrdb:color.background:self.fg}
-    element_bg = ${xrdb:color6:self.fg}
+    element_bg = ${xrdb:color1:self.fg}
 
 [global/wm]
     margin-top = 0
@@ -39,9 +39,9 @@
     compositing-border = over
 
     radius = 0
-    barheigh = 32
+    barheigh = 30
     element-padding = 2
-    element-spacing = 1
+    element-spacing = 0
 
 
 [bar/main]
@@ -57,7 +57,7 @@
     background = ${colors.main_bg}
     foreground = ${colors.main_fg}
     border-color = ${colors.main_bg}
-    border-size = 6
+    border-size = 5
     radius-top = ${settings.radius}
     radius-bottom = ${settings.radius}
     module-margin-right = ${settings.element-spacing}
@@ -70,9 +70,11 @@
     font-6 = Siji:size=8;2
     tray-position = right
     tray-padding = ${settings.element-padding}
+    ;separator = |
+    ;modules-center = title
     modules-left = volume battery light wlan signal speed hotspot wireguard
-    modules-center = mpd title
-    modules-right = audit cpu memory gpu sda1 sda2 nvme date time pomo
+    modules-center = pomo
+    modules-right = audit cpu memory gpu sda1 sda2 nvme date time
 
 [bar/workspaces]
     monitor = ${env:MONITOR}
@@ -313,15 +315,6 @@
     format-padding = ${settings.element-padding}
 
 
-[module/arandr]
-    type = custom/script
-    interval = 1
-    exec = var=$(cat /tmp/lighter) && echo $(echo "$var * 100"| bc) | awk -F'.' '{print $1}'
-    label = " %output%"
-    format-foreground = ${colors.element_fg}
-    format-background = ${colors.element_bg}
-    format-padding = ${settings.element-padding}
-
 [module/updates]
     type = custom/script
     exec = /home/bresilla/.config/polybar/scripts/update
@@ -354,7 +347,7 @@
 [module/pomo]
     type = custom/script
     interval = 1
-    exec = pomo status | awk '{print substr($3,1,6)}' | grep -o '[0-9]\+' | sed 'N;s/\n/:/'
+    exec = pomo status
     label = " %output%"
     format-foreground = ${colors.element_fg}
     format-background = ${colors.element_bg}

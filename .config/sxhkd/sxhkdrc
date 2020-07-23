@@ -6,8 +6,8 @@ super + space
     bash ~/.config/rofi/menu/BROWSE
 mode_switch + space
     bash ~/.config/rofi/menu/ROOT
-super + alt + space; {c,Return}
-    {code,kitty --class=til tmux}
+ctrl + Return; {c,Return, space}
+    {code,kitty --class=til tmux, alacritty -e tmux}
 
 {super,alt} + Escape
     bspc node -{c,k}
@@ -23,14 +23,14 @@ super + alt + space; {c,Return}
 mode_switch + Return
     kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(print -rl -- $commands | sort -u | fzy)'
 
-ctrl + Escape
-    /home/bresilla/.cargo/bin/xcursorlocate
 
 XF86Search
     pkill boomer; boomer
 {super,alt} + XF86Search
     /home/bresilla/.config/rofi/menu/monitors
 {super,alt} + Tab
+    bspc desktop -f last
+super + alt + space
     bspc desktop -f last
 
 super + alt + {Left,Right}
@@ -55,20 +55,18 @@ super + alt + {Down,Up}
 {super,alt,alt+super} + ~BackSpace
     bspc node -g {locked,private,sticky}
 
-mod3 + {space, Left,Right}
-    /home/bresilla/.config/sxhkd/scripts/mpv {cycle, backwards, forewards}
+mod3 + {Up,Down,Left,Right}
+    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,cycle,backwards,forewards}
 
 mod3 + XF86Audio{Prev,Next}
     mpc seekthrough {-10,+10}
 XF86Audio{Prev,Next,Play}
-    playerctl {previous,next,play-pause} & mpc -q {prev,next,toggle}
+    playerctl {previous,next,play-pause} || mpc -q {prev,next,toggle}
 XF86Audio{Raise,Lower}Volume
-    pulsemixer --change-volume {+,-}5
+    pulsemixer --change-volume {+,-}2 && pulsemixer --get-volume | cut -d " " -f1 >> /home/bresilla/.local/share/fifo/xob
 XF86AudioMute
     pulsemixer --toggle-mute
 XF86MonBrightness{Up,Down}
-    light -{A,U} 2
+    light -{A,U} 2 && light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
 alt + super + XF86MonBrightness{Up,Down}
     lighter {up,down}
-
-

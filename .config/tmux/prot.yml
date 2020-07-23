@@ -1,16 +1,9 @@
-name: "fol_in_go"
+name: "opencv"
 windows:
-- name: grv
-  layout: e092,304x64,0,0,23
-  panes:
-  - commands:
-    - git view
-    focus: true
-    root:  /home/bresilla/data/code/PROJECTS/folang/fol_in_go   
 - name: nvim
   layout: e094,304x64,0,0,25
   panes:
   - commands:
     - nvim
     focus: true
-    root:  /home/bresilla/data/code/PROJECTS/folang/fol_in_go   
+    root:  /home/bresilla/code/TEMP/opencv                    

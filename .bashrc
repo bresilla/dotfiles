@@ -5,8 +5,8 @@
 source ~/.cache/wal/colors.sh
 
 #--------------------------------------------------------------------------------------------------------------------
-###FUNCTIONS
-[ -d ~/.func ] && for file in ~/.func/*; do source "$file" ; done
+###ALIASES
+[ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
 ###PROFILE
 [[ -e ~/.profile ]] && source ~/.profile
 ###DIRENV
@@ -18,6 +18,22 @@ if [[ -n ${LAUNCHER} ]]; then
     bind 'RETURN: "\e[4~ & \n exit \n"'
     return
 fi
+
+#--------------------------------------------------------------------------------------------------------------------
+###NNN
+n(){
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    nnn "$@"
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
+
 
 #--------------------------------------------------------------------------------------------------------------------
 ###SETTINGS
@@ -35,13 +51,19 @@ shopt -s checkwinsize
 shopt -s expand_aliases
 shopt -s histappend
 
+###HISTORY STAFF
+HISTFILE=~/.config/bash_history
+
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
 source ~/.config/promptline
+
+
 #--------------------------------------------------------------------------------------------------------------------
-
-source /home/bresilla/.config/broot/launcher/bash/br
-
-[[ -f ~/.resh/shellrc ]] && source ~/.resh/shellrc
-
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+###RE-ENTER SAME DIRECTORY
+recd(){
+    if [ -z ${cdre+x} ]; then
+        export cdre="cdre";
+        cd .. && cd - ;
+    fi
+}

@@ -7,12 +7,14 @@ source ~/.cache/wal/colors.sh
 #--------------------------------------------------------------------------------------------------------------------
 ###SCRIPTS PATH
 export FPATH=~/.config/zsh:$FPATH
-###FUNCTIONS
-[ -d ~/.func ] && for file in ~/.func/*; do source "$file" ; done
+###ALIASES
+[ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
 ###PROFILE
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 ###DIRENV
 eval "$(direnv hook zsh)"
+###ENVY
+eval "$(envy hook zsh)"
 ###MODULES
 [[ -e /opt/modules ]] && source /opt/modules/init/zsh
 
@@ -65,6 +67,7 @@ setopt hist_ignore_space
 setopt interactive_comments
 setopt no_beep
 
+
 #--------------------------------------------------------------------------------------------------------------------
 ###VI MODE
 bindkey -v
@@ -84,6 +87,7 @@ set_vi_mode_cursor() {
 zle-keymap-select(){ set_vi_mode_cursor; zle reset-prompt; }
 
 zle-line-init(){ zle -K $DEFAULT_VI_MODE; }
+
 
 zle -N zle-line-init
 zle -N zle-keymap-select
@@ -130,17 +134,23 @@ bindkey -M vicmd '^k' run_killer
 bindkey -M viins '^k' run_killer
 bindkey '^k' run_killer
 
+function fzi_grep() {
+    selected=$(
+        FZF_DEFAULT_COMMAND="rg --files" fzf -m -e --ansi --phony --reverse \
+        --bind "ctrl-a:select-all" --bind "f12:execute-silent:(subl -b {})" \
+        --bind "change:reload:rg -i -l --hidden --no-ignore-vcs {q} || true" \
+        --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
+    [[ -n $selected ]] && nvim $selected; }
+zle -N fzi_grep
+bindkey -M vicmd '^o' fzi_grep
+bindkey -M viins '^o' fzi_grep
+bindkey '^o' fzi_grep
+
 function run_find(){ finder; zle reset-prompt; zle redisplay; }
 zle -N run_find
 bindkey -M vicmd '^f' run_find
 bindkey -M viins '^f' run_find
 bindkey '^f' run_find
-
-function run_compile(){ compile FastDebug && build; zle reset-prompt; zle redisplay; }
-zle -N run_compile
-bindkey -M viins '^o' run_compile
-bindkey -M vicmd '^o' run_compile
-bindkey '^o' run_compile
 
 push-line-and-clear() { zle .push-line; zle .clear-screen }
 zle -N push-line-and-clear
@@ -149,7 +159,7 @@ bindkey '^L' push-line-and-clear
 # CTRL-Z starts previously suspended process.
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
-    bg 
+    bg
     zle redisplay
     fg &>/dev/null
   else
@@ -158,10 +168,48 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+
+#--------------------------------------------------------------------------------------------------------------------
+###NNN
+n(){
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    nnn -e "$@"
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
+
+#SHKO
+my-accept-line () {
+    # check if the buffer does not contain any words
+    if [ ${#${(z)BUFFER}} -eq 0 ]; then
+        shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"
+    fi
+    zle accept-line
+}
+zle -N my-accept-line
+bindkey '^M' my-accept-line
+
+
+#--------------------------------------------------------------------------------------------------------------------
+###RE-ENTER SAME DIRECTORY
+recd(){
+    if [ -z ${cdre+x} ]; then
+        export cdre="cdre";
+        cd .. && cd - ;
+    fi
+}
+
 #--------------------------------------------------------------------------------------------------------------------
 ###MODULES
 autoload -U colors && colors
-autoload compinit && compinit
+autoload compinit && compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 
 # TMOUT=1
 TRAPALRM() {
@@ -189,17 +237,4 @@ TRAPALRM() {
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
 [ -f ~/.config/promptline ] && source ~/.config/promptline
-
-
-
-#--------------------------------------------------------------------------------------------------------------------
-# Added by Zplugin's installer
-# source "$HOME/.zplugin/bin/zplugin.zsh"
-# autoload -Uz _zplugin
-# (( ${+_comps} )) && _comps[zplugin]=_zplugin
-### End of Zplugin installer's chunk
-# zplugin light zsh-users/zsh-autosuggestions
-# zplugin light zdharma/fast-syntax-highlighting
-# zplugin load zdharma/history-search-multi-word
-
-[[ -n "${$(task ids)/[ ]*\n/}" ]] && task | tail -n+4 | head -n-2
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

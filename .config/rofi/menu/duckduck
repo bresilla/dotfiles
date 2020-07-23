@@ -1,0 +1,59 @@
+#!/bin/bash
+## Author: https://github.com/BelkaDev
+
+urlencode() {
+    echo ${1// /"%20"}
+}
+
+duckduckgo(){
+    url="https://ac.duckduckgo.com/ac/?q=$(urlencode "$*")&type=list&kl=us-en"
+    res=$(jq -r  '.[1][]'  <<< "$(curl -s "$url" &)" | tr -d '"' | sed 's/\(.*\),/\1 /')
+    echo "$res"
+}
+
+############# SETTINGS
+refreshrate=1 # refresh suggestions every n characters hit 
+allowExcess=true
+suggestions=""
+default_custom_format="{{name_enum}}:{{value}}"
+custom_format="${format:-$default_custom_format}"
+logfile="/tmp/ddgrofi.tmp"
+convertJson(){
+	echo "$1" | sed -e 's/\\/\\\\/g' -e 's/\"/\\"/g' -e 's/.*/"&"/' | paste -sd "," -
+}
+removeIllegal(){
+    echo "$1" | tr -dc '[:alnum:][:space:]-\n\r'
+}
+
+fill_menu(){
+	JSON_LINES="$(convertJson "$suggestions")"
+ 	TEXT=$(cat <<EOF | tr -d "\n" | tr -d "\t"  
+{
+	"event format":"${custom_format}",
+	"lines":[ 
+	${JSON_LINES}
+	]
+}
+EOF
+)
+	printf '%s\n' "$TEXT"
+}
+echo '{"input action":"send"}'
+unset length i
+while IFS= read -r line; do
+    ((i++))
+    [[ "$line" = 'SELECT'* ]] && selected=$(echo "$line" | cut -d':' -f2-) && break;
+    print=$(echo "$line" | cut -d':' -f2-)
+    #custom algorithm to reduce Api calls
+    [[ "${#print}" < $length ]] && length="${#print}" && continue;
+    length="${#print}"
+    if (( i%refreshrate == 0 )) || [ ! -z $allowExcess ]; then suggestions="$(removeIllegal "$(duckduckgo $print)")"
+
+    [[ "${line:0:1}" != '{' ]] && suggestions="${print}"$'\n'"$suggestions"
+    fill_menu "$print"
+    fi
+done
+selected="$(tr '[:lower:]' '[:upper:]' <<< ${selected:0:1})${selected:1}"
+rm $logfile
+[ -z "$selected" ] && exit 1 || printf "$selected" >"$logfile"
+exit 0
