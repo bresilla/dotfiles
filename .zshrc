@@ -13,6 +13,8 @@ export FPATH=~/.config/zsh:$FPATH
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 ###DIRENV
 eval "$(direnv hook zsh)"
+###ENVY
+eval "$(envy hook zsh)"
 ###MODULES
 [[ -e /opt/modules ]] && source /opt/modules/init/zsh
 
@@ -166,6 +168,34 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+
+#--------------------------------------------------------------------------------------------------------------------
+###NNN
+n(){
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    nnn -e "$@"
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
+
+#SHKO
+my-accept-line () {
+    # check if the buffer does not contain any words
+    if [ ${#${(z)BUFFER}} -eq 0 ]; then
+        shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"
+    fi
+    zle accept-line
+}
+zle -N my-accept-line
+bindkey '^M' my-accept-line
+
 
 #--------------------------------------------------------------------------------------------------------------------
 ###RE-ENTER SAME DIRECTORY

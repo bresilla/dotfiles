@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Siddharth Dushantha 2020
-#
+# https://github.com/sdushantha/fontpreview
 # Dependencies: sxiv, imagemagick, xdotool, fzf
 
 # Use mktemp to create temporary files that won't
@@ -49,7 +49,7 @@ pre_exit() {
     # exit this script, an error will be shown
     # from kill and we dont want that
     kill -9 "$(cat "$PIDFILE" 2>/dev/null)" &> /dev/null
- 
+
 }
 
 generate_preview(){
@@ -141,7 +141,7 @@ options=$(getopt -o h --long position:,size:,version,search-prompt:,font-size:,b
 eval set -- "$options"
 
 while true; do
-    case "$1" in 
+    case "$1" in
         --size)
             shift;
             FONTPREVIEW_SIZE=$2
@@ -181,4 +181,3 @@ while true; do
     shift
 done
 main
-
