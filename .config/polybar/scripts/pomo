@@ -1,0 +1,8 @@
+round=$(pomo -p /home/bresilla/.config/pomo status | awk '{print substr($2,1,6)}')
+minutes=$(pomo -p /home/bresilla/.config/pomo status | awk '{print substr($3,1,6)}' | grep -o '[0-9]\+' | head -1)
+seconds=$(pomo -p /home/bresilla/.config/pomo status | awk '{print substr($3,1,6)}' | grep -o '[0-9]\+' | tail -1)
+
+[[ -z $seconds ]] && exit
+
+pomotime=$(pomo -p /home/bresilla/.config/pomo status | awk '{print substr($3,1,6)}' | grep -o '[0-9]\+' | sed 'N;s/\n/:/')
+echo $round $pomotime

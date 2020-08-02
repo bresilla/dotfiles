@@ -28,3 +28,10 @@ matches:
         type: shell
         params:
           cmd: "echo Hello from your shell"
+
+  - trigger: ":hotmail"
+    replace: "kushtrim.bresilla@hotmail.com"
+  - trigger: ":gmail"
+    replace: "kushtrim.bresilla@gmail.com"
+  - trigger: ":yahoo"
+    replace: "kushtrim.bresilla@yahoo.com"

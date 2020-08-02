@@ -47,7 +47,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 
-" === NERD-TREE === "
+" === FILE-TREE === "
 nnoremap <silent> <tab> :NERDTreeToggle <CR>
 
 

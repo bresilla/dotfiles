@@ -3,7 +3,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/dunst dunst -config %h/.config/dunst/dunstrc
+ExecStart=/usr/bin/dunst -config %h/.config/dunst/dunstrc
 Restart=on-failure
 
 [Install]
