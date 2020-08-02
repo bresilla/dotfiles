@@ -182,7 +182,28 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 au VimEnter * NERDTreeRefreshRoot
 
-
+let g:lua_tree_side = 'left'
+let g:lua_tree_size = 50
+let g:lua_tree_ignore = [ '.git', 'node_modules', '.cache' ]
+let g:lua_tree_auto_open = 1
+let g:lua_tree_auto_close = 1
+let g:lua_tree_follow = 1
+let g:lua_tree_indent_markers = 1
+let g:lua_tree_show_icons = { 'git': 0, 'folders': 1, 'files': 1 }
+let g:lua_tree_icons = {
+    \ 'default': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "═",
+    \   'renamed': "➜",
+    \   'untracked': "★"
+    \   },
+    \ 'folder': {
+    \   'default': "",
+    \   'open': ""
+    \   }
+    \ }
 
 
 " === OUTLINE BAR === "

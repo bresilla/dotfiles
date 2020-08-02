@@ -62,18 +62,17 @@
     radius-bottom = ${settings.radius}
     module-margin-right = ${settings.element-spacing}
     font-0 = ${settings.font}
-    font-1 = unifont:size=10;1
+    font-1 = FontAwesome 5 Pro:style=Medium:size=10;3
     font-2 = FontAwesome:size=10;3
-    font-3 = FontAwesome Pro:size=10;3
-    font-4 = Iosevka Nerd Font:style=Medium:size=16;3
-    font-5 = MaterialIcons:size=16;5
-    font-6 = Siji:size=8;2
+    font-3 = Iosevka Nerd Font:style=Medium:size=16;3
+    font-4 = MaterialIcons:size=16;5
+    font-5 = Siji:size=8;2
     tray-position = right
     tray-padding = ${settings.element-padding}
     ;separator = |
     ;modules-center = title
     modules-left = volume battery light wlan signal speed hotspot wireguard
-    modules-center = pomo
+    modules-center = pomo task_list task_urgent
     modules-right = audit cpu memory gpu sda1 sda2 nvme date time
 
 [bar/workspaces]
@@ -153,6 +152,25 @@
     exec = /home/bresilla/.config/polybar/scripts/mpris -f '{icon} {:artist:t18:{artist}:}{:artist: - :}{:t20:{title}:}  %{A1:/home/bresilla/.config/polybar/scripts/mpris previous:} ⏮ %{A} %{A1:/home/bresilla/.config/polybar/scripts/mpris play-pause:} {icon-reversed} %{A} %{A1:/home/bresilla/.config/polybar/scripts/mpris next:} ⏭ %{A}'
     tail = true
 
+[module/task_list]
+    interval = 10
+    type = custom/script
+    exec = task rc.verbose: rc.report.next.columns:description rc.report.next.labels:1 | wc -l
+    label = " %output%"
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
+
+
+[module/task_urgent]
+    interval = 10
+    type = custom/script
+    exec = /home/bresilla/.config/polybar/scripts/task_warrior
+    label = " %output%"
+    format-foreground = ${colors.element_fg}
+    format-background = ${colors.element_bg}
+    format-padding = ${settings.element-padding}
+    click-left = task "$((`cat /tmp/tw_polybar_id`))" done
 
 
 [module/title]
@@ -347,8 +365,8 @@
 [module/pomo]
     type = custom/script
     interval = 1
-    exec = pomo status
-    label = " %output%"
+    exec = /home/bresilla/.config/polybar/scripts/pomo
+    label = " %output%"
     format-foreground = ${colors.element_fg}
     format-background = ${colors.element_bg}
     format-padding = ${settings.element-padding}

@@ -15,6 +15,8 @@ export FPATH=~/.config/zsh:$FPATH
 eval "$(direnv hook zsh)"
 ###ENVY
 eval "$(envy hook zsh)"
+###NAVI
+source <(navi widget zsh)
 ###MODULES
 [[ -e /opt/modules ]] && source /opt/modules/init/zsh
 
@@ -196,6 +198,10 @@ my-accept-line () {
 zle -N my-accept-line
 bindkey '^M' my-accept-line
 
+
+
+#--------------------------------------------------------------------------------------------------------------------
+alias \$=''
 
 #--------------------------------------------------------------------------------------------------------------------
 ###RE-ENTER SAME DIRECTORY

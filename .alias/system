@@ -1,8 +1,9 @@
-alias s='sudo -E nvim'
-alias \$=''
+alias s='sudo -E'
 alias v='nvim'
+alias b='bat'
 
 alias home='home-manager'
+alias pwd='pwd | clip && pwd'
 
 alias ups="doas systemctl"
 alias upu="systemctl --user"
@@ -27,7 +28,6 @@ alias dotfile='/usr/bin/git --git-dir=$HOME/dots --work-tree=$HOME'
 alias cp='acp -g -r -p'
 alias mv='amv -g -u'
 alias rm='rm -rf'
-alias rn='mv -v'
 
 
 alias ls='exa -F'
@@ -67,6 +67,8 @@ alias x='dtrx --one-entry=rename'
 alias ari='aria2c'
 alias mix='ncpamixer'
 alias inxi='optirun inxi -Fxxxz'
+alias note='dnote'
+alias pomo='pomo -p /home/bresilla/.config/pomo'
 
 ##HISTORY
 alias hister='fc -lrn 0 | tux -e | clip'

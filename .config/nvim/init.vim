@@ -36,6 +36,7 @@ function init#space_plugs()
     Plug 'vim-ctrlspace/vim-ctrlspace'                  "a better workspace manager
     Plug 'liuchengxu/vim-clap'                          "interactive floating finder and dispatcher
     Plug 'scrooloose/nerdtree'                          "side-bar file manager
+    Plug 'kyazdani42/nvim-tree.lua'
     Plug '~/.config/plug/tree-linux'
     Plug 'ryanoasis/vim-devicons'                       "icons for nerdtree
     Plug 'liuchengxu/vista.vim'                          "tagbar
@@ -103,6 +104,7 @@ function init#theme_plugs()
     Plug 'vim-airline/vim-airline-themes'
     Plug 'edkolev/promptline.vim'
     Plug 'machakann/vim-highlightedyank'                "flash on yank
+    Plug 'kyazdani42/nvim-web-devicons'                 "file icons
     Plug 'ap/vim-css-color'
     Plug 'powerline/fonts'                              "patched powerline-fonts
     Plug 'rakr/vim-one'                                 "Atom ONE theme

@@ -173,7 +173,7 @@ close_all = ctrl+shift+space
 # Redisplay last message(s).
 # On the US keyboard layout "grave" is normally above TAB and left
 # of "1".
-history = ctrl+grave
+# history = ctrl+grave
 
 # Context menu.
 context = ctrl+shift+period
@@ -217,9 +217,9 @@ timeout = 30
 # NOTE: It might be helpful to run dunst -print in a terminal in order
 # to find fitting options for rules.
 [pomo]
-   appname = Pomo
-   summary = "*pomo*"
-   script = beep
+   summary = "*Pomo*"
+   script = /home/bresilla/.config/dunst/scripts/beep.sh
+   urgency = critical
 
 #[espeak]
 #    summary = "*"

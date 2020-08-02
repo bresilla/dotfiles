@@ -5,7 +5,6 @@
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
 [[ -d $HOME/.func ]] && for file in $HOME/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
-
 #GO
 [[ -d "/opt/bin/go/bin" ]] && PATH="/opt/bin/go/bin:$PATH"
 #RUST
@@ -16,6 +15,8 @@
 #NIX
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
 
+#SHIMS
+export PATH="$HOME/.local/alt/shims:$PATH"
 
 #OTHER VARS
 [[ -e "/home/bresilla/.variables" ]] && source /home/bresilla/.variables

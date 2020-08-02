@@ -15,10 +15,10 @@ ctrl + Return; {c,Return, space}
     {pkill -USR1 -x sxhkd && ~/.startup; systemctl --user restart wallpaper.service}
 
 {_,super} + dead_circumflex
-    termop {kitty, cool-retro-term} MAIN 2500 1050
+    termop {kitty, alacritty} MAIN 2500 1050
 #    tmass -l /home/bresilla/.config/tmux load MAIN; tdrop -m -w 66% -h 50% -x 17% -y 25% -n MAIN -f "-e tmux attach -t MAIN" {kitty, cool-retro-term}
 {_,super} + dead_acute
-    termop {kitty, cool-retro-term} NOTE 3500 1900
+    termop {kitty, alacritty} NOTE 3500 1900
 #    tmass -l /home/bresilla/.config/tmux load NOTE; tdrop -m -w 80% -h 80% -x 10% -y 10% -n NOTE -f "-e tmux attach -t NOTE" {kitty, cool-retro-term}
 mode_switch + Return
     kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(print -rl -- $commands | sort -u | fzy)'
