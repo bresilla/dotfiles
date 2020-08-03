@@ -1,0 +1,93 @@
+-------------------------------------------------            SYSTEM             --------------------------------------------------
+bat                         - a cat clone                           - https://github.com/sharkdp/bat                        - rust
+fzf                         - a command-line fuzzy finder           - https://github.com/junegunn/fzf                       - go
+fzy                         - simplier fuzzy finder                 - https://github.com/jhawthorn/fzy                      - cpp
+get     - sysget            - One package manager to rule them all  - https://github.com/emilengler/sysget                  - cpp
+peep                        - less alternative                      - https://github.com/ryochack/peep                      - rust
+delta                       - viewer for git and diff output        - https://github.com/dandavison/delta                   - rust
+tap     - teip              - Standard input replace                - https://github.com/greymd/teip                        - rust
+rg                          - (ripgrep) grep alternative            - https://github.com/BurntSushi/ripgrep                 - rust
+fd                          - fast find alternative                 - https://github.com/sharkdp/fd                         - rust
+sd                          - an intuitive search & displace        - https://github.com/chmln/sd                           - rust
+tk      - tokei             - code statistics                       - https://github.com/XAMPPRocky/tokei                   - rust
+aa      - alertafter        - notify after command                  - https://github.com/frewsxcv/alert-after               - rust
+alt                         - binary version/path manager           - https://github.com/dotboris/alt                       - rust
+handlr                      - better xdg-utils                      - https://github.com/chmln/handlr                       - rust
+lnav                        - system LOG navigatior/viewer          - https://github.com/tstack/lnav                        - cpp
+-------------------------------------------------           NETWORK             --------------------------------------------------
+band    - bandwhitch        - bandwidth utilization                 - https://github.com/imsnif/bandwhich                   - rust
+ipinfo                      - info about public IP                  - https://github.com/Surendrajat/IPinfo                 - go
+torrent                     - torrent client package and utilities  - https://github.com/anacrolix/torrent                  - go
+mole                        - cli app to create ssh tunnels         - https://github.com/davrodpin/mole                     - go
+rclone                      - rsync for cloud storage               - https://github.com/rclone/rclone                      - go
+gotty                       - share CLI as a web application        - https://github.com/yudai/gotty                        - go
+-------------------------------------------------             SHELL             --------------------------------------------------
+pet                         - CLI Snippet Manager                   - https://github.com/knqyf263/pet                       - go
+mn      - tealdeer          - faster TLDR/MAN                       - https://github.com/dbrgn/tealdeer                     - rust
+cod                         - a completion daemon for bash/zsh      - https://github.com/dim-an/cod                         - go
+navi                        - interactive cheatsheet tool           - https://github.com/denisidoro/navi                    - rust
+-------------------------------------------------             COLOR             --------------------------------------------------
+pastel                      - convert and manipulate colors         - https://github.com/sharkdp/pastel                     - rust
+xcolor                      . color picker                          - https://github.com/Soft/xcolor                        - rust
+-------------------------------------------------            MONITOR            --------------------------------------------------
+gotop                       - better htop system monitor            - https://github.com/cjbassi/gotop                      - go
+ps      - procs             - a replacement for ps                  - https://github.com/dalance/procs                      - rust
+-------------------------------------------------              GIT              --------------------------------------------------
+lzg     - lazygit           - simple terminal UI for git commands   - https://github.com/jesseduffield/lazygit              - go
+grv                         - TUI for viewing git repositories      - https://github.com/rgburke/grv                        - go
+hub                         - github command-line tool              - https://github.com/github/hub                         - go
+-------------------------------------------------           CONTAINER           --------------------------------------------------
+lxc     - lxd               - daemon based on liblxc                - https://github.com/lxc/lxd                            - go
+dive                        - exploring docker layers               - https://github.com/wagoodman/dive                     - go
+lzd     - lazydocker        - lazier way to manage docker           - https://github.com/jesseduffield/lazydocker           - go
+-------------------------------------------------              DEV              --------------------------------------------------
+pro     - proji             - CLI project templating tool           - https://github.com/nikoksr/proji                      - go
+direnv                      - OTF local load and unload variables   - https://github.com/direnv/direnv                      - go
+envy                        - OTF global load and unload variables  - https://github.com/mre/envy                           - rust
+-------------------------------------------------             DATAS             --------------------------------------------------
+xsv                         - a cli CSV edtor/reader                - https://github.com/BurntSushi/xsv                     - rust
+define                      - command-line dictionary               - https://github.com/Rican7/define                      - go
+faker                       - fake data gererator                   - https://github.com/jiro4989/faker                     - nim
+-------------------------------------------------           ENCRYPTION          --------------------------------------------------
+gopass                      - standard unix password manage         - https://github.com/gopasspw/gopass                    - go
+age                         - file encryption tool                  - https://github.com/FiloSottile/age                    - go
+crux    - horcrux           - split file into encrypted fragments   - https://github.com/jesseduffield/horcrux              - go
+tomb                        - manage encrypted volumes              - https://github.com/dyne/Tomb                          - bash
+-------------------------------------------------             FILES             --------------------------------------------------
+ls      - exa               - modern version of ‘ls’                - https://github.com/ogham/exa                          - rust
+lsd                         - next-gen version of 'ls'              - https://github.com/Peltoche/lsd                       - rust
+rn      - renamer           - regex batch renamer                   - https://github.com/adriangoransson/renamer            - rust
+rm      - crap              - remove files to trash                 - https://github.com/icyphox/crap                       - nim
+unf                         - sanitize filenames unix format        - https://github.com/io12/unf                           - rust
+du      - dust              - linux du alternative                  - https://github.com/dalance/procs                      - rust
+disco   - diskonaut         - disk space navigator                  - https://github.com/imsnif/diskonaut                   - rust
+oneshot                     - single-fire HTTP server               - https://github.com/raphaelreyna/oneshot               - go
+dragon                      - drag & drop for X                     - https://github.com/mwh/dragon                         - cpp
+send    - ffsend            - command line file share               - https://github.com/timvisee/ffsend                    - rust
+qrcp                        - QR-code file network transfer         - https://github.com/claudiodangelis/qrcp               - go
+-------------------------------------------------           HTML & MD           --------------------------------------------------
+gomd                        - Serve markdown to localhost           - https://github.com/wojciechkepka/gomd                 - go
+hugo                        - Static website builder                - https://github.com/gohugoio/hugo                      - go
+mdp                         - markdown presentation tool            - https://github.com/visit1985/mdp                      - cpp
+pandoc                      - universal markup converter            - https://github.com/jgm/pandoc                         - hs
+-------------------------------------------------             NOTES             --------------------------------------------------
+dnote                       - simple command line notebook          - https://github.com/dnote/dnote                        - go
+-------------------------------------------------            SCHEDULE           ------------------------------------------------
+pomo                        - pomodoro CLI                          - https://github.com/kevinschoon/pomo                   - go
+task    - taskwarrior       - commandline task management           - https://github.com/GothenburgBitFactory/taskwarrior   - cpp
+taskell                     - commandline board management          - https://github.com/smallhadroncollider/taskell        - hs
+-------------------------------------------------             IMAGE             --------------------------------------------------
+fim                         - costumizable image viewer             - https://www.nongnu.org/fbi-improved/                  - cpp
+viu                         - terminal image viewer                 - https://github.com/atanunq/viu                        - rust
+sic                         - image processing and converter        - https://github.com/foresterre/sic                     - rust
+chafa                       - terminal graphics for 21st century    - https://github.com/hpjansson/chafa                    - cpp
+-------------------------------------------------             MUSIC             --------------------------------------------------
+spt     -spotifytui         - spotify for the terminal              - https://github.com/Rigellute/spotify-tui              - rust
+spotifyd                    - spotify deamon                        - https://github.com/Spotifyd/spotifyd                  - rust
+-------------------------------------------------            HACKING            --------------------------------------------------
+r2      -radare2            - reverse engineering framework         - https://github.com/radareorg/radare2                  - cpp
+termshark                   - terminal UI for tshark                - https://github.com/gcla/termshark                     - go
+hexyl                       - command-line hex viewer               - https://github.com/sharkdp/hexyl                      - rust
+-------------------------------------------------               WM              --------------------------------------------------
+ly                          - display manager with console UI       - https://github.com/nullgemm/ly                        - cpp
+boomer                      - zoom tool for boomers                 - https://github.com/tsoding/boomer                     - nim

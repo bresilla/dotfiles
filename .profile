@@ -6,11 +6,11 @@
 [[ -d $HOME/.func ]] && for file in $HOME/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
 #GO
-[[ -d "/opt/bin/go/bin" ]] && PATH="/opt/bin/go/bin:$PATH"
+[[ -d "/env/go/bin" ]] && PATH="/env/go/bin:$PATH"
 #RUST
-[[ -d "/opt/bin/cargo/bin" ]] && PATH="/opt/bin/cargo/bin:$PATH"
+[[ -d "/env/cargo/bin" ]] && PATH="/env/cargo/bin:$PATH"
 #NIM
-[[ -d "/opt/bin/nimble/bin" ]] && PATH="/opt/bin/nimble/bin:$PATH"
+[[ -d "/env/nimble/bin" ]] && PATH="/env/nimble/bin:$PATH"
 
 #NIX
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
@@ -30,14 +30,15 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export MONITOR1=eDP1
 export MONITOR2=DP1
 
-export CARGO_HOME="/opt/bin/cargo"
-export RUSTUP_HOME="/opt/bin/rustup"
-export NIMBLE_DIR="/opt/bin/nimble"
-export GOPATH="/opt/bin/go"
+export CONDA_HOME="/env/conda"
+export CARGO_HOME="/env/cargo"
+export RUSTUP_HOME="/env/rustup"
+export NIMBLE_DIR="/env/nimble"
+export GOPATH="/env/go"
 export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
 
-export UBUNTUPATH="/opt/chroot/ubuntu"
+export UBUNTU_PATH="/tent/ubuntu"
 export TZ='Europe/Berlin'
 export VIM="/usr/share/nvim/"
 
@@ -52,7 +53,7 @@ export MAGENTA=$(xrdb -query | grep 'color5:'| awk 'NR==1{print $NF}')
 export CYAN=$(xrdb -query | grep 'color6:'| awk 'NR==1{print $NF}')
 export WHITE=$(xrdb -query | grep 'color7:'| awk 'NR==1{print $NF}')
 
-export WINEPREFIX=/opt/wine
+export WINEPREFIX=/wine
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 export XDG_CONFIG_HOME=/home/$USER/.config
 export XDG_CONFIG_PATH=/home/$USER/.config
