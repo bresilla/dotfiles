@@ -3,8 +3,8 @@
 export INDIRENV=true;
 
 use_ros(){
-    _CATKIN_SETUP_DIR=/opt/ubuntu/opt/ros/install
-    export PYTHONPATH=/opt/ubuntu/usr/lib/python3/dist-packages
+    _CATKIN_SETUP_DIR=$UBUNTU_PATH/opt/ros/install
+    export PYTHONPATH=$UBUNTU_PATH/usr/lib/python3/dist-packages
     ROSPATH="$_CATKIN_SETUP_DIR/bin" && [[ -d "$ROSPATH" ]] && PATH="$ROSPATH:$PATH" || exit 1
     if [[ -n ${ZSH_VERSION-} ]]; then
         echo "sourcing $_CATKIN_SETUP_DIR/setup.zsh";
@@ -51,7 +51,7 @@ nix-profile(){
 
 layout_conda() {
     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
-    CONDAPATH="/opt/conda/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
+    CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
 
     if [ -n "$1" ]; then
         local env_name="$1"
@@ -65,7 +65,7 @@ layout_conda() {
     elif [ -f environment.yml ]; then
         local env_name =$(grep name: environment.yml | sed -e 's/name: //' | cut -d "'" -f 2 | cut -d '"' -f 2)
         source activate ${env_name}
-        PATH="/opt/conda/envs/${env_name}/bin:$PATH"
+        PATH="$CONDA_HOME/envs/${env_name}/bin:$PATH"
         printf "\n${GREEN}environment specified${NC}\nusing environment: ${BLUE}${conda_env}${NC}\n\n";
     else
         CONDALOC="$PWD/.direnv/bin"
@@ -142,7 +142,7 @@ export_alias() {
     chmod +x "$target"
 }
 # EXAMPLE
-# export_alias piuu "ls -la"
+# export_alias ll "ls -la"
 
 tidyup(){
     [[ -d "$PWD/.direnv/functions" ]] && rm -r $PWD/.direnv/functions
