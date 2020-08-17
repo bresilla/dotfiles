@@ -71,9 +71,9 @@
     tray-padding = ${settings.element-padding}
     ;separator = |
     ;modules-center = title
-    modules-left = volume battery light wlan signal speed hotspot wireguard
+    modules-left = volume battery light wlan signal wireguard hotspot speed
     modules-center = pomo task_list task_urgent
-    modules-right = audit cpu memory gpu sda1 sda2 nvme date time
+    modules-right = cpu memory gpu sda1 sda2 nvme audit kernel date time
 
 [bar/workspaces]
     monitor = ${env:MONITOR}
@@ -326,8 +326,9 @@
 [module/hotspot]
     type = custom/script
     interval = 1
-    exec = if [[ -e /tmp/hotspot.all.lock ]]; then [[ -z $(wispot list) ]] && exit 1 || wispot list | tail -n+2 | wc -l; fi
+    exec = /home/bresilla/.config/polybar/scripts/hotspot
     label = " %output%"
+    click-left = /home/bresilla/.config/polybar/scripts/hotspot --toggle &
     format-foreground = ${colors.element_fg}
     format-background = ${colors.element_bg}
     format-padding = ${settings.element-padding}

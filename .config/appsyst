@@ -1,0 +1,140 @@
+-------------------------------------------------------            SYSTEM             --------------------------------------------------------
+borg                        + backup & deduplicating archiver       + https://github.com/borgbackup/borg                    + cpp       + pack
+bitwise                     + bit manipulator in ncurses            + https://github.com/mellowcandle/bitwise               + cpp       + pack
+-------------------------------------------------------           TERMINAL             -------------------------------------------------------
+alacritty                   + GPU-accelerated terminal emulator     + https://github.com/alacritty/alacritty                + rust      + pack
+kitty                       + GPU based terminal emulator           + https://github.com/kovidgoyal/kitty                   + cpp       + pack
+-------------------------------------------------------             SHELL             --------------------------------------------------------
+rng                         + stream range of input to stdout       + https://github.com/nickolasburr/rng                   + cpp
+adv[cp.mv]                  + cp & mv with progressbar              + https://github.com/jarun/advcpmv                      + cpp       + pack
+tmux
+-------------------------------------------------------             MEDIA              -------------------------------------------------------
+tube        -youtube-dl     + download videos from YouTube.com      + https://github.com/ytdl-org/youtube-dl                + python    + pack
+mpv                         + command line video player             + https://github.com/mpv-player/mpv                     + cpp
+mpc
+playerctl
+ncpamixer
+imagemagick                 + swissarmy knife of image editor
+sox                         + swissarmy knife of sound processing   + https://github.com/chirlu/sox                         + cpp       + pack
+-------------------------------------------------------            NETWORK             -------------------------------------------------------
+ari         - aria2         + swissarmy knife of downloaders       + https://github.com/aria2/aria2                         + cpp       + pack
+shipit                      + minimalistic SSH deployment           + https://github.com/sapegin/shipit                     + bash
+maza                        + local ad blocker, like Pi-hole        + https://github.com/tanrax/maza-ad-blocking            + bash
+hblock                      + hosts adblocker                       + https://github.com/hectorm/hblock                     + bash
+mtr                         + 'traceroute' and 'ping' combines      + https://github.com/traviscross/mtr                    + cpp       + pack
+hostapd
+dnsmasq
+traceroute
+ufw
+tor
+-------------------------------------------------------              USB              --------------------------------------------------------
+usbip
+usbredir
+-------------------------------------------------------              DEV              --------------------------------------------------------
+httpie                      + HTTP client for the API era           + https://github.com/jakubroztocil/httpie               + bash      + pack
+-------------------------------------------------------             DATAS             --------------------------------------------------------
+jq                          + JSON processor                        + https://github.com/stedolan/jq                        + cpp       + pack
+jo                          + utility to create JSON objects        + https://github.com/jpmens/jo                          + cpp       + pack
+ledger                      + double-entry accounting system        + https://github.com/ledger/ledger                      + cpp       + pack
+-------------------------------------------------------             SCHEDULE            ------------------------------------------------------
+task    - taskwarrior       + commandline task management           + https://github.com/GothenburgBitFactory/taskwarrior   + cpp       + pack
+timew   - timewarrior       + commandline time reporting            + https://github.com/GothenburgBitFactory/timewarrior   + cpp
+remind
+-------------------------------------------------------         WINDOW-MANAGER          ------------------------------------------------------
+ly                          + a tui display manager                 + https://github.com/cylgom/ly                          + cpp       + pack
+bspwm
+sxhkd
+wmutils
+wmctrl
+xdo
+xdotool
+tabbed
+polybar
+dunst
+picom
+espansso
+rofi
+rofi-blocks
+xob
+clight
+flameshot
+slop                        + query selection from desktop degion   + https://github.com/naelstrof/slop                     + cpp       + pack
+maim                        + takes a screenshot of your desktop    + https://github.com/naelstrof/maim                     + cpp       + pack
+scrot
+-------------------------------------------------------             EDITORS             ------------------------------------------------------
+docker
+lxd
+wine
+nvidia-docker
+-------------------------------------------------------             EDITORS             ------------------------------------------------------
+neovim
+kakoune
+-------------------------------------------------------            INTERNET             ------------------------------------------------------
+buku
+neomutt
+surf
+surfraw
+-------------------------------------------------------           FILESYSTEM            ------------------------------------------------------
+fuseiso
+sshfs
+btfs
+unionfs
+vdfuse
+wdfs
+bindfs
+ipfs
+-------------------------------------------------------           ENCRYPTION            ------------------------------------------------------
+keybase
+tomb                        + manage encrypted volumes              + https://github.com/dyne/Tomb                          + bash
+encfs
+gocryptfs
+qrencode
+-------------------------------------------------------             VIEWERS             ------------------------------------------------------
+f3d
+feh
+sxiv
+-------------------------------------------------------             NAVIGATR            ------------------------------------------------------
+nnn
+vifm
+-------------------------------------------------------              INFO               ------------------------------------------------------
+kmon
+fortune
+neofetch
+nvtop
+bashtop
+watchman                    + file watching service                 + https://github.com/facebook/watchman                  + cpp       + pack
+-------------------------------------------------------             VIEWERS             ------------------------------------------------------
+tigervnc
+virt-viewer
+virt-manager
+-------------------------------------------------------              DISKS              ------------------------------------------------------
+dfc
+dtrx
+ncdu
+clonezilla
+smartctl
+udisk2          - udiskctl
+udevil
+-------------------------------------------------------           EMULATION             ------------------------------------------------------
+qemu
+kvm
+unicorn                     + CPU emulation framework               + https://github.com/unicorn-engine/unicorn             + cpp       + pack
+keystone                    + multi-architecture assembler          + https://github.com/keystone-engine/keystone           + cpp       + pack
+capstone                    + multi-architecture disassembly        + https://github.com/aquynh/capstone                    + cpp       + pack
+-------------------------------------------------------             CHROOT              ------------------------------------------------------
+bubblewrap
+firejail
+fakeroot
+fakechroot
+schroot
+debootstrap
+debtap
+-------------------------------------------------------              OTHER              ------------------------------------------------------
+doas
+apparmor
+busybox
+binutils
+preload
+binwalk
+bpf
+socat

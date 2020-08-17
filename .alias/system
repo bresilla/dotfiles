@@ -1,4 +1,5 @@
 alias s='sudo -E'
+alias sv='sudo -E nvim'
 alias v='nvim'
 alias b='bat'
 
@@ -39,15 +40,6 @@ alias lu='dutree -d1 --usage -x .git -x .direnv'
 alias df='dfc -dTomw -p -/dev/loop,tmp,dev,run,one'
 alias lsblk='lsblk -f'
 alias dd='dd status=progress'
-alias z='doas /usr/bin/ncdu --color=dark \
-    --exclude /home \
-    --exclude /opt \
-    --exclude /nix \
-    --exclude /var/lib/libvirt \
-    --exclude /var/lib/docker \
-    --exclude /var/lib/flatpak \
-    --exclude /var/lib/snapd \
-    --exclude /var/lib/lxd'
 
 #LOGS
 alias syslog='bat "/var/log/syslog"'
