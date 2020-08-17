@@ -13,8 +13,6 @@ export FPATH=~/.config/zsh:$FPATH
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 ###DIRENV
 eval "$(direnv hook zsh)"
-###ENVY
-eval "$(envy hook zsh)"
 ###NAVI
 source <(navi widget zsh)
 ###MODULES
@@ -191,7 +189,7 @@ n(){
 my-accept-line () {
     # check if the buffer does not contain any words
     if [ ${#${(z)BUFFER}} -eq 0 ]; then
-        shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"
+        shko -c --short; cd "$(cat ~/.config/shko/settings/chdir)"
     fi
     zle accept-line
 }

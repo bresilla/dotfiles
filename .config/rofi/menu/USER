@@ -44,8 +44,10 @@ elif [ "$another" == "$clip" ] ; then
 
 elif [ "$another" == "$usem" ] ; then
     appname=$(cat ~/.config/applist |  grep "\S" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'apps:')
-    [[ -n $appname ]] && $edit_with -e nvim ~/.config/applist
-    # grep -Fxq $appname ~/.config/applist && sed -i "/$appname\b/d" ~/.config/applist || echo $appname >> ~/.config/applist
+    thelink=$(echo $appname | cut -d'+' -f3 | tr -d ' ')
+    [[ ! -n $appname ]] && exit
+    regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+    [[ $thelink =~ $regex ]]&& $BROWSER $thelink || $edit_with -e nvim ~/.config/applist
 
 elif [ "$another" == "$cont" ] ; then
     exec ~/.config/rofi/menu/contacts

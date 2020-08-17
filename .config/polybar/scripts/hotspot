@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case "$1" in
+--toggle)
+    if [[ -e /tmp/hotspot.all.lock ]]; then
+        systemctl --user stop hotspot.service;
+    else
+        systemctl --user start hotspot.service;
+    fi
+    ;;
+*)
+    if [[ -e /tmp/hotspot.all.lock ]]; then
+        hotspot --list-clients $(hotspot --list-running | sed -n '3p' | awk '{print $1}') | tail -n+2 | wc -l;
+    else
+        echo "NO";
+    fi
+    ;;
+esac

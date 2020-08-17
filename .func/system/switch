@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+#script to list all the possible binary paths excluding manpages and libraries
+#eg:
+# switch cargo
+#
+# /usr/bin/cargo
+# /nix/store/bw745yab7lc339rmnf3qgq24vy7qq6bk-rustup-1.22.1/bin/cargo
+# /nix/store/1f1nb0876r86lnphnlippdjjpc1nacf3-rust-1.45.2-2020-07-31-d3fb005a3/bin/cargo
+
+
+lister=$(whereis -b $1 | tr ' ' '\n' | tail -n +2)
+
+declare -a my_array
+while read -r; do
+  my_array+=( "$REPLY" )
+done <<< "$lister"
+
+for i in "${my_array[@]}"; do
+    echo $i
+done

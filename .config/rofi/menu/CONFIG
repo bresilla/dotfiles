@@ -33,9 +33,10 @@ if [ "$another" == "PROFILE" ] ; then
 $HOME/dots/.bashrc
 $HOME/dots/.startup
 $HOME/dots/.profile
-$HOME/.variables
+$HOME/dots/.other/variables
 $HOME/dots/.config/git/config
-$HOME/dots/.config/tmux/tmux.conf" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "shell: ")
+$HOME/dots/.config/tmux/tmux.conf
+$HOME/dots/.config/nixpkgs/home.nix" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "shell: ")
 [[ -z $selected ]] && exit
 	$edit_with -e nvim $selected
 

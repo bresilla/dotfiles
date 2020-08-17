@@ -14,12 +14,36 @@
   #packages
   home.packages = [
     pkgs.bat
-    pkgs.jq
     pkgs.fzf
+    pkgs.fzy
+    pkgs.jq
     pkgs.ripgrep
+    pkgs.tokei
+    pkgs.direnv
+    pkgs.fd
     pkgs.exa
-    pkgs.lorri
+    pkgs.dijo
+    pkgs.zenith
+    pkgs.spotifyd
   ];
 
-  services.lorri.enable = true;
+  systemd.user.services.spotifyd = let
+    secrets = "/home/bresilla/dots/.other/variables";
+  in {
+    Unit = {
+      Description = "A spotify playing daemon";
+      Documentation = "https://github.com/Spotifyd/spotifyd";
+      Wants = ["sound.target" "network-online.target"];
+      After = ["sound.target" "network-online.target"];
+    };
+    Service = {
+      EnvironmentFile = "${secrets}";
+      ExecStart = "${pkgs.spotifyd}/bin/spotifyd -u \${spotname} -p \${spotpass} -v softvol -b pulseaudio -d XPS --no-daemon";
+      Restart = "always";
+    };
+    Install = {
+      WantedBy = ["default.target"];
+    };
+  };
+
 }
