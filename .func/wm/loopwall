@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+while true
+  do ls $1/* | sort -R | tail -$N | while read file
+    feh --no-fehbg --bg-scale $file &
+    # do	wal -n -i $file --backend haishoku --saturate 1.0
+    do wal -n -i $file --saturate 0.5
+    bspc wm -r &
+    python /home/bresilla/.local/bin/pywalfox update &
+    sleep $2
+  done
+done

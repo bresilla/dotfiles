@@ -1,0 +1,12 @@
+#!/bin/sh
+
+MONITOR1=eDP1
+MONITOR2=DP1
+
+killall -q polybar &
+while pgrep -x polybar >/dev/null; do sleep 1; done
+
+MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini main &
+MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini main &
+MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini workspaces &
+MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini workspaces &

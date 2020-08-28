@@ -1,6 +1,0 @@
-#!/bin/sh
-
-if [ -z ${cdre+x} ]; then
-    export cdre="cdre";
-    cd .. && cd - ;
-fi

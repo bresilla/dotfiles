@@ -1,7 +1,7 @@
 # Corners with ibhagwan's fork
-corner-radius = 15;
+corner-radius = 12;
+round-borders = 2;
 rounded-corners-exclude = [
-	"class_g = 'Polybar'",
     "class_g = 'firefox' && window_type = 'utility'"
 ];
 
@@ -41,13 +41,13 @@ fade-out-step = 0.1;
 # no-fading-openclose = true;
 fade-exclude = [ ];
 
-# blur: {
-#   method = "dual_kawase";
-#   strength = 8;
-#   background = false;
-#   background-frame = false;
-#   background-fixed = false;
-# }
+blur: {
+  method = "dual_kawase";
+  strength = 8;
+  background = false;
+  background-frame = false;
+  background-fixed = false;
+}
 
 # Backend
 vsync = true;
@@ -58,15 +58,12 @@ detect-rounded-corners = true;
 
 ### Opacity
 inactive-opacity-override = false;
-#alpha-step = 0.06;
+active-opacity = 0.99;
+inactive-opacity = 1;
 opacity-rule = [
-        "99:class_g = 'mpv'",
-        "99:class_g = 'smplayer'",
-        "99:class_g = 'Spotify'",
-        "99:class_g = 'chromium'",
-        "99:class_g = 'Firefox' && focused",
-        "99:class_g = 'Firefox' && !focused",
-#        "80:name *= 'qutebrowser'"
+        "100:class_g = 'mpv'",
+        "100:class_g = 'Firefox' && focused",
+        "100:class_g = 'Firefox' && !focused",
 ];
 
 focus-exclude = [

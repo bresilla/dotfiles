@@ -64,5 +64,6 @@
     conflicts = !git diff --name-only --diff-filter=U
     fix = !git mergetool --tool=diffconflicts
     root = rev-parse --show-toplevel
+    ignore = "!f(){ echo $@ >> .gitignore; }; f"
 [gc]
     writeCommitGraph = true

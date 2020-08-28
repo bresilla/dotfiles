@@ -9,7 +9,7 @@ if empty(glob('~/.config/nvim/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-function init#lang_plugs()
+function init#server_plugs()
     Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
     Plug 'puremourning/vimspector'
     if has('nvim')
@@ -30,6 +30,10 @@ function init#lang_plugs()
     Plug 'tpope/vim-commentary'
     Plug 'ntpeters/vim-better-whitespace'               "whitespace detection
     Plug 'khzaw/vim-conceal'                            "better symbols like lambda, rise power ...
+endfunction
+
+function init#lang_plugs()
+    Plug 'vim-pandoc/vim-pandoc'
 endfunction
 
 function init#space_plugs()
@@ -81,6 +85,7 @@ function init#tools_plugs()
     Plug 'bdellaterra/vim-pick-me-up'                   "where you left
 endfunction
 
+
 function init#git_plugs()
     Plug 'airblade/vim-gitgutter'                       "show differences (GIT)
     Plug 'tpope/vim-fugitive'                           "git wrapper
@@ -114,6 +119,7 @@ endfunction
 call plug#begin('~/.config/plug_vim')
 " ==== TOOLS ==== "
     "language
+    call init#server_plugs()
     call init#lang_plugs()
     "workspace
     call init#space_plugs()

@@ -53,6 +53,22 @@ alias fzi='selected=$(
         --bind "change:reload:rg -i -l --hidden --no-ignore-vcs {q} || true" \
         --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
     [[ -n $selected ]] && nvim $selected'
+alias du_home='ncdu --color=dark \
+    --exclude /home/bresilla/data \
+    --exclude /home/bresilla/sets \
+    --exclude /home/bresilla/dots \
+    --exclude /home/bresilla/sync'
+
+alias du_sys='doas ncdu --color=dark \
+    --exclude /home \
+    --exclude /env \
+    --exclude /nix \
+    --exclude /tent \
+    --exclude /var/lib/libvirt \
+    --exclude /var/lib/docker \
+    --exclude /var/lib/flatpak \
+    --exclude /var/lib/snapd \
+    --exclude /var/lib/lxd'
 
 alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
 alias x='dtrx --one-entry=rename'

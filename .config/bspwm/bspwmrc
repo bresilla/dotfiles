@@ -2,13 +2,16 @@
 monitor1=eDP1
 monitor2=DP1
 btops &
+#sxhkd -m -1 -c /home/bresilla/.config/sxhkd/sxhkdrc &
+/home/bresilla/.config/polybar/launch &
 
 ###############################################################################################################################
 #|||	SETTINGS
 ###############################################################################################################################
-bspc config border_width         0
+. "${HOME}/.cache/wal/colors.sh"
+bspc config border_width         2
 bspc config normal_border_color "#000000"
-bspc config focused_border_color "#000000"
+bspc config focused_border_color "$color1"
 bspc config presel_feedback_color "#000000"
 bspc config window_gap          10
 bspc config split_ratio          0.51
@@ -53,4 +56,13 @@ bspc rule -a Screenkey manage=off
 ###############################################################################################################################
 #|||	SCRIPTS
 ###############################################################################################################################
-bash ~/.startup &
+MONITOR1=eDP1
+MONITOR2=DP1
+xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate normal --output $MONITOR2 --mode 3840x2160 --pos 0x0 --rotate normal --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off &
+
+#KEYBOARD
+xsetroot -cursor_name left_ptr &
+xset -dpms s off &
+xset -r 118 & #Insert
+xset -r 107 & #Print
+setxkbmap de &
