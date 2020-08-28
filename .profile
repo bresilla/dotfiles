@@ -1,10 +1,16 @@
+export DOTS=$HOME/dots
+export SETS=$HOME/sets
+export DATA=$HOME/data
+export DOWN=$HOME/down
+export SYNC=$HOME/sync
+
 #USER_BIN
-[[ -d "$HOME/.bin" ]] && PATH="$HOME/.bin:$PATH"
-[[ -d "$HOME/.sbin" ]] && PATH="$HOME/.sbin:$PATH"
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
 [[ -d $HOME/.func ]] && for file in $HOME/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
+#CPP
+[[ -d "/env/cpp/bin" ]] && PATH="/env/cpp/bin:$PATH"
 #GO
 [[ -d "/env/go/bin" ]] && PATH="/env/go/bin:$PATH"
 #RUST
@@ -15,13 +21,13 @@
 #NIX
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
 
-#OTHER VARS
-[[ -e "/home/bresilla/.variables" ]] && source /home/bresilla/.variables
+#SECRETS
+[[ -e "/home/bresilla/sets/variables" ]] && source /home/bresilla/sets/variables
 
 export BROWSER=firefox
 export EDITOR=nvim
 export TERMINAL=kitty
-
+export TZ='Europe/Berlin'
 
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export MONITOR1=eDP1
@@ -29,14 +35,13 @@ export MONITOR2=DP1
 
 export CONDA_HOME="/env/conda"
 export CARGO_HOME="/env/cargo"
-export RUSTUP_HOME="/env/rustup"
+export RUSTUP_HOME="/opt/rustup"
 export NIMBLE_DIR="/env/nimble"
 export GOPATH="/env/go"
 export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
 
 export UBUNTU_PATH="/tent/ubuntu"
-export TZ='Europe/Berlin'
 export VIM="/usr/share/nvim/"
 
 export FOREGROUND=$(xrdb -query | grep 'foreground:'| awk 'NR==1{print $NF}')
@@ -61,13 +66,8 @@ export XDG_CACHE_PATH=/home/$USER/.cache
 
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
-
 export IPFS_PATH=/home/bresilla/sync/planetary/ipfs
 
-export DOTS=/home/bresilla/dots
-export WALL=/usr/share/backgrounds
-export CODE=/home/bresilla/DATA/CODE
-export PRO=/home/bresilla/DATA/CODE/PROJECTS
 
 export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
 export TASKDATA="$XDG_DATA_HOME"/task
@@ -77,3 +77,4 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode

@@ -10,7 +10,7 @@ case "$1" in
     ;;
 *)
     if [[ -e /tmp/hotspot.all.lock ]]; then
-        hotspot --list-clients $(hotspot --list-running | sed -n '3p' | awk '{print $1}') | tail -n+2 | wc -l;
+        /home/bresilla/dots/.func/network/hotspot --list-clients $(/home/bresilla/dots/.func/network/hotspot --list-running | sed -n '3p' | awk '{print $1}') | tail -n+2 | wc -l;
     else
         echo "NO";
     fi

@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-while true
-  do ls $1/* | sort -R | tail -$N | while read file
-    # do	wal -i $file --backend haishoku --saturate 1.0
-do wal -i $file --saturate 0.5
-    python /home/bresilla/.local/bin/pywalfox update
-    sleep $2
-  done
-done

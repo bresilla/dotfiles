@@ -6,5 +6,7 @@
 .notifier
 /.undodir/
 /.direnv/
-/.clangd/
 .gdb_history
+.venv
+poetry.lock
+.cenv

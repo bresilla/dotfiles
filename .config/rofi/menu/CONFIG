@@ -4,16 +4,13 @@ ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_full -theme-str "*{accent: ${color1
 edit_with="kitty --class=til"
 
 another=$(echo "CONFIGS
-SCRIPTS
-FUNCTIS
 ALIASES
+SCRIPTS
 ROFMENU
 PROFILE" | awk '{print $(NF-1)}' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "CONFIGS: ")
 
-
-
 browse(){
-	selected=$(ls "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
+	selected=$(ls -A --group-directories-first "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
 	[[ -z $selected ]] && exit
 	if [[ -f $1/$selected ]]; then
 		$edit_with -e nvim $1/$selected
@@ -26,12 +23,9 @@ browse(){
 	fi
 }
 
-
-
 if [ "$another" == "PROFILE" ] ; then
 	selected=$(echo "$HOME/dots/.zshrc
 $HOME/dots/.bashrc
-$HOME/dots/.startup
 $HOME/dots/.profile
 $HOME/dots/.other/variables
 $HOME/dots/.config/git/config
@@ -43,14 +37,8 @@ $HOME/dots/.config/nixpkgs/home.nix" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "s
 elif [ "$another" == "CONFIGS" ] ; then
 	browse /home/bresilla/dots/.config;
 
-elif [ "$another" == "SYSTEMS" ] ; then
-	bash /home/bresilla/dots/.config/rofi/menu/system;
-
-elif [ "$another" == "FUNCTIS" ] ; then
-	browse /home/bresilla/dots/.func;
-
 elif [ "$another" == "SCRIPTS" ] ; then
-	browse /home/bresilla/dots/.sbin;
+    browse /home/bresilla/dots/.func;
 
 elif [ "$another" == "ALIASES" ] ; then
 	browse /home/bresilla/dots/.alias;
