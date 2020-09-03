@@ -30,9 +30,9 @@ case $chosen in
         disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
         sleep .2
         if [ "$disp" == "" ] ; then
-            sed -i '5s/.*/do wal -n -i $file --saturate 0.5/' /home/bresilla/.sbin/loopwall && systemctl --user restart wallpaper.service
+            sed -i '5s/.*/do wal -n -i $file --saturate 0.5/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
         elif [ "$disp" == "" ] ; then
-            sed -i '5s/.*/do wal -n -l -i $file --saturate 0.5/' /home/bresilla/.sbin/loopwall && systemctl --user restart wallpaper.service
+            sed -i '5s/.*/do wal -n -l -i $file --saturate 0.5/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
         fi
         ;;
     $record)

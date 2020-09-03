@@ -19,6 +19,7 @@ export SYNC=$HOME/sync
 [[ -d "/env/nimble/bin" ]] && PATH="/env/nimble/bin:$PATH"
 
 #NIX
+export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
 
 #SECRETS
@@ -78,3 +79,4 @@ export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

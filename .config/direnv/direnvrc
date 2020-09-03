@@ -64,6 +64,29 @@ layout_conda() {
 }
 
 
+layout_go() {
+  export GOPATH="$PWD/vendor/"
+  PATH_add "$PWD/vendor/bin"
+  PATH_add bin
+}
+
+layout_rust() {
+  export CARGO_HOME="$PWD/vendor/"
+  export RUSTUP_HOME="$PWD/vendor/rustup"
+  PATH_add "$PWD/vendor/bin"
+  PATH_add bin
+}
+
+layout_nim() {
+  export NIMBLE_DIR="$PWD/vendor/"
+  PATH_add "$PWD/vendor/bin"
+  PATH_add bin
+}
+
+layout_julia() {
+  export JULIA_PROJECT=$PWD
+}
+
 
 layout_conda_detail() {
     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
@@ -97,25 +120,6 @@ layout_conda_detail() {
             # PATH="$CONDALOC:$PATH"
         fi
     fi;
-}
-
-layout_go() {
-  export GOPATH="$PWD/vendor/"
-  PATH_add "$PWD/vendor/bin"
-  PATH_add bin
-}
-
-layout_rust() {
-  export CARGO_HOME="$PWD/vendor/"
-  export RUSTUP_HOME="$PWD/vendor/rustup"
-  PATH_add "$PWD/vendor/bin"
-  PATH_add bin
-}
-
-layout_nim() {
-  export NIMBLE_DIR="$PWD/vendor/"
-  PATH_add "$PWD/vendor/bin"
-  PATH_add bin
 }
 
 local_vimrc() {
