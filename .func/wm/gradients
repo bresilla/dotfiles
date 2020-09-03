@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+/env/cargo/bin/pastel gradient $(head -n 1 $HOME/.cache/wal/colors) $(tail -n 1 $HOME/.cache/wal/colors) -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients &
+
+awk '{print "color" NR+231 "\t " $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors-kitty.conf &

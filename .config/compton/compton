@@ -1,46 +1,53 @@
+# Backend
+vsync = true;
+backend = "glx";
+mark-wmwin-focused = true;
+unredir-if-possible = true;
+detect-rounded-corners = true;
+use-damage = false;
+
+
 # Corners with ibhagwan's fork
 corner-radius = 12;
 round-borders = 2;
 rounded-corners-exclude = [
-    "class_g = 'firefox' && window_type = 'utility'"
+    "class_g = 'firefox' && window_type = 'utility'",
+    "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+    "_GTK_FRAME_EXTENTS@:c"
 ];
 
-use-damage = false;
 
 # Shadow
 shadow = true;
-shadow-radius = 50;
+shadow-radius = 25;
 shadow-offset-x = 10;
 shadow-offset-y = 10;
-shadow-opacity = 0.3;
-
+shadow-opacity = 0.2;
 shadow-exclude = [
     "class_g *?= 'jgmenu'",
-    "class_g *?= 'VirtualBox'",
     "class_g *?= 'Conky'",
     "class_g *?= 'Notify-osd'",
     "class_g *?= 'cairo-dock'",
-    "class_g *?= 'trayer'",
-    "class_g *?= 'navigator'",
-    "class_g *?= 'Cairo-clock'",
-    "class_g *?= 'Cairo-dock'",
     "class_g *?= 'Polybar'",
-    "class_g *?= 'Docky'",
     "class_g = 'firefox' && !window_type *= 'menu'",
     "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
     "_GTK_FRAME_EXTENTS@:c"
 ];
 
 
+# Dim
+inactive-dim = 0.2;
+
 
 # Fade
 fading = true;
-fade-delta = 10;  # 30;
+fade-delta = 20;  # 30;
 fade-in-step = 0.1;
 fade-out-step = 0.1;
-# no-fading-openclose = true;
 fade-exclude = [ ];
 
+
+# Blur
 blur: {
   method = "dual_kawase";
   strength = 8;
@@ -49,29 +56,14 @@ blur: {
   background-fixed = false;
 }
 
-# Backend
-vsync = true;
-backend = "glx";
-mark-wmwin-focused = true;
-unredir-if-possible = true;
-detect-rounded-corners = true;
 
 ### Opacity
-inactive-opacity-override = false;
 active-opacity = 0.99;
 inactive-opacity = 1;
 opacity-rule = [
-        "100:class_g = 'mpv'",
-        "100:class_g = 'Firefox' && focused",
-        "100:class_g = 'Firefox' && !focused",
-];
-
-focus-exclude = [
-    "class_g *?= 'Cairo-clock'",
-    "class_g *?= 'Virtualbox'",
-    "class_g *?= 'trayer'",
-    "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
-    "name *?= 'Authy'"
+    "100:class_g = 'mpv'",
+    "100:class_g = 'Firefox' && focused",
+    "100:class_g = 'Firefox' && !focused",
 ];
 
 

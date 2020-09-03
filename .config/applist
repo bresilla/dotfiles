@@ -43,6 +43,7 @@ ps      - procs             + a replacement for ps                  + https://gi
 inxi                        + all-n-one system info                 + https://github.com/smxi/inxi                          + perl
 -------------------------------------------------------              GIT              --------------------------------------------------------
 lzg     - lazygit           + simple terminal UI for git commands   + https://github.com/jesseduffield/lazygit              + go
+gitui                       + blazng fast git cmd ui                + https://github.com/extrawurst/gitui                   + rust
 grv                         + TUI for viewing git repositories      + https://github.com/rgburke/grv                        + go
 hub                         + github command-line tool              + https://github.com/github/hub                         + go
 -------------------------------------------------------           CONTAINER           --------------------------------------------------------

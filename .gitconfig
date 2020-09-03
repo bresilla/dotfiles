@@ -48,6 +48,7 @@
     uncommit = reset --soft HEAD^
     master = checkout master
     develop = checkout develop
+    hub = "!f(){ gh $@; }; f"
     module = submodule
     check = checkout
     clone = clone --recursive

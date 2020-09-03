@@ -11,7 +11,7 @@ case "$1" in
     if [ "$connection_status" = "$answer_status" ]; then
         doas systemctl stop tor.service
     else
-        doas systemctl stop tor.service
+        doas systemctl start tor.service
     fi
     ;;
 *)

@@ -40,7 +40,6 @@ function init#space_plugs()
     Plug 'vim-ctrlspace/vim-ctrlspace'                  "a better workspace manager
     Plug 'liuchengxu/vim-clap'                          "interactive floating finder and dispatcher
     Plug 'scrooloose/nerdtree'                          "side-bar file manager
-    Plug 'kyazdani42/nvim-tree.lua'
     Plug '~/.config/plug/tree-linux'
     Plug 'ryanoasis/vim-devicons'                       "icons for nerdtree
     Plug 'liuchengxu/vista.vim'                          "tagbar

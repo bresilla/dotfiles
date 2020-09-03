@@ -42,8 +42,8 @@ super + alt + {Down,Up}
 
 {super,alt} + @button{6,5,4,7}
     /home/bresilla/.config/bspwm/scripts/{focus,move} {west,south,north,east}
-{_, ctrl} + {super+alt} + @button{6,5,4,7}
-    /home/bresilla/.config/bspwm/scripts/resize {b,s} {Left,Down,Up,Right}
+{_, ctrl, shift} + {super+alt} + @button{6,5,4,7}
+    /home/bresilla/.config/bspwm/scripts/resize {b,s,s} {Left,Down,Up,Right}
 
 {super+alt} + shift + {Left,Right}
     bspc node -d {prev,next} --follow

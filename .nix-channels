@@ -1,4 +1,4 @@
 https://nixos.org/channels/nixpkgs-unstable nixpkgs
 https://github.com/nix-community/NUR/archive/master.tar.gz nur
-https://github.com/rycee/home-manager/archive/master.tar.gz home
 https://github.com/lopsided98/nix-ros-overlay/archive/master.tar.gz ros
+https://github.com/rycee/home-manager/archive/master.tar.gz home-manager

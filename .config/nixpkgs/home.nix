@@ -54,7 +54,6 @@ in {
         After = ["network.target"];
       };
       Service = {
-        EnvironmentFile = "${ENVFILE}";
         Type = "simple";
         ExecStartPre = "/bin/sleep 5";
         ExecStart = "rclone --vfs-cache-mode writes mount one: /home/bresilla/sync/onedrive";
@@ -72,6 +71,7 @@ in {
       };
       Service = {
         Type = "simple";
+        # EnvironmentFile = "${ENVFILE}";
         ExecStartPre = "/bin/sleep 2";
         ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/hotspot wlp2s0 wlp2s0 algorithm dyhere024";
         ExecStop = "/usr/bin/doas rm /tmp/hotspot.all.lock";
