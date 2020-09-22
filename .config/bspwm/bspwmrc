@@ -1,7 +1,7 @@
 #! /bin/sh
-monitor1=eDP1
-monitor2=DP1
-btops &
+MONITOR1=eDP-1
+MONITOR2=DP-1
+/env/cpp/bin/btops &
 #sxhkd -m -1 -c /home/bresilla/.config/sxhkd/sxhkdrc &
 /home/bresilla/.config/polybar/launch &
 
@@ -19,7 +19,7 @@ bspc config split_ratio          0.51
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 # bspc config focus_follows_pointer   true
-# bspc config pointer_follows_focus   true
+bspc config pointer_follows_focus   true
 bspc config pointer_follows_monitor true
 bspc config auto_alternate true
 bspc config pointer_action1 move
@@ -31,8 +31,8 @@ bspc config remove_disabled_monitors true
 ###############################################################################################################################
 #|||	WORKSPACES & MONITORS
 ###############################################################################################################################
-# bspc monitor $monitor1 -d 1 2 3 4 5
-# bspc monitor $monitor2 -d 1 2 3 4 5
+# bspc monitor $MONITOR1 -d 1 2 3 4 5
+# bspc monitor $MONITOR2 -d 1 2 3 4 5
 
 
 ###############################################################################################################################
@@ -58,8 +58,6 @@ bspc rule -a Screenkey manage=off
 ###############################################################################################################################
 #|||	SCRIPTS
 ###############################################################################################################################
-MONITOR1=eDP1
-MONITOR2=DP1
 xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate normal --output $MONITOR2 --mode 3840x2160 --pos 0x0 --rotate normal --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off &
 
 #KEYBOARD

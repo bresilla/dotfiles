@@ -11,12 +11,18 @@ draw_bold_text_with_bright_colors: true
 font:
   normal:
     family: PragmataPro Mono
+    # family: Iosevka Term SS01 Light
+    # family: Input Mono Compressed Thin
     style: Regular
   bold:
     family: PragmataPro Mono
+    # family: Iosevka Term SS01 Bold
+    # family: Input Mono Compressed Light
     style: Bold
   italic:
     family: PragmataPro Mono
+    # family: Iosevka Term SS01 Italic
+    # family: Input Mono Compressed Italic
     style: Italic
   size: 6.0
   offset:
@@ -47,7 +53,7 @@ colors:
     cyan:    '0x54ced6'
     white:   '0x2a2a2a'
 
-visual_bell:
+bell:
   animation: EaseOutCubic
   duration: 200
 

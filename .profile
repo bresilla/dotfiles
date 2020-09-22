@@ -31,8 +31,9 @@ export TERMINAL=kitty
 export TZ='Europe/Berlin'
 
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-export MONITOR1=eDP1
-export MONITOR2=DP1
+export GPG_TTY=$(tty)
+export MONITOR1=eDP-1
+export MONITOR2=DP-1
 
 export CONDA_HOME="/env/conda"
 export CARGO_HOME="/env/cargo"
