@@ -29,13 +29,17 @@ use_docker(){
 use_nix() {
     if [[ -f .shell.nix ]]; then
         NIXFILE=$PWD/.shell.nix
-    fi
-    direnv_load nix-shell --show-trace "$@" --run "$(join_args "$direnv" dump)" $NIXFILE
-    if [[ -f .shell.nix ]]; then
-        watch_file $NIXFILE
     else
-        watch_file default.nix shell.nix
+        NIXFILE=shell.nix
     fi
+    watch_file $NIXFILE
+    direnv_load nix-shell --show-trace "$@" --run "$(join_args "$direnv" dump)" $NIXFILE
+}
+
+use_flake() {
+  watch_file flake.nix
+  watch_file flake.lock
+  eval "$(nix print-dev-env --profile "$(direnv_layout_dir)/flake-profile")"
 }
 
 nix-profile(){

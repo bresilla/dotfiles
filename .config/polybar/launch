@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MONITOR1=eDP1
-MONITOR2=DP1
+MONITOR1=eDP-1
+MONITOR2=DP-1
 
 killall -q polybar &
 while pgrep -x polybar >/dev/null; do sleep 1; done

@@ -25,6 +25,7 @@ shadow-offset-y = 10;
 shadow-opacity = 0.2;
 shadow-exclude = [
     "class_g *?= 'jgmenu'",
+    "class_g *?= 'mpv'",
     "class_g *?= 'Conky'",
     "class_g *?= 'Notify-osd'",
     "class_g *?= 'cairo-dock'",
@@ -55,6 +56,9 @@ blur: {
   background-frame = false;
   background-fixed = false;
 }
+blur-background-exclude = [
+    "class_g *?= 'mpv'"
+];
 
 
 ### Opacity

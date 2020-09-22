@@ -25,6 +25,8 @@ mole                        + cli app to create ssh tunnels         + https://gi
 rclone                      + rsync for cloud storage               + https://github.com/rclone/rclone                      + go
 gotty                       + share CLI as a web application        + https://github.com/yudai/gotty                        + go
 tunnelto                    + expose local web-server to internet   + https://github.com/agrinman/tunnelto                  + go
+-------------------------------------------------------           BROWSER             --------------------------------------------------------
+bookmark                    + terminal bookmark manager             + https://github.com/Szymongib/bookmark                 + rust
 -------------------------------------------------------          DOWNLOADER           --------------------------------------------------------
 annie                       + fast and simple video downloader      + https://github.com/iawia002/annie                     + go
 -------------------------------------------------------             SHELL             --------------------------------------------------------
@@ -57,6 +59,7 @@ envy                        + OTF global load and unload variables  + https://gi
 dtool                       + command-line tool collection for devs + https://github.com/guoxbin/dtool                      + rust
 -------------------------------------------------------             DATAS             --------------------------------------------------------
 xsv                         + a cli CSV edtor/reader                + https://github.com/BurntSushi/xsv                     + rust
+csview                      + a cli CSV viewer                      + https://github.com/wfxr/csview                        + rust
 define                      + command-line dictionary               + https://github.com/Rican7/define                      + go
 faker                       + fake data gererator                   + https://github.com/jiro4989/faker                     + nim
 -------------------------------------------------------           ENCRYPTION          --------------------------------------------------------
@@ -77,6 +80,7 @@ dragon                      + drag & drop for X                     + https://gi
 send    - ffsend            + command line file share               + https://github.com/timvisee/ffsend                    + rust
 qrcp                        + QR-code file network transfer         + https://github.com/claudiodangelis/qrcp               + go
 transfer                    + easy and fast file sharing from cli   + https://github.com/dutchcoders/transfer.sh            + go
+croc                        + end things from one computer to other + https://github.com/schollz/croc                       + go
 psc     - periscope         + De-duplicate files                    + https://github.com/anishathalye/periscope             + go
 -------------------------------------------------------           HTML & MD           --------------------------------------------------------
 gomd                        + Serve markdown to localhost           + https://github.com/wojciechkepka/gomd                 + go
@@ -89,6 +93,7 @@ dnote                       + simple command line notebook          + https://gi
 eureka                      + store your ideas in the terminal      + https://github.com/simeg/eureka                       + rust
 -------------------------------------------------------            SCHEDULE           --------------------------------------------------------
 pomo                        + pomodoro CLI                          + https://github.com/kevinschoon/pomo                   + go
+krab                        + time management tui application       + https://github.com/aryakaul/rusty-krab-manager        + rust
 taskell                     + commandline board management          + https://github.com/smallhadroncollider/taskell        + hs
 dijo                        + scriptable digital habit tracker      + https://github.com/NerdyPepper/dijo                   + rust      + home
 meli                        + experimental tui mail client          + https://github.com/meli/meli                          + rust
@@ -100,6 +105,7 @@ chafa                       + terminal graphics for 21st century    + https://gi
 -------------------------------------------------------             MUSIC             --------------------------------------------------------
 spt     - spotifytui        + spotify for the terminal              + https://github.com/Rigellute/spotify-tui              + rust
 spotifyd                    + spotify deamon                        + https://github.com/Spotifyd/spotifyd                  + rust
+shellcaster                 + terminal-based podcast manager        + https://github.com/jeff-hughes/shellcaster            + rust
 -------------------------------------------------------            HACKING            --------------------------------------------------------
 r2      - radare2           + reverse engineering framework         + https://github.com/radareorg/radare2                  + cpp
 termshark                   + terminal UI for tshark                + https://github.com/gcla/termshark                     + go

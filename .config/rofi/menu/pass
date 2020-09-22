@@ -21,7 +21,7 @@ USERNAME_field='user'
 AUTOTYPE_field='autotype'
 OTPmethod_field='otp_method'
 
-default_autotype="user :tab pass"
+default_autotype="user :tab gopass"
 delay=2
 wait=0.2
 xdotool_delay=12
@@ -124,7 +124,7 @@ generateQrCode() {
 	fi
 
 	checkIfPass
-	pass "$selected_password" | head -n 1 | qrencode -d 300 -v 8 -l H -o - | _image_viewer
+	gopass "$selected_password" | head -n 1 | qrencode -d 300 -v 8 -l H -o - | _image_viewer
 	if [[ $? -eq "1" ]]; then
 		printf '%s\n' "" | _rofi -dmenu -mesg "Image viewer not defined or cannot read from pipe"
 		exit_value=$?
@@ -139,7 +139,7 @@ generateQrCode() {
 
 openURL () {
 	checkIfPass
-	$BROWSER "$(PASSWORD_STORE_DIR="${root}" pass "$selected_password" | grep "${URL_field}: " | gawk '{sub(/:/,"")}{print $2}1' | head -1)"; exit;
+	$BROWSER "$(PASSWORD_STORE_DIR="${root}" gopass "$selected_password" | grep "${URL_field}: " | gawk '{sub(/:/,"")}{print $2}1' | head -1)"; exit;
 	clearUp
 }
 
@@ -209,12 +209,12 @@ generateOTP () {
 	checkIfPass
 
 	# First, we check if there is a non-conventional OTP command in the pass file
-	if PASSWORD_STORE_DIR="${root}" pass "$selected_password" | grep -q "${OTPmethod_field}: "; then
+	if PASSWORD_STORE_DIR="${root}" gopass "$selected_password" | grep -q "${OTPmethod_field}: "; then
 		# We execute the commands after otp_method: AS-IS
-		bash -c "$(PASSWORD_STORE_DIR="${root}" pass "$selected_password" | grep "${OTPmethod_field}: " | cut -d' ' -f2-)"
+		bash -c "$(PASSWORD_STORE_DIR="${root}" gopass "$selected_password" | grep "${OTPmethod_field}: " | cut -d' ' -f2-)"
 	else
 		# If there is no method defined, fallback to pass-otp
-		PASSWORD_STORE_DIR="${root}" pass otp "$selected_password"
+		PASSWORD_STORE_DIR="${root}" gopass otp "$selected_password"
 	fi
 
 	clearUp
@@ -303,9 +303,9 @@ generatePass () {
 		exit
 	fi
 	if [[ $length == "" ]]; then
-		PASSWORD_STORE_DIR="${root}" pass generate ${symbols} -i "$selected_password" "${password_length}" > /dev/null;
+		PASSWORD_STORE_DIR="${root}" gopass generate ${symbols} -i "$selected_password" "${password_length}" > /dev/null;
 	else
-		PASSWORD_STORE_DIR="${root}" pass generate ${symbols} -i "$selected_password" "${length}" > /dev/null;
+		PASSWORD_STORE_DIR="${root}" gopass generate ${symbols} -i "$selected_password" "${length}" > /dev/null;
 	fi
 }
 
@@ -374,19 +374,19 @@ mainMenu () {
 			26) ${basecommand} --bmarks; return;;
 		esac
 
-		mapfile -t password_temp < <(PASSWORD_STORE_DIR="${root}" pass show "$selected_password")
+		mapfile -t password_temp < <(PASSWORD_STORE_DIR="${root}" gopass show "$selected_password")
 		password=${password_temp[0]}
 
 		if [[ ${password} == "#FILE="* ]]; then
 			pass_file="${password#*=}"
-			mapfile -t password_temp2 < <(PASSWORD_STORE_DIR="${root}" pass show "${pass_file}")
+			mapfile -t password_temp2 < <(PASSWORD_STORE_DIR="${root}" gopass show "${pass_file}")
 			password=${password_temp2[0]}
 		fi
 
 		fields=$(printf '%s\n' "${password_temp[@]:1}" | awk '$1 ~ /:$/ || /otpauth:\/\// {$1=$1;print}')
 		declare -A stuff
 		stuff["pass"]=${password}
-	
+
 		if [[ -n $fields ]]; then
 			while read -r LINE; do
 				unset _id _val
@@ -409,7 +409,7 @@ mainMenu () {
 			if test "${stuff['autotype']+autotype}"; then
 				:
 			else
-				stuff["autotype"]="${USERNAME_field} :tab pass"
+				stuff["autotype"]="${USERNAME_field} :tab gopass"
 			fi
 		fi
 	fi
@@ -563,7 +563,7 @@ actionMenu () {
 
 showEntry () {
 	if [[ -z $pass_content ]]; then
-		pass_temp=$(PASSWORD_STORE_DIR="${root}" pass show "$selected_password")
+		pass_temp=$(PASSWORD_STORE_DIR="${root}" gopass show "$selected_password")
 		password="${pass_temp%%$'\n'*}"
 		pass_key_value=$(printf '%s\n' "${pass_temp}" | tail -n+2 | grep ': ')
 		declare -A stuff
@@ -579,7 +579,7 @@ showEntry () {
 		if test "${stuff['autotype']+autotype}"; then
 			:
 		else
-			stuff["autotype"]="${USERNAME_field} :tab pass"
+			stuff["autotype"]="${USERNAME_field} :tab gopass"
 		fi
 
 		pass_content="$(for key in "${!stuff[@]}"; do printf '%s\n' "${key}: ${stuff[$key]}"; done)"
@@ -626,7 +626,7 @@ showEntry () {
 
 manageEntry () {
 	if [[ "$1" == "edit" ]]; then
-		EDITOR=$EDITOR PASSWORD_STORE_DIR="${root}" pass edit "${selected_password}"
+		EDITOR=$EDITOR PASSWORD_STORE_DIR="${root}" gopass edit "${selected_password}"
 		mainMenu
 	elif [[ $1 == "move" ]]; then
 		cd "${root}" || exit
@@ -635,7 +635,7 @@ manageEntry () {
 		if [[ $group == "" ]]; then
 			exit
 		fi
-		PASSWORD_STORE_DIR="${root}" pass mv "$selected_password" "${group}"
+		PASSWORD_STORE_DIR="${root}" gopass mv "$selected_password" "${group}"
 		mainMenu
 	elif [[ $1 == "copy" ]]; then
 		cd "${root}" || exit
@@ -646,7 +646,7 @@ manageEntry () {
 		else
 			new_name="$(listgpg | _rofi -dmenu -format 'f' -mesg "Copying to same Group. Please enter a name for the new entry" -p "> ")"
 		fi
-		PASSWORD_STORE_DIR="${root}" pass cp "$selected_password" "${group}/${new_name}"
+		PASSWORD_STORE_DIR="${root}" gopass cp "$selected_password" "${group}/${new_name}"
 		mainMenu
 	elif [[ "$1" == "delete" ]]; then
 		HELP="<span color='$help_color'>Selected entry: ${selected_password}</span>"
@@ -654,7 +654,7 @@ manageEntry () {
 			"No")
 		ask=$(printf '%s\n' "${ask_content[@]}" | _rofi -mesg "${HELP}" -dmenu -p "Are You Sure? > ")
 		if [[ "$ask" == "Yes" ]]; then
-			PASSWORD_STORE_DIR="${root}" pass rm --force "${selected_password}"
+			PASSWORD_STORE_DIR="${root}" gopass rm --force "${selected_password}"
 		elif [[ "$ask" == "No" ]]; then
 			mainMenu
 		elif [[ -z "$ask" ]]; then
@@ -728,12 +728,12 @@ insertPass () {
 				"---"
 				"${USERNAME_field}: ${user}"
 				"${URL_field}: ${url}")
-			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" pass insert -m "${name}" > /dev/null && PASSWORD_STORE_DIR="${root}" pass edit "${name}"
+			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" gopass insert -m "${name}" > /dev/null && PASSWORD_STORE_DIR="${root}" gopass edit "${name}"
 		else
 			pass_content=("${pw}"
 				"---"
 				"${USERNAME_field}: ${user}")
-			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" pass insert -m "${name}" > /dev/null && PASSWORD_STORE_DIR="${root}" pass edit "${name}"
+			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" gopass insert -m "${name}" > /dev/null && PASSWORD_STORE_DIR="${root}" gopass edit "${name}"
 		fi
 	else
 		if [[ $url == http* ]]; then
@@ -741,21 +741,21 @@ insertPass () {
 				"---"
 				"${USERNAME_field}: ${user}"
 				"${URL_field}: ${url}")
-			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" pass insert -m "${group}/${name}" > /dev/null && PASSWORD_STORE_DIR="${root}" pass edit "${group}/${name}"
+			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" gopass insert -m "${group}/${name}" > /dev/null && PASSWORD_STORE_DIR="${root}" gopass edit "${group}/${name}"
 		else
 			pass_content=("${pw}"
 				"---"
 				"${USERNAME_field}: ${user}")
-			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" pass insert -m "${group}/${name}" > /dev/null
+			printf '%s\n' "${pass_content[@]}" | PASSWORD_STORE_DIR="${root}" gopass insert -m "${group}/${name}" > /dev/null
 			if [[ $edit_new_pass == "true" ]]; then
-				PASSWORD_STORE_DIR="${root}" pass edit "${group}/${name}"
+				PASSWORD_STORE_DIR="${root}" gopass edit "${group}/${name}"
 			fi
 		fi
 	fi
 }
 
 help_msg () {
-	cat <<'EOF' 
+	cat <<'EOF'
 	Usage:
 	rofi-pass [command]
 
@@ -862,5 +862,3 @@ main () {
 }
 
 main "$@"
-
-
