@@ -1,0 +1,5 @@
+#!/bin/sh
+
+confile=$(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" -not -path "/home/bresilla/dots/.config/Code*" -not -path "/home/bresilla/dots/.config/nvim/plugged/*" | fzf)
+
+nvim $confile

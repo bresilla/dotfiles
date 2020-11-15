@@ -2,29 +2,29 @@
 nvenc(){
   echo "START"
   slop=$(slop -f "%x %y %w %h %g %i") && read -r X Y W H G ID < <(echo $slop)
-  echo " rec" > /home/bresilla/.config/bspwm/pipes/rec &
-  optirun ffmpeg -y -re \
+  echo " rec" > /home/bresilla/.config/rec &
+  prime ffmpeg -y -re \
     -f x11grab \
     -s "$W"x"$H" \
     -i :0.0+$X,$Y \
     -r 30 -framerate 60 \
     -vcodec h264_nvenc \
     -profile high444p -pixel_format yuv444p -qmin 10 -qmax 52 -preset lossless -level 51\
-    ~/DATA/VIDEOS/CASTS/$(date +%s).mkv
-  echo "" > /home/bresilla/.config/bspwm/pipes/rec
+    /home/bresilla/temp/$(date +%s).mkv
+  echo "" > /home/bresilla/.config/rec
 }
 
 libx264(){
   slop=$(slop -f "%x %y %w %h %g %i") && read -r X Y W H G ID < <(echo $slop)
-  echo " rec" > /home/bresilla/.config/bspwm/pipes/rec &
+  echo " rec" > /home/bresilla/.config/rec &
   ffmpeg -y -re \
     -f x11grab \
     -s "$W"x"$H" \
     -i :0.0+$X,$Y \
     -vcodec libx264rgb \
     -profile high444 -pixel_format yuv444p -crf 19 -preset ultrafast -qp 0 -level 51\
-    ~/DATA/VIDEOS/CASTS/$(date +%s).mkv
-  echo "" > /home/bresilla/.config/bspwm/pipes/rec
+    /home/bresilla/temp/$(date +%s).mkv
+  echo "" > /home/bresilla/.config/rec
 #    -f alsa -i pulse \
 }
 

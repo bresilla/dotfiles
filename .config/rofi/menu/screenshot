@@ -1,6 +1,6 @@
 #!/bin/bash
 PADDINGS="40% 0 0 40%"
-source ~/.cache/wal/colors.sh
+source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${color1:-#FFFFFF}; spacing: $PADDINGS;}")
 
 zoom=""
@@ -27,21 +27,25 @@ case $chosen in
     $theme)
         # pastel pick | pastel format hex | xclip -sel clip
         # xcolor | xclip -sel clip
-        disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
+        disp=$(echo -e "L\nD" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
         sleep .2
-        if [ "$disp" == "" ] ; then
+        if [ "$disp" == "L" ] ; then
             sed -i '5s/.*/do wal -n -i $file --saturate 0.5/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
-        elif [ "$disp" == "" ] ; then
+        elif [ "$disp" == "D" ] ; then
             sed -i '5s/.*/do wal -n -l -i $file --saturate 0.5/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
         fi
         ;;
     $record)
         disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
         if [ "$disp" == "" ] ; then
-            exec /home/bresilla/.sbin/recffm -w
+            systemctl --user stop picom.service
+            exec /home/bresilla/.func/media/capture -w
+            systemctl --user start picom.service
         elif [ "$disp" == "" ] ; then
             killall ffmpeg
-            exec /home/bresilla/.sbin/recffm -g
+            systemctl --user stop picom.service
+            exec /home/bresilla/.func/media/capture -g
+            systemctl --user start picom.service
         fi
         ;;
     $screenshot)
@@ -51,6 +55,8 @@ case $chosen in
         elif [ "$disp" == "" ] ; then
             filename=/tmp/$(date +%s).png
         fi
+        systemctl --user stop picom.service
         maim -s | tee $filename | xclip -sel clip -t image/png -i && sxiv $filename
+        systemctl --user start picom.service
         ;;
 esac

@@ -4,20 +4,8 @@
 (cat ~/.cache/wal/sequences &)
 source ~/.cache/wal/colors.sh
 
-#--------------------------------------------------------------------------------------------------------------------
-###SCRIPTS PATH
-export FPATH=~/.config/zsh:$FPATH
-###ALIASES
-[ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
-###PROFILE
-[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-###DIRENV
-eval "$(direnv hook zsh)"
-###NAVI
-source <(navi widget zsh)
-###MODULES
-[[ -e /opt/modules ]] && source /opt/modules/init/zsh
 
+#--------------------------------------------------------------------------------------------------------------------
 ###LAUNCHER
 if [[ -n ${LAUNCHER} ]]; then
     PS1="> "
@@ -26,6 +14,8 @@ if [[ -n ${LAUNCHER} ]]; then
     return
 fi
 
+
+#--------------------------------------------------------------------------------------------------------------------
 ###CASE INSENSITIVE
 zstyle ':completion:*' completer _expand _complete _ignored
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -116,8 +106,8 @@ sudo-command-line() {
         LBUFFER="sudo $LBUFFER"
     fi
 }
-zle -N sudo-command-line
-bindkey -s '\es' sudo-command-line
+# zle -N sudo-command-line
+# bindkey -s '\es' sudo-command-line
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -156,6 +146,7 @@ push-line-and-clear() { zle .push-line; zle .clear-screen }
 zle -N push-line-and-clear
 bindkey '^L' push-line-and-clear
 
+#--------------------------------------------------------------------------------------------------------------------
 # CTRL-Z starts previously suspended process.
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
@@ -169,22 +160,7 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-
 #--------------------------------------------------------------------------------------------------------------------
-###NNN
-n(){
-    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
-        echo "nnn is already running"
-        return
-    fi
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-    nnn -e "$@"
-    if [ -f "$NNN_TMPFILE" ]; then
-            . "$NNN_TMPFILE"
-            rm -f "$NNN_TMPFILE" > /dev/null
-    fi
-}
-
 #SHKO
 my-accept-line () {
     # check if the buffer does not contain any words
@@ -198,8 +174,6 @@ bindkey '^M' my-accept-line
 
 
 
-#--------------------------------------------------------------------------------------------------------------------
-alias \$=''
 
 #--------------------------------------------------------------------------------------------------------------------
 ###RE-ENTER SAME DIRECTORY
@@ -241,4 +215,28 @@ TRAPALRM() {
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
 [ -f ~/.config/promptline ] && source ~/.config/promptline
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+
+#--------------------------------------------------------------------------------------------------------------------
+###SCRIPTS PATH
+export FPATH=~/.config/zsh:$FPATH
+
+###ALIASES
+[ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
+alias \$=''
+
+###PROFILE
+[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
+
+###ZOXIDE
+eval "$(zoxide init zsh)"
+cd() { [[ -d $1 ]] && builtin cd $1 || z $1; }
+
+###DIRENV
+eval "$(direnv hook zsh)"
+
+###NAVI
+source <(navi widget zsh)
+
+###STARSHIP
+# eval "$(starship init zsh)"

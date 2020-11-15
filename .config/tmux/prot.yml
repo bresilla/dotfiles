@@ -1,4 +1,4 @@
-name: "opencv"
+name: "basics"
 windows:
 - name: nvim
   layout: e094,304x64,0,0,25
@@ -6,4 +6,4 @@ windows:
   - commands:
     - nvim
     focus: true
-    root:  /home/bresilla/code/TEMP/opencv                    
+    root:  /home/bresilla/code/lang/CPP/basics 

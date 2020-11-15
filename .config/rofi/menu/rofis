@@ -1,6 +1,6 @@
 #!/bin/bash
 FOREGROUND=$(xrdb -query | grep 'color1:'| awk 'NR==1{print $NF}')
-source ~/.cache/wal/colors.sh
+source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_full -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
 browse(){

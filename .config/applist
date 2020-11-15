@@ -1,6 +1,7 @@
 -------------------------------------------------------            SYSTEM             --------------------------------------------------------
 bat                         + a cat clone                           + https://github.com/sharkdp/bat                        + rust      + home
 fzf                         + a command-line fuzzy finder           + https://github.com/junegunn/fzf                       + go        + home
+sk      - skim              + a rusty fuzzy finder                  + https://github.com/lotabout/skim                      + rust
 fzy                         + simplier fuzzy finder                 + https://github.com/jhawthorn/fzy                      + cpp       + home
 get     - sysget            + One package manager to rule them all  + https://github.com/emilengler/sysget                  + cpp
 peep                        + less alternative                      + https://github.com/ryochack/peep                      + rust
@@ -8,15 +9,18 @@ delta                       + viewer for git and diff output        + https://gi
 tap     - teip              + Standard input replace                + https://github.com/greymd/teip                        + rust
 rg                          + (ripgrep) grep alternative            + https://github.com/BurntSushi/ripgrep                 + rust      + home
 fd                          + fast find alternative                 + https://github.com/sharkdp/fd                         + rust      + home
+fq      - fselect           + find files with SQL-like queries      + https://github.com/jhspetersson/fselect               + rust
 sd                          + an intuitive search & displace        + https://github.com/chmln/sd                           + rust      + home
 tk      - tokei             + code statistics                       + https://github.com/XAMPPRocky/tokei                   + rust
 aa      - alertafter        + notify after command                  + https://github.com/frewsxcv/alert-after               + rust
 alt                         + binary version/path manager           + https://github.com/dotboris/alt                       + rust
 handlr                      + better xdg-utils                      + https://github.com/chmln/handlr                       + rust
 lnav                        + system LOG navigatior/viewer          + https://github.com/tstack/lnav                        + cpp
+bootiso                     + create a bootable USB devices         + https://github.com/jsamr/bootiso                      + bash
+pier                        + script management CLI                 + https://github.com/pier-cli/pier                      + rust
 -------------------------------------------------------            CHANGE             --------------------------------------------------------
+entr                        + run commands on files change          + https://github.com/eradman/entr                       + cpp
 watcher                     + watch files or directory changes      + https://github.com/radovskyb/watcher                  + go
-watchexex                   + exec commands in file change          + https://github.com/watchexec/watchexec                + rust
 -------------------------------------------------------           NETWORK             --------------------------------------------------------
 band    - bandwhitch        + bandwidth utilization                 + https://github.com/imsnif/bandwhich                   + rust
 ipinfo                      + info about public IP                  + https://github.com/Surendrajat/IPinfo                 + go
@@ -27,8 +31,6 @@ gotty                       + share CLI as a web application        + https://gi
 tunnelto                    + expose local web-server to internet   + https://github.com/agrinman/tunnelto                  + go
 -------------------------------------------------------           BROWSER             --------------------------------------------------------
 bookmark                    + terminal bookmark manager             + https://github.com/Szymongib/bookmark                 + rust
--------------------------------------------------------          DOWNLOADER           --------------------------------------------------------
-annie                       + fast and simple video downloader      + https://github.com/iawia002/annie                     + go
 -------------------------------------------------------             SHELL             --------------------------------------------------------
 pet                         + CLI Snippet Manager                   + https://github.com/knqyf263/pet                       + go
 mn      - tealdeer          + faster TLDR/MAN                       + https://github.com/dbrgn/tealdeer                     + rust
@@ -42,7 +44,9 @@ xcolor                      + color picker                          + https://gi
 gotop                       + better htop system monitor            + https://github.com/cjbassi/gotop                      + go
 zenith                      + htop but with zoom-able charts        + https://github.com/bvaisvil/zenith                    + rust
 ps      - procs             + a replacement for ps                  + https://github.com/dalance/procs                      + rust
+pd                          + view process details                  + https://github.com/wyhaya/pd                          + rust
 inxi                        + all-n-one system info                 + https://github.com/smxi/inxi                          + perl
+battop                      + Interactive batteriy monitor          + https://github.com/svartalf/rust-battop               + rust
 -------------------------------------------------------              GIT              --------------------------------------------------------
 lzg     - lazygit           + simple terminal UI for git commands   + https://github.com/jesseduffield/lazygit              + go
 gitui                       + blazng fast git cmd ui                + https://github.com/extrawurst/gitui                   + rust
@@ -66,38 +70,53 @@ faker                       + fake data gererator                   + https://gi
 gopass                      + standard unix password manage         + https://github.com/gopasspw/gopass                    + go
 age                         + file encryption tool                  + https://github.com/FiloSottile/age                    + go
 crux    - horcrux           + split file into encrypted fragments   + https://github.com/jesseduffield/horcrux              + go
--------------------------------------------------------             FILES             --------------------------------------------------------
+tomb                        + manage encrypted volumes              + https://github.com/dyne/Tomb                          + bash
+-------------------------------------------------------              DOT             --------------------------------------------------------
+emplace                     + syncronise packages multiple PC       + https://github.com/tversteeg/emplace                  + rust
+-------------------------------------------------------            MANAGER            --------------------------------------------------------
+adv[cp,mv]                  + cp & mv with progressbar              + https://github.com/jarun/advcpmv                      + cpp       + pack
+scd                         + side/tab file manager                 + https://github.com/cshuaimin/scd                      + rust
 ls      - exa               + modern version of ‘ls’                + https://github.com/ogham/exa                          + rust      + home
 lsd                         + next-gen version of 'ls'              + https://github.com/Peltoche/lsd                       + rust
+s       -scotty             + drectory fast beaming                 + https://github.com/wdullaer/scotty                    + rust
 rn      - renamer           + regex batch renamer                   + https://github.com/adriangoransson/renamer            + rust
 sw                          + swap names of multiple files          + https://github.com/aypie/sw                           + cpp
-rm      - crap              + remove files to trash                 + https://github.com/icyphox/crap                       + nim
+rip                         + safe and ergonomic alternative to rm  + https://github.com/nivekuil/rip                       + rust
 unf                         + sanitize filenames unix format        + https://github.com/io12/unf                           + rust
-du      - dust              + linux du alternative                  + https://github.com/dalance/procs                      + rust
+psc     - periscope         + De-duplicate files                    + https://github.com/anishathalye/periscope             + go
+-------------------------------------------------------             FILES             --------------------------------------------------------
 disco   - diskonaut         + disk space navigator                  + https://github.com/imsnif/diskonaut                   + rust
 oneshot                     + single-fire HTTP server               + https://github.com/raphaelreyna/oneshot               + go
 dragon                      + drag & drop for X                     + https://github.com/mwh/dragon                         + cpp
 send    - ffsend            + command line file share               + https://github.com/timvisee/ffsend                    + rust
 qrcp                        + QR-code file network transfer         + https://github.com/claudiodangelis/qrcp               + go
 transfer                    + easy and fast file sharing from cli   + https://github.com/dutchcoders/transfer.sh            + go
-croc                        + end things from one computer to other + https://github.com/schollz/croc                       + go
-psc     - periscope         + De-duplicate files                    + https://github.com/anishathalye/periscope             + go
+croc                        + send from one computer to other       + https://github.com/schollz/croc                       + go
 -------------------------------------------------------           HTML & MD           --------------------------------------------------------
 gomd                        + Serve markdown to localhost           + https://github.com/wojciechkepka/gomd                 + go
 mdp                         + markdown presentation tool            + https://github.com/visit1985/mdp                      + cpp
 pandoc                      + universal markup converter            + https://github.com/jgm/pandoc                         + hs
 hugo                        + Static website builder                + https://github.com/gohugoio/hugo                      + go
 zola                        + Static site generator                 + https://github.com/getzola/zola                       + rust
+-------------------------------------------------------             DATAS             --------------------------------------------------------
+jq                          + JSON processor                        + https://github.com/stedolan/jq                        + cpp       + pack
+jo                          + utility to create JSON objects        + https://github.com/jpmens/jo                          + cpp       + pack
+ledger                      + double-entry accounting system        + https://github.com/ledger/ledger                      + cpp       + pack
 -------------------------------------------------------             NOTES             --------------------------------------------------------
 dnote                       + simple command line notebook          + https://github.com/dnote/dnote                        + go
 eureka                      + store your ideas in the terminal      + https://github.com/simeg/eureka                       + rust
 -------------------------------------------------------            SCHEDULE           --------------------------------------------------------
+task    - taskwarrior       + commandline task management           + https://github.com/GothenburgBitFactory/taskwarrior   + cpp       + pack
+remind                      + commandline task management           + https://github.com/GothenburgBitFactory/remind        + cpp       + pack
 pomo                        + pomodoro CLI                          + https://github.com/kevinschoon/pomo                   + go
-krab                        + time management tui application       + https://github.com/aryakaul/rusty-krab-manager        + rust
-taskell                     + commandline board management          + https://github.com/smallhadroncollider/taskell        + hs
+todo    - taskwarrior-tui   + TUI for taskwarrior                   + https://github.com/kdheepak/taskwarrior-tui           + rust
 dijo                        + scriptable digital habit tracker      + https://github.com/NerdyPepper/dijo                   + rust      + home
+-------------------------------------------------------              MAIL              -------------------------------------------------------
 meli                        + experimental tui mail client          + https://github.com/meli/meli                          + rust
+-------------------------------------------------------             MEDIA              -------------------------------------------------------
+mpv                         + command line video player             + https://github.com/mpv-player/mpv                     + cpp
 -------------------------------------------------------             IMAGE             --------------------------------------------------------
+imagemagick                 + swissarmy knife of image editor       + https://github.com/ImageMagick/ImageMagick            + cpp
 fim                         + costumizable image viewer             + https://www.nongnu.org/fbi-improved/                  + cpp
 viu                         + terminal image viewer                 + https://github.com/atanunq/viu                        + rust
 sic                         + image processing and converter        + https://github.com/foresterre/sic                     + rust
@@ -106,12 +125,27 @@ chafa                       + terminal graphics for 21st century    + https://gi
 spt     - spotifytui        + spotify for the terminal              + https://github.com/Rigellute/spotify-tui              + rust
 spotifyd                    + spotify deamon                        + https://github.com/Spotifyd/spotifyd                  + rust
 shellcaster                 + terminal-based podcast manager        + https://github.com/jeff-hughes/shellcaster            + rust
+rsmix                       + PulseAudio volume mixer               + https://github.com/jantap/rsmixer                     + rust
+sox                         + swissarmy knife of sound processing   + https://github.com/chirlu/sox                         + cpp       + pack
+-------------------------------------------------------             VIDEO             --------------------------------------------------------
+annie                       + fast and simple video downloader      + https://github.com/iawia002/annie                     + go
+tube    -youtube-dl         + download videos from YouTube.com      + https://github.com/ytdl-org/youtube-dl                + python    + pack
+mpv                         + command line video player             + https://github.com/mpv-player/mpv                     + cpp
 -------------------------------------------------------            HACKING            --------------------------------------------------------
 r2      - radare2           + reverse engineering framework         + https://github.com/radareorg/radare2                  + cpp
 termshark                   + terminal UI for tshark                + https://github.com/gcla/termshark                     + go
 hexyl                       + command-line hex viewer               + https://github.com/sharkdp/hexyl                      + rust
+bingrep                     + grep binary files                     + https://github.com/m4b/bingrep                        + rust
+stego                       + stegonographic swiss army knife       + https://github.com/ajmwagar/stego                     + rust
+-------------------------------------------------------            TERMINAL           --------------------------------------------------------
+alacritty                   + GPU-accelerated terminal emulator     + https://github.com/alacritty/alacritty                + rust      + pack
+kitty                       + GPU based terminal emulator           + https://github.com/kovidgoyal/kitty                   + cpp       + pack
+tab                         + terminal multiplexer                  + https://github.com/austinjones/tab-rs                 + rust
+tmux                        + THE terminal multiplexer              + https://github.com/tmux/tmux                          + cpp
+-------------------------------------------------------             SHELL             --------------------------------------------------------
+rng                         + stream range of input to stdout       + https://github.com/nickolasburr/rng                   + cpp
 -------------------------------------------------------               WM              --------------------------------------------------------
 boomer                      + zoom tool for boomers                 + https://github.com/tsoding/boomer                     + nim
-wallutils                   + monitors, resolutions, wallpapers...  + https://github.com/xyproto/wallutils                  + cpp       + pack
+ly                          + a tui display manager                 + https://github.com/cylgom/ly                          + cpp       + pack
 -------------------------------------------------------              OTHER            --------------------------------------------------------
 eva                         + a calculator REPL, similar to bc      + https://github.com/NerdyPepper/eva                    + rust

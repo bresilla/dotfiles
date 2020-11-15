@@ -54,16 +54,22 @@ nix-profile(){
 
 layout_conda() {
     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
-    CONDAPATH="$CONDA_HOME/bin"; CONDALENV="$PWD/.venv"; [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
+    CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
+    CONDALENV="$PWD/.venv";
 
     if [[ -d $CONDALENV/conda-meta ]]; then
         source activate $CONDALENV
         conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
-        printf "\nconda environment: ${BLUE}${conda_env}${NC}\n\n";
+        python_v=$(python --version)
+        conda_v=$(conda --version)
+        printf "\nenvironment ver.: \t ${BLUE}${python_v}${NC} and ${BLUE}${conda_v}${NC}";
+        printf "\nenvironment path: \t${BLUE}${conda_env}${NC}\n\n";
     else
-        exit 1
-        # conda create -p $CONDALENV python=${1:-3};
-        # source activate $CONDALENV;
+        # conda create --prefix=$PWD/.venv python=3 -y
+        printf "\n crating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
+        conda create -p $CONDALENV python=${1:-3};
+        printf "\n activating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
+        source activate $CONDALENV;
     fi
 }
 

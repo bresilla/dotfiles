@@ -19,18 +19,15 @@ rounded-corners-exclude = [
 
 # Shadow
 shadow = true;
-shadow-radius = 25;
-shadow-offset-x = 10;
-shadow-offset-y = 10;
-shadow-opacity = 0.2;
+shadow-radius = 50;
+shadow-offset-x = 5;
+shadow-offset-y = 5;
+shadow-opacity = 0.4;
 shadow-exclude = [
-    "class_g *?= 'jgmenu'",
-    "class_g *?= 'mpv'",
-    "class_g *?= 'Conky'",
     "class_g *?= 'Notify-osd'",
     "class_g *?= 'cairo-dock'",
     "class_g *?= 'Polybar'",
-    "class_g = 'firefox' && !window_type *= 'menu'",
+    "class_g = 'firefox' && window_type = 'utility'",
     "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
     "_GTK_FRAME_EXTENTS@:c"
 ];

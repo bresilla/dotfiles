@@ -28,6 +28,8 @@ in {
     pkgs.direnv
     pkgs.fd
     pkgs.exa
+    pkgs.spotifyd
+    pkgs.spotify-tui
   ];
 
   systemd.user.services = let
@@ -158,22 +160,6 @@ in {
       Service = {
         Type = "simple";
         ExecStart = "/usr/bin/dunst -config %h/.config/dunst/dunstrc";
-        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
-        Restart = "always";
-        RestartSec = "5";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    sxhkd = {
-      Unit = {
-        Description = "Simple X Hotkey Daemon";
-        Documentation = "man:sxhkd(1)";
-        After = ["graphical.target"];
-      };
-      Service = {
-        ExecStart = "/usr/bin/sxhkd -m -1 -c /home/bresilla/.config/sxhkd/sxhkdrc";
         ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
         Restart = "always";
         RestartSec = "5";

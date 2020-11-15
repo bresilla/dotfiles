@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.cache/wal/colors.sh
+source /home/bresilla/.cache/wal/colors.sh
 PADDINGS="40% 0 0 37%"
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${color1:-#FFFFFF}; spacing: $PADDINGS;}")
 
@@ -24,7 +24,7 @@ case $chosen in
         [ $(echo -e $YESNO | rofi "${ROFI_OPTIONS[@]}" -theme-str "*{accent: #e53714;}" -dmenu -i -p "Are you shure you want to proceed?") ==  ] && systemctl reboot
         ;;
     $lock)
-	    exec  ~/.config/i3lock/blurlock;
+	    exec  /home/bresilla/.config/i3lock/blurlock;
         ;;
     $suspend)
 	    [ $(echo -e $YESNO | rofi "${ROFI_OPTIONS[@]}" -theme-str "*{accent: #e53714;}" -dmenu -i -p "Are you shure you want to proceed?") ==  ] && systemctl suspend

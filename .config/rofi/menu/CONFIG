@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.cache/wal/colors.sh
+source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_full -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 edit_with="kitty --class=til"
 
@@ -10,12 +10,19 @@ ROFMENU
 PROFILE" | awk '{print $(NF-1)}' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "CONFIGS: ")
 
 browse(){
-	selected=$(ls -A --group-directories-first "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
+	if [[ "$2" == "$1" ]]; then
+	    selected=$(ls -A --group-directories-first "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
+    else
+	    selected=$({ ls -A --group-directories-first "$1/" & echo ".."; } | cat | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
+    fi
+
 	[[ -z $selected ]] && exit
-	if [[ -f $1/$selected ]]; then
+	if [[ "$selected" == ".." ]]; then
+        browse "$(dirname $1)" $2
+	elif [[ -f $1/$selected ]]; then
 		$edit_with -e nvim $1/$selected
 	elif [[ -d $1/$selected ]]; then
-		browse $1/$selected
+		browse $1/$selected $2
 	else
 		touch $1/$selected
 		chmod +x $1/$selected
@@ -27,6 +34,7 @@ if [ "$another" == "PROFILE" ] ; then
 	selected=$(echo "$HOME/dots/.zshrc
 $HOME/dots/.bashrc
 $HOME/dots/.profile
+$HOME/dots/.startup
 $HOME/dots/.other/variables
 $HOME/dots/.config/git/config
 $HOME/dots/.config/tmux/tmux.conf
@@ -35,16 +43,16 @@ $HOME/dots/.config/nixpkgs/home.nix" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "s
 	$edit_with -e nvim $selected
 
 elif [ "$another" == "CONFIGS" ] ; then
-	browse /home/bresilla/dots/.config;
+	browse /home/bresilla/dots/.config /home/bresilla/dots/.config;
 
 elif [ "$another" == "SCRIPTS" ] ; then
-    browse /home/bresilla/dots/.func;
+    browse /home/bresilla/dots/.func /home/bresilla/dots/.func;
 
 elif [ "$another" == "ALIASES" ] ; then
-	browse /home/bresilla/dots/.alias;
+	browse /home/bresilla/dots/.alias /home/bresilla/dots/.alias;
 
 elif [ "$another" == "ROFMENU" ] ; then
-	browse /home/bresilla/dots/.config/rofi/menu;
+	browse /home/bresilla/dots/.config/rofi/menu /home/bresilla/dots/.config/rofi/menu;
 
 else
     echo $another

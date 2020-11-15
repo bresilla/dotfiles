@@ -74,7 +74,7 @@ goto()
 
 _goto_resolve_db()
 {
-  GOTO_DB="${GOTO_DB:-$HOME/Dots/.config/zsh/goto/gotodb}"
+  GOTO_DB="${GOTO_DB:-$HOME/dots/.config/zsh/goto/gotodb}"
   touch -a "$GOTO_DB"
 }
 
@@ -451,4 +451,3 @@ else
   echo "Unsupported shell."
   exit 1
 fi
-

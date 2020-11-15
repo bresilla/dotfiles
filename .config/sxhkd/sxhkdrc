@@ -1,18 +1,19 @@
 alt + space
-    bash ~/.config/rofi/menu/USER
+    /home/bresilla/.config/rofi/menu/USER
 super + alt + {Escape,Delete,Insert}
-    bash ~/.config/rofi/menu/{power,CONFIG,screenshot}
+    /home/bresilla/.config/rofi/menu/{power,CONFIG,screenshot}
 super + space
-    bash ~/.config/rofi/menu/BROWSE
+    /home/bresilla/.config/rofi/menu/BROWSE
 mode_switch + space
-    bash ~/.config/rofi/menu/ROOT
+    /home/bresilla/.config/rofi/menu/ROOT
 ctrl + Return; {c,Return, space}
     {code,kitty --class=til tmux, alacritty -e tmux}
 
 {super,alt} + Escape
     bspc node -{c,k}
 {super,alt} + Delete
-    {pkill -USR1 -x sxhkd && ~/.startup; systemctl --user restart wallpaper.service}
+    {systemctl --user restart picom.service; systemctl --user restart wallpaper.service, play ~/.config/dunst/scripts/bleep.wav; /home/bresilla/.startup}
+    #{pkill -USR1 -x sxhkd && ~/.startup; systemctl --user restart picom.service; systemctl --user restart wallpaper.service}
 
 {_,super} + dead_circumflex
     /home/bresilla/dots/.func/wm/termop {kitty, alacritty} MAIN 2500 1050
@@ -55,18 +56,19 @@ super + alt + {Down,Up}
 {super,alt,alt+super} + ~BackSpace
     bspc node -g {locked,private,sticky}
 
-mod3 + {Up,Down,Left,Right}
-    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,cycle,backwards,forewards}
+mode_switch + mod3 + {space,Up,Down,Left,Right}
+    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,cycle,cycle,backwards,forewards}
+
+alt+super + XF86AudioPlay
+    play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
 
 mod3 + XF86Audio{Prev,Next}
     mpc seekthrough {-10,+10}
 XF86Audio{Prev,Next,Play}
     playerctl {previous,next,play-pause} || mpc -q {prev,next,toggle}
 XF86Audio{Raise,Lower}Volume
-    pulsemixer --change-volume {+,-}2 && pulsemixer --get-volume | cut -d " " -f1 >> /home/bresilla/.local/share/fifo/xob
+    pulsemixer --change-volume {+,-}2 && [[ $(pulsemixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pulsemixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
 XF86AudioMute
-    pulsemixer --toggle-mute
+    pulsemixer --toggle-mute && [[ $(pulsemixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pulsemixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
 XF86MonBrightness{Up,Down}
     light -{A,U} 2 && light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
-alt + super + XF86MonBrightness{Up,Down}
-    lighter {up,down}
