@@ -70,7 +70,7 @@ endif(CCACHE_BIN)
 # -------------------------------------------------------------------------------------------------------------------------------------------
 include(Warnings)
 #CPP STANDARD OPTIONS
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
@@ -89,10 +89,11 @@ if((cmake_build_type_tolower STREQUAL "release") OR (cmake_build_type_tolower ST
         option(ENABLE_DOCUMENT         "Enable documentation"           ON)
     endif()
 elseif((cmake_build_type_tolower STREQUAL "debug") OR (cmake_build_type_tolower STREQUAL "fastdebug"))
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -fprofile-arcs -ftest-coverage -O0 -g3")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1 -g3")
     option(BUILD_TESTS             "Build test units"                   ON)
-    option(ENABLE_COVERAGE         "Enable testing coverage"            ON)
     if(cmake_build_type_tolower STREQUAL "debug")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+        option(ENABLE_COVERAGE         "Enable testing coverage"        ON)
         option(ENABLE_SANITIZERS       "Enable langtidy and cppcheck"   ON)
         option(ENABLE_DOCUMENT         "Enable documentation"           ON)
         option(ENABLE_MEMCHECK         "Enable memory leak check"       ON)

@@ -35,17 +35,22 @@ function __promptline_vcs_branch {
     return 1
 }
 
+function __dev_lang {
+    if [[ -n $(echo $ENVNAME) ]]; then
+        printf " $ENVNAME "
+    fi
+}
+
 function __is_in_container {
-    if [[ -n $(echo $INDIRENV) ]]; then
-        [[ -n $(echo $ENVNAME) ]] && printf " $ENVNAME " || printf ' ■ '
-    else
-        [[ -n $(awk -F/ '$2 == "docker"' /proc/self/cgroup) ]] && printf ' ⊙ '
-        [[ -n $(echo $IN_NIX_SHELL) ]] && printf ' × '
+    if [[ -n $(awk -F/ '$2 == "docker"' /proc/self/cgroup) ]]; then
+        printf ' ⊙ '
+    elif [[ -n $(echo $IN_NIX_SHELL) ]]; then
+        printf ' ❄️ '
     fi
 }
 
 function __promptline_cwd {
-    local dir_limit="4"
+    local dir_limit="3"
     local truncation="⋯"
     local first_char
     local part_count=0
@@ -68,16 +73,18 @@ function __promptline_cwd {
 function __promptline_left_prompt {
     #HOST
     prefix="${blackTX}${accentBG}${space}" suffix="${space}${blackBG}${accentTX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
+    #CONTAINER
+    prefix="${blackTX}${accentBG}${arrFL}${blackTX}${accentBG}" suffix="${accentTX}"; [[ -n $(__is_in_container) ]] && printf "%s" "$prefix" "$(__is_in_container)" "$suffix"
     #USER
     prefix="${whiteBG}${arrFL}${blackTX}${whiteBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$USER" "$suffix"
     #SUDO WARN
     prefix="${redBG}${arrFL}${blackTX}${redBG}${space}" suffix="${space}${redTX}"; [[ -n $(__sudo_warning) ]] && printf "%s" "$prefix" "$(__sudo_warning)" "$suffix"
-    #CONTAINER
-    prefix="${blackBG}${arrFL}${blackTX}${accentBG}${arrFL}${blackTX}${accentBG}" suffix="${accentTX}"; [[ -n $(__is_in_container) ]] && printf "%s" "$prefix" "$(__is_in_container)" "$suffix"
+    #DEVSHELL
+    prefix="${blackBG}${arrFL}${blackTX}${accentBG}${arrFL}${blackTX}${accentBG}" suffix="${accentTX}"; [[ -n $(__dev_lang) ]] && printf "%s" "$prefix" "$(__dev_lang)" "$suffix"
     [[ -n $(__is_in_container) ]] && endARR="$arrEL$redBG$blackTX$arrFL$redBG$redTX$blackBG$arrFL$greyTX"
     #PATH
     [[ $(__promptline_vcs_branch) = "master" ]] && conTX=$accentTX
-    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd)" "$suffix"
+    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd)" "$suffix"
 }
 
 function __promptline_right_prompt {
@@ -120,7 +127,7 @@ function __one_line_prompt {
 }
 
 function __breakline() {
-    COLS="${COLUMNS:-80}"
+    COLS="${COLUMNS:-10}"
     local WORD="─"
     if [[ -n "$WORD" ]] ; then
         local LINE=''
@@ -128,7 +135,7 @@ function __breakline() {
         do
             LINE="$LINE$WORD"
         done
-        echo "\e[38;5;59m${LINE:0:$COLS}\e[0m"
+        echo "\e[38;5;240m${LINE:0:$COLS}\e[0m"
     fi
 }
 
@@ -161,8 +168,10 @@ function __promptline {
     local whiteTX="${IN}38;5;15${EN}"
     local accentBG="${IN}48;5;1${EN}"
     local accentTX="${IN}38;5;1${EN}"
-    local greyBG="${IN}48;5;244${EN}"
-    local greyTX="${IN}38;5;244${EN}"
+    local orangeBG="${IN}48;5;214${EN}"
+    local orangeTX="${IN}38;5;214${EN}"
+    local greyBG="${IN}48;5;240${EN}"
+    local greyTX="${IN}38;5;240${EN}"
     local redTX="${IN}38;5;124${EN}"
     local redBG="${IN}48;5;124${EN}"
     local blueTX="${IN}38;5;27${EN}"
@@ -170,8 +179,8 @@ function __promptline {
     local greenTX="${IN}38;5;40${EN}"
     local greenBG="${IN}48;5;40${EN}"
     local conTX=$greyTX
-    local NLD="\e[0m"
-    local BLD="\e[32;1m"
+    local NLD='\e[0m'
+    local BLD='\e[32;1m'
 
 
     if [[ -n ${ZSH_VERSION-} ]]; then

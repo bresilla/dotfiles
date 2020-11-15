@@ -17,6 +17,8 @@
 VERSION=0.4.6
 PROGNAME="$(basename $0)"
 
+# https://github.com/oblique/create_ap
+
 # make sure that all command outputs are in english
 # so we can parse them correctly
 export LC_ALL=C
@@ -1809,13 +1811,14 @@ if [[ "$SHARE_METHOD" != "bridge" ]]; then
     if [[ $NO_DNSMASQ -eq 0 ]]; then
       iptables -w -I INPUT -p udp -m udp --dport 67 -j ACCEPT || die
 
-      if which complain > /dev/null 2>&1; then
+      if which aa-complain > /dev/null 2>&1; then
           # openSUSE's apparmor does not allow dnsmasq to read files.
           # remove restriction.
-          complain dnsmasq
+          aa-complain dnsmasq
       fi
 
       umask 0033
+      chown -R bresilla:bresilla $CONFDIR
       dnsmasq -C $CONFDIR/dnsmasq.conf -x $CONFDIR/dnsmasq.pid -l $CONFDIR/dnsmasq.leases -p $DNS_PORT || die
       umask $SCRIPT_UMASK
     fi

@@ -11,7 +11,7 @@ draw_bold_text_with_bright_colors: true
 font:
   normal:
     family: PragmataPro Mono
-    # family: Iosevka Term SS01 Light
+    # family: Iosevka Term Light Nerd Font Complete Mono
     # family: Input Mono Compressed Thin
     style: Regular
   bold:
@@ -24,7 +24,7 @@ font:
     # family: Iosevka Term SS01 Italic
     # family: Input Mono Compressed Italic
     style: Italic
-  size: 6.0
+  size: 7
   offset:
     x: 0
     y: 6

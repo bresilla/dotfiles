@@ -1,4 +1,4 @@
 # Defined in - @ line 1
-function rn --wraps='mv -v' --description 'alias rn mv -v'
-  mv -v $argv;
+function rn --wraps=renamer --description 'alias rn renamer'
+  renamer  $argv;
 end

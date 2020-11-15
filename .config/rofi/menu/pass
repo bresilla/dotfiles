@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source ~/.cache/wal/colors.sh
+source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
 # rofi-pass
@@ -383,7 +383,7 @@ mainMenu () {
 			password=${password_temp2[0]}
 		fi
 
-		fields=$(printf '%s\n' "${password_temp[@]:1}" | awk '$1 ~ /:$/ || /otpauth:\/\// {$1=$1;print}')
+		fields=$(printf '%s\n' "${password_temp[@]:1}" | awk '$1 /home/bresilla /:$/ || /otpauth:\/\// {$1=$1;print}')
 		declare -A stuff
 		stuff["pass"]=${password}
 

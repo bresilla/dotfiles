@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.cache/wal/colors.sh
+source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 BROWSER=firefox
 
@@ -18,7 +18,7 @@ if [ "$another" == "$srch" ] ; then
 	surfraw -browser=$BROWSER $(sr -elvi | awk -F'-' '{print $1}' | sed '/:/d' | awk '{$1=$1};1' | rofi "${ROFI_OPTIONS[@]}" -kb-row-select 'Tab' -kb-row-tab 'Control+space' -dmenu -i -p 'bangs: ')
 
 elif [ "$another" == "$hist" ] ; then
-    exec ~/.config/rofi/menu/fox
+    exec /home/bresilla/.config/rofi/menu/fox
 
 elif [ "$another" == "$mark" ] ; then
     LINK=$(buku --nc -p -f 4 | awk -F'\t' '{print $1 "\t\t\t\t" $3 "\t\t" $4 "\t\t" $2}' | tail -n +2 | column -t -s $'\t' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'buku: ' | sed 's/ .*//;s/[^0-9]//g') 

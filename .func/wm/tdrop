@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# needs:
+# xdotool
+# xprop
+# xorg-xwininfo
+
 MUTDROP_PATH=/tmp/tdrop_"$USER"
 # shellcheck disable=SC2174
 mkdir -p "$MUTDROP_PATH" -m 700

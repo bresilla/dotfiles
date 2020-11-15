@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.cache/wal/colors.sh
+source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 edit_with="kitty --class=til"
 
@@ -25,41 +25,41 @@ $proj
 $usem" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
 if [ "$another" == "$file" ] ; then
-	exec ~/.config/rofi/menu/locate
+    /home/bresilla/.config/rofi/menu/locate
 
 elif [ "$another" == "$task" ] ; then
-  exec ~/.config/rofi/menu/task
+    /home/bresilla/.config/rofi/menu/task
 
 elif [ "$another" == "$book" ] ; then
-  exec ~/.config/rofi/menu/books
+    /home/bresilla/.config/rofi/menu/books
 
 elif [ "$another" == "$note" ] ; then
-  exec ~/.config/rofi/menu/note
+    /home/bresilla/.config/rofi/menu/note
 
 elif [ "$another" == "$locl" ] ; then
-	exec ~/.config/rofi/menu/marks $HOME/Sets/.notes/localhost.wiki
+    exec /home/bresilla/.config/rofi/menu/marks $HOME/sets/.notes/localhost.wiki
 
 elif [ "$another" == "$clip" ] ; then
-	rofi "${ROFI_OPTIONS[@]}" -modi "clipboard:greenclip print" -show clipboard
+    rofi "${ROFI_OPTIONS[@]}" -modi "clipboard:greenclip print" -show clipboard
 
 elif [ "$another" == "$usem" ] ; then
-    appname=$(cat ~/.config/applist |  grep "\S" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'apps:')
+    appname=$(cat /home/bresilla/.config/applist |  grep "\S" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'apps:')
     thelink=$(echo $appname | cut -d'+' -f3 | tr -d ' ')
     [[ ! -n $appname ]] && exit
     regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
-    [[ $thelink =~ $regex ]]&& $BROWSER $thelink || $edit_with -e nvim ~/.config/applist
+    [[ $thelink =~ $regex ]]&& firefox $thelink || $edit_with -e nvim ~/.config/applist
 
 elif [ "$another" == "$cont" ] ; then
-    exec ~/.config/rofi/menu/contacts
+    exec /home/bresilla/.config/rofi/menu/contacts
 
 elif [ "$another" == "$proj" ] ; then
-    pather=$(proji ls | head -n-1 | tail -n+4 | cut -d "|" -f3-5 | tr "|" "\t" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'projects:' | cut -f2)
+    pather=$(/env/go/bin/proji ls | head -n-1 | tail -n+4 | cut -d "|" -f3-5 | tr "|" "\t" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'projects:' | cut -f2)
     nameer=$(basename $pather)
-    [[ $pather ]] && sed -e "s|.*root.*|    root: $pather|" -e "1cname: \"$nameer\"" /home/bresilla/.config/tmux/PRO.yml > /home/bresilla/.config/tmux/prot.yml && tmass -l /home/bresilla/.config/tmux load prot && kitty --class=til tmux attach -t $nameer
+    [[ $pather ]] && sed -e "s|.*root.*|    root: $pather|" -e "1cname: \"$nameer\"" /home/bresilla/.config/tmux/PRO.yml > /home/bresilla/.config/tmux/prot.yml && /env/cpp/bin/tmass -l /home/bresilla/.config/tmux load prot && kitty --class=til tmux attach -t $nameer
     # kitty --class=til tmux attach -t $nameer
 
 elif [ "$another" == "$pass" ] ; then
-    exec ~/.config/rofi/menu/pass
+    exec /home/bresilla/.config/rofi/menu/pass
 
 elif [ -z "$another" ] ; then
 	echo "variable empty" && exit 1

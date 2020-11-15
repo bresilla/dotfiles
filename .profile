@@ -29,7 +29,9 @@ export BROWSER=firefox
 export EDITOR=nvim
 export TERMINAL=kitty
 export TZ='Europe/Berlin'
+export LC_ALL="en_US.UTF-8"
 
+export SSH_AGENT_PID=""
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export GPG_TTY=$(tty)
 export MONITOR1=eDP-1
@@ -42,6 +44,8 @@ export NIMBLE_DIR="/env/nimble"
 export GOPATH="/env/go"
 export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
+export DIRENV_WARN_TIMEOUT=1h
+export BAKE_HOME="/home/bresilla/.local/share/bake"
 
 export UBUNTU_PATH="/tent/ubuntu"
 export VIM="/usr/share/nvim/"
@@ -69,9 +73,9 @@ export XDG_CACHE_PATH=/home/$USER/.cache
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export IPFS_PATH=/home/bresilla/sync/planetary/ipfs
+export GRAVEYARD=/tmp/graveyard-$USER
 
-
-export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
+export WAKATIME_HOME="$XDG_CONFIG_HOME"/wakatime
 export TASKDATA="$XDG_DATA_HOME"/task
 export TASKRC="$XDG_CONFIG_HOME"/task/taskrc
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
@@ -80,4 +84,3 @@ export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

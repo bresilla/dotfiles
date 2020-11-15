@@ -1,5 +1,5 @@
-name: NOTE
-windows:
+# name: NOTE
+# windows:
 # - name: music
   # layout: 8e51,280x57,0,0[280x43,0,0,89,280x13,0,44,118]
   # panes:
@@ -10,10 +10,38 @@ windows:
     # - ncpamixer
     # focus: true
     # root: /home/bresilla
-- name: gotop
-  layout: 6585,280x57,0,0,92
+# - name: gotop
+  # layout: 6585,280x57,0,0,92
+  # panes:
+  # - commands:
+    # - ytop -b
+    # focus: true
+    # root: /home/bresilla
+    #
+
+
+name: NOTE
+windows:
+- name: spt
+  layout: 6642,310x66,0,0[310x18,0,0,6,310x47,0,19,8]
   panes:
   - commands:
-    - gotop -b
+    - rsmixer
+    root: /home/bresilla
+  - commands:
+    - spt
     focus: true
+    root: /home/bresilla
+- name: top
+  layout: ddfa,310x66,0,0{189x66,0,0,5,120x66,190,0[120x22,190,0,4,120x43,190,23,3]}
+  panes:
+  - commands:
+    - ytop -b
+    root: /home/bresilla
+    focus: true
+  - commands:
+    - doas bandwhich
+    root: /home/bresilla
+  - commands:
+    - tock -c
     root: /home/bresilla

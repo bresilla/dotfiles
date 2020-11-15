@@ -1,16 +1,10 @@
-alias s='sudo -E'
-alias sv='sudo -E nvim'
-alias v='nvim'
-alias b='bat'
-
 alias home='home-manager'
-alias pwd='pwd | clip && pwd'
 
 alias ups="doas systemctl"
 alias upu="systemctl --user"
 alias clip='xclip -sel clip'
 alias suspend='systemctl suspend'
-# alias ssh='TERM=xterm-color ssh'
+alias eject='udisksctl power-off -b'
 
 #ALTERNATIVES
 alias vim='nvim'
@@ -26,9 +20,11 @@ alias refresh='pkill -USR1 -x sxhkd && bash ~/.startup -r'
 alias dotfile='/usr/bin/git --git-dir=$HOME/dots --work-tree=$HOME'
 
 #SYSTEM
-# alias cp='acp -g -r -p'
-# alias mv='amv -g -u'
+alias cp='acp -g -r -p'
+alias mv='amv -g -u'
 alias rm='rm -rf'
+alias del='rip'
+alias cat='bat'
 
 
 alias ls='exa -F'
@@ -41,46 +37,15 @@ alias df='dfc -dTomw -p -/dev/loop,tmp,dev,run,one'
 alias lsblk='lsblk -f'
 alias dd='dd status=progress'
 
-#LOGS
-alias syslog='bat "/var/log/syslog"'
-alias lc="wc -l"
-
 ##PROGRAMS
 alias fzp='fzf --preview="head -$LINES {}"'
-alias fzi='selected=$(
-        FZF_DEFAULT_COMMAND="rg --files" fzf -m -e --ansi --phony --reverse \
-        --bind "ctrl-a:select-all" --bind "f12:execute-silent:(subl -b {})" \
-        --bind "change:reload:rg -i -l --hidden --no-ignore-vcs {q} || true" \
-        --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
-    [[ -n $selected ]] && nvim $selected'
-alias du_home='ncdu --color=dark \
-    --exclude /home/bresilla/data \
-    --exclude /home/bresilla/sets \
-    --exclude /home/bresilla/dots \
-    --exclude /home/bresilla/sync'
-
-alias du_sys='doas ncdu --color=dark \
-    --exclude /home \
-    --exclude /env \
-    --exclude /nix \
-    --exclude /tent \
-    --exclude /var/lib/libvirt \
-    --exclude /var/lib/docker \
-    --exclude /var/lib/flatpak \
-    --exclude /var/lib/snapd \
-    --exclude /var/lib/lxd'
-
 alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
 alias x='dtrx --one-entry=rename'
 alias ari='aria2c'
-alias mix='ncpamixer'
 alias inxi='optirun inxi -Fxxxz'
 alias note='dnote'
+alias font='fc-query'
 alias pomo='pomo -p /home/bresilla/.config/pomo'
-
-##HISTORY
-alias hister='fc -lrn 0 | tux -e | clip'
-alias delete_hister='name=$(tac $HISTFILE | fzy); [[ -n $name ]] && LC_ALL=C sed -i "/$name/d" $HISTFILE'
 
 ##FILES
 alias own='doas chown -R $USER:$USER'
@@ -89,5 +54,4 @@ alias dxe='chmod u-x'
 
 ##OTHER
 alias open='nohup mimeo $1 > /dev/null 2>&1 &!'
-alias snip='PREV=$(fc -lrn | head -n 1); sh -c "pet new `printf %q "$PREV"`"'
-alias killer'n=$(ps -ef | sed 1d | tux -m | awk "{print $2}"); [[ -n $n ]] && doas kill $n'
+alias headphones='pactl set-sink-port 0 analog-output-headphones'

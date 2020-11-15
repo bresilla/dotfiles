@@ -1,0 +1,10 @@
+[Unit]
+Description=ktrl
+
+[Service]
+User=ktrl
+Environment=HOME=/home/bresilla/.config/ktrl
+ExecStart=/usr/local/bin/ktrl -d <keyboard-dev-path>
+
+[Install]
+WantedBy=multi-user.target

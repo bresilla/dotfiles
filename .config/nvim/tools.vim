@@ -36,7 +36,6 @@ highlight ALEInfoLine ctermbg=0 ctermfg=237 cterm=italic
 let g:ale_linters = {
             \ 'rust': ['cargo-clippy'],
             \ 'go': ['gopls'],
-            \ 'cpp': ['clangtidy'],
             \ 'nim': ['nimlsp'],
             \ 'python': ['/usr/local/bin/pyls']
             \ }
@@ -166,6 +165,7 @@ let g:clap_layout = { 'relative': 'editor' }
 let g:clap_open_action = { 'ctrl-x': 'vsplit' }
 let g:clap_search_box_border_symbols = {'nil': ['█', '█'], 'curve': ['', ''], 'arrow': ['', '']}
 let g:clap_search_box_border_style = 'nil'
+let g:clap_enable_background_shadow = 'false'
 " let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
 let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
 let g:clap_provider_src = {
