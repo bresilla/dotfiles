@@ -1,27 +1,25 @@
 #!/bin/bash
-PADDINGS="40% 0 0 40%"
+PADDINGS="40% 0 0 42%"
 source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${color1:-#FFFFFF}; spacing: $PADDINGS;}")
 
-zoom=""
-theme=""
-record=""
-screenshot=""
+monitor="M"
+theme="T"
+record="R"
 
-options="$zoom\n$theme\n$record\n$screenshot"
+options="$monitor\n$theme\n$record"
 chosen="$(echo -e "$options" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)"
 
 PADDINGS="40% 0 0 46%"
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${FOREGROUND:-#000000}; spacing: $PADDINGS;}")
 
 case $chosen in
-    $zoom)
-        disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
-        sleep .2
-        if [ "$disp" == "" ] ; then
-            slop -r boxzoom
-        elif [ "$disp" == "" ] ; then
-            slop -r crosshair
+    $monitor)
+         disp=$(echo -e "1\n2" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "Select layout:")
+        if [ "$disp" == "1" ] ; then
+            exec xrandr --output "eDP-1" --primary --mode 3840x2160 --pos 0x0 --output "DP1" --off
+        elif [ "$disp" == "2" ] ; then
+            exec xrandr --output "eDP-1" --primary --mode 3840x2160 --pos 0x1080 --output "DP1" --mode 1920x1080 --pos 920x0
         fi
         ;;
     $theme)
@@ -30,33 +28,18 @@ case $chosen in
         disp=$(echo -e "L\nD" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
         sleep .2
         if [ "$disp" == "L" ] ; then
-            sed -i '5s/.*/do wal -n -i $file --saturate 0.5/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
+            sed -i '5s/.*/do wal -n -i $file --saturate 0.5  -o "/home/bresilla/dots/.func/wm/colors"/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
         elif [ "$disp" == "D" ] ; then
-            sed -i '5s/.*/do wal -n -l -i $file --saturate 0.5/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
+            sed -i '5s/.*/do wal -n -l -i $file --saturate 0.5  -o "/home/bresilla/dots/.func/wm/colors"/' /home/bresilla/dots/.func/wm/loopwall && systemctl --user restart wallpaper.service
         fi
         ;;
     $record)
         disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
         if [ "$disp" == "" ] ; then
-            systemctl --user stop picom.service
             exec /home/bresilla/.func/media/capture -w
-            systemctl --user start picom.service
         elif [ "$disp" == "" ] ; then
             killall ffmpeg
-            systemctl --user stop picom.service
             exec /home/bresilla/.func/media/capture -g
-            systemctl --user start picom.service
         fi
-        ;;
-    $screenshot)
-        disp=$(echo -e "\n" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)
-        if [ "$disp" == "" ] ; then
-            filename=/home/bresilla/temp/$(date +%s).png
-        elif [ "$disp" == "" ] ; then
-            filename=/tmp/$(date +%s).png
-        fi
-        systemctl --user stop picom.service
-        maim -s | tee $filename | xclip -sel clip -t image/png -i && sxiv $filename
-        systemctl --user start picom.service
         ;;
 esac

@@ -10,11 +10,8 @@ xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate norma
 
 
 #TASKBAR
-# /home/bresilla/.config/polybar/launch &
 killall -q polybar &
 while pgrep -x polybar >/dev/null; do sleep 1; done
-# MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini main &
-# MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini main &
 MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini workspaces &
 MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini workspaces &
 
@@ -32,9 +29,5 @@ tail -f /home/bresilla/.local/share/fifo/xob | /env/cpp/bin/xob &
 
 
 #KEYBOARD
-xset -dpms s off &
 xset -r 118 & #Insert
 xset -r 107 & #Print
-# setxkbmap de &
-# xmodmap -e "remove control = Control_R" && xmodmap -e "add mod3 = Control_R" &
-xsetroot -cursor_name left_ptr &

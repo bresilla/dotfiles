@@ -1,192 +1,122 @@
 " ======================== LANGUAGE ==================== "
-" === DEOPLETE & FLOAT-PRE & FLOAT-PREVV === "
-let g:deoplete#enable_at_startup = 1
-" let g:deoplete#sources._ = ['buffer', 'member', 'tag', 'file', 'omni', 'ultisnips']
-call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)
-call deoplete#custom#option('auto_complete_delay', 200)
-"autocomplete popup - nvigation keys and enter to select
+" === COMPLETION === "
 inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
 inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-"floating window
-" let g:float_preview#docked = 0
-let g:float_preview#auto_close = 1
-function! DisableExtras()
-    call nvim_win_set_option(g:float_preview#win, 'number', v:false)
-    call nvim_win_set_option(g:float_preview#win, 'relativenumber', v:false)
-    call nvim_win_set_option(g:float_preview#win, 'cursorline', v:false)
-endfunction
-autocmd User FloatPreviewWinOpen call DisableExtras()
+imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
+                 \ "\<Plug>(completion_confirm_completion)"  : "\<c-e>\<CR>" :  "\<CR>"
+lua <<EOF
+    require'lspconfig'.clangd.setup{
+        cmd = { "clangd", "--background-index" };
+        on_attach=require'completion'.on_attach;
+    }
+
+    require'nvim-treesitter.configs'.setup {
+        highlight = { enable = true },
+        incremental_selection = { enable = true },
+        indent = { enable = true },
+    }
+
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+            underline = true,
+            virtual_text = { spacing = 30 },
+            -- update_in_insert = false,
+        }
+    )
+
+    vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)
+        if #line_diagnostics == 0 then
+            return nil
+        end
+        local line_length = #(vim.api.nvim_buf_get_lines(bufnr, line, line + 1, false)[1] or '')
+        local get_highlight = vim.lsp.diagnostic._get_severity_highlight_name
+        local virt_texts = {{string.rep(" ", 80 - line_length)}}
+        for i = 1, #line_diagnostics - 1 do
+            table.insert(virt_texts, {"■", get_highlight(line_diagnostics[i].severity)})
+        end
+        local last = line_diagnostics[#line_diagnostics]
+        if last.message then
+            table.insert(virt_texts, {string.format("■ %s", last.message:gsub("\r", ""):gsub("\n", "  ")), get_highlight(last.severity)})
+            return virt_texts
+        end
+        return virt_texts
+    end
+
+    require('telescope').setup{
+        defaults = {
+            prompt_position = "bottom",
+            prompt_prefix = ">>",
+            selection_strategy = "reset",
+            sorting_strategy = "descending",
+            layout_strategy = "horizontal",
+            shorten_path = true,
+            width = 0.75,
+            preview_cutoff = 120,
+            results_height = 1,
+            results_width = 0.8,
+            color_devicons = true,
+            use_less = true,
+        }
+    }
+
+EOF
+" require('el').setup {
+"         generator = function(win_id)
+"             local el_segments = {}
+"             table.insert(el_segments, '[literal_string]')
+"             table.insert(el_segments, '%f')
+"             local builtin = require('el.builtin')
+"             table.insert(el_segments, builtin.file)
+"             local extensions = require('el.extensions')
+"             table.insert(el_segments, extensions.mode) -- mode returns the current mode.
+"             return el_segments
+"         end
+"         require('el').setup { generator = generator }
+"     }
+
+let g:completion_chain_complete_list = {'default':[{'complete_items': ['lsp','snippet','tabnine']}]}
+autocmd BufEnter * lua require'completion'.on_attach()
 
 
-
-" === ALE === "
-let g:ale_sign_error = '×'
-let g:ale_sign_warning = '!'
-highlight ALEError ctermbg=15 ctermfg=1 cterm=bold
-highlight ALEErrorSign ctermbg=0 ctermfg=124 cterm=bold
-highlight ALEErrorLine ctermbg=1 ctermfg=0 cterm=italic,bold
-highlight ALEWarning cterm=italic,bold
-highlight ALEWarningSign ctermbg=0 ctermfg=184 cterm=bold
-highlight ALEWarningLine ctermbg=0 ctermfg=237 cterm=italic
-highlight ALEInfo cterm=italic,bold
-highlight ALEInfoSign ctermbg=0 ctermfg=69 cterm=bold
-highlight ALEInfoLine ctermbg=0 ctermfg=237 cterm=italic
-let g:ale_linters = {
-            \ 'rust': ['cargo-clippy'],
-            \ 'go': ['gopls'],
-            \ 'nim': ['nimlsp'],
-            \ 'python': ['/usr/local/bin/pyls']
-            \ }
-let g:ale_fixers = {
-            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \ 'rust': ['rustfmt'],
-            \ 'cpp': ['clang-format'],
-            \ }
-let g:ale_linters_explicit=1
-let g:ale_set_balloons= 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 1
-let g:airline#extensions#ale#enabled = 1
-let g:ale_fix_on_save = 1
-au TabLeave * silent! <Plug>(ale_fix)
-au BufLeave * silent! <Plug>(ale_fix)
-
-
-" === LANGUAGE CLIENT === "
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-            \ 'rust': ['rust-analyzer'],
-            \ 'go': ['gopls'],
-            \ 'nim': ['nimlsp'],
-            \ 'python': ['/usr/local/bin/pyls'],
-            \ 'c': ['clangd', '-compile-commands-dir=' . getcwd() . '/build'],
-            \ 'cpp': ['clangd', '-compile-commands-dir=' . getcwd() . '/build'],
-            \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-            \       using LanguageServer;
-            \       using Pkg;
-            \       import StaticLint;
-            \       import SymbolServer;
-            \       env_path = dirname(Pkg.Types.Context().env.project_file);
-            \       debug = false;
-            \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
-            \       server.runlinter = true;
-            \       run(server);']
-            \ }
-let g:LanguageClient_diagnosticsDisplay = {
-    \ 1: {
-        \ "name": "Error",
-        \ "texthl": "ALEError",
-        \ "signText": "×",
-        \ "signTexthl": "ALEErrorSign",
-        \ "virtualTexthl": "ALEErrorLine",
-    \ },
-    \ 2: {
-        \ "name": "Warning",
-        \ "texthl": "ALEWarning",
-        \ "signText": "!",
-        \ "signTexthl": "ALEWarningSign",
-        \ "virtualTexthl": "ALEWarningLine",
-    \ },
-    \ 3: {
-        \ "name": "Information",
-        \ "texthl": "ALEInfo",
-        \ "signText": "i",
-        \ "signTexthl": "ALEInfoSign",
-        \ "virtualTexthl": "ALEInfoLine",
-    \ },
-    \ 4: {
-        \ "name": "Hint",
-        \ "texthl": "ALEInfo",
-        \ "signText": ">",
-        \ "signTexthl": "ALEInfoSign",
-        \ "virtualTexthl": "ALEInfoLine",
-    \ },
-\ }
-" let g:LanguageClient_useVirtualText = "All"
-" let g:LanguageClient_hoverPreview = "Always"
-set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
-let g:LanguageClient_windowLogMessageLevel = "Log"
-
-
-
-" === TAB NINE === "
-call deoplete#custom#var('tabnine',{'line_limit': 500,'max_num_results': 5})
-
-
-
-"semicolons
-autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)
-autocmd FileType rust nmap <silent> , <Plug>(cosco-commaOrSemiColon)
-
-
-
-" === COMMENTER === "
-map <silent> # :Commentary<CR>
-
-
-" === WHITESPACE === "
-let g:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=1
 
 " ======================== WORKSPACE ==================== "
-" === cTRLSPACE === "
-let g:CtrlSpaceDefaultMappingKey = "<C-space> "
-let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
-" let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
-" let g:CtrlSpaceSaveWorkspaceOnExit = 1
-hi link CtrlSpaceNormal   Normal
-hi link CtrlSpaceSelected PMenu
-hi link CtrlSpaceSearch   Search
-hi link CtrlSpaceStatus   StatusLine
-if executable("ag")
-    let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
-endif
-let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
-let g:CtrlSpaceUseArrowsInTerm = 1
-imap <C-Pagedown> <C-O>:CtrlSpaceGoDown<CR>
-imap <C-Pageup> <C-O>:CtrlSpaceGoUp<CR>
-map <C-Pagedown> :CtrlSpaceGoDown<CR>
-map <C-Pageup> :CtrlSpaceGoUp<CR>
-
+" === DMENU/ROFI === "
+let g:dmenu_finder_dmenu_command = "/home/bresilla/dots/.func/wm/rofit"
 
 
 " === VIM CLAP === "
 let g:clap_theme = 'atom_dark'
 let g:clap_theme = {
-            \'input': {'ctermbg': '1', 'ctermfg': '15', 'cterm': 'bold'},
-            \'spinner': {'ctermbg': '1', 'ctermfg': '15', 'cterm': 'bold'},
-            \'display': {'ctermbg': '0'},
+            \'input': {'ctermbg': '240', 'ctermfg': '1'},
+            \'search_text': {'ctermbg': '240', 'ctermfg': '246', 'cterm': 'italic'},
+            \'spinner': {'ctermbg': '240', 'ctermfg': '15', 'cterm': 'bold'},
+            \'display': {'ctermbg': '236'},
+            \'preview': {'ctermbg': '234'},
             \ }
 let g:clap_selected_sign = { 'text': '- ', 'texthl': "ClapSelectedSign", "linehl": "ClapSelected"}
 let g:clap_current_selection_sign = { 'text': '> ', 'texthl': "ClapCurrentSelectionSign", "linehl": "ClapCurrentSelection"}
 let g:clap_layout = { 'relative': 'editor' }
-let g:clap_open_action = { 'ctrl-x': 'vsplit' }
+let g:clap_open_action = { 'ctrl-t': 'tab split', 'ctrl-s': 'split', 'ctrl-v': 'vsplit' }
 let g:clap_search_box_border_symbols = {'nil': ['█', '█'], 'curve': ['', ''], 'arrow': ['', '']}
 let g:clap_search_box_border_style = 'nil'
 let g:clap_enable_background_shadow = 'false'
 " let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
-let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
-let g:clap_provider_src = {
-    \ 'source': 'find {src,include} -type f',
-    \ 'sink': 'e',
-\ }
+" let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
+" let g:clap_provider_src = {
+    " \ 'source': 'find {src,include} -type f',
+    " \ 'sink': 'e',
+" \ }
 
 
 " === FILEMANAGER === "
-let NERDTreeQuitOnOpen=1                "automatically clone nerd tre after open
-let NERDTreeShowHidden=1
-let g:NERDTreeMinimalUI = 1
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-au VimEnter * NERDTreeRefreshRoot
-
 let g:lua_tree_side = 'left'
 let g:lua_tree_size = 50
 let g:lua_tree_ignore = [ '.git', 'node_modules', '.cache' ]
 let g:lua_tree_auto_open = 1
 let g:lua_tree_auto_close = 1
+let g:lua_tree_quit_on_open = 1
 let g:lua_tree_follow = 1
 let g:lua_tree_indent_markers = 1
 let g:lua_tree_show_icons = { 'git': 0, 'folders': 1, 'files': 1 }
@@ -206,80 +136,40 @@ let g:lua_tree_icons = {
     \ }
 
 
-" === OUTLINE BAR === "
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista_fzf_preview = ['right:50%']
-let g:vista#renderer#enable_icon = 1
-let g:vista#renderer#enable_icon = 1
-" autocmd FileType rust let b:auto_save = 1
-
-
 " === INDENTATION LINES === "
 let g:indentLine_char_list = ['⋮']
 let g:indentLine_color_term = 9
 let g:indentLine_setConceal = 2
-" default ''.
-" n for Normal mode
-" v for Visual mode
-" i for Insert mode
-" c for Command line editing, for 'incsearch'
 let g:indentLine_concealcursor = ""
-
-
-" === AUTOSAVE === "
-autocmd FileType markdown let b:auto_save = 1
-autocmd FileType scss let b:auto_save = 1
-autocmd FileType html let b:auto_save = 1
-autocmd FileType go let b:auto_save = 1
-autocmd FileType rust let b:auto_save = 1
-autocmd FileType cpp let b:auto_save = 1
-autocmd FileType hpp let b:auto_save = 1
-autocmd FileType h let b:auto_save = 1
-autocmd FileType cmake let b:auto_save = 1
-let g:auto_save_events = ["FocusLost", "FocusGained"]
-let g:auto_save_write_all_buffers = 1
-" let g:auto_save_presave_hook = 'call AbortIfNotGitDirectory()'
-" function! AbortIfNotGitDirectory()
-" if ...
-" let g:auto_save_abort = 0
-" else
-" let g:auto_save_abort = 1
-" endif
-" endfunction
-
-
-" === BOOKMARKS === "
-let g:bookmark_auto_save = 1
-let g:bookmark_sign = '⚑'
-let g:bookmark_annotation_sign = '■'
-highlight BookmarkSign ctermbg=NONE ctermfg=1
-highlight BookmarkAnnotationSign ctermbg=None ctermfg=1
-" let g:bookmark_highlight_lines = 1
-" highlight BookmarkLine ctermbg=15 ctermfg=NONE
-" Finds the Git super-project directory.
-let g:bookmark_save_per_working_dir = 1
-function! g:BMWorkDirFileLocation()
-    let filename = 'bookmarks'
-    let location = ''
-    if isdirectory('.git')
-        " Current work dir is git's work tree
-        let location = getcwd().'/.git'
-    else
-        " Look upwards (at parents) for a directory named '.git'
-        let location = finddir('.git', '.;')
-    endif
-    if len(location) > 0
-        return location.'/'.filename
-    else
-        return $HOME."/.config/plug/bookmarks"
-    endif
-endfunction
-
 
 
 " === UNDO TREE === "
 nnoremap U :redo<CR>
 nnoremap <C-U> :UndotreeToggle<CR> :UndotreeFocus<CR>
+
+
+
+" === FLOAT-TERM === "
+noremap  <silent> <Insert>           :FloatermToggle<CR>
+noremap! <silent> <Insert>           <Esc>:FloatermToggle<CR>
+tnoremap <silent> <Insert>           <C-\><C-n>:FloatermToggle<CR>
+let g:floaterm_position = 'center'
+let g:floaterm_autoinsert = 1
+let g:floaterm_width = float2nr(&columns/1.2)
+let g:floaterm_height = float2nr(winheight(0)/1.5)
+let g:floaterm_title = ''
+" let g:floaterm_borderchars = ['═', '║', '═', '║', '╔', '╗', '╝', '╚']
+" let g:floaterm_borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
+" let g:floaterm_borderchars = ['━', '┃', '━', '┃', '┏', '┓', '┛', '┗']
+let g:floaterm_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+let g:floaterm_autoclose = 1
+
+
+" ===  RUNNER === "
+noremap <silent><f7>        :FloatermNew --autoclose=0 run<cr>
+tnoremap <silent><f7>       <C-\><C-n>:FloatermToggle<CR>
+noremap <silent><f5>        :FloatermNew --autoclose=0 build<cr>
+tnoremap <silent><f5>       <C-\><C-n>:FloatermToggle<CR>
 
 
 
@@ -291,15 +181,11 @@ hi link EasyMotionTarget2First EasyMotionTarget
 hi EasyMotionTarget2Second ctermfg=2 cterm=underline
 
 
-
 " === SEARCH SETTINGS === "
 let g:incsearch#auto_nohlsearch = 1
 map / <Plug>(incsearch-forward)
 map <leader>/ <Plug>(incsearch-forward)
 nnoremap * *``
-"substitute normal
-"substitute with subversive + abolish
-nmap + <plug>(SubversiveSubstituteWordRange)
 
 
 " === MOVE LINES === "
@@ -333,32 +219,7 @@ let g:VM_maps['Find Under']         = '<M-d>'           " replace C-n
 let g:VM_maps['Find Subword Under'] = '<M-d>'           " replace visual C-n
 let g:VM_maps["Add Cursor Down"]    = '<M-S-Down>'
 let g:VM_maps["Add Cursor Up"]      = '<M-S-Up>'
-let g:VM_maps["Add Cursor At Pos"]  = '<CR>'
-"" let g:VM_maps["Select Cursor Up"]   = '<M-S-Up>'        " start selecting up
-"" let g:VM_maps["Select Cursor Down"] = '<M-S-Down>'      " start selecting down
-
-
-" === RECORDING === "
-let g:Mac_MaxItems = 10
-let g:Mac_SavePersistently = 0
-let g:Mac_DisplayMacroMaxWidth = 80
-let g:Mac_NamedMacroFileExtension = '.bin'
-let g:Mac_NamedMacroFuzzySearcher = v:null
-let g:Mac_NamedMacrosDirectory = "~/.config/macrobatics"
-let g:Mac_NamedMacroParameters = {}
-let g:Mac_NamedMacroParametersByFileType = {}
-
-
-"Brackets
-let g:rainbow_active = 1
-
-
-
-" ======================== TOOLS ==================== "
-"go to last position you were editing
-" au BufWinLeave * silent! mkview
-" au BufWinEnter * silent! loadview
-
+let g:VM_maps["Add Cursor At Pos"]  = '<M-i>'
 
 
 " === DIRENV === "
@@ -369,7 +230,15 @@ if exists("$EXTRA_VIM")
 endif
 
 
-" ======================== GIT ==================== "
+" === GIT === "
 highlight GitGutterAdd    ctermfg=34 ctermbg=0
 highlight GitGutterChange ctermfg=184 ctermbg=0
 highlight GitGutterDelete ctermfg=124 ctermbg=0
+
+
+" === SEMICOLON === &&  === COMMENTER === "
+autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)
+autocmd FileType rust nmap <silent> , <Plug>(cosco-commaOrSemiColon)
+nmap <silent> # :Commentary<CR>
+
+

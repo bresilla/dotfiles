@@ -4,7 +4,6 @@ ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_full -theme-str "*{accent: ${color1
 edit_with="kitty --class=til"
 
 another=$(echo "CONFIGS
-ALIASES
 SCRIPTS
 ROFMENU
 PROFILE" | awk '{print $(NF-1)}' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "CONFIGS: ")
@@ -35,6 +34,7 @@ if [ "$another" == "PROFILE" ] ; then
 $HOME/dots/.bashrc
 $HOME/dots/.profile
 $HOME/dots/.startup
+$HOME/dots/.aliases
 $HOME/dots/.other/variables
 $HOME/dots/.config/git/config
 $HOME/dots/.config/tmux/tmux.conf
@@ -47,9 +47,6 @@ elif [ "$another" == "CONFIGS" ] ; then
 
 elif [ "$another" == "SCRIPTS" ] ; then
     browse /home/bresilla/dots/.func /home/bresilla/dots/.func;
-
-elif [ "$another" == "ALIASES" ] ; then
-	browse /home/bresilla/dots/.alias /home/bresilla/dots/.alias;
 
 elif [ "$another" == "ROFMENU" ] ; then
 	browse /home/bresilla/dots/.config/rofi/menu /home/bresilla/dots/.config/rofi/menu;

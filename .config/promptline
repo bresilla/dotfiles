@@ -45,12 +45,12 @@ function __is_in_container {
     if [[ -n $(awk -F/ '$2 == "docker"' /proc/self/cgroup) ]]; then
         printf ' ⊙ '
     elif [[ -n $(echo $IN_NIX_SHELL) ]]; then
-        printf ' ❄️ '
+        printf ' ❄ '
     fi
 }
 
 function __promptline_cwd {
-    local dir_limit="3"
+    local dir_limit="1"
     local truncation="⋯"
     local first_char
     local part_count=0
@@ -84,7 +84,7 @@ function __promptline_left_prompt {
     [[ -n $(__is_in_container) ]] && endARR="$arrEL$redBG$blackTX$arrFL$redBG$redTX$blackBG$arrFL$greyTX"
     #PATH
     [[ $(__promptline_vcs_branch) = "master" ]] && conTX=$accentTX
-    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd)" "$suffix"
+    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd)" "$suffix"
 }
 
 function __promptline_right_prompt {
@@ -170,8 +170,8 @@ function __promptline {
     local accentTX="${IN}38;5;1${EN}"
     local orangeBG="${IN}48;5;214${EN}"
     local orangeTX="${IN}38;5;214${EN}"
-    local greyBG="${IN}48;5;240${EN}"
-    local greyTX="${IN}38;5;240${EN}"
+    local greyBG="${IN}48;5;242${EN}"
+    local greyTX="${IN}38;5;242${EN}"
     local redTX="${IN}38;5;124${EN}"
     local redBG="${IN}48;5;124${EN}"
     local blueTX="${IN}38;5;27${EN}"
@@ -179,8 +179,8 @@ function __promptline {
     local greenTX="${IN}38;5;40${EN}"
     local greenBG="${IN}48;5;40${EN}"
     local conTX=$greyTX
-    local NLD='\e[0m'
-    local BLD='\e[32;1m'
+    local BLD=$(tput bold)
+    local NLD=$(tput sgr0)
 
 
     if [[ -n ${ZSH_VERSION-} ]]; then

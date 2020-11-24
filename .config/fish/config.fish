@@ -12,6 +12,25 @@ function _shko
     shko -c --short 19 && cd (cat ~/.config/shko/settings/chdir)
 end
 
+function n --wraps nnn --description 'support nnn quit and change directory'
+    if test -n "$NNNLVL"
+        if [ (expr $NNNLVL + 0) -ge 1 ]
+            echo "nnn is already running"
+            return
+        end
+    end
+    if test -n "$XDG_CONFIG_HOME"
+        set -x NNN_TMPFILE "$XDG_CONFIG_HOME/nnn/.lastd"
+    else
+        set -x NNN_TMPFILE "$HOME/.config/nnn/.lastd"
+    end
+    nnn $argv
+    if test -e $NNN_TMPFILE
+        source $NNN_TMPFILE
+        rm $NNN_TMPFILE
+    end
+end
+
 set -g __fish_git_prompt_show_informative_status 1
 set -g __fish_git_prompt_hide_untrackedfiles 1
 set -g __fish_git_prompt_color_branch magenta
@@ -33,18 +52,16 @@ set -g __fish_prompt_normal (set_color normal)
 
 function sh_aliases \
     --description 'import bash aliases to .fish function files.'
-    for file in ~/.alias/*
-        for a in (cat $file  | grep "^alias")
-            set aname (echo $a | sed 's/alias \(.*\)=\(\'\|\"\).*/\1/')
-            set command (echo $a | sed 's/alias \(.*\)=\(\'\|\"\)\(.*\)\2/\3/')
-            if test -f ~/.config/fish/functions2/$aname.fish
-                echo "Overwriting alias $aname as $command"
-            else
-                echo "Creating alias $aname as $command"
-            end
-            alias $aname $command
-            funcsave $aname
+    for a in (cat ~/dots/.aliases | grep "^alias")
+        set aname (echo $a | sed 's/alias \(.*\)=\(\'\|\"\).*/\1/')
+        set command (echo $a | sed 's/alias \(.*\)=\(\'\|\"\)\(.*\)\2/\3/')
+        if test -f ~/.config/fish/functions2/$aname.fish
+            echo "Overwriting alias $aname as $command"
+        else
+            echo "Creating alias $aname as $command"
         end
+        alias $aname $command
+        funcsave $aname
     end
 end
 

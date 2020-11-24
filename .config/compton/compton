@@ -46,16 +46,16 @@ fade-exclude = [ ];
 
 
 # Blur
-blur: {
-  method = "dual_kawase";
-  strength = 8;
-  background = false;
-  background-frame = false;
-  background-fixed = false;
-}
-blur-background-exclude = [
-    "class_g *?= 'mpv'"
-];
+# blur: {
+#   method = "dual_kawase";
+#   strength = 8;
+#   background = false;
+#   background-frame = false;
+#   background-fixed = false;
+# }
+# blur-background-exclude = [
+#     "class_g *?= 'mpv'"
+# ];
 
 
 ### Opacity

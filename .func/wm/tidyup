@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+rm $HOME/.fehbg &
+rm $HOME/.lyxauth &

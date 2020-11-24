@@ -3,6 +3,8 @@ let mapleader = "\<Space>"
 
 " === NAVIGATION === "
 "navigation panes
+map <C-Pagedown> :bn<CR>
+map <C-Pageup> :bp<CR>
 map <C-M-Pagedown> :tabn<CR>
 map <C-M-Pageup> :tabp<CR>
 map <C-Up> <C-k>
@@ -48,16 +50,32 @@ vnoremap > >gv
 
 
 " === FILE-TREE === "
-nnoremap <silent> <tab> :NERDTreeToggle <CR>
+nnoremap <silent> <tab> :LuaTreeToggle <CR>
+let g:lua_tree_bindings = {
+    \ 'edit':            ['<CR>'],
+    \ 'edit_vsplit':     'v',
+    \ 'edit_split':      's',
+    \ 'edit_tab':        't',
+    \ 'toggle_dotfiles': 'i',
+    \ 'refresh':         'r',
+    \ 'create':          'n',
+    \ 'remove':          'd',
+    \ 'rename':          'm',
+    \ 'cut':             'x',
+    \ 'copy':            'c',
+    \ 'paste':           'p',
+    \ 'close':           ['<Tab>'],
+    \ }
+autocmd FileType LuaTree nnoremap <silent> <tab> :LuaTreeToggle <CR>
 
 
-" === CLAP === "
-map <leader><leader> :Clap files<CR>
-map <leader><CR> :Clap grep2<CR>
+" === FINDER === "
+map <leader><leader> <cmd>lua require('telescope.builtin').git_files()<cr>
+map <C-Space> :Clap buffers<CR>
+map <C-p> :DmenuFinderFindFile<CR>
+map <leader><CR> :Clap buffers<CR>
+map <leader><tab> :Clap grep2<CR>
 map <leader>+ :Clap grep2 ++query=<cword><CR>
-map <leader><tab> :Clap tags<CR>
-" map <leader><CR> :RofiFiles<CR>
-map <C-o> :Clap grep<CR>
 
 
 
@@ -98,11 +116,9 @@ let g:which_key_map['.'] = [ ':e $MYVIMRC'                      , 'open init' ]
 let g:which_key_map['='] = [ '<C-W>='                           , 'balance windows' ]
 let g:which_key_map['h'] = [ '<C-W>s'                           , 'split below']
 let g:which_key_map['q'] = [ 'q'                                , 'quit' ]
-let g:which_key_map['S'] = [ ':CtrlSpaceSaveWorkspace'          , 'save session' ]
 let g:which_key_map['T'] = [ ':Rg'                              , 'search text' ]
 let g:which_key_map['v'] = [ '<C-W>v'                           , 'split right']
 let g:which_key_map['W'] = [ 'w'                                , 'write' ]
-let g:which_key_map['f'] = [ '<Plug>(easymotion-overwin-f)'     , 'easy motion']
 
 " let g:which_key_map['<CR>'] = 'which_key_ignore'
 let g:which_key_map['/'] = 'which_key_ignore'
@@ -125,8 +141,6 @@ let g:which_key_map.a = {
       \ 'n' : [':set nonumber!'          , 'line-numbers'],
       \ 'r' : [':set norelativenumber!'  , 'relative line nums'],
       \ 's' : [':let @/ = ""'            , 'remove search highlight'],
-      \ 'v' : [':Vista!!'                , 'tag viewer'],
-      \ 't' : [':NERDTreeToggle'         , 'nerd tree'],
       \ }
 
 " m is for macros

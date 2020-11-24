@@ -1,38 +1,30 @@
 alt + space
     /home/bresilla/.config/rofi/menu/USER
-super + alt + {Escape,Delete,Insert}
-    /home/bresilla/.config/rofi/menu/{power,CONFIG,screenshot}
 super + space
     /home/bresilla/.config/rofi/menu/BROWSE
 mode_switch + space
     /home/bresilla/.config/rofi/menu/ROOT
-ctrl + Return; {c,Return, space}
-    {code,kitty --class=til tmux, alacritty -e tmux}
+
+super + alt + {Escape,Delete,Insert}
+    /home/bresilla/.config/rofi/menu/{power,CONFIG,screenshot}
+ctrl + Return; {Return, space}
+    {kitty --class=til tmux, alacritty -e tmux}
+Print
+    /usr/bin/flameshot gui
+XF86Search
+    pkill slop; slop -r boxzoom
 
 {super,alt} + Escape
     bspc node -{c,k}
-{super,alt} + Delete
-    {systemctl --user restart picom.service; systemctl --user restart wallpaper.service, play ~/.config/dunst/scripts/bleep.wav; /home/bresilla/.startup}
-    #{pkill -USR1 -x sxhkd && ~/.startup; systemctl --user restart picom.service; systemctl --user restart wallpaper.service}
+{super,alt, mode_switch} + Delete
+    {systemctl --user restart picom; systemctl --user restart wallpaper, /home/bresilla/.startup, /home/bresilla/dots/.func/wm/coltty}
+
 
 {_,super} + dead_circumflex
     /home/bresilla/dots/.func/wm/termop {kitty, alacritty} MAIN 2500 1050
-#    tmass -l /home/bresilla/.config/tmux load MAIN; tdrop -m -w 66% -h 50% -x 17% -y 25% -n MAIN -f "-e tmux attach -t MAIN" {kitty, cool-retro-term}
 {_,super} + dead_acute
     /home/bresilla/dots/.func/wm/termop {kitty, alacritty} NOTE 3500 1900
-#    tmass -l /home/bresilla/.config/tmux load NOTE; tdrop -m -w 80% -h 80% -x 10% -y 10% -n NOTE -f "-e tmux attach -t NOTE" {kitty, cool-retro-term}
-mode_switch + Return
-    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(print -rl -- $commands | sort -u | fzy)'
 
-
-XF86Search
-    pkill boomer; boomer
-{super,alt} + XF86Search
-    /home/bresilla/.config/rofi/menu/monitors
-{super,alt} + Tab
-    bspc desktop -f last
-super + alt + space
-    bspc desktop -f last
 
 super + alt + {Left,Right}
     bspc desktop -f {prev,next}.local
@@ -40,30 +32,22 @@ super + alt + {Down,Up}
     bspc monitor -f {prev,next}
 {super,alt} + {Left,Down,Up,Right}
     /home/bresilla/.config/bspwm/scripts/{focus,move} {west,south,north,east}
-
 {super,alt} + @button{6,5,4,7}
     /home/bresilla/.config/bspwm/scripts/{focus,move} {west,south,north,east}
 {_, ctrl, shift} + {super+alt} + @button{6,5,4,7}
     /home/bresilla/.config/bspwm/scripts/resize {b,s,s} {Left,Down,Up,Right}
-
 {super+alt} + shift + {Left,Right}
     bspc node -d {prev,next} --follow
 {super+alt} + shift + {Down,Up}
     bspc node -m {prev,next} --follow
+
 
 {super,alt,alt+super} + ~Return
     bspc node -t {tiled,fullscreen,floating}
 {super,alt,alt+super} + ~BackSpace
     bspc node -g {locked,private,sticky}
 
-mode_switch + mod3 + {space,Up,Down,Left,Right}
-    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,cycle,cycle,backwards,forewards}
 
-alt+super + XF86AudioPlay
-    play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
-
-mod3 + XF86Audio{Prev,Next}
-    mpc seekthrough {-10,+10}
 XF86Audio{Prev,Next,Play}
     playerctl {previous,next,play-pause} || mpc -q {prev,next,toggle}
 XF86Audio{Raise,Lower}Volume
@@ -72,3 +56,11 @@ XF86AudioMute
     pulsemixer --toggle-mute && [[ $(pulsemixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pulsemixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
 XF86MonBrightness{Up,Down}
     light -{A,U} 2 && light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
+
+
+ctrl + super + alt + {space,Left,Right}
+    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,backwards,forewards}
+alt+super + XF86AudioPlay
+    play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
+alt+super + XF86AudioMute
+    pactl set-sink-port 0 analog-output-headphones
