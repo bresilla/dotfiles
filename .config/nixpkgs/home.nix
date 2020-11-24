@@ -206,6 +206,7 @@ in {
         After = ["graphical.target"];
       };
       Service = {
+        Environment="COLORTERM=truecolor";
         Type = "simple";
         ExecStartPre = "/bin/sleep 2";
         ExecStart = "/home/bresilla/dots/.func/wm/loopwall /home/bresilla/sets/.wallpaper 300";

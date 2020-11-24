@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 wall=$(cat /tmp/wallppr)
-# cols=$(/env/cargo/bin/pigmnts -c 7 $wall -q)
 
 bg=$(head -n 1 $HOME/.cache/wal/colors)
 fg=$(tail -n 1 $HOME/.cache/wal/colors)
@@ -19,4 +18,8 @@ awk '{print "]4;" NR+231 ";" $0"\\"}' ORS='' $HOME/.cache/wal/gradients >> /ho
 # awk '{print "color" NR+231 "=" $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors.sh &
 # awk '{print "color" NR+231 "\t " $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors-kitty.conf &
 
-# /env/cargo/bin/pigmnts -c 18 $wall -q > /tmp/colorz &
+
+# . "${HOME}/.cache/wal/colors.sh"
+# /home/bresilla/dots/.func/wm/coltty &
+# bspc config focused_border_color $color1 &
+# python /home/bresilla/.local/bin/pywalfox update &

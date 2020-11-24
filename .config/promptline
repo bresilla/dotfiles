@@ -135,7 +135,7 @@ function __breakline() {
         do
             LINE="$LINE$WORD"
         done
-        echo "\e[38;5;240m${LINE:0:$COLS}\e[0m"
+        echo "\e[38;5;7m${LINE:0:$COLS}\e[0m"
     fi
 }
 
@@ -170,8 +170,8 @@ function __promptline {
     local accentTX="${IN}38;5;1${EN}"
     local orangeBG="${IN}48;5;214${EN}"
     local orangeTX="${IN}38;5;214${EN}"
-    local greyBG="${IN}48;5;242${EN}"
-    local greyTX="${IN}38;5;242${EN}"
+    local greyBG="${IN}48;5;7${EN}"
+    local greyTX="${IN}38;5;7${EN}"
     local redTX="${IN}38;5;124${EN}"
     local redBG="${IN}48;5;124${EN}"
     local blueTX="${IN}38;5;27${EN}"

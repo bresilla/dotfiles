@@ -59,7 +59,7 @@ function init#theme_plugs()
     Plug 'vim-airline/vim-airline'	                    "airline theme
     Plug 'vim-airline/vim-airline-themes'
     Plug 'sheerun/vim-polyglot'                         "syntax highlight
-    Plug 'nvim-treesitter/nvim-treesitter'
+    " Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'machakann/vim-highlightedyank'                "flash on yank
     Plug 'kyazdani42/nvim-web-devicons'                 "file icons
     Plug 'rakr/vim-one' 

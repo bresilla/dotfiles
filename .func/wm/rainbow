@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
 
-wall=$(cat /tmp/wallppr)
-/env/cargo/bin/pigmnts -c 18 $1 -q > /tmp/colorz
+# /env/cargo/bin/pigmnts -c 15 $(cat /tmp/wallppr) -q > /tmp/colorz
 
-cat /tmp/colorz | /env/cargo/bin/pastel sort-by -r brightness | /env/cargo/bin/pastel saturate 0.2 | xargs -0 | head -n -11 | tail -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
+export PASTEL_COLOR_MODE=24bit
+export COLORTERM=truecolor
+
+cat /tmp/colorz | /env/cargo/bin/pastel sort-by -r chroma | /env/cargo/bin/pastel -f desaturate 0.2 | /env/cargo/bin/pastel -f lighten 0.1 | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
 ac=$(cat /tmp/rainbow | head -n 1)
-tmp=$(echo $ac | /env/cargo/bin/pastel desaturate 0.8 | /env/cargo/bin/pastel darken 0.95 | /env/cargo/bin/pastel format hex)
 
 
-col0=$(pastel gradient $tmp $ac -n 10 | /env/cargo/bin/pastel format hex | head -n 2 | tail -n 1)
-col1=$(echo $ac | /env/cargo/bin/pastel desaturate 0.3 | /env/cargo/bin/pastel format hex)
-col7=$(echo $ac | /env/cargo/bin/pastel desaturate 0.8 | /env/cargo/bin/pastel format hex)
-col8=$(echo $ac | /env/cargo/bin/pastel desaturate 0.6 | /env/cargo/bin/pastel darken 0.2 | /env/cargo/bin/pastel format hex)
-col15=$(echo $ac | /env/cargo/bin/pastel saturate 0.1 | /env/cargo/bin/pastel lighten 0.3 | /env/cargo/bin/pastel format hex)
+tmp=$(echo $ac | /env/cargo/bin/pastel -f desaturate 0.8 | /env/cargo/bin/pastel -f darken 0.95 | /env/cargo/bin/pastel format hex)
+col0=$(/env/cargo/bin/pastel -f gradient $tmp $ac -n 10 | /env/cargo/bin/pastel format hex | head -n 2 | tail -n 1)
+col1=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.5 | /env/cargo/bin/pastel format hex)
+col7=$(echo $ac | /env/cargo/bin/pastel -f desaturate 0.8 | /env/cargo/bin/pastel format hex)
+col8=$(echo $ac | /env/cargo/bin/pastel -f desaturate 0.6 | /env/cargo/bin/pastel -f darken 0.2 | /env/cargo/bin/pastel format hex)
+tmp=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.4 | /env/cargo/bin/pastel -f lighten 0.8 | /env/cargo/bin/pastel format hex)
+col15=$(/env/cargo/bin/pastel -f gradient $tmp $ac -n 10 | /env/cargo/bin/pastel format hex | head -n 2 | tail -n 1)
+
 (( 0x${bg:1} > 0x555555 )) && white=#000000 black=#ffffff || black=#000000 white=#ffffff 
 
 echo $col0 > $HOME/.cache/wal/rainbow
@@ -20,27 +24,23 @@ echo $col1 >> $HOME/.cache/wal/rainbow
 cat /tmp/rainbow | tail -n 5 >> $HOME/.cache/wal/rainbow
 echo $col7 >> $HOME/.cache/wal/rainbow
 echo $col8 >> $HOME/.cache/wal/rainbow
-cat /tmp/rainbow | /env/cargo/bin/pastel sort-by brightness | /env/cargo/bin/pastel lighten 0.1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/rainbow
+cat /tmp/rainbow | /env/cargo/bin/pastel -f lighten 0.2 | /env/cargo/bin/pastel -f saturate 0.6 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/rainbow
 echo $col15 >> $HOME/.cache/wal/rainbow
 awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/rainbow >> /home/bresilla/.cache/wal/sequences
 awk '{print "color" NR-1 "=" $0}' $HOME/.cache/wal/rainbow >> /home/bresilla/.cache/wal/colors.sh &
-# cat $HOME/.cache/wal/rainbow > /home/bresilla/.cache/wal/colors
+cat $HOME/.cache/wal/rainbow > /home/bresilla/.cache/wal/colors
 
+#foreground,bacground,cursorback,cursofore
 printf "]10;$col15\\" >> /home/bresilla/.cache/wal/sequences
 printf "]11;$col0\\" >> /home/bresilla/.cache/wal/sequences
+printf "]12;$col1\\" >> /home/bresilla/.cache/wal/sequences
+printf "]13;$col0\\" >> /home/bresilla/.cache/wal/sequences
+printf "]17;$col1\\" >> /home/bresilla/.cache/wal/sequences
+printf "]19;$col0\\" >> /home/bresilla/.cache/wal/sequences
 
 
 
-# /env/cargo/bin/pastel gradient $black $col0 -n 4 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients
-# /env/cargo/bin/pastel gradient $col0 $col1 -n 8 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/gradients
-# /env/cargo/bin/pastel gradient $col1 $col15 -n 8 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/gradients
-# /env/cargo/bin/pastel gradient $col15 $white -n 4 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/gradients
-/env/cargo/bin/pastel gradient $black $col0 $col1 $col15 $white -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients
+#gradients from 232 to 255
+/env/cargo/bin/pastel -f gradient $black $col0 $col1 $col15 $white -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients
 awk '{print "]4;" NR+231 ";" $0"\\"}' ORS='' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/sequences
 awk '{print "color" NR+231 "=" $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors.sh &
-
-
-
-# . "${HOME}/.cache/wal/colors.sh"
-# bspc config focused_border_color $color1 &
-# /home/bresilla/dots/.func/wm/coltty &

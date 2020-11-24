@@ -4,12 +4,12 @@ function! DarkTheme()
     highlight Normal guibg=0 ctermbg=0
     highlight StatusLine ctermbg=1 ctermfg=0 guibg=1 guifg=0
     "visual select
-    highlight Visual ctermbg=9 cterm=bold guibg=9 gui=bold
+    highlight Visual ctermbg=239 cterm=bold guibg=9 gui=bold
     "cursor
-    highlight Search ctermfg=7 ctermbg=9 guifg=7 guibg=9
+    highlight Search ctermfg=0 ctermbg=9 guifg=7 guibg=9
     highlight CursorLine ctermbg=235 cterm=bold guibg=0 gui=bold
     highlight CursorColumn ctermbg=235 cterm=bold guibg=0 gui=bold
-    highlight Cursor ctermfg=7 ctermbg=1 guifg=7 guibg=1
+    " highlight Cursor ctermfg=15 ctermbg=1 guifg=7 guibg=1
     "similar words
     highlight illuminatedWord ctermbg=0 cterm=bold,underline guibg=0 gui=bold,underline
     "squicky lines "~" hide
@@ -21,18 +21,16 @@ function! DarkTheme()
     highlight SignColumn  ctermbg=0 guibg=0
     highlight CursorLineNR ctermbg=0 ctermfg=1 cterm=bold guibg=0 guifg=1 gui=bold
     "special characters of endline
-    highlight NonText ctermbg=0 ctermfg=9 guifg=#000000 guibg=0
+    highlight NonText ctermbg=0 ctermfg=232 guifg=#000000 guibg=0
     "completion menu
-    highlight Pmenu ctermbg=240 ctermfg=15 guibg=0 guifg=15
+    highlight Pmenu ctermbg=239 ctermfg=15 guibg=0 guifg=15
     highlight PmenuSel ctermbg=235 ctermfg=1 cterm=bold guibg=0 guifg=9 gui=bold
     highlight PmenuSbar ctermbg=0 guibg=0
     highlight PmenuThumb ctermbg=0 guibg=0
     "other
-    highlight MatchParen ctermfg=231 ctermbg=1 cterm=bold  guifg=231 guibg=1 gui=bold
+    highlight MatchParen ctermfg=15 ctermbg=1 cterm=bold  guifg=231 guibg=1 gui=bold
     highlight FloatermBorder ctermfg=1 ctermbg=0 guifg=1 guibg=0
     highlight Floaterm ctermbg=0  guibg=0
-    "ctrlspace
-    highlight CtrlSpaceStatus ctermbg=1 ctermfg=0 guibg=1 guifg=0
 endfunction
 " === THEME === "
 set notermguicolors
@@ -44,7 +42,7 @@ call DarkTheme()
 sign define LspDiagnosticsSignError text=×
 highlight LspDiagnosticsVirtualTextError ctermbg=232 ctermfg=131 cterm=italic
 highlight LspDiagnosticsSignError ctermbg=0 ctermfg=124 cterm=bold
-highlight LspDiagnosticsFloatingError ctermbg=1 ctermfg=0 cterm=italic,bold
+highlight LspDiagnosticsFloatingError ctermbg=1 ctermfg=0 cterm=italic
 sign define LspDiagnosticsSignWarning text=!
 highlight LspDiagnosticsVirtualTextWarning ctermbg=232 ctermfg=94 cterm=italic
 highlight LspDiagnosticsSignWarning ctermbg=0 ctermfg=184 cterm=bold
@@ -63,17 +61,17 @@ highlight BufferCurrent ctermbg=0 ctermfg=1 cterm=bold
 highlight BufferCurrentMod ctermbg=0 ctermfg=1
 highlight BufferCurrentSign ctermbg=0 ctermfg=1
 highlight BufferCurrentTarget ctermbg=0 ctermfg=15
-highlight BufferVisible ctermbg=240 ctermfg=15 
-highlight BufferVisibleMod ctermbg=240 ctermfg=0
-highlight BufferVisibleSign ctermbg=240 ctermfg=0
-highlight BufferVisibleTarget ctermbg=240 ctermfg=0
-highlight BufferInactive ctermbg=240 ctermfg=15
-highlight BufferInactiveMod ctermbg=240 ctermfg=0
-highlight BufferInactiveSign ctermbg=240 ctermfg=0
-highlight BufferInactiveTarget ctermbg=240 ctermfg=0
-highlight BufferTabpages ctermbg=240 ctermfg=0
-highlight BufferTabpageFill ctermbg=240 ctermfg=0
-highlight TabLineFill ctermfg=1 ctermbg=240 guibg=#151515
+highlight BufferVisible ctermbg=239 ctermfg=15 
+highlight BufferVisibleMod ctermbg=239 ctermfg=0
+highlight BufferVisibleSign ctermbg=239 ctermfg=0
+highlight BufferVisibleTarget ctermbg=239 ctermfg=0
+highlight BufferInactive ctermbg=239 ctermfg=15
+highlight BufferInactiveMod ctermbg=239 ctermfg=0
+highlight BufferInactiveSign ctermbg=239 ctermfg=0
+highlight BufferInactiveTarget ctermbg=239 ctermfg=0
+highlight BufferTabpages ctermbg=239 ctermfg=0
+highlight BufferTabpageFill ctermbg=239 ctermfg=0
+highlight TabLineFill ctermfg=1 ctermbg=239 guibg=#151515
 
 
 " === FOCUS === "

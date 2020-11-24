@@ -16,8 +16,8 @@ XF86Search
 
 {super,alt} + Escape
     bspc node -{c,k}
-{super,alt, mode_switch} + Delete
-    {systemctl --user restart picom; systemctl --user restart wallpaper, /home/bresilla/.startup, /home/bresilla/dots/.func/wm/coltty}
+{super, alt, mode_switch} + Delete
+    {systemctl --user restart picom, systemctl --user restart wallpaper, /home/bresilla/.startup}
 
 
 {_,super} + dead_circumflex
