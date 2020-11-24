@@ -39,6 +39,7 @@ navi                        + interactive cheatsheet tool           + https://gi
 z       - zoxide            + faster way to navigate filesystem     + https://github.com/ajeetdsouza/zoxide                 + rust
 -------------------------------------------------------             COLOR             --------------------------------------------------------
 pastel                      + convert and manipulate colors         + https://github.com/sharkdp/pastel                     + rust
+pigments                    + color palete from image               + https://github.com/blenderskool/pigmnts               + rust
 xcolor                      + color picker                          + https://github.com/Soft/xcolor                        + rust
 -------------------------------------------------------            MONITOR            --------------------------------------------------------
 gotop                       + better htop system monitor            + https://github.com/cjbassi/gotop                      + go
@@ -142,6 +143,8 @@ alacritty                   + GPU-accelerated terminal emulator     + https://gi
 kitty                       + GPU based terminal emulator           + https://github.com/kovidgoyal/kitty                   + cpp       + pack
 tab                         + terminal multiplexer                  + https://github.com/austinjones/tab-rs                 + rust
 tmux                        + THE terminal multiplexer              + https://github.com/tmux/tmux                          + cpp
+t-rec                       + terminal recorder                     + https://github.com/sassman/t-rec-rs                   + rust
+textimg                     + command colors to image               + https://github.com/jiro4989/textimg                   + go
 -------------------------------------------------------             SHELL             --------------------------------------------------------
 rng                         + stream range of input to stdout       + https://github.com/nickolasburr/rng                   + cpp
 -------------------------------------------------------               WM              --------------------------------------------------------

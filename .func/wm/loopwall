@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 while true
   do ls $1/* | sort -R | tail -$N | while read file
-    feh --no-fehbg --bg-scale $file &
-do wal -n -i $file --saturate 0.5
-    /home/bresilla/dots/.func/wm/colors &
-    sleep $2
+    do echo $file > /tmp/wallppr
+      wal -n -i $file --saturate 0.5 -o "/home/bresilla/dots/.func/wm/colors"
+      /home/bresilla/dots/.func/wm/coltty &
+      feh --no-fehbg --bg-scale $file
+      # /home/bresilla/dots/.func/wm/rainbow
+
+      . "${HOME}/.cache/wal/colors.sh"
+      python /home/bresilla/.local/bin/pywalfox update &
+      bspc config focused_border_color $color1 &
+      /home/bresilla/dots/.func/wm/tidyup &
+      sleep $2
   done
 done

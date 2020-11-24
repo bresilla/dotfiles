@@ -1,0 +1,91 @@
+##SUDO
+alias virsh="doas virsh"
+alias virt-viewer="doas virt-viewer"
+alias chroot="doas chroot"
+alias chroot="doas schroot"
+alias mount="doas mount"
+alias umount="doas umount"
+alias nmap="doas nmap"
+alias lxc="doas lxc"
+alias hotspot="doas hotspot"
+alias bandwhich="doas bandwhich"
+alias ufw="doas ufw"
+alias btrfs="doas btrfs"
+alias tent="doas tent"
+alias hexy="xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex"
+alias argz="xargs -0 | head -n -1"
+
+##NETWORK
+alias dnsinuse='nmcli dev show | grep IP4.DNS'
+alias findip='doas arp-scan --localnet'
+alias netspeed='wget --output-document=/dev/null http://speedtest.wdc01.softlayer.com/downloads/test500.zip'
+alias portgraph='doas lsof -n -F | ./lsofgraph | dot -Tjpg > /tmp/a.jpg'
+alias portmon='doas lsof -Pnl -i4'
+alias openports='doas netstat -tulpn'
+alias wifis='nmcli -t -f ssid dev wifi'
+
+##ALTERNATIVES
+alias vim='nvim'
+alias mut='neomutt'
+
+##PACKAGE_MANAGER
+alias pack='unset GOPATH; unset GOBIN && yay'
+alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
+alias branch='doas pacman-mirrors --api -S'
+
+##SYSTEM
+alias cp='acp -g -r -p'
+alias mv='amv -g -u'
+alias rm='rm -rf'
+alias del='rip'
+alias cat='bat'
+alias ls='exa -F'
+alias ll='exa -liSHF --header --git --group-directories-first --tree -L1'
+alias la='exa -laiSHF --header --git --group-directories-first --tree -L1'
+alias lt='exa -liSHF --header --git --tree -L2'
+alias lu='dutree -d1 --usage -x .git -x .direnv'
+alias df='dfc -dTomw -p -/dev/loop,tmp,dev,run,one'
+alias lsblk='lsblk -f'
+alias dd='dd status=progress'
+alias home='home-manager'
+alias clip='xclip -sel clip'
+alias suspend='systemctl suspend'
+alias eject='udisksctl power-off -b'
+
+##PROGRAMS
+alias x='dtrx --one-entry=rename'
+alias ari='aria2c'
+alias inxi='optirun inxi -Fxxxz'
+alias note='dnote'
+alias font='fc-query'
+alias pomo='pomo -p /home/bresilla/.config/pomo'
+alias git='hub'
+alias doc='docker'
+alias docker='supdock'
+alias dev='devenv'
+alias pro='proji'
+alias lines='tokei'
+alias search="rg"
+
+##FILES
+alias own='doas chown -R $USER:$USER'
+alias exe='chmod u+x'
+alias dxe='chmod u-x'
+
+##OTHER
+alias open='nohup mimeo $1 > /dev/null 2>&1 &!'
+alias headphones='pactl set-sink-port 0 analog-output-headphones'
+alias ps='procs'
+alias rn='renamer'
+alias tk='tokei'
+alias mn='tldr'
+alias fq='fselect'
+alias disco='diskonaut'
+alias band='bandwhich'
+alias tap='teip'
+alias get='sysget'
+alias lzd='lazydocker'
+alias lzg='lazygit'
+alias crux='horcrux'
+alias pass='gopass'
+alias todo='taskwarrior-tui'

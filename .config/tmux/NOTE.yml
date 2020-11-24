@@ -23,13 +23,16 @@
 name: NOTE
 windows:
 - name: spt
-  layout: 6642,310x66,0,0[310x18,0,0,6,310x47,0,19,8]
+  layout: 1069,310x66,0,0{124x66,0,0[124x33,0,0,10,124x32,0,34,22],185x66,125,0,20}
   panes:
   - commands:
-    - rsmixer
+    - ncpamixer
     root: /home/bresilla
   - commands:
     - spt
+    root: /home/bresilla
+  - commands:
+    - todo
     focus: true
     root: /home/bresilla
 - name: top

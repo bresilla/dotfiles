@@ -67,7 +67,8 @@ function! UseSpaces()
 endfunction
 call UseSpaces()
 
-set completeopt=longest,menuone
+set completeopt=longest,menuone,noinsert,noselect
+set omnifunc=v:lua.vim.lsp.omnifunc
 set wildmenu                            " show a navigable menu for tab completion
 set wildmode=longest,list,full
 set wildignore=*.o,*~,*.pyc,*.class,*.so,*.zip,*.a,*/tmp/*

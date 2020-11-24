@@ -134,6 +134,23 @@ in {
         WantedBy = ["default.target"];
       };
     };
+    greenclip = {
+      Unit = {
+        Description = "Clipboard manager for ROFI";
+        Documentation = "https://github.com/erebe/greenclip";
+        After = ["graphical.target"];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "/env/cpp/bin/greenclip daemon";
+        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
+        Restart = "always";
+        RestartSec = "5";
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+    };
     espanso = {
       Unit = {
         Description = "Text Expander Daemon";
@@ -142,7 +159,7 @@ in {
       };
       Service = {
         Type = "simple";
-        ExecStart = "/usr/bin/espanso daemon";
+        ExecStart = "/env/cargo/bin/espanso daemon";
         ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
         Restart = "always";
         RestartSec = "5";

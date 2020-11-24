@@ -20,7 +20,7 @@
 	urgentcolor:      	#e53714;
 
     fromtop: 20%;
-   font: 				"Monoid 14";
+   font: 				"Iosevka Term SS01 20";
    border-color:        @background;
    separatorcolor:      @foreground;
    background-color: 	@background;

@@ -9,7 +9,7 @@
 * {
 	accent: #FFFFFF;
     foreground:         		@accent;
-    background:         		rgba(0, 0, 0, 0.70);
+    background:         		rgba(0, 0, 0, 0.90);
     transparent:				rgba(0, 0, 0, 0);
 
     normal-background: 			@transparent;
@@ -33,7 +33,7 @@
     alternate-urgent-background: @transparent;
     alternate-urgent-foreground: @urgent-foreground;
 
-    font: 				         "Monoid 14";
+    font: 				         "Iosevka Term SS01 20";
     border-color:                @background;
     separatorcolor:              @foreground;
     background-color:            @transparent;

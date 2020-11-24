@@ -6,16 +6,6 @@ source ~/.cache/wal/colors.sh
 
 
 #--------------------------------------------------------------------------------------------------------------------
-###LAUNCHER
-if [[ -n ${LAUNCHER} ]]; then
-    PS1="> "
-    bindkey -s "^M" " & \n"
-    bind 'RETURN: "\e[4~ & \n exit \n"'
-    return
-fi
-
-
-#--------------------------------------------------------------------------------------------------------------------
 ###CASE INSENSITIVE
 zstyle ':completion:*' completer _expand _complete _ignored
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -73,22 +63,17 @@ set_vi_mode_cursor() {
           ;;
     esac
 }
-
 zle-keymap-select(){ set_vi_mode_cursor; zle reset-prompt; }
-
 zle-line-init(){ zle -K $DEFAULT_VI_MODE; }
-
-
 zle -N zle-line-init
 zle -N zle-keymap-select
-
 vi-append-x-selection(){ RBUFFER=$(xsel -o -p </dev/null)$RBUFFER; }
 zle -N vi-append-x-selection
 bindkey -M vicmd '^P' vi-append-x-selection
-
 vi-yank-x-selection(){ print -rn -- $CUTBUFFER | xsel -i -p; }
 zle -N vi-yank-x-selection
 bindkey -M vicmd '^Y' vi-yank-x-selection
+
 
 #--------------------------------------------------------------------------------------------------------------------
 # use SUDO for last command
@@ -106,45 +91,16 @@ sudo-command-line() {
         LBUFFER="sudo $LBUFFER"
     fi
 }
-# zle -N sudo-command-line
-# bindkey -s '\es' sudo-command-line
+zle -N sudo-command-line
+bindkey '^S' sudo-command-line
 
 
 #--------------------------------------------------------------------------------------------------------------------
-###FUZZYFINDER
-function run_history(){ hister; zle reset-prompt; zle redisplay; }
-zle -N run_history
-bindkey -M vicmd '^t' run_history
-bindkey -M viins '^t' run_history
-bindkey '^t' run_history
-
-function run_killer(){ killer; zle reset-prompt; zle redisplay; }
-zle -N run_killer
-bindkey -M vicmd '^k' run_killer
-bindkey -M viins '^k' run_killer
-bindkey '^k' run_killer
-
-function fzi_grep() {
-    selected=$(
-        FZF_DEFAULT_COMMAND="rg --files" fzf -m -e --ansi --phony --reverse \
-        --bind "ctrl-a:select-all" --bind "f12:execute-silent:(subl -b {})" \
-        --bind "change:reload:rg -i -l --hidden --no-ignore-vcs {q} || true" \
-        --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2; );
-    [[ -n $selected ]] && nvim $selected; }
-zle -N fzi_grep
-bindkey -M vicmd '^o' fzi_grep
-bindkey -M viins '^o' fzi_grep
-bindkey '^o' fzi_grep
-
-function run_find(){ finder; zle reset-prompt; zle redisplay; }
-zle -N run_find
-bindkey -M vicmd '^f' run_find
-bindkey -M viins '^f' run_find
-bindkey '^f' run_find
-
+###CLEAN SCREEN
 push-line-and-clear() { zle .push-line; zle .clear-screen }
 zle -N push-line-and-clear
 bindkey '^L' push-line-and-clear
+
 
 #--------------------------------------------------------------------------------------------------------------------
 # CTRL-Z starts previously suspended process.
@@ -160,19 +116,35 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
+
 #--------------------------------------------------------------------------------------------------------------------
 #SHKO
+alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
+alias _conf='nvim $(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" | fzf)'
+
+
+# NNN
+_nnn() {
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    nnn "$@"
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
 my-accept-line () {
     # check if the buffer does not contain any words
     if [ ${#${(z)BUFFER}} -eq 0 ]; then
-        shko -c --short; cd "$(cat ~/.config/shko/settings/chdir)"
+        _nnn
     fi
     zle accept-line
 }
 zle -N my-accept-line
 bindkey '^M' my-accept-line
-
-
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -207,7 +179,6 @@ TRAPALRM() {
 [ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
 [ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
 [ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
-[ -d ~/.config/zsh/goto ] && source ~/.config/zsh/goto/goto.sh
 [ -d ~/.config/gitstatus ] && source ~/.config/gitstatus/gitstatus.prompt.zsh
 
 
@@ -222,7 +193,7 @@ TRAPALRM() {
 export FPATH=~/.config/zsh:$FPATH
 
 ###ALIASES
-[ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
+[[ -f ~/dots/.aliases ]] && source ~/dots/.aliases
 alias \$=''
 
 ###PROFILE
@@ -230,7 +201,13 @@ alias \$=''
 
 ###ZOXIDE
 eval "$(zoxide init zsh)"
-cd() { [[ -d $1 ]] && builtin cd $1 || z $1; }
+cd() {
+  if [[ -z $1 ]]; then
+    cd $(proji ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4)
+  else
+    [[ -d $1 ]] && builtin cd $1 || z $1;
+  fi
+}
 
 ###DIRENV
 eval "$(direnv hook zsh)"

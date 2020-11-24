@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
 
-/env/cargo/bin/pastel gradient $(head -n 1 $HOME/.cache/wal/colors) $(tail -n 1 $HOME/.cache/wal/colors) -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients &
-awk '{print "color" NR+231 "\t " $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors-kitty.conf &
-awk '{print "color" NR+231 "=" $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors.sh &
+wall=$(cat /tmp/wallppr)
+# cols=$(/env/cargo/bin/pigmnts -c 7 $wall -q)
 
-. "${HOME}/.cache/wal/colors.sh"
+bg=$(head -n 1 $HOME/.cache/wal/colors)
+fg=$(tail -n 1 $HOME/.cache/wal/colors)
+(( 0x${bg:1} > 0x555555 )) && white=#000000 black=#ffffff || black=#000000 white=#ffffff 
+md=$(head -n 2 $HOME/.cache/wal/colors | tail -n 1)
+md=$(/env/cargo/bin/pastel desaturate 0.2 $md)
 
-# bash /home/bresilla/.config/polybar/launch &
-python /home/bresilla/.local/bin/pywalfox update &
-bspc config focused_border_color $color1 &
+# echo $cols | /env/cargo/bin/pastel sort-by brightness | pastel saturate 0.8 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/rainbow
+# echo $cols | /env/cargo/bin/pastel sort-by brightness | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/rainbow
+
+
+/env/cargo/bin/pastel gradient $black $bg $md $fg $white -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients
+awk '{print "]4;" NR+231 ";" $0"\\"}' ORS='' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/sequences
+
+# awk '{print "color" NR+231 "=" $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors.sh &
+# awk '{print "color" NR+231 "\t " $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors-kitty.conf &
+
+# /env/cargo/bin/pigmnts -c 18 $wall -q > /tmp/colorz &

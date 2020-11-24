@@ -4,10 +4,13 @@ export DATA=$HOME/data
 export DOWN=$HOME/down
 export SYNC=$HOME/sync
 
+#PKGCONFIGS
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig
+
 #USER_BIN
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
-[[ -d $HOME/.func ]] && for file in $HOME/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
+[[ -d $DOTS/.func ]] && for file in $DOTS/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
 #CPP
 [[ -d "/env/cpp/bin" ]] && PATH="/env/cpp/bin:$PATH"
@@ -50,6 +53,8 @@ export BAKE_HOME="/home/bresilla/.local/share/bake"
 export UBUNTU_PATH="/tent/ubuntu"
 export VIM="/usr/share/nvim/"
 
+export PASTEL_COLOR_MODE=24bit
+export COLORTERM=truecolor
 export FOREGROUND=$(xrdb -query | grep 'foreground:'| awk 'NR==1{print $NF}')
 export BACKGROUND=$(xrdb -query | grep 'background:'| awk 'NR==1{print $NF}')
 export BLACK=$(xrdb -query | grep 'color0:'| awk 'NR==1{print $NF}')
