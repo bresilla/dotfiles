@@ -3,8 +3,8 @@ let mapleader = "\<Space>"
 
 " === NAVIGATION === "
 "navigation panes
-map <C-Pagedown> :bn<CR>
-map <C-Pageup> :bp<CR>
+map <C-Pagedown> :BufferNext<CR>
+map <C-Pageup> :BufferPrevious<CR>
 map <C-M-Pagedown> :tabn<CR>
 map <C-M-Pageup> :tabp<CR>
 map <C-Up> <C-k>
@@ -47,6 +47,32 @@ nnoremap <M-u> viw~<ESC>
 " === CHANGE CASE === "
 vnoremap < <gv
 vnoremap > >gv
+
+
+" === LSP and COMPLETION === "
+inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
+                 \ "\<Plug>(completion_confirm_completion)"  : "\<c-e>\<CR>" :  "\<CR>"
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> L     <cmd>lua vim.lsp.diagnostic.goto_next { min_severity = "info", show_config=true }<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+
+
+" ===  RUNNER === "
+noremap <silent><f7>        :FloatermNew --autoclose=0 run<cr>
+tnoremap <silent><f7>       <C-\><C-n>:FloatermToggle<CR>
+noremap <silent><f5>        :FloatermNew --autoclose=0 build<cr>
+tnoremap <silent><f5>       <C-\><C-n>:FloatermToggle<CR>
 
 
 " === FILE-TREE === "
@@ -100,12 +126,6 @@ let g:which_key_vertical = 0
 let g:which_key_use_floating_win = 1
 let g:which_key_floating_opts = { 'row': '1' }
 
-" Change the colors if you want
-highlight default link WhichKey          Operator
-highlight default link WhichKeySeperator DiffAdded
-highlight default link WhichKeyGroup     Identifier
-highlight default link WhichKeyDesc      Function
-highlight default link WhichKeyFloating  Pmenu
 
 " Hide status line
 autocmd! FileType which_key
