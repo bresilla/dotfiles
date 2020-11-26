@@ -15,7 +15,7 @@ function init#server_plugs()
     Plug 'neovim/nvim-lspconfig'
     Plug 'puremourning/vimspector'
     Plug 'nvim-lua/completion-nvim'
-    Plug 'aca/completion-tabnine', { 'do': './install.sh' }
+    " Plug 'aca/completion-tabnine', { 'do': './install.sh' }
     Plug 'SirVer/ultisnips'                             "snipets engine
     Plug 'lfilho/cosco.vim'                             "add semicolon or comma n the end
     Plug 'tpope/vim-commentary'
@@ -55,7 +55,7 @@ function init#tools_plugs()
 endfunction
 
 function init#theme_plugs()
-    " Plug 'express_line.nvim'
+    " Plug 'tjdevries/express_line.nvim'
     Plug 'vim-airline/vim-airline'	                    "airline theme
     Plug 'vim-airline/vim-airline-themes'
     Plug 'sheerun/vim-polyglot'                         "syntax highlight
@@ -84,3 +84,4 @@ call plug#end()
 source $HOME/.config/nvim/theme.vim
 source $HOME/.config/nvim/keys.vim
 source $HOME/.config/nvim/tools.vim
+luafile $HOME/.config/nvim/tools.lua

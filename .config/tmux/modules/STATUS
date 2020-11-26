@@ -28,7 +28,7 @@ chrg=$(acpi | awk '{print $3}' | tr -d '%,')
 tmu=$(date +"%H:%M")
 dat=$(date +"%d.%m.%G")
 upt=$(uptime -p)
-net=$(if nc -zw1 google.com 443; then echo "$blackTX●"; else echo "$redTX●"; fi)
+net=$(if nc -zw1 google.com 443; then echo "$blackTX*"; else echo "$redTX*"; fi)
 wat=$(echo - | awk "{printf \"%.1f\", $(($(cat /sys/class/power_supply/BAT0/current_now) * $(cat /sys/class/power_supply/BAT0/voltage_now))) / 1000000000000 }")
 
 [[ $bat -le 10 ]] && grayBG=$redBG whiteTX=$redTX accentBG=$redBG accentTX=$redTX

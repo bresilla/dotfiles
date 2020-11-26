@@ -17,7 +17,7 @@ MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini workspaces &
 
 
 #SHORTCUTS
-killall -q sxhkd
+pkill sxhkd
 while pgrep -x sxhkd >/dev/null; do sleep 1; done
 sxhkd -c /home/bresilla/.config/sxhkd/sxhkdrc &
 
