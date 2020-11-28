@@ -30,6 +30,7 @@ function init#space_plugs()
     Plug 'kyazdani42/nvim-tree.lua'                     "side-bar file manager
     Plug 'yggdroot/indentline'                          "indentation (characters)
     Plug 'mbbill/undotree'                              "show a tree of undos
+    Plug 'glepnir/dashboard-nvim'
 endfunction
 
 function init#navi_plugs()
@@ -63,8 +64,11 @@ function init#theme_plugs()
     Plug 'ishan9299/modus-theme-vim'
 endfunction
 
+function init#other_plugs()
+    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "firefox theme
+endfunction
+
 call plug#begin('~/.config/plug_vim')
-" ==== TOOLS ==== "
     "language
     call init#server_plugs()
     "workspace
@@ -73,8 +77,10 @@ call plug#begin('~/.config/plug_vim')
     call init#navi_plugs()
     "tools
     call init#tools_plugs()
-" ==== THEMES ==== "
+    "theme
     call init#theme_plugs()
+    "other
+    call init#other_plugs()
 call plug#end()
 
 

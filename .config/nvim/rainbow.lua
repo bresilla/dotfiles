@@ -1,45 +1,45 @@
-foreground="#f4fefe"
-background="#111717"
-cursor="#74fdff"
-color0="#111717"
-color1="#74fdff"
-color2="#3965be"
-color3="#303390"
-color4="#4780ca"
-color5="#6597ca"
-color6="#50d1dc"
-color7="#a6b8b8"
-color8="#6f8080"
-color9="#dafeff"
-color10="#5e94ff"
-color11="#272eff"
-color12="#78b2ff"
-color13="#96caff"
-color14="#93f6ff"
-color15="#f4fefe"
+foreground="#f8fbfb"
+background="#131515"
+cursor="#acdfe2"
+color0="#131515"
+color1="#acdfe2"
+color2="#c5e0e2"
+color3="#659cab"
+color4="#a6c5c9"
+color5="#5391a4"
+color6="#96b6ba"
+color7="#adb2b3"
+color8="#767b7b"
+color9="#f5fefe"
+color10="#ffffff"
+color11="#7eddf8"
+color12="#d9f8fc"
+color13="#64d6f9"
+color14="#bef1f8"
+color15="#f8fbfb"
 color232="#000000"
-color233="#030505"
-color234="#060a0a"
-color235="#0a0e0e"
-color236="#0d1212"
-color237="#0f1515"
-color238="#161f1f"
-color239="#274142"
-color240="#386768"
-color241="#498f90"
-color242="#5ab9bb"
-color243="#6be6e8"
-color244="#84fdff"
-color245="#9efdff"
-color246="#b5feff"
-color247="#cafefe"
-color248="#ddfefe"
-color249="#f0fefe"
-color250="#f5fefe"
-color251="#f7fefe"
-color252="#f9fefe"
-color253="#fbffff"
-color254="#fdffff"
+color233="#040404"
+color234="#070909"
+color235="#0b0d0d"
+color236="#0e1010"
+color237="#111313"
+color238="#191c1c"
+color239="#303a3b"
+color240="#495c5d"
+color241="#647f80"
+color242="#80a4a6"
+color243="#9dcbce"
+color244="#b3e1e4"
+color245="#c0e6e8"
+color246="#ceebed"
+color247="#dbf0f1"
+color248="#e8f5f6"
+color249="#f5fafa"
+color250="#f9fcfc"
+color251="#fafcfc"
+color252="#fbfdfd"
+color253="#fdfefe"
+color254="#fefefe"
 color255="#ffffff"
 -- === COLORBUDDY ===
 local Color, colors, Group, groups, styles = require("colorbuddy").setup()
@@ -214,14 +214,25 @@ Group.new('GitGutterChangeDelete',      colors.Blue,     colors.r0)
 
 
 -- === MULTIPLE CURSORS ===
-Group.new('multiple_cursors_cursor',    colors.r0,      nil,            styles.reverse)
-Group.new('multiple_cursors_visual',    colors.r0,      colors.r15,     nil)
+Group.new('VM_Mono',                    colors.r0,       colors.r1,       styles.reverse)
+Group.new('VM_Extend',                  colors.r0,       colors.r1,       styles.reverse)
+Group.new('VM_Cursor',                  colors.r0,       colors.r1,       styles.reverse)
+Group.new('VM_Insert',                  colors.r0,       colors.r1,       styles.reverse)
 
 
 -- === FLOAT-TERM ===
-Group.new('FloatermBorder',         colors.r1,            colors.r0)
-Group.new('Floaterm',               nil,                  colors.r0)
+Group.new('FloatermBorder',             colors.r1,       colors.r0)
+Group.new('Floaterm',                   nil,             colors.r0)
 
 
 -- === TELESCOPE ===
-Group.new('TelescopeBorder',            colors.r1,      nil)
+Group.new('TelescopeBorder',            colors.r1,       nil)
+
+
+-- === NVIM LUA TREE ===
+Group.new('Directory',                  colors.r1,       nil)
+Group.new('FolderIcon',                 colors.r1,       nil)
+
+
+-- === NVIM LUA TREE ===
+Group.new('DashboardHeader',            colors.r1,       nil)
