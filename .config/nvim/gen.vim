@@ -12,6 +12,7 @@ let &t_SI = "\e[6 q"
 let &t_EI = "\e[3 q"
 
 set nocompatible
+set termguicolors
 set hidden
 set encoding=utf8
 set showtabline=0
@@ -70,6 +71,8 @@ call UseSpaces()
 set completeopt=longest,menuone,noinsert,noselect
 set omnifunc=v:lua.vim.lsp.omnifunc
 set wildmenu                            " show a navigable menu for tab completion
+set wildoptions=pum
+set pumblend=10
 set wildmode=longest,list,full
 set wildignore=*.o,*~,*.pyc,*.class,*.so,*.zip,*.a,*/tmp/*
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -112,3 +115,33 @@ function! FoldText()
 	let expansionString = repeat('.', w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
 	return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endfunction
+
+
+" === HIGHLIGHT YANK === "
+au TextYankPost * silent! lua vim.highlight.on_yank()
+
+
+" === FOCUS === "
+"change color on focus lost
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+function! s:beactive()
+    " set number
+    " set relativenumber
+    set cursorline
+    set cursorcolumn
+    " highlight LineNr ctermbg=0 ctermfg=15
+    " syntax on
+    " set laststatus=2
+endfunction
+function! s:bepassive()
+    " set norelativenumber
+    " set nonumber
+    set nocursorline
+    set nocursorcolumn
+    " highlight LineNr ctermbg=0 ctermfg=7
+    " set laststatus=1
+    " syntax off
+endfunction
+au FocusLost * silent! call s:bepassive()
+au FocusGained * silent! call s:beactive()

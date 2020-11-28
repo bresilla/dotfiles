@@ -5,8 +5,8 @@ let mapleader = "\<Space>"
 "navigation panes
 map <C-Pagedown> :BufferNext<CR>
 map <C-Pageup> :BufferPrevious<CR>
-map <C-M-Pagedown> :tabn<CR>
-map <C-M-Pageup> :tabp<CR>
+map <C-M-Pagedown> :BufferMoveNext<CR>
+map <C-M-Pageup> :BufferMovePrevious<CR>
 map <C-Up> <C-k>
 map <C-Down> <C-j>
 map <C-Left> <C-h>
@@ -90,18 +90,15 @@ let g:lua_tree_bindings = {
     \ 'cut':             'x',
     \ 'copy':            'c',
     \ 'paste':           'p',
-    \ 'close':           ['<Tab>'],
     \ }
-autocmd FileType LuaTree nnoremap <silent> <tab> :LuaTreeToggle <CR>
+au FileType LuaTree lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':LuaTreeClose<CR>', {})
 
 
 " === FINDER === "
 map <leader><leader> <cmd>lua require('telescope.builtin').git_files()<cr>
-map <C-Space> :Clap buffers<CR>
+map <C-Space> <cmd>lua require('telescope.builtin').buffers(center_list)<cr>
 map <C-p> :DmenuFinderFindFile<CR>
-map <leader><CR> :Clap buffers<CR>
-map <leader><tab> :Clap grep2<CR>
-map <leader>+ :Clap grep2 ++query=<cword><CR>
+map <leader><CR> :DmenuFinderFindFile<CR>
 
 
 

@@ -8,29 +8,6 @@ autocmd BufEnter * lua require'completion'.on_attach()
 let g:dmenu_finder_dmenu_command = "/home/bresilla/dots/.func/wm/rofit"
 
 
-" === VIM CLAP === "
-let g:clap_theme = 'atom_dark'
-let g:clap_theme = {
-            \'input': {'ctermbg': '240', 'ctermfg': '1'},
-            \'search_text': {'ctermbg': '240', 'ctermfg': '246', 'cterm': 'italic'},
-            \'spinner': {'ctermbg': '240', 'ctermfg': '15', 'cterm': 'bold'},
-            \'display': {'ctermbg': '236'},
-            \'preview': {'ctermbg': '234'},
-            \ }
-let g:clap_selected_sign = { 'text': '- ', 'texthl': "ClapSelectedSign", "linehl": "ClapSelected"}
-let g:clap_current_selection_sign = { 'text': '> ', 'texthl': "ClapCurrentSelectionSign", "linehl": "ClapCurrentSelection"}
-let g:clap_layout = { 'relative': 'editor' }
-let g:clap_open_action = { 'ctrl-t': 'tab split', 'ctrl-s': 'split', 'ctrl-v': 'vsplit' }
-let g:clap_search_box_border_symbols = {'nil': ['█', '█'], 'curve': ['', ''], 'arrow': ['', '']}
-let g:clap_search_box_border_style = 'nil'
-let g:clap_enable_background_shadow = 'false'
-" let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
-" let g:clap_spinner_frames = ['◇ ', '◈ ', '◆ ']
-" let g:clap_provider_src = {
-    " \ 'source': 'find {src,include} -type f',
-    " \ 'sink': 'e',
-" \ }
-
 
 " === FILEMANAGER === "
 let g:lua_tree_side = 'left'
@@ -59,16 +36,15 @@ let g:lua_tree_icons = {
 
 
 " === INDENTATION LINES === "
-let g:indentLine_char_list = ['⋮']
-let g:indentLine_color_term = 9
-let g:indentLine_setConceal = 2
-let g:indentLine_concealcursor = ""
+let g:indentLine_char_list = ['┊']
+let g:indentLine_color_term = 235
+" let g:indentLine_setConceal = 2
+" let g:indentLine_concealcursor = ""
 
 
 " === UNDO TREE === "
 nnoremap U :redo<CR>
 nnoremap <C-U> :UndotreeToggle<CR> :UndotreeFocus<CR>
-
 
 
 " === FLOAT-TERM === "
@@ -80,27 +56,8 @@ let g:floaterm_autoinsert = 1
 let g:floaterm_width = float2nr(&columns/1.2)
 let g:floaterm_height = float2nr(winheight(0)/1.5)
 let g:floaterm_title = ''
-" let g:floaterm_borderchars = ['═', '║', '═', '║', '╔', '╗', '╝', '╚']
-" let g:floaterm_borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
-" let g:floaterm_borderchars = ['━', '┃', '━', '┃', '┏', '┓', '┛', '┗']
 let g:floaterm_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
 let g:floaterm_autoclose = 1
-
-
-" ===  RUNNER === "
-noremap <silent><f7>        :FloatermNew --autoclose=0 run<cr>
-tnoremap <silent><f7>       <C-\><C-n>:FloatermToggle<CR>
-noremap <silent><f5>        :FloatermNew --autoclose=0 build<cr>
-tnoremap <silent><f5>       <C-\><C-n>:FloatermToggle<CR>
-
-
-
-" ======================== NAVIGATION ==================== "
-" === EASY MOTION === "
-let g:EasyMotion_do_mapping = 0
-hi EasyMotionTarget ctermfg=15 cterm=bold,underline
-hi link EasyMotionTarget2First EasyMotionTarget
-hi EasyMotionTarget2Second ctermfg=2 cterm=underline
 
 
 " === SEARCH SETTINGS === "
@@ -152,15 +109,19 @@ if exists("$EXTRA_VIM")
 endif
 
 
-" === GIT === "
-highlight GitGutterAdd    ctermfg=34 ctermbg=0
-highlight GitGutterChange ctermfg=184 ctermbg=0
-highlight GitGutterDelete ctermfg=124 ctermbg=0
-
-
 " === SEMICOLON === &&  === COMMENTER === "
 autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)
 autocmd FileType rust nmap <silent> , <Plug>(cosco-commaOrSemiColon)
 nmap <silent> # :Commentary<CR>
 
 
+"
+" === VIM FADE === "
+let g:vimade = {}
+let g:vimade.fadelevel = 0.6
+let g:vimade.enablesigns = 1
+let g:vimade.colbufsize = 20
+let g:vimade.rowbufsize = 20
+let g:vimade.checkinterval = 100
+let g:vimade.enablefocusfading = 1
+let g:vimade.detecttermcolors = 1

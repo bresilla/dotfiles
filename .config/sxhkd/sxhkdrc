@@ -7,6 +7,8 @@ mode_switch + space
 
 super + alt + {Escape,Delete,Insert}
     /home/bresilla/.config/rofi/menu/{power,CONFIG,screenshot}
+super + alt + Print
+    /home/bresilla/dots/.func/wm/rainbow
 ctrl + Return; {Return, space}
     {kitty --class=til tmux, alacritty -e tmux}
 Print
