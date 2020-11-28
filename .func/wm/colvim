@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+cat $HOME/.cache/wal/colors.sh > /tmp/rainbow.lua
+cat $HOME/.config/nvim/theme.lua >> /tmp/rainbow.lua
+cat /tmp/rainbow.lua > $HOME/.config/nvim/rainbow.lua
+
+# tail -n +45 /tmp/theme.lua >> /tmp/themenvim
+# cat /tmp/themenvim > /tmp/theme.lua
+
+# sed -i "s/^color0.*$/color0=\"$color0\"/" /tmp/theme.lua
+
+# while read NAME
+# do
+#     col=$(echo "$NAME" | cut -d"=" -f1)
+#     val=$(echo "$NAME" | cut -d"=" -f2)
+#     sed -i "s/^$col.*$/$col=$val/" /tmp/theme.lua
+# done < $HOME/.cache/wal/colors.sh
+
+while read SERVER
+do
+    echo $SERVER
+    /home/bresilla/.local/bin/nvr --servername $SERVER -c 'luafile $HOME/.config/nvim/rainbow.lua'
+done <<< $( echo -e "$(/home/bresilla/.local/bin/nvr --serverlist)" )

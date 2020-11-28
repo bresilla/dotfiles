@@ -2,53 +2,66 @@
 
 # /env/cargo/bin/pigmnts -c 15 $(cat /tmp/wallppr) -q > /tmp/colorz
 
-export PASTEL_COLOR_MODE=24bit
-export COLORTERM=truecolor
-
-cat /tmp/colorz | /env/cargo/bin/pastel sort-by -r chroma | /env/cargo/bin/pastel -f desaturate 0.2 | /env/cargo/bin/pastel -f lighten 0.1 | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
+cat /tmp/colorz | /env/cargo/bin/pastel sort-by -r chroma | /env/cargo/bin/pastel -f lighten 0.15 | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
 ac=$(cat /tmp/rainbow | head -n 1)
 
 
-tmp=$(echo $ac | /env/cargo/bin/pastel -f desaturate 0.8 | /env/cargo/bin/pastel -f darken 0.95 | /env/cargo/bin/pastel format hex)
-col0=$(/env/cargo/bin/pastel -f gradient $tmp $ac -n 10 | /env/cargo/bin/pastel format hex | head -n 2 | tail -n 1)
-col1=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.5 | /env/cargo/bin/pastel format hex)
-col7=$(echo $ac | /env/cargo/bin/pastel -f desaturate 0.8 | /env/cargo/bin/pastel format hex)
-col8=$(echo $ac | /env/cargo/bin/pastel -f desaturate 0.6 | /env/cargo/bin/pastel -f darken 0.2 | /env/cargo/bin/pastel format hex)
-tmp=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.4 | /env/cargo/bin/pastel -f lighten 0.8 | /env/cargo/bin/pastel format hex)
-col15=$(/env/cargo/bin/pastel -f gradient $tmp $ac -n 10 | /env/cargo/bin/pastel format hex | head -n 2 | tail -n 1)
-back=$col0 fore=$col15
 
-(( 0x${bg:1} > 0x555555 )) && white=#000000 black=#ffffff back=$col15 fore=$col0 || black=#000000 white=#ffffff back=$col0 fore=$col15
+### === COLOR-GENERATION ===
+col0=$(/env/cargo/bin/pastel -f mix $ac -f 0.08 "#000000" | /env/cargo/bin/pastel format hex)
+col1=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.2 | /env/cargo/bin/pastel format hex)
+col7=$(/env/cargo/bin/pastel -f mix $ac -f 0.2 "#aaaaaa" | /env/cargo/bin/pastel format hex)
+col8=$(/env/cargo/bin/pastel -f mix $ac -f 0.2 "#666666" | /env/cargo/bin/pastel format hex)
+col15=$(/env/cargo/bin/pastel -f mix $ac -f 0.1 "#ffffff" | /env/cargo/bin/pastel format hex)
 
-echo $back > $HOME/.cache/wal/rainbow
-echo $col1 >> $HOME/.cache/wal/rainbow
-cat /tmp/rainbow | tail -n 5 >> $HOME/.cache/wal/rainbow
-echo $col7 >> $HOME/.cache/wal/rainbow
-echo $col8 >> $HOME/.cache/wal/rainbow
-cat /tmp/rainbow | /env/cargo/bin/pastel -f lighten 0.2 | /env/cargo/bin/pastel -f saturate 0.6 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/rainbow
-echo $fore >> $HOME/.cache/wal/rainbow
+
+
+### === LIGHT & DARK THEME ===
+if [[ $1 == "light" ]]; then
+    white=#000000 
+    black=#ffffff 
+    back=$col15 
+    fore=$col0
+else
+    black=#000000
+    white=#ffffff
+    back=$col0
+    fore=$col15
+fi
+
+
+
+### === COLOR-CONCATINATION ===
+echo $back > $HOME/.cache/wal/colors
+echo $col1 >> $HOME/.cache/wal/colors
+cat /tmp/rainbow | tail -n 5 >> $HOME/.cache/wal/colors
+echo $col7 >> $HOME/.cache/wal/colors
+echo $col8 >> $HOME/.cache/wal/colors
+cat /tmp/rainbow | /env/cargo/bin/pastel -f lighten 0.2 | /env/cargo/bin/pastel -f saturate 0.6 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+echo $fore >> $HOME/.cache/wal/colors
 /env/cargo/bin/pastel -f gradient $black $back $col1 $fore $white -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients
 
-# printf "wallpaper: \"$1\"\n\n" > /home/bresilla/.cache/wal/colors.yml
-# printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" >> /home/bresilla/.cache/wal/colors.yml
-# awk '{print "\tcolor" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/rainbow >> /home/bresilla/.cache/wal/colors.yml
-# awk '{print "\tcolor" NR+231 ": \"" $0 "\""}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors.yml
 
-printf "foreground='$fore'\nbackground='$back'\ncursor='$col1'\n\n" > /home/bresilla/.cache/wal/colors.sh
-awk '{print "color" NR-1 "=" $0}' $HOME/.cache/wal/rainbow >> /home/bresilla/.cache/wal/colors.sh
-awk '{print "color" NR+231 "=" $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors.sh
 
-printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > /home/bresilla/.cache/wal/colors-kitty.conf
-awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/rainbow >> /home/bresilla/.cache/wal/colors-kitty.conf
-awk '{print "color" NR+231 "\t " $0}' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/colors-kitty.conf
+### === PRINTING THINGS TO FILES === ###
+# COLORS.YAML (used by ALACRITY)
+# printf "wallpaper: \"$1\"\n\n" > $HOME/.cache/wal/colors.yml
+# printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" >> $HOME/.cache/wal/colors.yml
+# awk '{print "\tcolor" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.yml
+# awk '{print "\tcolor" NR+231 ": \"" $0 "\""}' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/colors.yml
 
-awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/rainbow >> /home/bresilla/.cache/wal/sequences
-awk '{print "]4;" NR+231 ";" $0"\\"}' ORS='' $HOME/.cache/wal/gradients >> /home/bresilla/.cache/wal/sequences
-printf "]10;$fore\\" >> /home/bresilla/.cache/wal/sequences
-printf "]11;$back\\" >> /home/bresilla/.cache/wal/sequences
-printf "]12;$col1\\" >> /home/bresilla/.cache/wal/sequences
-printf "]13;$back\\" >> /home/bresilla/.cache/wal/sequences
-printf "]17;$col1\\" >> /home/bresilla/.cache/wal/sequences
-printf "]19;$back\\" >> /home/bresilla/.cache/wal/sequences
+# COLORS.SH (used by shells - bash,zsh,fish...)
+printf "foreground=\"$fore\"\nbackground=\"$back\"\ncursor=\"$col1\"\n" > $HOME/.cache/wal/colors.sh
+awk '{print "color" NR-1 "=\"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.sh
+awk '{print "color" NR+231 "=\"" $0 "\""}' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/colors.sh
 
-cat $HOME/.cache/wal/rainbow > /home/bresilla/.cache/wal/colors
+# COLORS.KITTY (used by KITTY)
+printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors-kitty.conf
+awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors-kitty.conf
+awk '{print "color" NR+231 "\t " $0}' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/colors-kitty.conf
+
+# SEQUENCES (escape codes sent to all '/dev/pts/*')
+printf "]10;$fore\\]11;$back\\]12;$col1\\]13;$back\\]17;$col1\\]19;$back\\" >> $HOME/.cache/wal/sequences
+awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/colors >> $HOME/.cache/wal/sequences
+awk '{print "]4;" NR+231 ";" $0"\\"}' ORS='' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/sequences
+# for tt in /dev/pts/*; do re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && /usr/bin/cat ~/.cache/wal/sequences >$tt; done &

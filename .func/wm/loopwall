@@ -4,13 +4,14 @@ while true
     do echo $file > /tmp/wallppr &
       /env/cargo/bin/pigmnts -c 18 $(cat /tmp/wallppr) -q > /tmp/colorz
       # wal -n -i $file --saturate 0.5 -o "/home/bresilla/dots/.func/wm/colors"
-      /home/bresilla/dots/.func/wm/rainbow $file
+      /home/bresilla/dots/.func/wm/rainbow $(cat /tmp/theme)
       feh --no-fehbg --bg-scale $file
 
 
       . "${HOME}/.cache/wal/colors.sh"
-      bspc config focused_border_color $color1 &
-      /home/bresilla/dots/.func/wm/coltty &
+      /home/bresilla/dots/.func/wm/colvim
+      /home/bresilla/dots/.func/wm/coltty
+      bspc config focused_border_color $color1
       python /home/bresilla/.local/bin/pywalfox update &
 
       sleep $2

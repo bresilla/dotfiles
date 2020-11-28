@@ -25,8 +25,7 @@ function init#space_plugs()
     Plug 'liuchengxu/vim-which-key'
     Plug 'nvim-telescope/telescope.nvim'                "finder and runner
     Plug 'romgrk/barbar.nvim'
-    Plug 'voldikss/vim-floaterm'		                "terminal
-    Plug 'liuchengxu/vim-clap'                          "interactive floating finder and dispatcher
+    Plug 'voldikss/vim-floaterm'                        "terminal
     Plug 'has2k1/vim-dmenu-finder'
     Plug 'kyazdani42/nvim-tree.lua'                     "side-bar file manager
     Plug 'yggdroot/indentline'                          "indentation (characters)
@@ -51,20 +50,17 @@ function init#tools_plugs()
     Plug 'haya14busa/incsearch.vim'
     Plug 'kana/vim-fakeclip'                            "better clipboard
     Plug 'direnv/direnv'
-    Plug 'norcalli/nvim-colorizer.lua'
 endfunction
 
 function init#theme_plugs()
-    " Plug 'tjdevries/express_line.nvim'
-    Plug 'vim-airline/vim-airline'	                    "airline theme
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'sheerun/vim-polyglot'                         "syntax highlight
-    " Plug 'nvim-treesitter/nvim-treesitter'
-    Plug 'machakann/vim-highlightedyank'                "flash on yank
+    Plug 'tjdevries/express_line.nvim'
+    Plug 'tjdevries/colorbuddy.nvim'
+    Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'kyazdani42/nvim-web-devicons'                 "file icons
-    Plug 'rakr/vim-one' 
     Plug 'TaDaa/vimade'                                 "Fade inctive window
     Plug 'gcavallanti/vim-noscrollbar'                  "scrollbar
+    Plug 'rakr/vim-one'
+    Plug 'ishan9299/modus-theme-vim'
 endfunction
 
 call plug#begin('~/.config/plug_vim')
@@ -81,7 +77,15 @@ call plug#begin('~/.config/plug_vim')
     call init#theme_plugs()
 call plug#end()
 
-source $HOME/.config/nvim/theme.vim
+
+
+
 source $HOME/.config/nvim/keys.vim
+
 source $HOME/.config/nvim/tools.vim
 luafile $HOME/.config/nvim/tools.lua
+
+" source $HOME/.config/nvim/theme.vim
+
+lua require('colorbuddy').colorscheme('modus-vivendi')
+luafile $HOME/.config/nvim/rainbow.lua
