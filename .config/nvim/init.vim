@@ -64,10 +64,6 @@ function init#theme_plugs()
     Plug 'ishan9299/modus-theme-vim'
 endfunction
 
-function init#other_plugs()
-    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "firefox theme
-endfunction
-
 call plug#begin('~/.config/plug_vim')
     "language
     call init#server_plugs()
@@ -79,8 +75,6 @@ call plug#begin('~/.config/plug_vim')
     call init#tools_plugs()
     "theme
     call init#theme_plugs()
-    "other
-    call init#other_plugs()
 call plug#end()
 
 
