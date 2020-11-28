@@ -171,14 +171,25 @@ Group.new('GitGutterChangeDelete',      colors.Blue,     colors.r0)
 
 
 -- === MULTIPLE CURSORS ===
-Group.new('multiple_cursors_cursor',    colors.r0,      nil,            styles.reverse)
-Group.new('multiple_cursors_visual',    colors.r0,      colors.r15,     nil)
+Group.new('VM_Mono',                    colors.r0,       colors.r1,       styles.reverse)
+Group.new('VM_Extend',                  colors.r0,       colors.r1,       styles.reverse)
+Group.new('VM_Cursor',                  colors.r0,       colors.r1,       styles.reverse)
+Group.new('VM_Insert',                  colors.r0,       colors.r1,       styles.reverse)
 
 
 -- === FLOAT-TERM ===
-Group.new('FloatermBorder',         colors.r1,            colors.r0)
-Group.new('Floaterm',               nil,                  colors.r0)
+Group.new('FloatermBorder',             colors.r1,       colors.r0)
+Group.new('Floaterm',                   nil,             colors.r0)
 
 
 -- === TELESCOPE ===
-Group.new('TelescopeBorder',            colors.r1,      nil)
+Group.new('TelescopeBorder',            colors.r1,       nil)
+
+
+-- === NVIM LUA TREE ===
+Group.new('Directory',                  colors.r1,       nil)
+Group.new('FolderIcon',                 colors.r1,       nil)
+
+
+-- === NVIM LUA TREE ===
+Group.new('DashboardHeader',            colors.r1,       nil)

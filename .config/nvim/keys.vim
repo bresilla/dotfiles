@@ -75,6 +75,11 @@ noremap <silent><f5>        :FloatermNew --autoclose=0 build<cr>
 tnoremap <silent><f5>       <C-\><C-n>:FloatermToggle<CR>
 
 
+
+" ===  SESSIONS === "
+nnoremap <silent> ss <cmd>SessionSave<CR>
+
+
 " === FILE-TREE === "
 nnoremap <silent> <tab> :LuaTreeToggle <CR>
 let g:lua_tree_bindings = {
@@ -181,16 +186,16 @@ let g:which_key_map.m = {
 " b is for buffer
 let g:which_key_map.b = {
       \ 'name' : '+bookmarks' ,
-      \ 'b' : [':BookmarkToggle'        , 'BookmarkToggle'],
-      \ 'i' : [':BookmarkAnnotate'        , 'BookmarkAnnotate'],
-      \ 'a' : [':BookmarkShowAll'        , 'BookmarkShowAll'],
-      \ 'j' : [':BookmarkNext'        , 'BookmarkNext'],
-      \ 'k' : [':BookmarkPrev'        , 'BookmarkPrev'],
-      \ 'c' : [':BookmarkClear'        , 'BookmarkClear'],
-      \ 'x' : [':BookmarkClearAll'        , 'BookmarkClearAll'],
-      \ 'l' : [':BookmarkMoveUp'        , 'BookmarkMoveUp'],
-      \ 'h' : [':BookmarkMoveDown'        , 'BookmarkMoveDown'],
-      \ 'g' : [':BookmarkMoveToLine'        , 'BookmarkMoveToLine'],
+      \ 'b' : [':BookmarkToggle'          , 'BookmarkToggle'],
+      \ 'i' : [':BookmarkAnnotate'          , 'BookmarkAnnotate'],
+      \ 'a' : [':BookmarkShowAll'          , 'BookmarkShowAll'],
+      \ 'j' : [':BookmarkNext'          , 'BookmarkNext'],
+      \ 'k' : [':BookmarkPrev'          , 'BookmarkPrev'],
+      \ 'c' : [':BookmarkClear'          , 'BookmarkClear'],
+      \ 'x' : [':BookmarkClearAll'          , 'BookmarkClearAll'],
+      \ 'l' : [':BookmarkMoveUp'          , 'BookmarkMoveUp'],
+      \ 'h' : [':BookmarkMoveDown'          , 'BookmarkMoveDown'],
+      \ 'g' : [':BookmarkMoveToLine'          , 'BookmarkMoveToLine'],
       \ }
 
 " s is for search
@@ -213,15 +218,12 @@ let g:which_key_map.s = {
       \ 'M' : [':Maps'                  , 'normal maps'] ,
       \ 'p' : [':Helptags'              , 'help tags'] ,
       \ 'P' : [':Tags'                  , 'project tags'],
-      \ 's' : [':CocList snippets'      , 'snippets'],
       \ 'S' : [':Colors'                , 'color schemes'],
       \ 't' : [':Rg'                    , 'text Rg'],
       \ 'T' : [':BTags'                 , 'buffer tags'],
       \ 'w' : [':Windows'               , 'search windows'],
       \ 'y' : [':Filetypes'             , 'file types'],
-      \ 'z' : [':FZF'                   , 'FZF'],
       \ }
-      " \ 's' : [':Snippets'     , 'snippets'],
 
 " g is for git
 let g:which_key_map.g = {

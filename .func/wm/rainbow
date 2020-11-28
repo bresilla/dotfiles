@@ -3,7 +3,11 @@
 # /env/cargo/bin/pigmnts -c 15 $(cat /tmp/wallppr) -q > /tmp/colorz
 
 cat /tmp/colorz | /env/cargo/bin/pastel sort-by -r chroma | /env/cargo/bin/pastel -f lighten 0.15 | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
-ac=$(cat /tmp/rainbow | head -n 1)
+if [[ $2 == "pick" ]]; then
+    ac=$(/env/cargo/bin/pastel -f pick | /env/cargo/bin/pastel format hex)
+else
+    ac=$(cat /tmp/rainbow | head -n 1)
+fi
 
 
 
