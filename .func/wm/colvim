@@ -18,6 +18,8 @@ cat /tmp/rainbow.lua > $HOME/.config/nvim/rainbow.lua
 
 while read SERVER
 do
-    echo $SERVER
-    /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c 'luafile $HOME/.config/nvim/rainbow.lua'
+    # echo ${SERVER}
+    if [[ ${SERVER:0:1} == "/" ]]; then
+        /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c 'luafile $HOME/.config/nvim/rainbow.lua' &
+    fi
 done <<< $( echo -e "$(/home/bresilla/.local/bin/nvr --serverlist)" )
