@@ -17,6 +17,14 @@ col1=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.2 | /env/cargo/bin/pastel 
 col7=$(/env/cargo/bin/pastel -f mix $ac -f 0.2 "#aaaaaa" | /env/cargo/bin/pastel format hex)
 col8=$(/env/cargo/bin/pastel -f mix $ac -f 0.2 "#666666" | /env/cargo/bin/pastel format hex)
 col15=$(/env/cargo/bin/pastel -f mix $ac -f 0.1 "#ffffff" | /env/cargo/bin/pastel format hex)
+# additional color generation (mix between accent and primary colors)
+factor=0.6
+redish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#ff0000")
+blueish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#0000ff")
+greenish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#00ff00")
+cyanish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#00ffff")
+yellowish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#ffff00")
+magentaish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#ff00ff")
 
 
 
@@ -36,6 +44,7 @@ fi
 
 
 ### === COLOR-CONCATINATION ===
+#concatinating main colors (colors 0-15)
 echo $back > $HOME/.cache/wal/colors
 echo $col1 >> $HOME/.cache/wal/colors
 cat /tmp/rainbow | tail -n 5 >> $HOME/.cache/wal/colors
@@ -43,29 +52,42 @@ echo $col7 >> $HOME/.cache/wal/colors
 echo $col8 >> $HOME/.cache/wal/colors
 cat /tmp/rainbow | /env/cargo/bin/pastel -f lighten 0.2 | /env/cargo/bin/pastel -f saturate 0.6 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
 echo $fore >> $HOME/.cache/wal/colors
+#generating gradients (colors 232-255)
 /env/cargo/bin/pastel -f gradient $black $back $col1 $fore $white -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/gradients
+#generating shades of each additional color (colors 159-231)
+/env/cargo/bin/pastel -f gradient $back $redish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex > $HOME/.cache/wal/others
+/env/cargo/bin/pastel -f gradient $back $greenish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/others
+/env/cargo/bin/pastel -f gradient $back $blueish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/others
+/env/cargo/bin/pastel -f gradient $back $magentaish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/others
+/env/cargo/bin/pastel -f gradient $back $yellowish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/others
+/env/cargo/bin/pastel -f gradient $back $cyanish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/others
+
 
 
 
 ### === PRINTING THINGS TO FILES === ###
 # COLORS.YAML (used by ALACRITY)
-# printf "wallpaper: \"$1\"\n\n" > $HOME/.cache/wal/colors.yml
-# printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" >> $HOME/.cache/wal/colors.yml
-# awk '{print "\tcolor" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.yml
-# awk '{print "\tcolor" NR+231 ": \"" $0 "\""}' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/colors.yml
+printf "wallpaper: \"$1\"\n\n" > $HOME/.cache/wal/colors.yml
+printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" >> $HOME/.cache/wal/colors.yml
+awk '{print "\tcolor" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.yml
+awk '{print "\tcolor" NR+231 ": \"" $0 "\""}' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/colors.yml
+awk '{print "\tcolor" NR+159 ": \"" $0 "\""}' $HOME/.cache/wal/others >> $HOME/.cache/wal/colors.yml
 
 # COLORS.SH (used by shells - bash,zsh,fish...)
 printf "foreground=\"$fore\"\nbackground=\"$back\"\ncursor=\"$col1\"\n" > $HOME/.cache/wal/colors.sh
 awk '{print "color" NR-1 "=\"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.sh
 awk '{print "color" NR+231 "=\"" $0 "\""}' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/colors.sh
+awk '{print "color" NR+159 "=\"" $0 "\""}' $HOME/.cache/wal/others >> $HOME/.cache/wal/colors.sh
 
 # COLORS.KITTY (used by KITTY)
 printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors-kitty.conf
 awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors-kitty.conf
 awk '{print "color" NR+231 "\t " $0}' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/colors-kitty.conf
+awk '{print "color" NR+159 "\t " $0}' $HOME/.cache/wal/others >> $HOME/.cache/wal/colors-kitty.conf
 
 # SEQUENCES (escape codes sent to all '/dev/pts/*')
 printf "]10;$fore\\]11;$back\\]12;$col1\\]13;$back\\]17;$col1\\]19;$back\\" >> $HOME/.cache/wal/sequences
 awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/colors >> $HOME/.cache/wal/sequences
 awk '{print "]4;" NR+231 ";" $0"\\"}' ORS='' $HOME/.cache/wal/gradients >> $HOME/.cache/wal/sequences
+awk '{print "]4;" NR+159 ";" $0"\\"}' ORS='' $HOME/.cache/wal/others >> $HOME/.cache/wal/sequences
 # for tt in /dev/pts/*; do re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && /usr/bin/cat ~/.cache/wal/sequences >$tt; done &

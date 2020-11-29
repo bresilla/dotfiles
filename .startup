@@ -12,8 +12,8 @@ xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate norma
 #TASKBAR
 killall -q polybar &
 while pgrep -x polybar >/dev/null; do sleep 1; done
-MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini workspaces &
-MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini workspaces &
+MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini worktops &
+MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini worktops &
 
 
 #SHORTCUTS
