@@ -9,14 +9,19 @@ if empty(glob('~/.config/nvim/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+function init#lua_vimrc()
+    Plug 'svermeulen/vimpeccable'
+endfunction
+
 function init#server_plugs()
     Plug 'nvim-lua/plenary.nvim'                        "| windowing and shit beta for NVIM
     Plug 'nvim-lua/popup.nvim'                          "| hoepfully will get merget in mainsteream
     Plug 'neovim/nvim-lspconfig'
     Plug 'puremourning/vimspector'
     Plug 'nvim-lua/completion-nvim'
-    " Plug 'aca/completion-tabnine', { 'do': './install.sh' }
+    Plug 'aca/completion-tabnine', { 'do': './install.sh' }
     Plug 'SirVer/ultisnips'                             "snipets engine
+    Plug 'honza/vim-snippets'
     Plug 'lfilho/cosco.vim'                             "add semicolon or comma n the end
     Plug 'tpope/vim-commentary'
 endfunction
@@ -65,6 +70,8 @@ function init#theme_plugs()
 endfunction
 
 call plug#begin('~/.config/plug_vim')
+    "vimrc in LUA
+    call init#lua_vimrc()
     "language
     call init#server_plugs()
     "workspace
@@ -84,8 +91,6 @@ source $HOME/.config/nvim/keys.vim
 
 source $HOME/.config/nvim/tools.vim
 luafile $HOME/.config/nvim/tools.lua
-
-" source $HOME/.config/nvim/theme.vim
 
 lua require('colorbuddy').colorscheme('modus-vivendi')
 luafile $HOME/.config/nvim/rainbow.lua

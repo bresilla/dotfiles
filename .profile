@@ -24,6 +24,7 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 #NIX
 export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
+export NIXPKGS_ALLOW_UNFREE=1
 
 #SECRETS
 [[ -e "/home/bresilla/sets/variables" ]] && source /home/bresilla/sets/variables

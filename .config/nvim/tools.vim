@@ -1,6 +1,12 @@
 " ======================== LANGUAGE ==================== "
-" let g:completion_chain_complete_list = {'default':[{'complete_items': ['lsp','snippet','tabnine']}]}
+let g:completion_chain_complete_list = {'default':[{'complete_items': ['lsp','snippet','tabnine']}]}
+let g:completion_enable_snippet = 'UltiSnips'
 autocmd BufEnter * lua require'completion'.on_attach()
+
+sign define LspDiagnosticsSignError text=× texthl=LspDiagnosticsSignError linehl= numhl=
+sign define LspDiagnosticsSignWarning text=! texthl=LspDiagnosticsSignWarning linehl= numhl=
+sign define LspDiagnosticsSignInformation text=+ texthl=LspDiagnosticsSignInformation linehl= numhl=
+sign define LspDiagnosticsSignHint text=➜ texthl=LspDiagnosticsSignHint linehl= numhl=
 
 
 " ======================== WORKSPACE ==================== "
@@ -22,11 +28,11 @@ let g:lua_tree_show_icons = { 'git': 0, 'folders': 1, 'files': 1 }
 let g:lua_tree_icons = {
     \ 'default': '',
     \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
+    \   'unstaged': "×",
+    \   'staged': "+",
     \   'unmerged': "═",
     \   'renamed': "➜",
-    \   'untracked': "★"
+    \   'untracked': "*"
     \   },
     \ 'folder': {
     \   'default': "",
@@ -132,26 +138,40 @@ let g:vimade.detecttermcolors = 1
 let g:dashboard_default_executive ='telescope'
 let g:dashboard_default_header = "cres"
 let g:dashboard_custom_header = [
-    \ '                 ▄▄▄▄▄▄▄▄                     ' ,
-    \ '            ▄▄██████████████▄▄                ' ,
-    \ '         ▄██████████████████████▄             ' ,
-    \ '       ▄█▐██████████████████████▌█▄           ' ,
-    \ '     ▄█▀▄████████████████████████▄▀█▄         ' ,
-    \ '    ▄█╝ ██████████████████████████ ╚█▄        ' ,
-    \ '   ▐█▌ ▐██████████████████████████▌ ▐█▌       ' ,
-    \ '   █▀  ████████████████████████████  ▀█       ' ,
-    \ '     ▄██████████████████████████████▄         ' ,
-    \ '   ████████████████████████████████████       ' ,
-    \ '   ████████████████████████████████████       ' ,
-    \ '   ▐██  ╚▀▀████████████████████▀▀╝  ▐█▀       ' ,
-    \ '    ██       ╚██████████████╝       ██        ' ,
-    \ '     ██        ╚█▌██████▐█╝        ██         ' ,
-    \ '     ▐██;        █ ████ █        ,██▌         ' ,
-    \ '      ╚███▄▄▄▄    █ ██ █    ▄▄▄▄███╝          ' ,
-    \ '         ╚▀▀▀████████████████▀▀▀╝             ' ,
-    \ '          ██▄▀█████▄██▄█████▀▄██              ' ,
-    \ '          ╚██▄ ████████████ ▄██╝              ' ,
-    \ '            ╚█████▀▄▄▄▄▀█████╝                ' ,
-    \ '              ╚▀██████████▀╝                  ' ,
-    \ '                 ▀██████▀                     ' ,
+    \ '                                          ' ,
+    \ '                                          ' ,
+    \ '                                          ' ,
+    \ '                 ▄▄▄▄▄▄▄▄                 ' ,
+    \ '            ▄▄██████████████▄▄            ' ,
+    \ '         ▄██████████████████████▄         ' ,
+    \ '       ▄██████████████████████████▄       ' ,
+    \ '     ▄█▀▄████████████████████████▄▀█▄     ' ,
+    \ '    ▄█▀ ██████████████████████████ ▀█▄    ' ,
+    \ '   ▄█▀ ████████████████████████████ ▀█▄   ' ,
+    \ '   █▀ ▄████████████████████████████▄ ▀█   ' ,
+    \ '     ▄██████████████████████████████▄     ' ,
+    \ '   ████████████████████████████████████   ' ,
+    \ '   ████████████████████████████████████   ' ,
+    \ '   ▀██▀  ▀▀████████████████████▀▀  ▀██▀   ' ,
+    \ '    ██       ▀██▀████████▀██▀       ██    ' ,
+    \ '     ██        ▀█ ██████ █▀        ██     ' ,
+    \ '      ██▄        █ ████ █        ▄██      ' ,
+    \ '       ███▄▄▄▄    █ ██ █    ▄▄▄▄███       ' ,
+    \ '         ▀▀▀▀████▄██████▄████▀▀▀▀         ' ,
+    \ '          ██▄▀█████▄██▄█████▀▄██          ' ,
+    \ '           ██▄ ████████████ ▄██           ' ,
+    \ '            ▀█████▀▄▄▄▄▀█████▀            ' ,
+    \ '              ▀▀██████████▀▀              ' ,
+    \ '                 ▀██████▀                 ' ,
     \ ]
+let g:dashboard_custom_section={
+    \ 'last_session': { 'description': ['... press [ENTER] to load session ...'], 'command': ':SessionLoad' },
+\ }
+" \ 'load_tree': { 'description': ['... press TAB to show tree ...'], 'command': ':LuaTreeOpen' },
+" \ 'open_finder': { 'description': ['... press SPACE SPACE to open finder ...'], 'command': ':Telescope git_files' },
+let foo = "LESS IS SIGNIFICANTLY MORE"
+let g:dashboard_custom_footer = [foo]
+function! Dashboard_pref()
+    setlocal nocursorcolumn nocursorline
+endfunction
+autocmd Filetype dashboard call Dashboard_pref()
