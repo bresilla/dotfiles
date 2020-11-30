@@ -6,4 +6,4 @@ windows:
   - commands:
     - nvim
     focus: true
-    root:  /home/bresilla/code/lang/CPP/basics 
+    root:  /home/bresilla/code/lang/CPP/basics       

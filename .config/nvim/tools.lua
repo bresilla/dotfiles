@@ -12,6 +12,7 @@ require'lspconfig'.sumneko_lua.setup{
   cmd = {"/env/LSP/lua/lua-language-server"};
 }
 
+require'lspconfig'.pyls.setup{}
 
 --------------------------------- TREESITTER  -----------------------------------------
 require'nvim-treesitter.configs'.setup {

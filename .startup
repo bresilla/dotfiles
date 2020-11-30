@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # COLORS
-wal -R &
+# wal -R &
 
 
 #MONITORS

@@ -48,15 +48,16 @@ Color.new('r255',       color255)
 Color.new('ac_d',      color239)
 Color.new('ac_l',      color248)
 
-Color.new('Redish',     "#8c4c4c")
-Color.new('Orangeish',  "#6c4c00")
-Color.new('Violetish',  "#8c6cac")
-Color.new('Cyanish',    "#6cac8c")
-
 Color.new('Red',        color166)
+Color.new('Yellow',     color214)
 Color.new('Blue',       color190)
 Color.new('Green',      color178)
-Color.new('Yellow',     color214)
+
+Color.new('Redish',     color163)
+Color.new('Violetish',  color198)
+Color.new('Orangeish',  color211)
+Color.new('Cyanish',    color223)
+
 
 vim.g.terminal_color_0  = color0
 vim.g.terminal_color_8  = color8
@@ -92,13 +93,13 @@ Group.new('illuminatedWord',        nil,                  colors.r0,            
 --squicky lines "~" hide
 Group.new('EndOfBuffer',            colors.r0,            colors.r0)
 --splits and number backgrounds,
-Group.new('VertSplit',              colors.ac_d,            colors.r0)
+Group.new('VertSplit',              colors.ac_d,          colors.r0)
 Group.new('foldcolumn',             nil,                  colors.r0)
 Group.new('LineNr',                 colors.ac_l,          colors.r0)
 Group.new('SignColumn',             nil,                  colors.r0)
 Group.new('CursorLineNR',           colors.r1,            colors.r0,            styles.bold)
 --special characters of endline
-Group.new('NonText',                colors.r235,          colors.r0) 
+Group.new('NonText',                colors.r240,          colors.r0) 
 --completion menu
 Group.new('Pmenu',                  colors.r15,           colors.ac_d)
 Group.new('PmenuSel',               colors.r1,            colors.r236,          styles.bold)
