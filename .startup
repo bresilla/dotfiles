@@ -10,22 +10,13 @@ xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate norma
 
 
 #TASKBAR
-killall -q polybar &
-while pgrep -x polybar >/dev/null; do sleep 1; done
-MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini worktops &
-MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini worktops &
+/home/bresilla/.config/polybar
 
 
 #SHORTCUTS
 pkill sxhkd
 while pgrep -x sxhkd >/dev/null; do sleep 1; done
 sxhkd -c /home/bresilla/.config/sxhkd/sxhkdrc &
-
-
-#OCD
-killall -q xob
-while pgrep -x xob >/dev/null; do sleep 1; done
-tail -f /home/bresilla/.local/share/fifo/xob | /env/cpp/bin/xob &
 
 
 #KEYBOARD

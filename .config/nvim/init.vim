@@ -30,6 +30,7 @@ function init#space_plugs()
     Plug 'liuchengxu/vim-which-key'
     Plug 'nvim-telescope/telescope.nvim'                "finder and runner
     Plug 'romgrk/barbar.nvim'
+    " Plug 'akinsho/nvim-bufferline.lua'
     Plug 'voldikss/vim-floaterm'                        "terminal
     Plug 'has2k1/vim-dmenu-finder'
     Plug 'kyazdani42/nvim-tree.lua'                     "side-bar file manager

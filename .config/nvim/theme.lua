@@ -53,10 +53,10 @@ Color.new('Orangeish',  "#6c4c00")
 Color.new('Violetish',  "#8c6cac")
 Color.new('Cyanish',    "#6cac8c")
 
-Color.new('Red',        "#ff0000")
-Color.new('Blue',       "#0000ff")
-Color.new('Green',      "#00ff00")
-Color.new('Yellow',     "#ffff00")
+Color.new('Red',        color166)
+Color.new('Blue',       color190)
+Color.new('Green',      color178)
+Color.new('Yellow',     color214)
 
 vim.g.terminal_color_0  = color0
 vim.g.terminal_color_8  = color8

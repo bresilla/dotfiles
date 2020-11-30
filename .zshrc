@@ -218,3 +218,5 @@ source <(navi widget zsh)
 ###STARSHIP
 # eval "$(starship init zsh)"
 if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+/home/bresilla/dots/.func/system/bresilla
