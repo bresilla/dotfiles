@@ -125,7 +125,7 @@ in {
       };
       Service = {
         Type = "simple";
-        ExecStart = "/bin/sh -c 'tail -f /home/bresilla/.local/share/fifo/xob | xob'";
+        ExecStart = "/bin/sh -c 'tail -f /home/bresilla/.local/share/fifo/xob | /env/cpp/bin/xob'";
         ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
         Restart = "always";
         RestartSec = "5";
