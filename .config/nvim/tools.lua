@@ -120,6 +120,27 @@ center_list = require'telescope.themes'.get_dropdown({
   previewer = false,
 })
 
+---------------------------------- BUFFER LINE  -----------------------------------------
+-- require'bufferline'.setup{
+--   options = {
+--     view = "multiwindow",
+--     numbers = "none",
+--     mappings = true,
+--     buffer_close_icon= '',
+--     modified_icon = '●',
+--     close_icon = '',
+--     left_trunc_marker = '',
+--     right_trunc_marker = '',
+--     max_name_length = 18,
+--     max_prefix_length = 15, -- prefix used when a buffer is deduplicated
+--     tab_size = 18,
+--     show_buffer_close_icons = true,
+--     -- [focused and unfocused]. eg: { '|', '|' }
+--     -- separator_style = "slant" | "thick" | "thin" | { 'any', 'any' },
+--     always_show_bufferline = true,
+--   }
+-- }
+
 
 --------------------------------- EXPRESS LINE  -----------------------------------------
 local builtin = require('el.builtin')
@@ -164,6 +185,8 @@ require('el').setup {
       },
       git_branch,
       ' ',
+      git_changes,
+      ' ',
       sections.split,
       file_icon,
       sections.maximum_width(
@@ -177,8 +200,8 @@ require('el').setup {
       sections.split,
       lsp_statusline.current_function,
       lsp_statusline.server_progress,
-      git_changes,
       ' ',
+      builtin.filetype,
       '[', builtin.line_with_width(3), ':',  builtin.column_with_width(2), ']',
       sections.collapse_builtin {
         '[',
@@ -186,7 +209,6 @@ require('el').setup {
         builtin.readonly_list,
         ']',
       },
-      builtin.filetype,
     }
   end
 }
