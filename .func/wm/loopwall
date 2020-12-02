@@ -1,20 +1,10 @@
 #!/usr/bin/env bash
 while true
-  do ls $1/* | sort -R | tail -$N | while read file
-    do echo $file > /tmp/wallppr &
-      /env/cargo/bin/pigmnts -c 18 $(cat /tmp/wallppr) -q > /tmp/colorz
-      # wal -n -i $file --saturate 0.5 -o "/home/bresilla/dots/.func/wm/colors"
-      /home/bresilla/dots/.func/wm/rainbow $(cat /tmp/theme)
-      feh --no-fehbg --bg-scale $file
-
-
-      . "${HOME}/.cache/wal/colors.sh"
-      /home/bresilla/dots/.func/wm/colvim
-      /home/bresilla/dots/.func/wm/coltty
-      bspc config focused_border_color $color1
-      python /home/bresilla/.local/bin/pywalfox update &
-
-      sleep $2
-      /home/bresilla/dots/.func/wm/tidyup &
-  done
+do /home/bresilla/dots/.func/wm/rainbow regen
+    /home/bresilla/dots/.func/wm/tidyup &
+    /home/bresilla/dots/.func/wm/colvim &
+    /home/bresilla/dots/.func/wm/coltty &
+    bspc config focused_border_color $(cat $HOME/.cache/wal/colors | head -n 2 | tail -n 1) &
+    python /home/bresilla/.local/bin/pywalfox update &
+    sleep $2
 done

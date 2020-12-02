@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 # COLORS
+/home/bresilla/dots/.func/wm/rainbow regen &
 # wal -R &
 
 
@@ -10,7 +11,7 @@ xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate norma
 
 
 #TASKBAR
-/home/bresilla/.config/polybar
+/home/bresilla/.config/polybar/poly &
 
 
 #SHORTCUTS

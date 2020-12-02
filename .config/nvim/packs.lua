@@ -1,6 +1,7 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
 -- Only required if you have packer in your `opt` pack
+
+-- https://github.com/wbthomason/packer.nvim
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function()
@@ -11,7 +12,7 @@ return require('packer').startup(function()
     use 'neovim/nvim-lspconfig'
     use 'puremourning/vimspector'
     use 'nvim-lua/completion-nvim'
-    use {'aca/completion-tabnine', run = './install.sh'}
+    use {'aca/completion-tabnine', run = 'sh install.sh'}
     use 'SirVer/ultisnips'                             --snipets engine
     use 'honza/vim-snippets'
     use 'lfilho/cosco.vim'                             --add semicolon or comma n the end
@@ -51,6 +52,4 @@ return require('packer').startup(function()
     use 'gcavallanti/vim-noscrollbar'                  --scrollbar
     use 'rakr/vim-one'
     use 'ishan9299/modus-theme-vim'
-
-    use '9mm/vim-closer'
 end )

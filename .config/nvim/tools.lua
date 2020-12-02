@@ -2,6 +2,8 @@ vim.highlight.on_yank {
     on_visual = true
 }
 
+
+
 --------------------------------- LSP LANGUAGES  -----------------------------------------
 require'lspconfig'.clangd.setup{
     cmd = { "clangd", "--background-index" };
@@ -14,13 +16,10 @@ require'lspconfig'.sumneko_lua.setup{
 
 require'lspconfig'.pyls.setup{}
 
---------------------------------- TREESITTER  -----------------------------------------
-require'nvim-treesitter.configs'.setup {
-    highlight = { enable = true },
-    incremental_selection = { enable = true },
-    indent = { enable = true },
-}
 
+
+
+--------------------------------- TREESITTER  -----------------------------------------
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
@@ -49,7 +48,6 @@ require('nvim-treesitter.configs').setup {
       },
     },
 
-    -- TODO: This seems broken...
     navigation = {
       enable = true,
       keymaps = {
@@ -60,6 +58,9 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
+
+
+
 --------------------------------- DIAGNOSTICS  -----------------------------------------
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -68,7 +69,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         update_in_insert = true,
     }
 )
-
 
 vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)
     local win_width = vim.api.nvim_win_get_width(0)
@@ -93,6 +93,8 @@ vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line
     end
     return virt_texts
 end
+
+
 
 
 --------------------------------- TELESCOPE  -----------------------------------------
@@ -121,6 +123,9 @@ center_list = require'telescope.themes'.get_dropdown({
   previewer = false,
 })
 
+
+
+
 ---------------------------------- BUFFER LINE  -----------------------------------------
 -- require'bufferline'.setup{
 --   options = {
@@ -141,6 +146,8 @@ center_list = require'telescope.themes'.get_dropdown({
 --     always_show_bufferline = true,
 --   }
 -- }
+
+
 
 
 --------------------------------- EXPRESS LINE  -----------------------------------------
@@ -202,7 +209,6 @@ require('el').setup {
       lsp_statusline.current_function,
       lsp_statusline.server_progress,
       ' ',
-      builtin.filetype,
       '[', builtin.line_with_width(3), ':',  builtin.column_with_width(2), ']',
       sections.collapse_builtin {
         '[',
@@ -210,6 +216,7 @@ require('el').setup {
         builtin.readonly_list,
         ']',
       },
+      builtin.filetype,
     }
   end
 }

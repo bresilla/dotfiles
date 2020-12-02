@@ -1,5 +1,13 @@
 #!/usr/bin/env zsh
 #--------------------------------------------------------------------------------------------------------------------
+###BRESILLA
+/home/bresilla/dots/.func/system/bresilla &
+###THEME
+[ -f ~/.config/promptline ] && source ~/.config/promptline
+
+
+
+#--------------------------------------------------------------------------------------------------------------------
 ###WAL COLORS
 (cat ~/.cache/wal/sequences &)
 source ~/.cache/wal/colors.sh
@@ -182,12 +190,6 @@ TRAPALRM() {
 [ -d ~/.config/gitstatus ] && source ~/.config/gitstatus/gitstatus.prompt.zsh
 
 
-
-#--------------------------------------------------------------------------------------------------------------------
-###THEME
-[ -f ~/.config/promptline ] && source ~/.config/promptline
-
-
 #--------------------------------------------------------------------------------------------------------------------
 ###SCRIPTS PATH
 export FPATH=~/.config/zsh:$FPATH
@@ -218,5 +220,3 @@ source <(navi widget zsh)
 ###STARSHIP
 # eval "$(starship init zsh)"
 if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-
-/home/bresilla/dots/.func/system/bresilla
