@@ -1,8 +1,6 @@
 -- === COLORBUDDY ===
 require('colorbuddy').colorscheme('modus-vivendi')
 local Color, colors, Group, groups, styles = require("colorbuddy").setup()
--- package.path = '/home/bresilla/.cache/wal/rainbow.lua'
--- local colorz = require("rainbow.lua")
 
 function fileToList(file)
     -- see if the file exists
@@ -66,8 +64,8 @@ function mycolors()
     Color.new('r254',       rainbow[253+1])
     Color.new('r255',       rainbow[255+1])
 
-    Color.new('ac_d',       rainbow[239+1])
-    Color.new('ac_l',       rainbow[248+1])
+    Color.new('ac_d',       rainbow[237+1])
+    Color.new('ac_l',       rainbow[250+1])
 
     Color.new('Red',        rainbow[22+1])
     Color.new('Yellow',     rainbow[70+1])
@@ -100,6 +98,7 @@ function mycolors()
 
     -- === HIGHLIGHTS === "
     --background
+    Group.new('Error',                  nil,                  nil)
     Group.new('Normal',                 nil,                  colors.r0)
     Group.new('NormalNC',               nil,                  colors.r0)
     --visual select
@@ -126,6 +125,7 @@ function mycolors()
     Group.new('PmenuSel',               colors.r1,            colors.r236,          styles.bold)
     Group.new('PmenuSbar',              nil,                  colors.r0)
     Group.new('PmenuThumb',             nil,                  colors.r0)
+    Group.new('NormalFloat',            colors.r0,            colors.ac_d,          styles.bold)
     --parenthesis
     Group.new('MatchParen',             colors.r15,           colors.r1,            styles.bold)
 
@@ -165,23 +165,27 @@ function mycolors()
 
 
     -- === DIAGNOSTICS === "
-    Group.new('LspDiagnosticsVirtualTextSpace',         colors.r235,          colors.r0,            styles.italic)
+    Group.new('LspDiagnosticsVirtualTextSpace',         colors.r232,          colors.r0,            styles.italic)
     -- sign define LspDiagnosticsSignError text=×
-    Group.new('LspDiagnosticsVirtualTextError',         colors.Redish,        colors.r235,          styles.italic)
+    Group.new('LspDiagnosticsVirtualTextError',         colors.Redish,        colors.r232,          styles.italic)
     Group.new('LspDiagnosticsSignError',                colors.Redish,        colors.r0,            styles.bold)
-    Group.new('LspDiagnosticsFloatingError',            colors.Redish,        nil,                  styles.italic)
+    Group.new('LspDiagnosticsFloatingError',            colors.Redish,        nil)
+    Group.new('LspDiagnosticsUnderlineError',           colors.r0,            colors.Redish)
     -- sign define LspDiagnosticsSignWarning text=!
-    Group.new('LspDiagnosticsVirtualTextWarning',       colors.Orangeish,     colors.r235,          styles.italic)
+    Group.new('LspDiagnosticsVirtualTextWarning',       colors.Orangeish,     colors.r232,          styles.italic)
     Group.new('LspDiagnosticsSignWarning',              colors.Orangeish,     colors.r0,            styles.bold)
-    Group.new('LspDiagnosticsFloatingWarning',          colors.Orangeish,     nil,                  styles.italic)
+    Group.new('LspDiagnosticsFloatingWarning',          colors.Orangeish,     nil)
+    Group.new('LspDiagnosticsUnderlineWarning',         colors.r0,            colors.Orangeish)
     -- sign define LspDiagnosticsSignInformation text=i
-    Group.new('LspDiagnosticsVirtualTextInformation',   colors.Violetish,     colors.r235,          styles.italic)
+    Group.new('LspDiagnosticsVirtualTextInformation',   colors.Violetish,     colors.r232,          styles.italic)
     Group.new('LspDiagnosticsSignInformation',          colors.Violetish,     colors.r0,            styles.bold)
-    Group.new('LspDiagnosticsFloatingInformation',      colors.Violetish,     nil,                  styles.italic)
+    Group.new('LspDiagnosticsFloatingInformation',      colors.Violetish,     nil)
+    Group.new('LspDiagnosticsUnderlineInformation',     colors.r0,            colors.Violetish)
     -- sign define LspDiagnosticsSignHint text=➜
-    Group.new('LspDiagnosticsVirtualTextHint',          colors.Cyanish,       colors.r235,          styles.italic)
+    Group.new('LspDiagnosticsVirtualTextHint',          colors.Cyanish,       colors.r232,          styles.italic)
     Group.new('LspDiagnosticsSignHint',                 colors.Cyanish,       colors.r0,            styles.bold)
-    Group.new('LspDiagnosticsFloatingHint',             colors.Cyanish,       nil,                  styles.italic)
+    Group.new('LspDiagnosticsFloatingHint',             colors.Cyanish,       nil)
+    Group.new('LspDiagnosticsUnderlineHint',            colors.r0,            colors.Cyanish)
 
 
     -- === GIT & GITGUTTER ===

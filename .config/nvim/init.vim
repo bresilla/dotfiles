@@ -1,8 +1,5 @@
 lua package.path = '/home/bresilla/.config/nvim/?.lua'
-lua require('packs')
-lua require('utils')
-lua require('tools')
-lua require('theme')
+lua require('inits')
 
 
 " ======================== LANGUAGE ==================== "
@@ -17,9 +14,6 @@ sign define LspDiagnosticsSignHint text=➜ texthl=LspDiagnosticsSignHint linehl
 
 
 " ======================== WORKSPACE ==================== "
-" === DMENU/ROFI === "
-let g:dmenu_finder_dmenu_command = "/home/bresilla/dots/.func/wm/rofit"
-
 
 
 " === FILEMANAGER === "
@@ -192,10 +186,6 @@ let g:dashboard_custom_section={
 " \ 'open_finder': { 'description': ['... press SPACE SPACE to open finder ...'], 'command': ':Telescope git_files' },
 let foo = "LESS IS SIGNIFICANTLY MORE"
 let g:dashboard_custom_footer = [foo]
-function! Dashboard_pref()
-    setlocal nocursorcolumn nocursorline
-endfunction
-autocmd Filetype dashboard call Dashboard_pref()
 
 
 

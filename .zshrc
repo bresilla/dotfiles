@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #--------------------------------------------------------------------------------------------------------------------
 ###BRESILLA
-/home/bresilla/dots/.func/system/bresilla &
+/home/bresilla/dots/.func/system/bresilla
 ###THEME
 [ -f ~/.config/promptline ] && source ~/.config/promptline
 
@@ -216,7 +216,3 @@ eval "$(direnv hook zsh)"
 
 ###NAVI
 source <(navi widget zsh)
-
-###STARSHIP
-# eval "$(starship init zsh)"
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

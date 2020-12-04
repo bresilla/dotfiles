@@ -1,5 +1,73 @@
 #!/usr/bin/env sh
 
+space=" "
+arrFL=""
+arrFR=""
+arrEL=""
+arrER=""
+endARR=""
+
+function __cpustats() {
+    cpu=$(/env/cpp/bin/cpu-stat)
+    cpu=${cpu%.*}
+    printf $cpu
+}
+
+function __memoryuse() {
+    mem=$(free | grep Mem | awk '{print (100 - ($4/($3+$4) * 100.0));}')
+    mem=${mem%.*}
+    printf $mem
+}
+
+function __netspeed() {
+    [[ -z $INLABEL ]] && INLABEL="▼"
+    [[ -z $OUTLABEL ]] && OUTLABEL="▲"
+
+    iface=$(ip route | awk '/^default/ { print $5 ; exit }')
+    RXB=$(</sys/class/net/"$iface"/statistics/rx_bytes)
+    TXB=$(</sys/class/net/"$iface"/statistics/tx_bytes)
+    sleep 1
+    RXBN=$(</sys/class/net/"$iface"/statistics/rx_bytes)
+    TXBN=$(</sys/class/net/"$iface"/statistics/tx_bytes)
+
+    rx_rate=$(echo $((RXBN - RXB)) )
+    tx_rate=$(echo $((TXBN - TXB)) )
+
+    # incoming
+    echo -n "$INLABEL"
+    rx_kib=$(( $rx_rate >> 10 ))
+    if [[ "$rx_rate" -gt 1048576 ]]; then
+    printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
+    else
+    echo -n "${rx_kib}K"
+    fi
+    echo -n " "
+    # outgoing
+    echo -n "$OUTLABEL"
+    tx_kib=$(( $tx_rate >> 10 ))
+    if [[ "$tx_rate" -gt 1048576 ]]; then
+    printf '%sM' "`echo "scale=1; $tx_kib / 1024" | bc`"
+    else
+    echo -n "${tx_kib}K"
+    fi
+}
+
+function __battery() {
+    printf $(acpi | awk '{print $4}' | tr -d '%,')
+}
+
+function __timenow() {
+    printf $(date +"%H:%M")
+}
+
+function __datetoday() {
+    printf $(date +"%d.%m.%G")
+}
+
+function __uptime() {
+    echo $(uptime -p)
+}
+
 function preexec() {
     timer=${timer:-$SECONDS}
 }
@@ -50,7 +118,7 @@ function __is_in_container {
 }
 
 function __promptline_cwd {
-    local dir_limit="1"
+    local dir_limit="3"
     local truncation="⋯"
     local first_char
     local part_count=0
@@ -70,17 +138,27 @@ function __promptline_cwd {
     printf "%s" "$first_char$formatted_cwd"
 }
 
+function __truncate_cwd() {
+    dir=$(echo "$1" | rev | cut -d'/' -f-$2 | rev)
+
+    if [[ $2 == "1" ]]; then
+        if [[ $dir == "" ]]; then echo "/"; else echo $dir; fi
+    else
+        if [[ $dir =~ ^/ ]]; then echo $dir; else echo /$dir; fi
+    fi
+}
+
 function __promptline_left_prompt {
     #HOST
-    prefix="${blackTX}${accentBG}${space}" suffix="${space}${blackBG}${accentTX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
+    prefix="${light_TX}${dark_BG}${space}" suffix="${space}${blackBG}${dark_TX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
     #CONTAINER
-    prefix="${blackTX}${accentBG}${arrFL}${blackTX}${accentBG}" suffix="${accentTX}"; [[ -n $(__is_in_container) ]] && printf "%s" "$prefix" "$(__is_in_container)" "$suffix"
+    prefix="${blackTX}${dark_BG}${arrFL}${light_TX}${dark_BG}" suffix="${dark_TX}"; [[ -n $(__is_in_container) ]] && printf "%s" "$prefix" "$(__is_in_container)" "$suffix"
     #USER
-    prefix="${whiteBG}${arrFL}${blackTX}${whiteBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$USER" "$suffix"
+    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$USER" "$suffix"
     #SUDO WARN
     prefix="${redBG}${arrFL}${blackTX}${redBG}${space}" suffix="${space}${redTX}"; [[ -n $(__sudo_warning) ]] && printf "%s" "$prefix" "$(__sudo_warning)" "$suffix"
     #DEVSHELL
-    prefix="${blackBG}${arrFL}${blackTX}${accentBG}${arrFL}${blackTX}${accentBG}" suffix="${accentTX}"; [[ -n $(__dev_lang) ]] && printf "%s" "$prefix" "$(__dev_lang)" "$suffix"
+    prefix="${blackBG}${arrFL}${blackTX}${dark_BG}${arrFL}${light_TX}${dark_BG}" suffix="${dark_TX}"; [[ -n $(__dev_lang) ]] && printf "%s" "$prefix" "$(__dev_lang)" "$suffix"
     [[ -n $(__is_in_container) ]] && endARR="$arrEL$redBG$blackTX$arrFL$redBG$redTX$blackBG$arrFL$greyTX"
     #PATH
     [[ $(__promptline_vcs_branch) = "master" ]] && conTX=$accentTX
@@ -101,11 +179,11 @@ function __promptline_right_prompt {
         fi
     fi
     #CMD TIME
-    prefix="${whiteTX}${arrER}${arrFR}${blackTX}${whiteBG}${space}" suffix="${space}${blackTX}${arrER}"; [[ -n $timer_show ]] && printf "%s" "$prefix" "$timer_show" "$suffix"
+    prefix="${accentTX}${arrER}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; [[ -n $timer_show ]] && printf "%s" "$prefix" "$timer_show" "$suffix"
     #LOAD AVERAGE
-    prefix="${whiteTX}${arrFR}${blackTX}${whiteBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__load_average)" "$suffix"
+    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__load_average)" "$suffix"
     #VIM MODE
-    prefix="${accentTX}${arrFR}${blackTX}${accentBG}${space}" suffix="${space}${defaultBG}${defaultFG}";
+    prefix="${dark_TX}${arrFR}${light_TX}${dark_BG}${space}" suffix="${space}${defaultBG}${defaultFG}";
     if [[ -n ${ZSH_VERSION-} ]]; then
         vimode='${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}'
         printf "%s" "$prefix" $vimode "$suffix"
@@ -114,6 +192,38 @@ function __promptline_right_prompt {
         printf "%s" "$prefix" "$vimode" "$suffix"
     fi
 }
+
+function __tmuxline_right_prompt {
+    #WORKING DIR
+    prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__truncate_cwd $@ 3)" "$suffix"
+    #CMD TIME
+    prefix="${accentTX}${arrER}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; printf "%s" "$prefix" "$(__cpustats)" "$suffix"
+    #LOAD AVERAGE
+    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__memoryuse)" "$suffix"
+    #BATTERY
+    [[ $(acpi | awk '{print $3}' | tr -d '%,') == "Discharging" ]] && conTX=$redTX || conTX=$light_TX
+    prefix="${accentBG}${blackTX}${arrFR}${blackBG}${dark_TX}${arrFR}${light_TX}${dark_BG}${space}$conTX${space}" suffix="${space}";printf "%s" "$BLD$prefix" "$(__battery)" "$suffix"
+}
+
+function __tmuxline_left_prompt {
+    #TIME
+    prefix="${light_TX}${dark_BG}${space}" suffix="${space}${dark_TX}"; printf "%s" "$BLD$prefix" "$(__timenow)" "$suffix$NLD"
+    #UPTIME
+    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__datetoday)" "$suffix"
+    #UPTIME
+    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}"; printf "%s" "$prefix" "$(__uptime)" "$suffix"
+
+}
+
+function __tmuxline_center_prompt {
+    if [[  $1 == "active" ]]; then 
+        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${accentTX}${defaultBG}${arrFL}";
+    else
+        prefix="${dark_TX}${space}" suffix="${space}${defaultTX}";
+    fi
+    printf "%s" "$prefix" "$(basename $2)" "$suffix"
+}
+
 
 function __one_line_prompt {
     LEFTPROMPT=$(echo __promptline_left_prompt | wc -m)
@@ -125,7 +235,9 @@ function __one_line_prompt {
     echo $LEFTPROMPT
     echo $size_right
 }
-
+function __emptyline() {
+    echo
+}
 function __breakline() {
     COLS="${COLUMNS:-10}"
     local WORD="─"
@@ -154,30 +266,23 @@ function __promptline {
 
     local IN="$noprint$esc"
     local EN="$end_esc$end_noprint"
-    local space=" "
-    local arrFL=""
-    local arrFR=""
-    local arrEL=""
-    local arrER=""
-    local endARR=""
-    local defaultFG="${IN}0${EN}"
-    local defaultBG="${IN}49${EN}"
+
     local blackBG="${IN}48;5;0${EN}"
     local blackTX="${IN}38;5;0${EN}"
     local whiteBG="${IN}48;5;15${EN}"
     local whiteTX="${IN}38;5;15${EN}"
+    local dark_BG="${IN}48;5;250${EN}"
+    local dark_TX="${IN}38;5;250${EN}"
+    local light_BG="${IN}48;5;237${EN}"
+    local light_TX="${IN}38;5;237${EN}"
     local accentBG="${IN}48;5;1${EN}"
     local accentTX="${IN}38;5;1${EN}"
-    local orangeBG="${IN}48;5;214${EN}"
-    local orangeTX="${IN}38;5;214${EN}"
+    local redTX="${IN}38;5;22${EN}"
+    local redBG="${IN}48;5;22${EN}"
     local greyBG="${IN}48;5;7${EN}"
     local greyTX="${IN}38;5;7${EN}"
-    local redTX="${IN}38;5;124${EN}"
-    local redBG="${IN}48;5;124${EN}"
-    local blueTX="${IN}38;5;27${EN}"
-    local blueBG="${IN}48;5;27${EN}"
-    local greenTX="${IN}38;5;40${EN}"
-    local greenBG="${IN}48;5;40${EN}"
+    local defaultFG="${IN}0${EN}"
+    local defaultBG="${IN}49${EN}"
     local conTX=$greyTX
     local BLD=$(tput bold)
     local NLD=$(tput sgr0)
@@ -198,15 +303,50 @@ function __promptline {
     fi
 }
 
-if [[ -n ${ZSH_VERSION-} ]]; then
-  if [[ ! ${precmd_functions[(r)__promptline]} == __promptline ]]; then
-    precmd_functions+=(__promptline)
-    precmd_functions+=(__breakline)
+function __tmuxline() {
+    local blackTX="#[fg=colour0]"
+    local blackBG="#[bg=colour0]"
+    local whiteTX="#[fg=colour15]"
+    local whiteBG="#[bg=colour15]"
+    local dark_BG="#[bg=colour250]"
+    local dark_TX="#[fg=colour250]"
+    local light_BG="#[bg=colour237]"
+    local light_TX="#[fg=colour237]"
+    local accentBG="#[bg=colour1]"
+    local accentTX="#[fg=colour1]"
+    local redBG="#[bg=colour22]"
+    local redTX="#[fg=colour22]"
+    local greyBG="#[bg=colour7]"
+    local greyTX="#[fg=colour7]"
+    local defaultBG="#[bg=default]"
+    local defaultTX="#[fg=default]"
+    local conTX=$greyTX
+    local BLD="#[bold]"
+    local NLD="#[nobold]"
+
+    if [[  $1 == "left" ]]; then 
+        __tmuxline_left_prompt "${@:2}"
+    elif [[  $1 == "right" ]]; then 
+        __tmuxline_right_prompt "${@:2}"
+    elif [[  $1 == "center" ]]; then 
+        __tmuxline_center_prompt "${@:2}"
+    fi
+}
+
+
+if [[  $1 != "tmux" ]]; then
+  if [[ -n ${ZSH_VERSION-} ]]; then
+    if [[ ! ${precmd_functions[(r)__promptline]} == __promptline ]]; then
+      precmd_functions+=(__promptline)
+      precmd_functions+=(__emptyline)
+    fi
+  elif [[ -n ${FISH_VERSION-} ]]; then
+    __promptline "$@"
+  else
+    if [[ ! "$PROMPT_COMMAND" == *__promptline* ]]; then
+      PROMPT_COMMAND='__promptline;'$'\n'"$PROMPT_COMMAND"
+    fi
   fi
-elif [[ -n ${FISH_VERSION-} ]]; then
-  __promptline "$@"
-else
-  if [[ ! "$PROMPT_COMMAND" == *__promptline* ]]; then
-    PROMPT_COMMAND='__promptline;'$'\n'"$PROMPT_COMMAND"
-  fi
+elif [[  $1 == "tmux" ]]; then
+    __tmuxline "${@:2}"
 fi
