@@ -208,7 +208,7 @@ in {
       Service = {
         Environment="COLORTERM=truecolor";
         Type = "simple";
-        ExecStartPre = "/bin/sleep 2";
+        ExecStartPre = "/bin/sleep 5";
         ExecStart = "/home/bresilla/dots/.func/wm/loopwall /home/bresilla/sets/.wallpaper 300";
         Restart = "always";
         RestartSec = "2";

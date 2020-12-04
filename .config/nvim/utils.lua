@@ -26,7 +26,7 @@ vim.o.hidden = true                                                     -- keep 
 vim.o.showmode = false                                                  -- don't show mode
 
 vim.o.smartcase = true                                                  -- improve searching using '/'
-vim.o.hlsearch = true                                                   -- don't highlight matching search
+vim.o.hlsearch = true                                                   -- highlight matching search
 vim.o.incsearch = true
 vim.o.ignorecase = true                                                 -- case insensitive on search
 vim.o.re = 0                                                            -- set regexp engine to auto
@@ -56,7 +56,8 @@ vim.o.smartindent = true                                                -- smart
 vim.o.completeopt = 'longest,menuone,noinsert,noselect'                 -- better completion
 vim.o.wildmode ='longest,list,full'
 vim.o.wildoptions = "pum"
-vim.o.pumheight = 10                                                    -- limit completion items
+vim.o.pumblend = 10
+-- vim.o.pumheight = 10                                                    -- limit completion items
 
 vim.o.synmaxcol = 300                                                   -- set limit for syntax highlighting in a single line
 vim.o.updatetime = 100                                                  -- set faster update time
@@ -66,7 +67,6 @@ vim.o.encoding = "UTF-8"                                                -- set e
 vim.o.mouse = "a"                                                       -- enable mouse support
 vim.o.foldmethod = "marker"                                             -- foldmethod using marker
 vim.o.signcolumn = "yes"                                                -- enable sign column all the time, 4 column
-vim.o.pumblend = 10
 
 vim.o.list = true                                                       -- display listchars
 vim.o.listchars = "extends:›,precedes:‹,nbsp:␣,trail:·,tab:→\\ ,eol:¬"  -- set listchars

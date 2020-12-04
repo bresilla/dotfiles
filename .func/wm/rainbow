@@ -6,11 +6,11 @@ fi
 
 if [[ $1 == "regen" ]]; then
     wallpaper=$(find /home/bresilla/sets/.wallpaper -maxdepth 1 | shuf -n 1)
-    /env/cargo/bin/pigmnts -c 15 $wallpaper -q > /tmp/colorz
+    /env/cargo/bin/pigmnts -c 10 $wallpaper -q > /tmp/colorz
     feh --no-fehbg --bg-scale $wallpaper
 fi
 
-cat /tmp/colorz | /env/cargo/bin/pastel sort-by -r chroma | /env/cargo/bin/pastel -f lighten 0.15 | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
+cat /tmp/colorz | /env/cargo/bin/pastel -f saturate 0.1 | /env/cargo/bin/pastel sort-by -r chroma | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
 
 if [[ $1 == "pick" ]]; then
     ac=$(/env/cargo/bin/pastel -f pick | /env/cargo/bin/pastel format hex)
@@ -21,13 +21,13 @@ fi
 
 
 ### === COLOR-GENERATION ===
-col0=$(/env/cargo/bin/pastel -f mix $ac -f 0.08 "#000000" | /env/cargo/bin/pastel format hex)
-col1=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.2 | /env/cargo/bin/pastel format hex)
+col0=$(/env/cargo/bin/pastel -f mix $ac -f 0.09 "#000000" | /env/cargo/bin/pastel format hex)
+col1=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.1 | /env/cargo/bin/pastel format hex)
 col7=$(/env/cargo/bin/pastel -f mix $ac -f 0.2 "#aaaaaa" | /env/cargo/bin/pastel format hex)
 col8=$(/env/cargo/bin/pastel -f mix $ac -f 0.2 "#666666" | /env/cargo/bin/pastel format hex)
 col15=$(/env/cargo/bin/pastel -f mix $ac -f 0.1 "#ffffff" | /env/cargo/bin/pastel format hex)
 # additional color generation (mix between accent and primary colors)
-factor=0.3
+factor=0.5
 redish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#ff0000")
 blueish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#0000ff")
 greenish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#00ff00")
@@ -56,29 +56,29 @@ fi
 #concatinating main colors (colors 0-15)
 echo $back > $HOME/.cache/wal/colors
 echo $col1 >> $HOME/.cache/wal/colors
-cat /tmp/rainbow | tail -n 5 >> $HOME/.cache/wal/colors
+cat /tmp/rainbow | tail -n 5 | /env/cargo/bin/pastel -f lighten 0.1 | /env/cargo/bin/pastel -f saturate 0.1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
 echo $col7 >> $HOME/.cache/wal/colors
 echo $col8 >> $HOME/.cache/wal/colors
-cat /tmp/rainbow | /env/cargo/bin/pastel -f lighten 0.2 | /env/cargo/bin/pastel -f saturate 0.6 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+cat /tmp/rainbow | /env/cargo/bin/pastel -f lighten 0.3 | /env/cargo/bin/pastel -f saturate 0.3 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
 echo $fore >> $HOME/.cache/wal/colors
 #generating shades of each additional color (colors 16-51)
-/env/cargo/bin/pastel -f gradient $back $redish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-/env/cargo/bin/pastel -f gradient $back $greenish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-/env/cargo/bin/pastel -f gradient $back $blueish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back $redish $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back $greenish $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back $blueish $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
 #generating shades of each additional color (colors 52-87)
-/env/cargo/bin/pastel -f gradient $back $magentaish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-/env/cargo/bin/pastel -f gradient $back $yellowish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-/env/cargo/bin/pastel -f gradient $back $cyanish $fore -n 12 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-#generating random color (colors 88-123)
-/env/cargo/bin/pastel -f distinct 36 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-#generating random color (colors 124-159)
-/env/cargo/bin/pastel -f distinct 36 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-#generating random color (colors 160-195)
-/env/cargo/bin/pastel -f distinct 36 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
-#generating random color (colors 196-321)
-/env/cargo/bin/pastel -f distinct 36 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back $magentaish $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back $yellowish $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back $cyanish $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+#generating random color (colors 88-123:124-159:160-196)
+/env/cargo/bin/pastel -f distinct 108 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+#generating random color (colors 196-231)
+/env/cargo/bin/pastel -f gradient $back '#ff0000' $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back '#00ff00' $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $back '#0000ff' $fore -n 14 | xargs -0 | head -n -2 | tail -n +2 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
 #generating gradients (colors 232-255)
-/env/cargo/bin/pastel -f gradient $black $back $col1 $fore $white -n 24 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors
+/env/cargo/bin/pastel -f gradient $black $back -n 3 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors 
+/env/cargo/bin/pastel -f gradient $back $col1 $fore -n 18 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors 
+/env/cargo/bin/pastel -f gradient $fore $white -n 3 | xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex >> $HOME/.cache/wal/colors 
 
 
 

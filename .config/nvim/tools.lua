@@ -84,9 +84,12 @@ vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line
 
     if diag_length > cut_text then
         diag_length = cut_text
-        diag_msg = diag_msg:sub(0, diag_length-3) .. "..."
+        diag_msg = diag_msg:sub(0, diag_length-3 - #line_diagnostics + 2) .. "..."
     end
     local virt_texts = { { string.rep("━", win_width - diag_length - text_length - 8), "LspDiagnosticsVirtualTextSpace" } }
+    for i = 1, #line_diagnostics - 1 do
+        table.insert(virt_texts, {"*", get_highlight(line_diagnostics[i].severity)})
+    end
     if last.message then
         table.insert(virt_texts, {diag_msg, get_highlight(last.severity)})
         return virt_texts
@@ -220,3 +223,8 @@ require('el').setup {
     }
   end
 }
+
+
+--------------------------------- MOVED VIMSCPIPT  -----------------------------------------
+--- === DMENU/ROFI ===
+vim.g.dmenu_finder_dmenu_command = "/home/bresilla/dots/.func/wm/rofit"

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-cat $HOME/.cache/wal/colors.sh > /tmp/rainbow.lua
-cat $HOME/.config/nvim/theme.lua >> /tmp/rainbow.lua
-cat /tmp/rainbow.lua > $HOME/.config/nvim/rainbow.lua
+# cat $HOME/.cache/wal/colors.sh > /tmp/rainbow.lua
+# cat $HOME/.config/nvim/theme.lua >> /tmp/rainbow.lua
+# cat /tmp/rainbow.lua > $HOME/.config/nvim/rainbow.lua
 
 # tail -n +45 /tmp/theme.lua >> /tmp/themenvim
 # cat /tmp/themenvim > /tmp/theme.lua
@@ -20,7 +20,6 @@ while read SERVER
 do
     # echo ${SERVER}
     if [[ ${SERVER:0:1} == "/" ]]; then
-        # /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c 'luafile $HOME/.config/nvim/rainbow.lua' &
         /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c ':lua mycolors()' &
     fi
 done <<< $( echo -e "$(/home/bresilla/.local/bin/nvr --serverlist)" )
