@@ -4,5 +4,4 @@ require('packs')
 require('utils')
 require('tools')
 require('theme')
-
-
+require('binds')

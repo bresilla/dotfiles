@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
 import psutil
+import neovim
+
+str = open('/home/bresilla/.cache/wal/theme', 'r').read().replace('\n', '')
+print(str)
 
 addresses = []
-errors = []
 
 for proc in psutil.process_iter(attrs=['name']):
     if proc.info['name'] == 'nvim':
@@ -16,9 +19,11 @@ for proc in psutil.process_iter(attrs=['name']):
                 if conn.laddr:
                     addresses.insert(0, conn.laddr)
         except psutil.AccessDenied:
-            errors.insert(0, 'Access denied for nvim ({})'.format(proc.pid))
+            continue
 
 for addr in sorted(addresses):
-    print(addr)
-for error in sorted(errors):
-    print(error, file=sys.stderr)
+    nvim = neovim.attach('socket', path=addr)
+    try:
+        nvim.command(':lua mycolors("' + str +'")')
+    finally:
+        continue

@@ -57,9 +57,6 @@ nnoremap <C-U> :UndotreeToggle<CR> :UndotreeFocus<CR>
 
 
 " === FLOAT-TERM === "
-noremap  <silent> <Insert>           :FloatermToggle<CR>
-noremap! <silent> <Insert>           <Esc>:FloatermToggle<CR>
-tnoremap <silent> <Insert>           <C-\><C-n>:FloatermToggle<CR>
 let g:floaterm_position = 'center'
 let g:floaterm_autoinsert = 1
 let g:floaterm_width = float2nr(&columns/1.2)
@@ -191,87 +188,87 @@ let g:dashboard_custom_footer = [foo]
 
 " === KEYS === "
 " LEADER
-let mapleader = "\<Space>"
+" let mapleader = "\<Space>"
 
 " === NAVIGATION === "
 "navigation panes
-map <C-Pagedown> :BufferNext<CR>
-map <C-Pageup> :BufferPrevious<CR>
-map <C-M-Pagedown> :BufferMoveNext<CR>
-map <C-M-Pageup> :BufferMovePrevious<CR>
-map <C-Up> <C-k>
-map <C-Down> <C-j>
-map <C-Left> <C-h>
-map <C-Right> <C-l>
+" map <C-Pagedown> :BufferNext<CR>
+" map <C-Pageup> :BufferPrevious<CR>
+" map <C-M-Pagedown> :BufferMoveNext<CR>
+" map <C-M-Pageup> :BufferMovePrevious<CR>
+" map <C-Up> <C-k>
+" map <C-Down> <C-j>
+" map <C-Left> <C-h>
+" map <C-Right> <C-l>
 
 "move vertically on soft lines
-nnoremap j gj
-nnoremap k gk
-vnoremap j gj
-vnoremap k gk
-nnoremap <Down> gj
-nnoremap <Up> gk
-vnoremap <Down> gj
-vnoremap <Up> gk
-inoremap <Down> <C-o>gj
-inoremap <Up> <C-o>gk
+" nnoremap j gj
+" nnoremap k gk
+" vnoremap j gj
+" vnoremap k gk
+" nnoremap <Down> gj
+" nnoremap <Up> gk
+" vnoremap <Down> gj
+" vnoremap <Up> gk
+" inoremap <Down> <C-o>gj
+" inoremap <Up> <C-o>gk
 
 "move horizontally
-map <home> %
-map <end> $
+" map <home> %
+" map <end> $
 
 "go to last tab
-nmap - :e #<cr>
+" nmap - :e #<cr>
 
 " === REMOVE HABITS === "
-nnoremap d "_d
-vnoremap d "_d
-nnoremap c "_c
-vnoremap c "_c
-map <S-Up> <Nop>
-map <S-Down> <Nop>
+" nnoremap d "_d
+" vnoremap d "_d
+" nnoremap c "_c
+" vnoremap c "_c
+" map <S-Up> <Nop>
+" map <S-Down> <Nop>
 
 " === CHANGE CASE === "
-inoremap <M-u> <ESC>viw~
-nnoremap <M-u> viw~<ESC>
+" inoremap <M-u> <ESC>viw~
+" nnoremap <M-u> viw~<ESC>
 
 
-" === CHANGE CASE === "
-vnoremap < <gv
-vnoremap > >gv
+" === CHANGE INDENT === "
+" vnoremap < <gv
+" vnoremap > >gv
 
 
 " === LSP and COMPLETION === "
 " let g:completion_confirm_key = "\<CR>"
-inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-" imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
-                 " \ "\<Plug>(completion_confirm_completion)"  : "\<c-e>\<CR>" :  "\<CR>"
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> f     <cmd>lua vim.lsp.diagnostic.goto_next { min_severity = "info", show_config=true }<CR>
-nnoremap <silent> F     <cmd>lua vim.lsp.buf.code_action()<cr>
+" inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+" inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+" inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+" inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+" " imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
+"                  " \ "\<Plug>(completion_confirm_completion)"  : "\<c-e>\<CR>" :  "\<CR>"
+" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+" nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> f     <cmd>lua vim.lsp.diagnostic.goto_next { min_severity = "info", show_config=true }<CR>
+" nnoremap <silent> F     <cmd>lua vim.lsp.buf.code_action()<cr>
 
 
 " ===  RUNNER === "
-noremap <silent><f7>        :FloatermNew --autoclose=0 run<cr>
-tnoremap <silent><f7>       <C-\><C-n>:FloatermToggle<CR>
-noremap <silent><f5>        :FloatermNew --autoclose=0 build<cr>
-tnoremap <silent><f5>       <C-\><C-n>:FloatermToggle<CR>
+" noremap <silent><f7>        :FloatermNew --autoclose=0 run<cr>
+" tnoremap <silent><f7>       <C-\><C-n>:FloatermToggle<CR>
+" noremap <silent><f5>        :FloatermNew --autoclose=0 build<cr>
+" tnoremap <silent><f5>       <C-\><C-n>:FloatermToggle<CR>
 
 
 
-" ===  SESSIONS === "
-nnoremap <silent> ss <cmd>SessionSave<CR>
+" " ===  SESSIONS === "
+" nnoremap <silent> ss <cmd>SessionSave<CR>
 
 
 " === FILE-TREE === "
@@ -294,15 +291,15 @@ au FileType LuaTree lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':LuaTreeCl
 
 
 " === FINDER === "
-map <leader><leader> <cmd>lua require('telescope.builtin').git_files()<cr>
-map <C-Space> <cmd>lua require('telescope.builtin').buffers(center_list)<cr>
-map <C-p> :DmenuFinderFindFile<CR>
-map <leader><CR> :DmenuFinderFindFile<CR>
+" map <leader><leader> <cmd>lua require('telescope.builtin').git_files()<cr>
+" map <C-Space> <cmd>lua require('telescope.builtin').buffers(center_list)<cr>
+" map <C-p> :DmenuFinderFindFile<CR>
+" map <leader><CR> :DmenuFinderFindFile<CR>
 
 
 
 " === COMMENTARY === "
-map <silent> # :Commentary<CR>
+" map <silent> # :Commentary<CR>
 
 
 " === WHICH KEY === "
@@ -324,8 +321,8 @@ let g:which_key_floating_opts = { 'row': '1' }
 
 
 " Hide status line
-autocmd! FileType which_key
-autocmd  FileType which_key set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
+" autocmd! FileType which_key
+" autocmd  FileType which_key set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 
 " Single mappings
 let g:which_key_map['.'] = [ ':e $MYVIMRC'                      , 'open init' ]

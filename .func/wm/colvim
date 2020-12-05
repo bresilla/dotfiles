@@ -1,25 +1,36 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-# cat $HOME/.cache/wal/colors.sh > /tmp/rainbow.lua
-# cat $HOME/.config/nvim/theme.lua >> /tmp/rainbow.lua
-# cat /tmp/rainbow.lua > $HOME/.config/nvim/rainbow.lua
+import psutil
+import neovim
 
-# tail -n +45 /tmp/theme.lua >> /tmp/themenvim
-# cat /tmp/themenvim > /tmp/theme.lua
+str = open('/home/bresilla/.cache/wal/theme', 'r').read().replace('\n', '')
+addresses = []
 
-# sed -i "s/^color0.*$/color0=\"$color0\"/" /tmp/theme.lua
+for proc in psutil.process_iter(attrs=['name']):
+    if proc.info['name'] == 'nvim':
+        try:
+            # for conn in proc.connections('inet4'):
+            #     addresses.insert(0, ':'.join(map(str, conn.laddr)))
+            # for conn in proc.connections('inet6'):
+            #     addresses.insert(0, ':'.join(map(str, conn.laddr)))
+            for conn in proc.connections('unix'):
+                if conn.laddr:
+                    addresses.insert(0, conn.laddr)
+        except psutil.AccessDenied:
+            continue
 
-# while read NAME
+for addr in sorted(addresses):
+    nvim = neovim.attach('socket', path=addr)
+    try:
+        nvim.command(':lua mycolors("' + str +'")')
+    finally:
+        continue
+
+# IN BASH USING NEOVIM-REMOTE
+# while read SERVER
 # do
-#     col=$(echo "$NAME" | cut -d"=" -f1)
-#     val=$(echo "$NAME" | cut -d"=" -f2)
-#     sed -i "s/^$col.*$/$col=$val/" /tmp/theme.lua
-# done < $HOME/.cache/wal/colors.sh
-
-while read SERVER
-do
-    # echo ${SERVER}
-    if [[ ${SERVER:0:1} == "/" ]]; then
-        /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c ":lua mycolors(\"$(cat /home/bresilla/.cache/wal/theme)\")" &
-    fi
-done <<< $( echo -e "$(/home/bresilla/.local/bin/nvr --serverlist)" )
+#     # echo ${SERVER}
+#     if [[ ${SERVER:0:1} == "/" ]]; then
+#         /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c ":lua mycolors(\"$(cat /home/bresilla/.cache/wal/theme)\")" &
+#     fi
+# done <<< $( echo -e "$(/home/bresilla/.local/bin/nvr --serverlist)" )

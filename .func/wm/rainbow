@@ -4,26 +4,26 @@ if [ ! -d $HOME/.cache/wal ]; then
 fi
 
 if [[ $1 == "theme" ]]; then
-    [[ $(cat $HOME/.cache/wal/theme) == "light" ]] && echo dark > $HOME/.cache/wal/theme || echo light > $HOME/.cache/wal/theme
-fi
+    [[ $(cat $HOME/.cache/wal/theme) == "dark" ]] && echo light > $HOME/.cache/wal/theme || echo dark > $HOME/.cache/wal/theme
 
-if [[ $1 == "regen" ]]; then
+elif [[ $1 == "pick" ]]; then
+    ac=$(/env/cargo/bin/pastel -f pick | /env/cargo/bin/pastel format hex)
+    [[ -z $ac ]] && exit
+    echo $ac > /tmp/rainbow
+    # /env/cargo/bin/pastel -f distinct 5 | /env/cargo/bin/pastel -f lighten 0.1 | /env/cargo/bin/pastel format hex >> /tmp/rainbow
+    cat /tmp/colorz | /env/cargo/bin/pastel -f saturate 0.1 | /env/cargo/bin/pastel sort-by -r chroma | head -n 5 | /env/cargo/bin/pastel format hex >> /tmp/rainbow
+
+elif [[ $1 == "regen" ]]; then
     wallpaper=$(find /home/bresilla/sets/.wallpaper -maxdepth 1 | shuf -n 1)
     /env/cargo/bin/pigmnts -c 10 $wallpaper -q > /tmp/colorz
     feh --no-fehbg --bg-scale $wallpaper
-fi
-
-cat /tmp/colorz | /env/cargo/bin/pastel -f saturate 0.1 | /env/cargo/bin/pastel sort-by -r chroma | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
-
-if [[ $1 == "pick" ]]; then
-    ac=$(/env/cargo/bin/pastel -f pick | /env/cargo/bin/pastel format hex)
-else
-    ac=$(cat /tmp/rainbow | head -n 1)
+    cat /tmp/colorz | /env/cargo/bin/pastel -f saturate 0.1 | /env/cargo/bin/pastel sort-by -r chroma | head -n 6 | /env/cargo/bin/pastel format hex > /tmp/rainbow
 fi
 
 
 
 ### === COLOR-GENERATION ===
+ac=$(cat /tmp/rainbow | head -n 1)
 col0=$(/env/cargo/bin/pastel -f mix $ac -f 0.09 "#000000" | /env/cargo/bin/pastel format hex)
 col1=$(echo $ac | /env/cargo/bin/pastel -f saturate 0.1 | /env/cargo/bin/pastel format hex)
 col7=$(/env/cargo/bin/pastel -f mix $ac -f 0.2 "#aaaaaa" | /env/cargo/bin/pastel format hex)
@@ -99,7 +99,7 @@ awk '{print "color" NR-1 "=\"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache
 printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors.conf
 awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.conf
 
-# SEQUENCES (escape codes sent to all '/dev/pts/*')
+# SEqUENCES (escape codes sent to all '/dev/pts/*')
 printf "]10;$fore\\]11;$back\\]12;$col1\\]13;$back\\]17;$col1\\]19;$back\\" > $HOME/.cache/wal/sequences
 awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/colors >> $HOME/.cache/wal/sequences
 for tt in /dev/pts/*; do re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && /usr/bin/cat ~/.cache/wal/sequences >$tt; done &
@@ -107,4 +107,4 @@ for tt in /dev/pts/*; do re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && /usr/bin
 
 
 ### === UPDATE COLORS ON APPS WITH EXTERNAL SCRIPT/BINARY === ###
-/home/bresilla/dots/.func/wm/colupd &
+bash /home/bresilla/dots/.func/wm/colupd &
