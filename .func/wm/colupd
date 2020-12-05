@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-/home/bresilla/dots/.func/wm/colvim &
-/home/bresilla/dots/.func/wm/coltty &
+python /home/bresilla/dots/.func/wm/colvim &
+
 bspc config focused_border_color $(cat $HOME/.cache/wal/colors | head -n 2 | tail -n 1) &
+
 python /home/bresilla/.local/bin/pywalfox update &

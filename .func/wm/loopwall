@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
-while true
-do /home/bresilla/dots/.func/wm/rainbow regen
-    /home/bresilla/dots/.func/wm/tidyup &
-    /home/bresilla/dots/.func/wm/colvim &
-    /home/bresilla/dots/.func/wm/coltty &
-    bspc config focused_border_color $(cat $HOME/.cache/wal/colors | head -n 2 | tail -n 1) &
-    python /home/bresilla/.local/bin/pywalfox update &
-    sleep $2
-done
+# while true
+# do /home/bresilla/dots/.func/wm/rainbow regen
+#     /home/bresilla/dots/.func/wm/colupd &
+#     sleep 300
+# done

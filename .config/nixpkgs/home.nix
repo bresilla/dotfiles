@@ -32,10 +32,10 @@ in {
     pkgs.spotify-tui
   ];
 
-  systemd.user.services = let
+  systemd.user = let
     ENVFILE = "${dots}/.profile";
   in {
-    ipfs = {
+    services.ipfs = {
       Unit = {
         Description = "Inter-Planetary File System daemon";
         After = ["network.target"];
@@ -50,7 +50,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    onedrive = {
+    services.onedrive = {
       Unit = {
         Description = "OneDrive with RCLONE deamon";
         After = ["network.target"];
@@ -66,7 +66,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    hotspot = {
+    services.hotspot = {
       Unit = {
         Description = "Hotspot daemon";
         After = ["graphical.target"];
@@ -83,7 +83,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    clight = {
+    services.clight = {
       Unit = {
         Description = "Screen light,gama,dpms... manager";
         Documentation = "https://github.com/FedeDP/Clight";
@@ -100,7 +100,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    buckle = {
+    services.buckle = {
       Unit = {
         Description = " Nostalgia bucklespring keyboard sound";
         Documentation = "https://github.com/zevv/bucklespring";
@@ -117,7 +117,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    xob = {
+    services.xob = {
       Unit = {
         Description = "Bar overlay daemon";
         Documentation = "https://github.com/florentc/xob";
@@ -134,7 +134,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    greenclip = {
+    services.greenclip = {
       Unit = {
         Description = "Clipboard manager for ROFI";
         Documentation = "https://github.com/erebe/greenclip";
@@ -151,7 +151,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    espanso = {
+    services.espanso = {
       Unit = {
         Description = "Text Expander Daemon";
         Documentation = "https://github.com/federico-terzi/espanso/";
@@ -168,7 +168,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    dunst = {
+    services.dunst = {
       Unit = {
         Description = "Dunst Notification Daemon";
         Documentation = "man:dunst(1)";
@@ -185,7 +185,7 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    picom = {
+    services.picom = {
       Unit = {
         Description = "Compositor for X11";
         After = ["graphical.target"];
@@ -200,24 +200,31 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    wallpaper = {
+    services.wallpaper = {
       Unit = {
         Description = "Wallpaper switcher";
         After = ["graphical.target"];
       };
       Service = {
-        Environment="COLORTERM=truecolor";
-        Type = "simple";
-        ExecStartPre = "/bin/sleep 5";
-        ExecStart = "/home/bresilla/dots/.func/wm/loopwall /home/bresilla/sets/.wallpaper 300";
-        Restart = "always";
-        RestartSec = "2";
+        Type = "forking";
+        ExecStart = "/home/bresilla/dots/.func/wm/rainbow regen";
       };
       Install = {
         WantedBy = ["default.target"];
       };
     };
-    spotifyd = let
+    timers.wallpaper = {
+      Unit = {
+        Description = "Wallpaper switcher";
+      };
+      Timer = {
+        OnCalendar = "*:0/10";
+      };
+      Install = {
+        WantedBy = ["timers.target"];
+      };
+    };
+    services.spotifyd = let
       configFile = "${configs}/spotifyd/spotifyd.conf";
     in {
       Unit = {

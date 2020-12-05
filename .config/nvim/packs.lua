@@ -15,12 +15,13 @@ return require('packer').startup(function()
     use 'nvim-lua/completion-nvim'
     use 'RishabhRD/popfix'
     use 'RishabhRD/nvim-lsputils'
-    use 'nvim-treesitter/nvim-treesitter'
     use { 'aca/completion-tabnine', run = 'sh install.sh' }
     use 'SirVer/ultisnips'                                                  --snipets engine
     use 'honza/vim-snippets'
     use 'lfilho/cosco.vim'                                                  --add semicolon or comma n the end
     use 'tpope/vim-commentary'
+    use 'sheerun/vim-polyglot'
+    use 'nvim-treesitter/nvim-treesitter'
 
     use 'liuchengxu/vim-which-key'
     use 'nvim-telescope/telescope.nvim'                                     --finder and runner
