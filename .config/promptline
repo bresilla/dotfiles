@@ -1,11 +1,14 @@
 #!/usr/bin/env sh
 
 space=" "
+# arrFL=""
 arrFL=""
+# arrFR=""
 arrFR=""
+# arrEL="|"
 arrEL=""
+# arrER="|"
 arrER=""
-endARR=""
 
 function __cpustats() {
     cpu=$(/env/cpp/bin/cpu-stat)
@@ -118,24 +121,25 @@ function __is_in_container {
 }
 
 function __promptline_cwd {
-    local dir_limit="3"
+    [[ $1 -eq 0 ]] && local dir_limit="3" || local dir_limit="$1"
     local truncation="⋯"
     local first_char
     local part_count=0
     local formatted_cwd=""
-    local dir_sep="  "
     local tilde="~"
-    local cwd="${PWD/#$HOME/$tilde}"
+    [[ $2 == "right" ]] && local dir_sep=" ${arrER} " || local dir_sep=" ${arrEL} "
+    [[ $3 -eq 0 ]] && local cwd="${PWD/#$HOME/$tilde}" || local cwd="${3/#$HOME/$tilde}"
     [[ -n ${ZSH_VERSION-} ]] && first_char=$cwd[1,1] || first_char=${cwd::1}
     cwd="${cwd#\~}"
     while [[ "$cwd" == */* && "$cwd" != "/" ]]; do
-        local part="${cwd##*/}"
+        part="${cwd##*/}"
         cwd="${cwd%/*}"
-        formatted_cwd="$dir_sep$part$formatted_cwd"
+	[[ ${#part} -gt 8 ]] && part="${part:0:6}.."
+	formatted_cwd="$dir_sep$part$formatted_cwd"
         part_count=$((part_count+1))
-        [[ $part_count -eq $dir_limit ]] && first_char="$truncation" && break
+        [[ $part_count -ge $dir_limit ]] && first_char="$truncation" && break
     done
-    printf "%s" "$first_char$formatted_cwd"
+    [[ $2 == "right" ]] && printf "%s" "$(echo $formatted_cwd | tr ' ' '\n' | tac | tr '\n' ' ')$first_char" || printf "%s" "$first_char$formatted_cwd"
 }
 
 function __truncate_cwd() {
@@ -159,10 +163,9 @@ function __promptline_left_prompt {
     prefix="${redBG}${arrFL}${blackTX}${redBG}${space}" suffix="${space}${redTX}"; [[ -n $(__sudo_warning) ]] && printf "%s" "$prefix" "$(__sudo_warning)" "$suffix"
     #DEVSHELL
     prefix="${blackBG}${arrFL}${blackTX}${dark_BG}${arrFL}${light_TX}${dark_BG}" suffix="${dark_TX}"; [[ -n $(__dev_lang) ]] && printf "%s" "$prefix" "$(__dev_lang)" "$suffix"
-    [[ -n $(__is_in_container) ]] && endARR="$arrEL$redBG$blackTX$arrFL$redBG$redTX$blackBG$arrFL$greyTX"
     #PATH
     [[ $(__promptline_vcs_branch) = "master" ]] && conTX=$accentTX
-    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd)" "$suffix"
+    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd 3 left)" "$suffix"
 }
 
 function __promptline_right_prompt {
@@ -195,14 +198,14 @@ function __promptline_right_prompt {
 
 function __tmuxline_right_prompt {
     #WORKING DIR
-    prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__truncate_cwd $@ 3)" "$suffix"
+    prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__promptline_cwd 2 right $@)" "$suffix"
     #CMD TIME
-    prefix="${accentTX}${arrER}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; printf "%s" "$prefix" "$(__cpustats)" "$suffix"
+    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; printf "%s" "$prefix" "$(__cpustats)" "$suffix"
     #LOAD AVERAGE
-    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__memoryuse)" "$suffix"
+    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__memoryuse)" "$suffix"
     #BATTERY
     [[ $(acpi | awk '{print $3}' | tr -d '%,') == "Discharging" ]] && conTX=$redTX || conTX=$light_TX
-    prefix="${accentBG}${blackTX}${arrFR}${blackBG}${dark_TX}${arrFR}${light_TX}${dark_BG}${space}$conTX${space}" suffix="${space}";printf "%s" "$BLD$prefix" "$(__battery)" "$suffix"
+    prefix="${accentBG}${blackTX}${arrFR}${blackBG}${dark_TX}${arrFR}${light_TX}${dark_BG}${space}$conTX${space}" suffix="${space}";printf "%s" "$BLD$prefix" "$(__battery)%" "$suffix"
 }
 
 function __tmuxline_left_prompt {
@@ -217,9 +220,9 @@ function __tmuxline_left_prompt {
 
 function __tmuxline_center_prompt {
     if [[  $1 == "active" ]]; then 
-        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${accentTX}${defaultBG}${arrFL}";
+        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}${BLD}" suffix="${NLD}${space}${accentTX}${defaultBG}${arrFL}";
     else
-        prefix="${dark_TX}${space}" suffix="${space}${defaultTX}";
+        prefix="${light_TX}${space}" suffix="${space}${defaultTX}";
     fi
     printf "%s" "$prefix" "$(basename $2)" "$suffix"
 }
@@ -271,10 +274,10 @@ function __promptline {
     local blackTX="${IN}38;5;0${EN}"
     local whiteBG="${IN}48;5;15${EN}"
     local whiteTX="${IN}38;5;15${EN}"
-    local dark_BG="${IN}48;5;250${EN}"
-    local dark_TX="${IN}38;5;250${EN}"
-    local light_BG="${IN}48;5;237${EN}"
-    local light_TX="${IN}38;5;237${EN}"
+    local dark_BG="${IN}48;5;237${EN}"
+    local dark_TX="${IN}38;5;237${EN}"
+    local light_BG="${IN}48;5;250${EN}"
+    local light_TX="${IN}38;5;250${EN}"
     local accentBG="${IN}48;5;1${EN}"
     local accentTX="${IN}38;5;1${EN}"
     local redTX="${IN}38;5;22${EN}"
@@ -308,10 +311,10 @@ function __tmuxline() {
     local blackBG="#[bg=colour0]"
     local whiteTX="#[fg=colour15]"
     local whiteBG="#[bg=colour15]"
-    local dark_BG="#[bg=colour250]"
-    local dark_TX="#[fg=colour250]"
-    local light_BG="#[bg=colour237]"
-    local light_TX="#[fg=colour237]"
+    local dark_BG="#[bg=colour237]"
+    local dark_TX="#[fg=colour237]"
+    local light_BG="#[bg=colour250]"
+    local light_TX="#[fg=colour250]"
     local accentBG="#[bg=colour1]"
     local accentTX="#[fg=colour1]"
     local redBG="#[bg=colour22]"

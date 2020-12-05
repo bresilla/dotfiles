@@ -3,6 +3,9 @@ if [ ! -d $HOME/.cache/wal ]; then
   mkdir -p $HOME/.cache/wal;
 fi
 
+if [[ $1 == "theme" ]]; then
+    [[ $(cat $HOME/.cache/wal/theme) == "light" ]] && echo dark > $HOME/.cache/wal/theme || echo light > $HOME/.cache/wal/theme
+fi
 
 if [[ $1 == "regen" ]]; then
     wallpaper=$(find /home/bresilla/sets/.wallpaper -maxdepth 1 | shuf -n 1)
@@ -38,7 +41,7 @@ magentaish=$(/env/cargo/bin/pastel -f mix $ac -f $factor "#ff00ff")
 
 
 ### === LIGHT & DARK THEME ===
-if [[ $1 == "light" ]]; then
+if [ $(cat $HOME/.cache/wal/theme) == "light" ] ; then
     white=#000000 
     black=#ffffff 
     back=$col15 
@@ -85,7 +88,7 @@ echo $fore >> $HOME/.cache/wal/colors
 
 ### === PRINTING THINGS TO FILES === ###
 # COLORS.YAML (used by ALACRITY)
-printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" >> $HOME/.cache/wal/colors.yml
+printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" > $HOME/.cache/wal/colors.yml
 awk '{print "\tcolor" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.yml
 
 # COLORS.SH (used by shells - bash,zsh,fish...)
@@ -93,10 +96,15 @@ printf "foreground=\"$fore\"\nbackground=\"$back\"\ncursor=\"$col1\"\n" > $HOME/
 awk '{print "color" NR-1 "=\"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.sh
 
 # COLORS.KITTY (used by KITTY)
-printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors-kitty.conf
-awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors-kitty.conf
+printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors.conf
+awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.conf
 
 # SEQUENCES (escape codes sent to all '/dev/pts/*')
 printf "]10;$fore\\]11;$back\\]12;$col1\\]13;$back\\]17;$col1\\]19;$back\\" > $HOME/.cache/wal/sequences
 awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/colors >> $HOME/.cache/wal/sequences
 for tt in /dev/pts/*; do re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && /usr/bin/cat ~/.cache/wal/sequences >$tt; done &
+
+
+
+### === UPDATE COLORS ON APPS WITH EXTERNAL SCRIPT/BINARY === ###
+/home/bresilla/dots/.func/wm/colupd &

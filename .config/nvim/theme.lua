@@ -1,5 +1,4 @@
 -- === COLORBUDDY ===
-require('colorbuddy').colorscheme('modus-vivendi')
 local Color, colors, Group, groups, styles = require("colorbuddy").setup()
 
 function fileToList(file)
@@ -20,7 +19,14 @@ function fileToList(file)
 end
 
 
-function mycolors()
+function mycolors(theme)
+
+    if (theme == "light") then
+        require('colorbuddy').colorscheme('modus-operandi')
+    else
+        require('colorbuddy').colorscheme('modus-vivendi')
+    end
+
     rainbow = fileToList('/home/bresilla/.cache/wal/colors')
     Color.new('r0',         rainbow[0+1])
     Color.new('r1',         rainbow[1+1])
@@ -72,10 +78,10 @@ function mycolors()
     Color.new('Blue',       rainbow[46+1])
     Color.new('Green',      rainbow[34+1])
 
-    Color.new('Redish',     rainbow[19+1])
-    Color.new('Violetish',  rainbow[54+1])
-    Color.new('Orangeish',  rainbow[67+1])
-    Color.new('Cyanish',    rainbow[79+1])
+    Color.new('Redish',     rainbow[21+1])
+    Color.new('Violetish',  rainbow[56+1])
+    Color.new('Orangeish',  rainbow[69+1])
+    Color.new('Cyanish',    rainbow[81+1])
 
 
     vim.g.terminal_color_0  = rainbow[0+1]
@@ -101,6 +107,7 @@ function mycolors()
     Group.new('Error',                  nil,                  nil)
     Group.new('Normal',                 nil,                  colors.r0)
     Group.new('NormalNC',               nil,                  colors.r0)
+    Group.new('Comment',                colors.r8,            nil,                  styles.italic)
     --visual select
     Group.new('Visual',                 nil,                  colors.ac_d,          styles.bold)
     --cursor
@@ -131,6 +138,7 @@ function mycolors()
 
 
     -- === TABS === "
+    Group.new('TabLineFill',            colors.r1,            colors.ac_d)
     Group.new('BufferCurrent',          colors.r1,            colors.r0,            styles.bold)
     Group.new('BufferCurrentMod',       colors.r1,            colors.r0)
     Group.new('BufferCurrentSign',      colors.r1,            colors.r0)
@@ -145,7 +153,6 @@ function mycolors()
     Group.new('BufferInactiveTarget',   colors.r0,            colors.ac_d)
     Group.new('BufferTabpages',         colors.r0,            colors.ac_d)
     Group.new('BufferTabpageFill',      colors.r0,            colors.ac_d)
-    Group.new('TabLineFill',            colors.r1,            colors.ac_d)
 
 
     -- === STATUS-LINE === "
@@ -220,10 +227,10 @@ function mycolors()
     Group.new('FolderIcon',                 colors.r1,       nil)
 
 
-    -- === NVIM LUA TREE ===
+    -- === DASHBOARD ===
     Group.new('DashboardHeader',            colors.r1,       nil)
     Group.new('DashboardCenter',            colors.ac_l,     nil)
     Group.new('DashboardFooter',            colors.r1,       nil)
 end
 
-mycolors()
+mycolors("dark")
