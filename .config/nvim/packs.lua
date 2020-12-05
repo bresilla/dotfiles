@@ -13,6 +13,8 @@ return require('packer').startup(function()
     use 'nvim-lua/popup.nvim'                                               -- hoepfully will get merget in mainsteream
     use 'neovim/nvim-lspconfig'
     use 'nvim-lua/completion-nvim'
+    use 'RishabhRD/popfix'
+    use 'RishabhRD/nvim-lsputils'
     use 'nvim-treesitter/nvim-treesitter'
     use { 'aca/completion-tabnine', run = 'sh install.sh' }
     use 'SirVer/ultisnips'                                                  --snipets engine
@@ -23,6 +25,7 @@ return require('packer').startup(function()
     use 'liuchengxu/vim-which-key'
     use 'nvim-telescope/telescope.nvim'                                     --finder and runner
     use 'romgrk/barbar.nvim'
+    -- use 'akinsho/nvim-bufferline.lua'
     use 'voldikss/vim-floaterm'                                             --terminal
     use 'has2k1/vim-dmenu-finder'
     use 'kyazdani42/nvim-tree.lua'                                          --side-bar file manager
@@ -50,5 +53,5 @@ return require('packer').startup(function()
     use 'tjdevries/colorbuddy.nvim'
     use 'kyazdani42/nvim-web-devicons'                                      --file icons
     use 'ishan9299/modus-theme-vim'
-    use 'TaDaa/vimade'                                                      --Fade inctive window
+    -- use 'TaDaa/vimade'                                                      --Fade inctive window
 end )

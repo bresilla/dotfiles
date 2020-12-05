@@ -17,6 +17,14 @@ require'lspconfig'.sumneko_lua.setup{
 require'lspconfig'.pyls.setup{}
 
 
+vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
+vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
+vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
+vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
+vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
+vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
 
 
 --------------------------------- TREESITTER  -----------------------------------------
@@ -79,14 +87,16 @@ vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line
     local diag_length = #(diag_msg)
     local text_length = #(vim.api.nvim_buf_get_lines(bufnr, line, line + 1, false)[1] or '')
     local get_highlight = vim.lsp.diagnostic._get_severity_highlight_name
+    local three_dots = "..."
 
     cut_text = math.floor(0.25 * win_width)
 
     if diag_length > cut_text then
         diag_length = cut_text
-        diag_msg = diag_msg:sub(0, diag_length-3 - #line_diagnostics + 2) .. "..."
+        diag_msg = diag_msg:sub(0, diag_length - #three_dots) .. three_dots
     end
-    local virt_texts = { { string.rep("━", win_width - diag_length - text_length - 8), "LspDiagnosticsVirtualTextSpace" } }
+
+    local virt_texts = { { string.rep("━", win_width - diag_length - #line_diagnostics - text_length - 8), "LspDiagnosticsVirtualTextSpace" } }
     for i = 1, #line_diagnostics - 1 do
         table.insert(virt_texts, {"*", get_highlight(line_diagnostics[i].severity)})
     end
@@ -147,7 +157,13 @@ center_list = require'telescope.themes'.get_dropdown({
 --     -- [focused and unfocused]. eg: { '|', '|' }
 --     -- separator_style = "slant" | "thick" | "thin" | { 'any', 'any' },
 --     always_show_bufferline = true,
---   }
+--   },
+--   highlights = {
+--       background = {
+--         guifg = tablinefill,
+--         guibg = tablinefill
+--       },
+--     }
 -- }
 
 

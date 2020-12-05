@@ -20,6 +20,6 @@ while read SERVER
 do
     # echo ${SERVER}
     if [[ ${SERVER:0:1} == "/" ]]; then
-        /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c ':lua mycolors()' &
+        /home/bresilla/.local/bin/nvr --nostart --servername $SERVER -c ":lua mycolors(\"$(cat /home/bresilla/.cache/wal/theme)\")" &
     fi
 done <<< $( echo -e "$(/home/bresilla/.local/bin/nvr --serverlist)" )

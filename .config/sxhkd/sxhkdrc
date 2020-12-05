@@ -6,11 +6,14 @@ mode_switch + space
     /home/bresilla/.config/rofi/menu/ROOT
 
 super + alt + {Escape,Delete,Insert}
-    /home/bresilla/.config/rofi/menu/{power,CONFIG,screenshot}
+    /home/bresilla/.config/rofi/menu/{power,CONFIG,screens}
 super + alt + Print
     /home/bresilla/dots/.func/wm/rainbow
-ctrl + Return; {Return, space}
+super + alt + space; {Return, space}
     {kitty --class=til tmux, alacritty -e tmux}
+
+Insert; {Print,Insert,Delete}
+    /home/bresilla/dots/.func/wm/rainbow { theme, regen, pick }
 Print
     /usr/bin/flameshot gui
 XF86Search
@@ -43,12 +46,8 @@ super + alt + {Down,Up}
 {super+alt} + shift + {Down,Up}
     bspc node -m {prev,next} --follow
 
-
-{super,alt,alt+super} + ~Return
-    bspc node -t {tiled,fullscreen,floating}
-{super,alt,alt+super} + ~BackSpace
-    bspc node -g {locked,private,sticky}
-
+super + alt + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
+    bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
 
 XF86Audio{Prev,Next,Play}
     playerctl {previous,next,play-pause} || mpc -q {prev,next,toggle}

@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 # COLORS
 /home/bresilla/dots/.func/wm/rainbow regen &
+/home/bresilla/dots/.func/wm/colupd &
 # wal -R &
 
 
