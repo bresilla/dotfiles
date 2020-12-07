@@ -12,8 +12,8 @@ super + alt + Print
 super + alt + space; {Return, space}
     {kitty --class=til tmux, alacritty -e tmux}
 
-Insert; {Print,Insert,Delete}
-    /home/bresilla/dots/.func/wm/rainbow {theme,regen,pick}
+Insert; {Print,Insert,Delete,Return}
+    /home/bresilla/dots/.func/wm/rainbow {theme,regen,pick,none}
 Print
     /usr/bin/flameshot gui
 XF86Search

@@ -10,3 +10,4 @@ OSS/
 .local
 .config/direnv/allow
 .config/nvim/rainbow.lua
+.config/nvim/plugin

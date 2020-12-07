@@ -29,6 +29,10 @@ export NIXPKGS_ALLOW_UNFREE=1
 #SECRETS
 [[ -e "/home/bresilla/sets/variables" ]] && source /home/bresilla/sets/variables
 
+#ALT
+export PATH="$HOME/.local/alt/shims:$PATH"
+
+
 export BROWSER=firefox
 export EDITOR=nvim
 export TERMINAL=kitty
