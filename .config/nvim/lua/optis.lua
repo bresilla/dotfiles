@@ -12,6 +12,7 @@ vim.cmd('filetype plugin on')
 -- vim.cmd('filetype plugin indent on')
 
 vim.o.clipboard = "unnamedplus" .. vim.o.clipboard                      -- clipboard manager
+vim.o.termguicolors = true                                              -- truecolours for better experience
 vim.o.compatible = false
 vim.o.ruler = true
 vim.o.shiftround = true
@@ -25,9 +26,8 @@ vim.o.writebackup = false                                               -- disab
 vim.o.autowrite = true                                                  -- autowrite buffer when it's not focused
 
 vim.o.wrap = false                                                      -- dont wrap lines
-vim.o.number = true                                                     -- enable number
-vim.o.relativenumber = true                                             -- enable relativenumber
-vim.o.termguicolors = true                                              -- truecolours for better experience
+vim.wo.number = true                                                     -- enable number
+vim.wo.relativenumber = true                                             -- enable relativenumber
 vim.o.hidden = true                                                     -- keep hidden buffers
 vim.o.showmode = false                                                  -- don't show mode
 vim.o.showcmd = false                                                   -- don't show last command on cmd

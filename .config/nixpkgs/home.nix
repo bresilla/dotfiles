@@ -218,7 +218,7 @@ in {
         Description = "Wallpaper switcher";
       };
       Timer = {
-        OnCalendar = "*:0/10";
+        OnCalendar = "*:0/15";
       };
       Install = {
         WantedBy = ["timers.target"];

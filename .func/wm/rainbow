@@ -87,19 +87,23 @@ echo $fore >> $HOME/.cache/wal/colors
 
 
 ### === PRINTING THINGS TO FILES === ###
-# COLORS.YAML (used by ALACRITY)
-printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" > $HOME/.cache/wal/colors.yml
-awk '{print "\tcolor" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.yml
-
 # COLORS.SH (used by shells - bash,zsh,fish...)
 printf "foreground=\"$fore\"\nbackground=\"$back\"\ncursor=\"$col1\"\n" > $HOME/.cache/wal/colors.sh
 awk '{print "color" NR-1 "=\"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.sh
 
-# COLORS.KITTY (used by KITTY)
+# COLORS.YAML (used by ALACRITY)
+printf "special:\n\tbackground: \"$back\"\n\tforeground: \"$fore\"\n\tcursor: \"$col1\"\n\ncolors:\n" > $HOME/.cache/wal/colors.yml
+awk '{print "\tcolor" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.yml
+
+# COLORS.INI (used by POLYBAR)
+printf "[colors]\n\tforeground=$fore\n\tbackground=$back\n\tcursor=$col1\n" > $HOME/.cache/wal/colors.ini
+awk '{print "\tcolor" NR-1 "=" $0 }' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.ini
+
+# COLORS.CONF (used by KITTY)
 printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors.conf
 awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.conf
 
-# SEqUENCES (escape codes sent to all '/dev/pts/*')
+# SEQUENCES (escape codes sent to all '/dev/pts/*')
 printf "]10;$fore\\]11;$back\\]12;$col1\\]13;$back\\]17;$col1\\]19;$back\\" > $HOME/.cache/wal/sequences
 awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/colors >> $HOME/.cache/wal/sequences
 for tt in /dev/pts/*; do re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && /usr/bin/cat ~/.cache/wal/sequences >$tt; done &

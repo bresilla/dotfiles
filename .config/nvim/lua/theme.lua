@@ -161,6 +161,7 @@ function mycolors(theme)
     --express_line
     Group.new('ElNormal',               colors.r1,            colors.r0,            styles.bold)
     Group.new('ElInsert',               colors.r0,            colors.r1,            styles.bold)
+    Group.new('ElFileType',             colors.r1,            colors.ac_d,          styles.bold)
 
 
     -- === WHICH KEY === "
