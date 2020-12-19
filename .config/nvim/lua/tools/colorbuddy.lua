@@ -73,15 +73,14 @@ function mycolors(theme)
     Color.new('ac_d',       rainbow[237+1])
     Color.new('ac_l',       rainbow[250+1])
 
-    Color.new('Red',        rainbow[22+1])
-    Color.new('Yellow',     rainbow[70+1])
-    Color.new('Blue',       rainbow[46+1])
-    Color.new('Green',      rainbow[34+1])
+    Color.new('Red',        rainbow[56+1])
+    Color.new('Yellow',     rainbow[104+1])
+    Color.new('Blue',       rainbow[80+1])
+    Color.new('Green',      rainbow[68+1])
 
-    Color.new('Redish',     rainbow[21+1])
-    Color.new('Violetish',  rainbow[56+1])
-    Color.new('Orangeish',  rainbow[69+1])
-    Color.new('Cyanish',    rainbow[81+1])
+    Color.new('Redish',     rainbow[18+1])
+    Color.new('Violetish',  rainbow[42+1])
+    Color.new('Orangeish',  rainbow[30+1])
 
 
     vim.g.terminal_color_0  = rainbow[0+1]
@@ -190,10 +189,10 @@ function mycolors(theme)
     Group.new('LspDiagnosticsFloatingInformation',      colors.Violetish,     nil)
     Group.new('LspDiagnosticsUnderlineInformation',     colors.r0,            colors.Violetish)
     -- sign define LspDiagnosticsSignHint text=➜
-    Group.new('LspDiagnosticsVirtualTextHint',          colors.Cyanish,       colors.r232,          styles.italic)
-    Group.new('LspDiagnosticsSignHint',                 colors.Cyanish,       colors.r0,            styles.bold)
-    Group.new('LspDiagnosticsFloatingHint',             colors.Cyanish,       nil)
-    Group.new('LspDiagnosticsUnderlineHint',            colors.r0,            colors.Cyanish)
+    Group.new('LspDiagnosticsVirtualTextHint',          colors.Violetish,       colors.r232,          styles.italic)
+    Group.new('LspDiagnosticsSignHint',                 colors.Violetish,       colors.r0,            styles.bold)
+    Group.new('LspDiagnosticsFloatingHint',             colors.Violetish,       nil)
+    Group.new('LspDiagnosticsUnderlineHint',            colors.r0,            colors.Violetish)
 
 
     -- === GIT & GITGUTTER ===
@@ -205,6 +204,7 @@ function mycolors(theme)
     Group.new('GitGutterChange',            colors.Yellow,   colors.r0)
     Group.new('GitGutterDelete',            colors.Red,      colors.r0)
     Group.new('GitGutterChangeDelete',      colors.Blue,     colors.r0)
+    Group.new('GitBlameVirt',               colors.r0,       colors.r1,       styles.italic + styles.bold)
 
 
     -- === MULTIPLE CURSORS ===
@@ -234,4 +234,6 @@ function mycolors(theme)
     Group.new('DashboardFooter',            colors.r1,       nil)
 end
 
-mycolors("dark")
+
+themecolor = fileToList('/home/bresilla/.cache/wal/theme') or "dark"
+mycolors(themecolor[1])

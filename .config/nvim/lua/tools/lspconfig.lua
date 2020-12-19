@@ -1,3 +1,58 @@
+--------------------------------- COMPLETION  -----------------------------------------
+vim.cmd([[ let g:completion_chain_complete_list = {'default':[{'complete_items': ['lsp','snippet','tabnine']}]} ]])
+vim.g.completion_enable_snippet = 'snippets.nvim'
+vim.cmd([[autocmd BufEnter * lua require'completion'.on_attach()]])
+
+vim.cmd([[sign define LspDiagnosticsSignError text=× texthl=LspDiagnosticsSignError linehl= numhl=]])
+vim.cmd([[sign define LspDiagnosticsSignWarning text=! texthl=LspDiagnosticsSignWarning linehl= numhl=]])
+vim.cmd([[sign define LspDiagnosticsSignInformation text=+ texthl=LspDiagnosticsSignInformation linehl= numhl=]])
+vim.cmd([[sign define LspDiagnosticsSignHint text=➜ texthl=LspDiagnosticsSignHint linehl= numhl=]])
+
+
+--------------------------------- KEYBINDINSGS  -----------------------------------------
+vimp.inoremap({'silent', 'expr'}, '<Esc>', function()
+    if vim.fn.pumvisible() == 1 then
+        return [[<C-e>]]
+    else
+        return [[<Esc>]]
+    end
+end)
+vimp.inoremap({'silent', 'expr'}, '<CR>', function()
+    if vim.fn.pumvisible() == 1 then
+        return [[<C-y>]]
+    else
+        return [[<CR>]]
+    end
+end)
+vimp.inoremap({'silent', 'expr'}, '<Down>', function()
+    if vim.fn.pumvisible() == 1 then
+        return [[<C-n>]]
+    else
+        return [[<Down>]]
+    end
+end)
+vimp.inoremap({'silent', 'expr'}, '<Up>', function()
+    if vim.fn.pumvisible() == 1 then
+        return [[<C-p>]]
+    else
+        return [[<Up>]]
+    end
+end)
+
+
+vimp.nnoremap('<c-]>',      [[<cmd>lua vim.lsp.buf.definition()<CR>]])
+vimp.nnoremap('k',          [[<cmd>lua vim.lsp.buf.hover()<CR>]])
+vimp.nnoremap('<c-k>',      [[<cmd>lua vim.lsp.buf.signature_help()<CR>]])
+vimp.nnoremap('gD',         [[<cmd>lua vim.lsp.buf.type_definition()<CR>]])
+vimp.nnoremap('gI',         [[<cmd>lua vim.lsp.buf.implementation()<CR>]])
+vimp.nnoremap('gr',         [[<cmd>lua vim.lsp.buf.references()<CR>]])
+vimp.nnoremap('g0',         [[<cmd>lua vim.lsp.buf.document_symbol()<CR>]])
+vimp.nnoremap('gW',         [[<cmd>lua vim.lsp.buf.workspace_symbol()<CR>]])
+vimp.nnoremap('gd',         [[<cmd>lua vim.lsp.buf.declaration()<CR>]])
+vimp.nnoremap('f',          [[<cmd>lua vim.lsp.diagnostic.goto_next { min_severity = "info", show_config=true }<CR>]])
+vimp.nnoremap('F',          [[<cmd>lua vim.lsp.buf.code_action()<cr>]])
+
+
 --------------------------------- LSP LANGUAGES  -----------------------------------------
 require'lspconfig'.clangd.setup{
     cmd = { "clangd", "--background-index" };
@@ -18,13 +73,6 @@ vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typ
 vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
 vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
 vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-
-
-
---------------------------------- COMPLETION  -----------------------------------------
--- vim.g.completion_chain_complete_list = { default = { complete_items = {'lsp','snippet','tabnine'} } }
--- vim.g.completion_enable_snippet = 'UltiSnips'
--- autocmd BufEnter * lua require'completion'.on_attach()
 
 
 

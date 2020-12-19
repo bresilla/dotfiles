@@ -207,7 +207,8 @@ in {
       };
       Service = {
         Type = "forking";
-        ExecStart = "/home/bresilla/dots/.func/wm/rainbow regen";
+        ExecStart = "/home/bresilla/dots/.func/wm/rainbow wall";
+        # ExecStart = "/bin/bash -c '/home/bresilla/code/proj/warp/lule/lule set'";
       };
       Install = {
         WantedBy = ["default.target"];

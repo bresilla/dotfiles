@@ -1,6 +1,4 @@
--- vim.o.python_host_prog='/usr/bin/python'
--- vim.o.python3_host_prog='/usr/bin/python3'
-
+---------------------------------------------- === OPTIONS === ----------------------------------------------
 vim.api.nvim_set_var( 'python_host_prog', '/usr/bin/python' )
 vim.api.nvim_set_var( 'python3_host_prog', '/usr/bin/python3' )
 
@@ -25,7 +23,7 @@ vim.o.swapfile = false                                                  -- disab
 vim.o.writebackup = false                                               -- disable backup
 vim.o.autowrite = true                                                  -- autowrite buffer when it's not focused
 
-vim.o.wrap = false                                                      -- dont wrap lines
+vim.wo.wrap = false                                                      -- dont wrap lines
 vim.wo.number = true                                                     -- enable number
 vim.wo.relativenumber = true                                             -- enable relativenumber
 vim.o.hidden = true                                                     -- keep hidden buffers
@@ -79,8 +77,114 @@ vim.o.list = true                                                       -- displ
 vim.o.listchars = "extends:›,precedes:‹,nbsp:␣,trail:·,tab:→\\ ,eol:¬"  -- set listchars
 
 
--- vimp = lua require('vimrc')
--- vimp.nnoremap('<leader>hw', function()
---   print('hello')
---   print('world')
--- end)
+---------------------------------------------- === BINDINGS === ----------------------------------------------
+vimp = require'vimp'
+vim.g.mapleader = " "
+
+
+-- === FOCUS === "
+vim.cmd([[au WinLeave * set nocursorline nocursorcolumn]])
+vim.cmd([[au WinEnter * set cursorline cursorcolumn]])
+
+
+-- === NAVIGATION === "
+-- navigation panes
+vimp.bind('n',            '<C-Pagedown>',             [[:BufferNext<CR>]])
+vimp.bind('n',            '<C-Pageup>',               [[:BufferPrevious<CR>]])
+vimp.bind('n',            '<C-M-Pagedown>',           [[:BufferMoveNext<CR>]])
+vimp.bind('n',            '<C-M-Pageup>',             [[:BufferMovePrevious<CR>]])
+vimp.bind('n',            '<C-Up>',                   [[<C-k>]])
+vimp.bind('n',            '<C-Down>',                 [[<C-j>]])
+vimp.bind('n',            '<C-Left>',                 [[<C-h>]])
+vimp.bind('n',            '<C-Right>',                [[<C-l>]])
+-- move horizontally
+vimp.bind('n',            '<home>',                   [[%]])
+vimp.bind('n',            '<end>',                    [[$]])
+-- switch to last tab
+vimp.bind('n',            '-',                        [[:e #<cr>]])
+
+
+-- === REMOVE HABITS === "
+vimp.nnoremap('d',              [["_d]])
+vimp.vnoremap('d',              [["_d]])
+vimp.nnoremap('c',              [["_c]])
+vimp.vnoremap('c',              [["_c]])
+vimp.nnoremap('<S-Up>',         [[<Nop>]])
+vimp.nnoremap('<S-Down>',       [[<Nop>]])
+
+
+-- === CHANGE CASE === "
+vimp.inoremap('<M-u>',          [[<ESC>viw~]])
+vimp.nnoremap('<M-u>',          [[viw~<ESC>]])
+
+
+-- === CHANGE INDENT === "
+vimp.vnoremap('>', [[>gv]])
+vimp.vnoremap('<', [[<gv]])
+
+
+-- === UNDO TREE === "
+vimp.bind({'silent'},           'U',                  [[:redo<CR>]])
+vimp.bind({'silent'},           '<C-U>',              [[:UndotreeToggle<CR> :UndotreeFocus<CR>]])
+
+
+-- === SEMICOLON === &&  === COMMENTER === "
+vim.cmd([[autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)]])
+vim.cmd([[autocmd FileType rust nmap <silent> , <Plug>(cosco-commaOrSemiColon)]])
+vimp.bind('nv',                  '#',                 [[:Commentary<CR>]])
+
+
+--- === HIGHLGHT ON YANK
+vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank()]])
+vim.highlight.on_yank {
+    on_visual = true
+}
+
+
+--- === INDENTATION LINES === "
+vim.g.indentLine_char_list = { '┊' }
+vim.g.indentLine_color_term = 235
+vim.g.indentLine_setConceal = 2
+vim.g.indentLine_concealcursor = ""
+vim.g.indentLine_fileTypeExclude ={ 'dashboard' }
+
+
+-- --- === SEARCH SETTINGS === "
+vimp.rbind({'silent'},           '/',                 [[<Plug>(incsearch-forward)]])
+vimp.rbind({'silent'},           '<leader>/',         [[<Plug>(incsearch-forward)]])
+vimp.bind({'silent'},            '*',                       [[*``]])
+
+
+--- === MOVE LINES === "
+vimp.rbind('nx',                  '<C-A-Down>',             [[<Plug>MoveLineDown]])
+vimp.rbind('nx',                  '<C-A-Up>',               [[<Plug>MoveLineUp]])
+
+
+--- === COMFORTABLE SCROLLING === "
+vim.g.comfortable_motion_no_default_key_mappings = 1
+vim.g.comfortable_motion_impulse_multiplier = 2
+vim.g.comfortable_motion_friction = 60.0
+vim.g.comfortable_motion_air_drag = 4.0
+vim.g.comfortable_motion_interval = 1000.0 / 60
+vimp.nnoremap({'silent'},       '<ScrollWheelDown>',     [[:call comfortable_motion#flick(40)<CR>]])
+vimp.inoremap({'silent'},       '<ScrollWheelDown>',     [[<C-O><ScrollWheelDown>]])
+vimp.nnoremap({'silent'},       '<ScrollWheelUp>',       [[:call comfortable_motion#flick(-40)<CR>]])
+vimp.inoremap({'silent'},       '<ScrollWheelUp>',       [[<C-O><ScrollWheelUp>]])
+vimp.nnoremap({'silent'},       '<Pagedown>',            [[:call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0))<CR>]])
+vimp.inoremap({'silent'},       '<Pagedown>',            [[<C-O><Pagedown>]])
+vimp.nnoremap({'silent'},       '<Pageup>',              [[:call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * -winheight(0))<CR>]])
+vimp.inoremap({'silent'},       '<Pageup>',              [[<C-O><Pageup>]])
+
+
+-- --- === MULTIPLE CURSORS === "
+vim.g.VM_default_mappings = 0
+vim.g.VM_mouse_mappings = 1
+vim.api.nvim_exec([[
+    let g:VM_maps = {}
+    let g:VM_maps['Find Under']         = '<M-d>'
+    let g:VM_maps['Find Subword Under'] = '<M-d>'
+    let g:VM_maps["Add Cursor Down"]    = '<M-S-Down>'
+    let g:VM_maps["Add Cursor Up"]      = '<M-S-Up>'
+    let g:VM_maps["Add Cursor At Pos"]  = '<M-i>'
+    let mytext = 'hello world'
+]], true)

@@ -60,6 +60,10 @@ export VIM="/usr/share/nvim/"
 
 export PASTEL_COLOR_MODE=24bit
 export COLORTERM=truecolor
+export BAT_THEME="GitHub"
+export LULE_W="/home/bresilla/sets/.wallpaper"
+export LULE_S="/home/bresilla/dots/.func/wm/colupd"
+export LULE_C="/home/bresilla/.config/lule/configs.json"
 export FOREGROUND=$(xrdb -query | grep 'foreground:'| awk 'NR==1{print $NF}')
 export BACKGROUND=$(xrdb -query | grep 'background:'| awk 'NR==1{print $NF}')
 export BLACK=$(xrdb -query | grep 'color0:'| awk 'NR==1{print $NF}')
@@ -94,4 +98,3 @@ export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

@@ -6,6 +6,7 @@ with import <nixpkgs> {}; rec {
       in [
           stdenv
           pandoc
+          tectonic
           texlive.combined.scheme-medium
           biber
           rubber

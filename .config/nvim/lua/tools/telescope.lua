@@ -1,4 +1,9 @@
 --------------------------------- TELESCOPE  -----------------------------------------
+vimp.nnoremap('<leader><leader>',       [[<cmd>lua require('telescope.builtin').git_files()<cr>]])
+vimp.nnoremap('<C-Space>',              [[<cmd>lua require('telescope.builtin').buffers(center_list)<cr>]])
+
+
+
 require('telescope').setup{
     defaults = {
         prompt_position = "bottom",
@@ -25,4 +30,6 @@ center_list = require'telescope.themes'.get_dropdown({
 })
 
 
-
+--- === DMENU/ROFI ===
+vimp.nnoremap('<C-p>',                  [[:DmenuFinderFindFile<CR>]])
+vim.g.dmenu_finder_dmenu_command = "/home/bresilla/dots/.func/wm/rofit"

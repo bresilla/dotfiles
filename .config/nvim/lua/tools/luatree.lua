@@ -1,3 +1,8 @@
+vim.cmd([[au FileType LuaTree set nocursorcolumn]])
+
+vim.cmd([[au FileType LuaTree lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':LuaTreeClose<CR>', {})]])
+vim.cmd([[au FileType * lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':LuaTreeToggle<CR>', {})]])
+
 vim.g.lua_tree_side = 'left'
 vim.g.lua_tree_size = 50
 vim.g.lua_tree_ignore = { '.git', 'node_modules', '.cache' }

@@ -13,18 +13,15 @@ require('packer').startup(
         use 'nvim-lua/completion-nvim'
         use 'RishabhRD/popfix'
         use 'RishabhRD/nvim-lsputils'
-        use { 'aca/completion-tabnine', run = 'sh install.sh' }
-        use 'SirVer/ultisnips'                                                  --snipets engine
-        use 'honza/vim-snippets'
+        use { 'aca/completion-tabnine', run = './install.sh' }
+        use 'norcalli/snippets.nvim'
         use 'lfilho/cosco.vim'                                                  --add semicolon or comma n the end
         use 'tpope/vim-commentary'
         use 'sheerun/vim-polyglot'
         use 'nvim-treesitter/nvim-treesitter'
 
-        use 'liuchengxu/vim-which-key'
         use 'nvim-telescope/telescope.nvim'                                     --finder and runner
         use 'romgrk/barbar.nvim'
-        -- use 'akinsho/nvim-bufferline.lua'
         use 'voldikss/vim-floaterm'                                             --terminal
         use 'has2k1/vim-dmenu-finder'
         use 'kyazdani42/nvim-tree.lua'                                          --side-bar file manager
@@ -52,10 +49,9 @@ require('packer').startup(
         use 'tjdevries/colorbuddy.nvim'
         use 'kyazdani42/nvim-web-devicons'                                      --file icons
         use 'ishan9299/modus-theme-vim'
-        -- use 'TaDaa/vimade'                                                      --Fade inctive window
     end
 )
 
+package.path = '/home/bresilla/.config/nvim/lua/?.lua;' .. package.path
 require('optis')
-require('utils')
-require('theme')
+require('tools')
