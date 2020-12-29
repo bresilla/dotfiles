@@ -46,13 +46,13 @@
     view = !grv
     ban = "!fd -E ".git" -H . | fzf | parallel 'git ignore {}; git rm -rf --cached {};'"
     uncommit = reset --soft HEAD^
-    master = checkout master
+    master = "!git checkout master || git checkout main"
     develop = checkout develop
     hub = "!f(){ gh $@; }; f"
     module = submodule
     check = checkout
     clone = clone --recursive
-    publish = push origin --follow-tags
+    pub = "!f(){ git push ${1:-origin} --follow-tags; }; f"
     fuse = "!f(){ current=$(git branch --show-current); git checkout $1 && git merge $current && git checkout $current; }; f"
     sshify = "!f(){ [[ $(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '/com/ {print $1}') == "https:" ]] && gitname=$(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '{print $4,$5}' | sed 's! !/!g') && git remote set-url origin git@github.com:$gitname.git; }; f"
     get = "!f(){ INPUT=${1:-$(xsel --clipboard)}; NAMEEE=$(echo $INPUT | cut -d/ -f1-5); git clone --recursive $NAMEEE; }; f"
@@ -61,7 +61,7 @@
     tree = log --graph --all --format=format:'%w(80,0,0)%C(bold magenta)%h%C(reset) %C(white)%ad%C(reset) %C(dim white)(%ar)%C(reset) %C(bold dim white)%aN%C(auto)%+D%C(reset)%n%C(bold white)%s%C(reset)%+b%n'
     open = "!f(){ hub browse; }; f"
     remotes = remote -v
-    branches = branch -a
+    all = branch -a
     conflicts = !git diff --name-only --diff-filter=U
     fix = !git mergetool --tool=diffconflicts
     root = rev-parse --show-toplevel

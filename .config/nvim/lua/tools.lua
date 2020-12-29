@@ -1,16 +1,26 @@
+---------------------------------------------- === TOOLS === ----------------------------------------------
 require('tools.lspconfig')
 require('tools.treesitter')
+require('tools.hlsearch')
 require('tools.telescope')
 require('tools.snippets')
 -- require('tools.bufferline')
 require('tools.expressline')
-require('tools.luatree')
+require('tools.nvimtree')
 require('tools.floaterm')
 require('tools.dashboard')
 require('tools.colorbuddy')
 
---------------------------- OTHER
+---------------------------------------------- === OTHER === ----------------------------------------------
 require('other.blame')
-vim.cmd([[au CursorHold   * lua require'other.blame'.blameVirtText() ]]) 
-vim.cmd([[au CursorMoved  * lua require'other.blame'.clearBlameVirtText() ]]) 
-vim.cmd([[au CursorMovedI * lua require'other.blame'.clearBlameVirtText() ]]) 
+
+
+---------------------------------------------- === LAST MAP === ----------------------------------------------
+vimp.nnoremap({'silent', 'expr'}, '<ESC>', function()
+    vim.cmd('nohlsearch')
+    -- vim.cmd('FloatermHide')
+    -- vim.lsp.diagnostic.clear(0)
+    vim.lsp.diagnostic.display(nil, 0)
+    require('hlslens').disable()
+    return [[<ESC>]]
+end)

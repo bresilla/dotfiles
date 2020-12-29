@@ -1,0 +1,27 @@
+#sent color sequences to all ppts (most important piece of this script)
+colors_to_tty(){
+    for tt in /dev/pts/*; do
+        re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && cat $HOME/.cache/wal/sequences > $tt;
+    done
+}
+colors_to_tty &
+
+
+#apply all colors (or specific command) to nvim needs 'pip install neovim-remote' and 'lsof'
+colors_to_nvim(){
+    if command -v nvr &> /dev/null ; then
+        for i in `pidof nvim`; do
+            for e in `lsof -p "$i" | grep LISTEN | awk -v N=$9 '{print $9}'`; do
+                nvr --nostart --servername $e -c ":lua mycolors(\"$(cat $HOME/.cache/wal/theme)\")" &
+            done
+        done
+    else
+        1>&2 printf "executable nvr is not fond in your \$PATH, install it with 'pip install neovim-remote'\n"
+    fi
+}
+# colors_to_nvim &
+
+
+
+#apply all colors to firefox needs 'pip install pywalfox'
+# python $HOME/.local/bin/pywalfox update &

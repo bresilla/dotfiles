@@ -89,3 +89,6 @@ alias lzg='lazygit'
 alias crux='horcrux'
 alias pass='gopass'
 alias todo='taskwarrior-tui'
+
+##MEDIA
+alias color='pastel format hex'	

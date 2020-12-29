@@ -60,7 +60,7 @@ export VIM="/usr/share/nvim/"
 
 export PASTEL_COLOR_MODE=24bit
 export COLORTERM=truecolor
-export BAT_THEME="GitHub"
+export BAT_THEME="TwoDark"
 export LULE_W="/home/bresilla/sets/.wallpaper"
 export LULE_S="/home/bresilla/dots/.func/wm/colupd"
 export LULE_C="/home/bresilla/.config/lule/configs.json"

@@ -1,5 +1,5 @@
 ---------------------------------------------- === OPTIONS === ----------------------------------------------
-vim.api.nvim_set_var( 'python_host_prog', '/usr/bin/python' )
+vim.api.nvim_set_var( 'python_host_prog', '/usr/bin/python3' )
 vim.api.nvim_set_var( 'python3_host_prog', '/usr/bin/python3' )
 
 vim.cmd('syntax on')
@@ -136,28 +136,24 @@ vimp.bind('nv',                  '#',                 [[:Commentary<CR>]])
 
 --- === HIGHLGHT ON YANK
 vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank()]])
-vim.highlight.on_yank {
-    on_visual = true
-}
+vim.highlight.on_yank { on_visual = true }
 
 
 --- === INDENTATION LINES === "
 vim.g.indentLine_char_list = { '┊' }
-vim.g.indentLine_color_term = 235
-vim.g.indentLine_setConceal = 2
-vim.g.indentLine_concealcursor = ""
+-- vim.g.indentLine_color_term = 235
+-- vim.g.indentLine_bgcolor_term = 0
+-- vim.g.indentLine_setConceal = 2
+-- vim.g.indentLine_concealcursor = ""
+vim.g.indentLine_defaultGroup = 'NonText'
 vim.g.indentLine_fileTypeExclude ={ 'dashboard' }
 
 
--- --- === SEARCH SETTINGS === "
-vimp.rbind({'silent'},           '/',                 [[<Plug>(incsearch-forward)]])
-vimp.rbind({'silent'},           '<leader>/',         [[<Plug>(incsearch-forward)]])
-vimp.bind({'silent'},            '*',                       [[*``]])
-
-
 --- === MOVE LINES === "
-vimp.rbind('nx',                  '<C-A-Down>',             [[<Plug>MoveLineDown]])
-vimp.rbind('nx',                  '<C-A-Up>',               [[<Plug>MoveLineUp]])
+vimp.rbind('n',                  '<C-A-Down>',             [[<Plug>MoveLineDown]])
+vimp.rbind('n',                  '<C-A-Up>',               [[<Plug>MoveLineUp]])
+vim.cmd([[ vmap <C-A-Down> <Plug>MoveBlockDown ]])
+vim.cmd([[ vmap <C-A-Up> <Plug>MoveBlockUp ]])
 
 
 --- === COMFORTABLE SCROLLING === "

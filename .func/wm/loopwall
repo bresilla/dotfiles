@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# while true
-# do /home/bresilla/dots/.func/wm/rainbow regen
-#     /home/bresilla/dots/.func/wm/colupd &
-#     sleep 300
-# done

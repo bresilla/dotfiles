@@ -71,6 +71,7 @@ function mycolors(theme)
     Color.new('r255',       rainbow[255+1])
 
     Color.new('ac_d',       rainbow[237+1])
+    Color.new('ac_dd',      rainbow[236+1])
     Color.new('ac_l',       rainbow[250+1])
 
     Color.new('Red',        rainbow[56+1])
@@ -103,19 +104,16 @@ function mycolors(theme)
 
     -- === HIGHLIGHTS === "
     --background
-    Group.new('Error',                  nil,                  nil)
+    Group.new('Error',                  nil,                  nil,                  styles.undercurl)
     Group.new('Normal',                 nil,                  colors.r0)
     Group.new('NormalNC',               nil,                  colors.r0)
     Group.new('Comment',                colors.r8,            nil,                  styles.italic)
     --visual select
     Group.new('Visual',                 nil,                  colors.ac_d,          styles.bold)
     --cursor
-    Group.new('Search',                 colors.r0,            colors.r9)
     Group.new('CursorLine',             nil,                  colors.r236,          styles.bold)
     Group.new('CursorColumn',           nil,                  colors.r236,          styles.bold)
     Group.new('Cursor',                 colors.r15,           colors.r1)
-    --similar words
-    Group.new('illuminatedWord',        nil,                  colors.r0,            styles.bold)
     --squicky lines "~" hide
     Group.new('EndOfBuffer',            colors.r0,            colors.r0)
     --splits and number backgrounds,
@@ -125,15 +123,15 @@ function mycolors(theme)
     Group.new('SignColumn',             nil,                  colors.r0)
     Group.new('CursorLineNR',           colors.r1,            colors.r0,            styles.bold)
     --special characters of endline
-    Group.new('NonText',                colors.r240,          colors.r0) 
+    Group.new('NonText',                colors.r240,          nil) 
     --completion menu
     Group.new('Pmenu',                  colors.r15,           colors.ac_d)
     Group.new('PmenuSel',               colors.r1,            colors.r236,          styles.bold)
     Group.new('PmenuSbar',              nil,                  colors.r0)
     Group.new('PmenuThumb',             nil,                  colors.r0)
-    Group.new('NormalFloat',            colors.r0,            colors.ac_d,          styles.bold)
+    Group.new('NormalFloat',            colors.r15,           colors.ac_d,          styles.bold)
     --parenthesis
-    Group.new('MatchParen',             colors.r15,           colors.r1,            styles.bold)
+    Group.new('MatchParen',             colors.r0,            colors.r1,            styles.bold)
 
 
     -- === TABS === "
@@ -142,10 +140,10 @@ function mycolors(theme)
     Group.new('BufferCurrentMod',       colors.r1,            colors.r0)
     Group.new('BufferCurrentSign',      colors.r1,            colors.r0)
     Group.new('BufferCurrentTarget',    colors.r15,           colors.r0)
-    Group.new('BufferVisible',          colors.ac_l,          colors.ac_d)
-    Group.new('BufferVisibleMod',       colors.r0,            colors.ac_d)
-    Group.new('BufferVisibleSign',      colors.r0,            colors.ac_d)
-    Group.new('BufferVisibleTarget',    colors.r0,            colors.ac_d)
+    Group.new('BufferVisible',          colors.ac_l,          colors.ac_dd)
+    Group.new('BufferVisibleMod',       colors.r0,            colors.ac_dd)
+    Group.new('BufferVisibleSign',      colors.r0,            colors.ac_dd)
+    Group.new('BufferVisibleTarget',    colors.r0,            colors.ac_dd)
     Group.new('BufferInactive',         colors.ac_l,          colors.ac_d)
     Group.new('BufferInactiveMod',      colors.r0,            colors.ac_d)
     Group.new('BufferInactiveSign',     colors.r0,            colors.ac_d)
@@ -173,26 +171,30 @@ function mycolors(theme)
 
     -- === DIAGNOSTICS === "
     Group.new('LspDiagnosticsVirtualTextSpace',         colors.r232,          colors.r0,            styles.italic)
-    -- sign define LspDiagnosticsSignError text=×
     Group.new('LspDiagnosticsVirtualTextError',         colors.Redish,        colors.r232,          styles.italic)
     Group.new('LspDiagnosticsSignError',                colors.Redish,        colors.r0,            styles.bold)
     Group.new('LspDiagnosticsFloatingError',            colors.Redish,        nil)
-    Group.new('LspDiagnosticsUnderlineError',           colors.r0,            colors.Redish)
-    -- sign define LspDiagnosticsSignWarning text=!
+    -- Group.new('LspDiagnosticsUnderlineError',           nil,                  nil,                  styles.undercurl) 
     Group.new('LspDiagnosticsVirtualTextWarning',       colors.Orangeish,     colors.r232,          styles.italic)
     Group.new('LspDiagnosticsSignWarning',              colors.Orangeish,     colors.r0,            styles.bold)
     Group.new('LspDiagnosticsFloatingWarning',          colors.Orangeish,     nil)
-    Group.new('LspDiagnosticsUnderlineWarning',         colors.r0,            colors.Orangeish)
-    -- sign define LspDiagnosticsSignInformation text=i
+    -- Group.new('LspDiagnosticsUnderlineWarning',         nil,                  nil,                  styles.undercurl) 
     Group.new('LspDiagnosticsVirtualTextInformation',   colors.Violetish,     colors.r232,          styles.italic)
     Group.new('LspDiagnosticsSignInformation',          colors.Violetish,     colors.r0,            styles.bold)
     Group.new('LspDiagnosticsFloatingInformation',      colors.Violetish,     nil)
-    Group.new('LspDiagnosticsUnderlineInformation',     colors.r0,            colors.Violetish)
-    -- sign define LspDiagnosticsSignHint text=➜
-    Group.new('LspDiagnosticsVirtualTextHint',          colors.Violetish,       colors.r232,          styles.italic)
-    Group.new('LspDiagnosticsSignHint',                 colors.Violetish,       colors.r0,            styles.bold)
-    Group.new('LspDiagnosticsFloatingHint',             colors.Violetish,       nil)
-    Group.new('LspDiagnosticsUnderlineHint',            colors.r0,            colors.Violetish)
+    -- Group.new('LspDiagnosticsUnderlineInformation',     nil,                  nil,                  styles.undercurl) 
+    Group.new('LspDiagnosticsVirtualTextHint',          colors.Violetish,     colors.r232,          styles.italic)
+    Group.new('LspDiagnosticsSignHint',                 colors.Violetish,     colors.r0,            styles.bold)
+    Group.new('LspDiagnosticsFloatingHint',             colors.Violetish,     nil)
+    -- Group.new('LspDiagnosticsUnderlineHint',            nil,                  nil,                  styles.undercurl) 
+
+    -- === SEARCH ===
+    Group.new('Search',                     colors.r0,            colors.r1)
+    Group.new('HlSearchCur',                colors.r0,            colors.r1)
+    Group.new('HlSearchLensCur',            colors.r0,            colors.r1)
+    Group.new('HlSearchLens',               colors.r0,            colors.ac_d)
+    Group.new('illuminatedWord',            nil,                  colors.ac_d,            styles.bold)
+
 
 
     -- === GIT & GITGUTTER ===
@@ -204,7 +206,7 @@ function mycolors(theme)
     Group.new('GitGutterChange',            colors.Yellow,   colors.r0)
     Group.new('GitGutterDelete',            colors.Red,      colors.r0)
     Group.new('GitGutterChangeDelete',      colors.Blue,     colors.r0)
-    Group.new('GitBlameVirt',               colors.r0,       colors.r1,       styles.italic + styles.bold)
+    Group.new('GitBlameVirt',               colors.r0,       colors.ac_d,       styles.italic + styles.bold)
 
 
     -- === MULTIPLE CURSORS ===

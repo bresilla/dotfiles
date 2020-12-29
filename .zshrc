@@ -206,8 +206,12 @@ eval "$(zoxide init zsh)"
 cd() {
   if [[ -z $1 ]]; then
     cd $(proji ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4)
-  else
-    [[ -d $1 ]] && builtin cd $1 || z $1;
+  elif [[ -d $1 ]] ; then
+    builtin cd $1
+  elif [[ $1 == root ]] && [[ -d $(git rev-parse --show-toplevel) ]] ; then
+    cd $(git rev-parse --show-toplevel)
+  else 
+    z $1;
   fi
 }
 

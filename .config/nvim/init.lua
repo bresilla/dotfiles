@@ -13,12 +13,13 @@ require('packer').startup(
         use 'nvim-lua/completion-nvim'
         use 'RishabhRD/popfix'
         use 'RishabhRD/nvim-lsputils'
+        use 'RishabhRD/nvim-cheat.sh'
         use { 'aca/completion-tabnine', run = './install.sh' }
         use 'norcalli/snippets.nvim'
         use 'lfilho/cosco.vim'                                                  --add semicolon or comma n the end
         use 'tpope/vim-commentary'
         use 'sheerun/vim-polyglot'
-        use 'nvim-treesitter/nvim-treesitter'
+        use { 'nvim-treesitter/nvim-treesitter' }
 
         use 'nvim-telescope/telescope.nvim'                                     --finder and runner
         use 'romgrk/barbar.nvim'
@@ -42,6 +43,7 @@ require('packer').startup(
         use 'airblade/vim-gitgutter'                                            --show differences (GIT)
         use 'rrethy/vim-illuminate'                                             --highlightusert same words as cursor
         use 'haya14busa/incsearch.vim'
+        use 'kevinhwang91/nvim-hlslens'
         use 'kana/vim-fakeclip'                                                 --better clipboard
         use 'direnv/direnv'
 
@@ -49,6 +51,8 @@ require('packer').startup(
         use 'tjdevries/colorbuddy.nvim'
         use 'kyazdani42/nvim-web-devicons'                                      --file icons
         use 'ishan9299/modus-theme-vim'
+
+        use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'  }
     end
 )
 
