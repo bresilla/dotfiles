@@ -1,7 +1,3 @@
----------------------------
--- custom awesome theme --
----------------------------
-
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local gears = require("gears")
@@ -9,12 +5,36 @@ local dpi = xresources.apply_dpi
 
 local themes_path = "~/.config/awesome/" 
 
+function fileToList(file)
+    -- see if the file exists
+    function file_exists(file)
+        local f = io.open(file, "rb")
+        if f then f:close() end
+        return f ~= nil
+    end
+    -- get all lines from a file, returns an empty 
+    -- list/table if the file does not exist
+    if not file_exists(file) then return {} end
+    lines = {}
+    for line in io.lines(file) do 
+        lines[#lines + 1] = line
+    end
+    return lines
+end
+
+function getColor(col)
+    rainbow = fileToList('/home/bresilla/.cache/wal/colors')
+    return rainbow[col+1]
+end
+
+
 local theme = {}
+
+theme.rainbow = fileToList('/home/bresilla/.cache/wal/colors')
 
 theme.font          = "Roboto Medium 9"
 theme.titlefont     = "Roboto Bold 9"
 theme.fontname      = "Roboto Medium 9"
-
 
 theme.bg_normal     = "#1C1E26"
 theme.bg_focus      = theme.bg_normal
@@ -31,34 +51,21 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.highlight = "#F43E5C"
-theme.highlight_alt = "#B877DB"
-
-theme.misc1 = "#6C6F93"
-theme.misc2 = "#2f3240"
-theme.transparent = "'#282A3600"
-
--- terminal colors
-theme.blue = "#26BBD9"
-theme.blue_light = "#3FC6DE"
-theme.cyan = "#59E3E3"
-theme.cyan_light = "#6BE6E6"
-theme.green = "#29D398"
-theme.green_light = "#3FDAA4"
-theme.purple = "#EE64AE"
-theme.purple_light = "#F075B7"
-theme.red = "#E95678"
-theme.red_light = "#EC6A88"
-theme.yellow = "#FAB795"
-theme.yellow_light = "#FBC3A7"
+theme.highlight     = "#F43E5C"
+theme.transparent   = "#282A3600"
 
 
 theme.useless_gap   = dpi(8)
-theme.border_width  = dpi(0)
-theme.border_normal = theme.bg_very_light
-theme.border_focus  = theme.bg_very_light
-theme.border_marked = theme.bg_very_light
+theme.border_width  = dpi(3)
+theme.border_normal = getColor(232)
+theme.border_focus  = getColor(1)
+theme.border_marked = getColor(1)
 theme.rounded_corners = true
-theme.border_radius = dpi(20)
+theme.border_radius = dpi(15)
 
+theme.taglist_bg_focus = getColor(236)
+theme.taglist_bg_occupied = getColor(240)
+theme.taglist_bg_empty = getColor(246)
+
+awesome.emit_signal("awesome::refresh")
 return theme

@@ -2,6 +2,7 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 local beautiful = require("beautiful")
+local xrandr = require("utils.xrandr")
 
 require("config.error")
 
@@ -13,9 +14,6 @@ require("config.rules")
 require("config.tags")
 require("config.bar")
 require("config.keys")
-
-
-require("border")
 
 require("awful.autofocus")
 require("config.notif")

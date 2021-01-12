@@ -1,10 +1,10 @@
 local awful = require("awful")
+local hotkeys_popup = require("awful.hotkeys_popup")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local util = require("utils.shifty")
-
-local hotkeys_popup = require("awful.hotkeys_popup")
+local scratch = require("utils.scratch")
 
 -- Define mod key
 local modkey = "Mod4"
@@ -21,13 +21,12 @@ keys.desktopbuttons = gears.table.join(
 
 keys.globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "r",       awesome.restart,            {description = "reload awesome", group = "awesome"}),
+    awful.key({ modkey, "Control" }, "l",       awesome.emit_signal("awesome::refresh"),            {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Control" }, "q",       awesome.quit,               {description = "quit awesome", group = "awesome"}),
     awful.key({ modkey,           }, "s",       hotkeys_popup.show_help,    {description = "show help", group= "awesome"}),
 
     awful.key({ }, "F7", function () awful.layout.inc( 1 ) end,             {description = "select next layout", group = "layout"}),
 
-    awful.key({ modkey, altkey    }, "Left",    awful.tag.viewprev,         {description = "view previous", group = "tag"}),
-    awful.key({ modkey, altkey    }, "Right",   awful.tag.viewnext,         {description = "view next", group = "tag"}),
     awful.key({ modkey, altkey    }, "Up",      awful.tag.viewprev,         {description = "view previous", group = "tag"}),
     awful.key({ modkey, altkey    }, "Down",    awful.tag.viewnext,         {description = "view next", group = "tag"}),
     awful.key({ modkey, altkey, "Shift"   }, "Up",
@@ -41,39 +40,80 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "move to next tag", group = "tag"}),
 
-
-    -- master height & width
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
-              {description = "increase master width factor", group = "layout"}),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
-              {description = "decrease master width factor", group = "layout"}),
-    awful.key({ modkey,           }, "k",     function () awful.tag.incmhfact( 0.05)          end,
-              {description = "increase master height factor", group = "layout"}),
-    awful.key({ modkey,           }, "j",     function () awful.tag.incmhfact(-0.05)          end,
-              {description = "decrease master height factor", group = "layout"}),
-
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
-              {description = "increase the number of master clients", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
-              {description = "decrease the number of master clients", group = "layout"}),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
-              {description = "increase the number of columns", group = "layout"}),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
-              {description = "decrease the number of columns", group = "layout"}),
-
-    -- useless gaps
-    awful.key({ modkey }, "+",     function () beautiful.useless_gap = beautiful.useless_gap + 5 end,
-        {description = "increase useless gaps", group = "layout"}),
-    awful.key({ modkey }, "-",     function () beautiful.useless_gap = beautiful.useless_gap - 5 end,
-        {description = "decrease useless gaps", group = "layout"})
+        -- Focus client by direction (arrow keys)
+    awful.key({ modkey }, "Down",
+        function()
+            awful.client.focus.global_bydirection("down")
+        end,
+        {description = "focus down", group = "client"}),
+    awful.key({ modkey }, "Up",
+        function()
+            awful.client.focus.global_bydirection("up")
+        end,
+        {description = "focus up", group = "client"}),
+    awful.key({ modkey }, "Left",
+        function()
+            awful.client.focus.global_bydirection("left")
+        end,
+        {description = "focus left", group = "client"}),
+    awful.key({ modkey }, "Right",
+        function()
+            awful.client.focus.global_bydirection("right")
+        end,
+        {description = "focus right", group = "client"}),
+        -- Swap client by direction (arrow keys)
+    awful.key({ altkey }, "Down",
+        function()
+            awful.client.swap.global_bydirection("down")
+        end,
+        {description = "swap down", group = "client"}),
+    awful.key({ altkey }, "Up",
+        function()
+            awful.client.swap.global_bydirection("up")
+        end,
+        {description = "swap up", group = "client"}),
+    awful.key({ altkey }, "Left",
+        function()
+            awful.client.swap.global_bydirection("left")
+        end,
+        {description = "swap left", group = "client"}),
+    awful.key({ altkey }, "Right",
+        function()
+            awful.client.swap.global_bydirection("right")
+        end,
+        {description = "swap right", group = "client"})
 )
 
-keys.globalkeys = gears.table.join( keys.globalkeys,
-    awful.key({  }, "dead_acute", function () awful.spawn("/home/bresilla/dots/.func/wm/termop kitty NOTE 3500 1900") end,
-        {description = "user launcher", group = "launcher"}),
-    awful.key({  }, "dead_circumflex", function () awful.spawn("/home/bresilla/dots/.func/wm/termop kitty MAIN 2500 1050") end,
-        {description = "user launcher", group = "launcher"}),
 
+keys.globalkeys = gears.table.join( keys.globalkeys,
+    awful.key({  }, "dead_acute", 
+        function () 
+            awful.spawn("/env/cpp/bin/tmass -l /home/bresilla/.config/tmux load NOTE")
+            scratch.toggle(
+                "kitty --name=scratch_NOTE -e tmux attach -t NOTE", 
+                { instance = "scratch_NOTE" }, 
+                { 
+                    width = 3500,
+                    height = 1900,
+                    placement = awful.placement.centered,
+                }
+            )
+        end,
+        {description = "user launcher", group = "launcher"}),
+    awful.key({  }, "dead_circumflex", 
+        function () 
+            awful.spawn("/env/cpp/bin/tmass -l /home/bresilla/.config/tmux load MAIN")
+            scratch.toggle(
+                "kitty --name=scratch_MAIN -e tmux attach -t MAIN", 
+                { instance = "scratch_MAIN" }, 
+                { 
+                    width = 2500,
+                    height = 1050,
+                    placement = awful.placement.centered,
+                }
+            )
+        end,
+        {description = "user launcher", group = "launcher"}),
     awful.key({ agrkey }, "space", function () awful.spawn("/home/bresilla/.config/rofi/menu/ROOT") end,
         {description = "user launcher", group = "launcher"}),
     awful.key({ modkey }, "space", function () awful.spawn("/home/bresilla/.config/rofi/menu/BROWSE") end,
