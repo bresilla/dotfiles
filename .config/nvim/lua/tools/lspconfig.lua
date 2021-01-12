@@ -1,6 +1,6 @@
 --------------------------------- COMPLETION  -----------------------------------------
-vim.cmd([[ let g:completion_chain_complete_list = {'default':[{'complete_items': ['lsp','snippet','tabnine']}]} ]])
 vim.g.completion_enable_snippet = 'snippets.nvim'
+vim.cmd([[ let g:completion_chain_complete_list = {'default':[{'complete_items': ['lsp','snippet','tabnine']}]} ]])
 vim.cmd([[autocmd BufEnter * lua require'completion'.on_attach()]])
 
 vim.cmd([[sign define LspDiagnosticsSignError text=× texthl=LspDiagnosticsSignError linehl= numhl=]])
@@ -41,6 +41,7 @@ end)
 
 
 vimp.nnoremap('<c-]>',      [[<cmd>lua vim.lsp.buf.definition()<CR>]])
+vimp.nnoremap('<c-r>',      [[<cmd>lua vim.lsp.buf.rename()<CR>]])
 vimp.nnoremap('k',          [[<cmd>lua vim.lsp.buf.hover()<CR>]])
 vimp.nnoremap('<c-k>',      [[<cmd>lua vim.lsp.buf.signature_help()<CR>]])
 vimp.nnoremap('gD',         [[<cmd>lua vim.lsp.buf.type_definition()<CR>]])
@@ -50,7 +51,7 @@ vimp.nnoremap('g0',         [[<cmd>lua vim.lsp.buf.document_symbol()<CR>]])
 vimp.nnoremap('gW',         [[<cmd>lua vim.lsp.buf.workspace_symbol()<CR>]])
 vimp.nnoremap('gd',         [[<cmd>lua vim.lsp.buf.declaration()<CR>]])
 vimp.nnoremap('f',          [[<cmd>lua vim.lsp.diagnostic.goto_next { min_severity = "info", show_config=true }<CR>]])
-vimp.nnoremap('F',          [[<cmd>lua vim.lsp.buf.code_action()<cr>]])
+-- vimp.nnoremap('F',          [[<cmd>lua vim.lsp.buf.code_action()<cr>]])
 
 
 --------------------------------- LSP LANGUAGES  -----------------------------------------
@@ -77,17 +78,6 @@ require'lspconfig'.sumneko_lua.setup{
 }
 
 require'lspconfig'.pyls.setup{}
-
-vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
-vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
-vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
-vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
-vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
-vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
-vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-
-
 
 --------------------------------- DIAGNOSTICS  -----------------------------------------
 -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

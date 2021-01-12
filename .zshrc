@@ -104,10 +104,16 @@ bindkey '^S' sudo-command-line
 
 
 #--------------------------------------------------------------------------------------------------------------------
-###CLEAN SCREEN
+###other
 push-line-and-clear() { zle .push-line; zle .clear-screen }
 zle -N push-line-and-clear
 bindkey '^L' push-line-and-clear
+
+function run_killer(){ killer; zle reset-prompt; zle redisplay; }
+zle -N run_killer
+bindkey -M vicmd '^k' run_killer
+bindkey -M viins '^k' run_killer
+bindkey '^k' run_killer
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -187,8 +193,6 @@ TRAPALRM() {
 [ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
 [ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
 [ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
-[ -d ~/.config/gitstatus ] && source ~/.config/gitstatus/gitstatus.prompt.zsh
-
 
 #--------------------------------------------------------------------------------------------------------------------
 ###SCRIPTS PATH
@@ -220,3 +224,4 @@ eval "$(direnv hook zsh)"
 
 ###NAVI
 source <(navi widget zsh)
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

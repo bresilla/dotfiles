@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 # COLORS
 /home/bresilla/dots/.func/wm/rainbow regen &
-# wal -R &
 
 
 #MONITORS

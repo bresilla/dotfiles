@@ -1,7 +1,7 @@
 vimp.rbind({'silent'},           '/',                 [[<Plug>(incsearch-forward)]])
 vimp.rbind({'silent'},           '<leader>/',         [[<Plug>(incsearch-forward)]])
 vimp.nnoremap({'silent', 'expr'}, '*', function() return [[ *``<Cmd>lua require('hlslens').start()<CR> ]] end)
-vimp.nnoremap({'silent', 'expr'}, 'n', function() return [[ <Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR> ]] end)
+-- vimp.nnoremap({'silent', 'expr'}, 'n', function() return [[ <Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR> ]] end)
 
 require('hlslens').setup({
     override_line_lens = function(lnum, loc, idx, r_idx, count, hls_ns)

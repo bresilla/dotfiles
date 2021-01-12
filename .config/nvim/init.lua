@@ -11,9 +11,6 @@ require('packer').startup(
         use 'nvim-lua/popup.nvim'                                               -- hoepfully will get merget in mainsteream
         use 'neovim/nvim-lspconfig'
         use 'nvim-lua/completion-nvim'
-        use 'RishabhRD/popfix'
-        use 'RishabhRD/nvim-lsputils'
-        use 'RishabhRD/nvim-cheat.sh'
         use { 'aca/completion-tabnine', run = './install.sh' }
         use 'norcalli/snippets.nvim'
         use 'lfilho/cosco.vim'                                                  --add semicolon or comma n the end
@@ -24,7 +21,6 @@ require('packer').startup(
         use 'nvim-telescope/telescope.nvim'                                     --finder and runner
         use 'romgrk/barbar.nvim'
         use 'voldikss/vim-floaterm'                                             --terminal
-        use 'has2k1/vim-dmenu-finder'
         use 'kyazdani42/nvim-tree.lua'                                          --side-bar file manager
         use 'yggdroot/indentline'                                               --indentation (characters)
         use 'mbbill/undotree'                                                   --show a tree of undos
