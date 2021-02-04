@@ -1,0 +1,3 @@
+#/usr/bin/env bash
+
+papis export -a -f json | jq ".[] | .title, .author, ._papis_local_folder" | sed "s/.*/\\x0f&/;n;n" | rofit 3 '\x0f'

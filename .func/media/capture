@@ -3,7 +3,7 @@ nvenc(){
   echo "START"
   slop=$(slop -f "%x %y %w %h %g %i") && read -r X Y W H G ID < <(echo $slop)
   echo " rec" > /home/bresilla/.config/rec &
-  prime ffmpeg -y -re \
+  prime-run ffmpeg -y -re \
     -f x11grab \
     -s "$W"x"$H" \
     -i :0.0+$X,$Y \

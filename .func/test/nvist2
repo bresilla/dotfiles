@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+for i in `pidof nvim`; do 
+    for e in `lsof -p "$i" | grep LISTEN | awk -v N=$9 '{print $9}'`; do
+				nvr --nostart --servername $e -c ":lua mycolors(\"$(cat /home/bresilla/.cache/wal/theme)\")" &
+		done
+done 

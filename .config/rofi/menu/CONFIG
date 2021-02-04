@@ -36,6 +36,7 @@ $HOME/dots/.profile
 $HOME/dots/.startup
 $HOME/dots/.aliases
 $HOME/dots/.other/variables
+$HOME/dots/.config/promptline
 $HOME/dots/.config/git/config
 $HOME/dots/.config/tmux/tmux.conf
 $HOME/dots/.config/nixpkgs/home.nix" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "shell: ")

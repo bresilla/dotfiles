@@ -4,7 +4,6 @@ import psutil
 import neovim
 
 str = open('/home/bresilla/.cache/wal/theme', 'r').read().replace('\n', '')
-print(str)
 
 addresses = []
 
@@ -18,12 +17,13 @@ for proc in psutil.process_iter(attrs=['name']):
             for conn in proc.connections('unix'):
                 if conn.laddr:
                     addresses.insert(0, conn.laddr)
+                    print(conn.laddr)
         except psutil.AccessDenied:
             continue
 
-for addr in sorted(addresses):
-    nvim = neovim.attach('socket', path=addr)
-    try:
-        nvim.command(':lua mycolors("' + str +'")')
-    finally:
-        continue
+# for addr in sorted(addresses):
+#     nvim = neovim.attach('socket', path=addr)
+#     try:
+#         nvim.command(':lua mycolors("' + str +'")')
+#     finally:
+#         continue

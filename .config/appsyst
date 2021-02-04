@@ -1,17 +1,4 @@
--------------------------------------------------------            SYSTEM             --------------------------------------------------------
-borg                        + backup & deduplicating archiver       + https://github.com/borgbackup/borg                    + cpp       + pack
-bitwise                     + bit manipulator in ncurses            + https://github.com/mellowcandle/bitwise               + cpp       + pack
--------------------------------------------------------             MEDIA              -------------------------------------------------------
-mpv                         + command line video player             + https://github.com/mpv-player/mpv                     + cpp
-mpc
-playerctl
-ncpamixer
 -------------------------------------------------------            NETWORK             -------------------------------------------------------
-ari         - aria2         + swissarmy knife of downloaders       + https://github.com/aria2/aria2                         + cpp       + pack
-shipit                      + minimalistic SSH deployment           + https://github.com/sapegin/shipit                     + bash
-maza                        + local ad blocker, like Pi-hole        + https://github.com/tanrax/maza-ad-blocking            + bash
-hblock                      + hosts adblocker                       + https://github.com/hectorm/hblock                     + bash
-mtr                         + 'traceroute' and 'ping' combines      + https://github.com/traviscross/mtr                    + cpp       + pack
 hostapd
 dnsmasq
 traceroute
@@ -20,29 +7,10 @@ tor
 -------------------------------------------------------              USB              --------------------------------------------------------
 usbip
 usbredir
--------------------------------------------------------         WINDOW-MANAGER          ------------------------------------------------------
-bspwm
-sxhkd
-wmutils
-wmctrl
-xdo
-xdotool
-polybar
-dunst
-picom
-espansso
-rofi
-rofi-blocks
-xob
-clight
-slop                        + query selection from desktop degion   + https://github.com/naelstrof/slop                     + cpp       + pack
-maim                        + takes a screenshot of your desktop    + https://github.com/naelstrof/maim                     + cpp       + pack
-scrot
 -------------------------------------------------------             CNTAINER             ------------------------------------------------------
 docker
 lxd
 wine
-nvidia-docker
 -------------------------------------------------------             EDITORS             ------------------------------------------------------
 neovim
 kakoune
@@ -69,12 +37,6 @@ qrencode
 f3d
 feh
 sxiv
--------------------------------------------------------             NAVIGATR            ------------------------------------------------------
-nnn
-vifm
--------------------------------------------------------              INFO               ------------------------------------------------------
-neofetch
-nvtop
 -------------------------------------------------------              DISKS              ------------------------------------------------------
 dfc
 dtrx
@@ -85,23 +47,3 @@ udevil
 -------------------------------------------------------           EMULATION             ------------------------------------------------------
 qemu
 kvm
-unicorn                     + CPU emulation framework               + https://github.com/unicorn-engine/unicorn             + cpp       + pack
-keystone                    + multi-architecture assembler          + https://github.com/keystone-engine/keystone           + cpp       + pack
-capstone                    + multi-architecture disassembly        + https://github.com/aquynh/capstone                    + cpp       + pack
--------------------------------------------------------             CHROOT              ------------------------------------------------------
-bubblewrap
-firejail
-fakeroot
-fakechroot
-schroot
-debootstrap
-debtap
--------------------------------------------------------              OTHER              ------------------------------------------------------
-doas
-apparmor
-busybox
-binutils
-preload
-binwalk
-bpf
-socat

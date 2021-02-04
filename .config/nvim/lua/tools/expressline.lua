@@ -47,7 +47,11 @@ end
 function scrollbar_instance()
   local current_line = vim.fn.line('.')
   local total_lines = vim.fn.line('$')
-  local default_chars = {'__', '▁▁', '▂▂', '▃▃', '▄▄', '▅▅', '▆▆', '▇▇', '██'}
+  -- local default_chars = {'■        ', '■■       ', '■■■      ', '■■■■     ', '■■■■■    ', '■■■■■■   ', '■■■■■■■  ', '■■■■■■■■ ', '■■■■■■■■■'}
+  -- local default_chars = {'        ', '       ', '      ', '     ', '    ', '   ', '  ', ' ', ''}
+  -- local default_chars = {'█────────', '─█───────', '──█──────', '───█─────', '────█────', '─────█───', '──────█──', '───────█─', '────────█'}
+  -- local default_chars = {'────────', '────────', '────────', '────────', '────────', '────────', '────────', '────────', '────────'}
+  local default_chars = {'█░░░░░░░░', '░█░░░░░░░', '░░█░░░░░░', '░░░█░░░░░', '░░░░█░░░░', '░░░░░█░░░', '░░░░░░█░░', '░░░░░░░█░', '░░░░░░░░█'}
   local chars = default_chars
   local index = 1
 
@@ -63,13 +67,21 @@ function scrollbar_instance()
     end
   end
   percent = current_line_percent()
-  return " " .. chars[index] .. percent
+  return " " .. chars[index] .. " "
+  -- return " │" .. chars[index] .. "│ "
+  -- return "├" .. chars[index] .. "┤"
 end
 
 require('el').setup {
   generator = function(_, _)
     return {
-      '  //  ',
+      function(_, buffer)
+        if vim.api.nvim_call_function('winwidth', {0}) < 70 then 
+            return ''
+        else 
+          return '  //  '
+        end
+      end,
       extensions.gen_mode {
         format_string = '  %s  '
       },
@@ -104,8 +116,9 @@ require('el').setup {
         "el_scrol",
         "CursorMoved",
         function(_, buffer)
-          if vim.api.nvim_call_function('winwidth', {0}) < 50 then return '' end
-          return sections.highlight('ElFileType', scrollbar_instance)()
+          if vim.api.nvim_call_function('winwidth', {0}) < 70 then return '' end
+          local sec1 = sections.highlight('ElNormal', scrollbar_instance)()
+          return " " .. sec1 .. " " .. current_line_percent() .. " "
         end
       ),
     }

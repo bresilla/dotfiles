@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo $PWD "added to \$PATH"
+export PATH="$PWD:$PATH"

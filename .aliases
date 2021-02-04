@@ -29,7 +29,7 @@ alias vim='nvim'
 alias mut='neomutt'
 
 ##PACKAGE_MANAGER
-alias pack='unset GOPATH; unset GOBIN && yay'
+alias pack='unset GOPATH; unset GOBIN && paru'
 alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
 alias branch='doas pacman-mirrors --api -S'
 
@@ -77,6 +77,7 @@ alias open='nohup mimeo $1 > /dev/null 2>&1 &!'
 alias headphones='pactl set-sink-port 0 analog-output-headphones'
 alias ps='procs'
 alias rn='renamer'
+alias rp='ruplacer'
 alias tk='tokei'
 alias mn='tldr'
 alias fq='fselect'
@@ -89,3 +90,6 @@ alias lzg='lazygit'
 alias crux='horcrux'
 alias pass='gopass'
 alias todo='taskwarrior-tui'
+
+##MEDIA
+alias color='pastel format hex'	

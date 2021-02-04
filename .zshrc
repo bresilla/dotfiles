@@ -104,10 +104,16 @@ bindkey '^S' sudo-command-line
 
 
 #--------------------------------------------------------------------------------------------------------------------
-###CLEAN SCREEN
+###other
 push-line-and-clear() { zle .push-line; zle .clear-screen }
 zle -N push-line-and-clear
 bindkey '^L' push-line-and-clear
+
+function run_killer(){ killer; zle reset-prompt; zle redisplay; }
+zle -N run_killer
+bindkey -M vicmd '^k' run_killer
+bindkey -M viins '^k' run_killer
+bindkey '^k' run_killer
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -187,8 +193,6 @@ TRAPALRM() {
 [ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
 [ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
 [ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
-[ -d ~/.config/gitstatus ] && source ~/.config/gitstatus/gitstatus.prompt.zsh
-
 
 #--------------------------------------------------------------------------------------------------------------------
 ###SCRIPTS PATH
@@ -206,8 +210,12 @@ eval "$(zoxide init zsh)"
 cd() {
   if [[ -z $1 ]]; then
     cd $(proji ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4)
-  else
-    [[ -d $1 ]] && builtin cd $1 || z $1;
+  elif [[ -d $1 ]] ; then
+    builtin cd $1
+  elif [[ $1 == root ]] && [[ -d $(git rev-parse --show-toplevel) ]] ; then
+    cd $(git rev-parse --show-toplevel)
+  else 
+    z $1;
   fi
 }
 
@@ -216,3 +224,4 @@ eval "$(direnv hook zsh)"
 
 ###NAVI
 source <(navi widget zsh)
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

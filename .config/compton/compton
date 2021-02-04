@@ -31,10 +31,10 @@ shadow-exclude = [
     "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
     "_GTK_FRAME_EXTENTS@:c"
 ];
-
+shadow-ignore-shaped = false
 
 # Dim
-inactive-dim = 0.25;
+inactive-dim = 0.2;
 
 
 # Fade

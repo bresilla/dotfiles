@@ -1,0 +1,1714 @@
+#!/bin/sh
+# https://github.com/huijunchen9260/shbib/blob/master/shbib
+# Dependency: read, grep, curl, sort, pdfinfo, gs, xclip/xsel/pbcopy,
+
+# Variable explain:
+# $y: the current argument
+# $pos: the current position on argument y
+# $y2: the current position on current screen position (invert color using SGR 33 7)
+# $num: numbers of lines per argument
+# $fin: bottom for printable area, depends on num
+# $token: indicator for actions
+# Dimension is adjustable by $top & $bottom
+
+
+# Adjust tex template to your like
+# Template go between 'EOF' chunck.
+tex_template() {
+
+	while read -r CurLine; do
+	    printf '%s\n' "$CurLine" >> "$note"
+	done <<- EOF
+	    \documentclass[a4paper]{article}
+	    \usepackage[a4paper, margin=1in]{geometry}
+	    % Beamer:
+	    % \documentclass{beamer}
+	    % \usefonttheme[onlymath]{serif}
+	    % \usetheme{metropolis}
+
+	    % bibliogrpahy:
+	    \usepackage[style=authoryear,maxbibnames=9,maxcitenames=2,uniquelist=false, backend=biber]{biblatex}
+	    \addbibresource{$(echo $BIB)}
+
+	    % \openup 1em % double spacing
+	    \usepackage[utf8]{inputenc}
+	    \usepackage[T1]{fontenc}
+	    \usepackage{textcomp}
+	    \usepackage{amsmath, amssymb, amsthm}
+	    \usepackage{import}
+	    \usepackage{pdfpages}
+	    \usepackage{transparent}
+	    \usepackage{xcolor}
+	    \newcommand{\inkfig}[2][1]{%
+	      \def\svgwidth{#1\columnwidth}
+	      \import{./figures/}{#2.pdf_tex}
+	    }
+	    \pdfsuppresswarningpagegroup=1
+	    \title{Note on "$title"}
+	    \author{Author(s): $author}
+	    \date{\today}
+	    \begin{document}
+	    \maketitle
+
+
+
+	    \printbibliography
+	    \end{document}
+	EOF
+
+}
+
+# Stolen from shfm
+# Reference: https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_sequences
+esc() {
+    case $1 in
+        # vt100 (IL is vt102) (DECTCEM is vt520)
+	CUP)     printf '%s[%s;%sH' "$esc_c" "$2" "$3" ;; # cursor to LINES($2), COLUMNS($3)
+        CUU)     printf '%s[%sA'    "$esc_c" "$2"      ;; # cursor up
+        CUD)     printf '%s[%sB'    "$esc_c" "$2"      ;; # cursor down
+        CUR)     printf '%s[%sC'    "$esc_c" "$2"      ;; # cursor right
+	CUL)     printf '%s[%sD'    "$esc_c" "$2"      ;; # cursor left
+	DECAWM)  printf '%s[?7%s'   "$esc_c" "$2"      ;; # (h: set; l: unset) line wrap
+        DECRC)   printf '%s8'       "$esc_c"           ;; # cursor restore
+        DECSC)   printf '%s7'       "$esc_c"           ;; # cursor save
+        DECSTBM) printf '%s[%s;%sr' "$esc_c" "$2" "$3" ;; # scroll region
+	DECTCEM) printf '%s[?25%s'  "$esc_c" "$2"      ;; # (h: show; l: hide) cursor visible
+	ED[0-2]) printf '%s[%sJ'    "$esc_c" "${1#ED}" ;; # clear screen
+        EL[0-2]) printf '%s[%sK'    "$esc_c" "${1#EL}" ;; # clear line
+        IL)      printf '%s[%sL'    "$esc_c" "$2"      ;; # insert line
+        SGR)     printf '%s[%s;%sm' "$esc_c" "$2" "$3" ;; # colors
+
+        # xterm (since 1988, supported widely)
+	screen_alt) printf '%s[?1049%s' "$esc_c" "$2" ;; # (h: to; l: back from) alternate buffer
+    esac
+}
+
+# Check whether all listed dependency is satisfied
+CheckDeps () {
+    for CurDep in "$@"; do
+	command -v "$CurDep" 1> /dev/null 2>&1
+	case $? in
+	    0) ;;
+	    *) printf '%s\n' "ERROR: Dependency $CurDep not met." && Deps="$Deps$CurDep" ;;
+	esac
+    done
+    unset CurDep
+}
+
+# OS detector
+# Controlling BIB_OPENER and clipboard
+get_os() {
+    case $OSTYPE in
+	darwin*) BIB_OPENER=open; clipcopy=pbcopy ;;
+	*) { command -v xclip 1> /dev/null 2>&1 && clipcopy=xclip; } || { command -v xsel 1> /dev/null 2>&1 && clipcopy=xsel; } ;;
+    esac
+}
+
+term_setup() {
+    num=$1; shift
+    bottom=$((LINES - 2))				# space for bottom status_line
+    top=3		  				# space for top status_line
+    fin=$(( bottom - (bottom - (top - 1)) % num ))	# bottom for content printed
+
+    stty=$(stty -g)
+    stty -icanon -echo
+    esc screen_alt h
+    esc DECAWM l
+    esc DECTCEM l
+    esc ED2
+    esc DECSTBM "$top" "$fin"
+}
+
+term_resize() {
+    # false-positive, behavior intentional, globbing is disabled.
+    # shellcheck disable=2046
+    {
+        set -f -- $(stty size)
+        set +f
+    }
+
+    LINES=$1 COLUMNS=$2
+}
+
+term_reset() {
+    esc DECAWM h     >&2
+    esc DECTCEM h    >&2
+    esc ED2          >&2
+    esc DECSTBM      >&2
+    esc screen_alt l >&2
+    stty "$stty"
+}
+
+redraw() {
+    num=$1; shift
+    esc ED2
+
+    status_line 't'
+    list_print "$num" "$@"
+    status_line 'b' "$#"
+    # status_line 'b' "y2:$y2 pos:$pos num:$num top:$top fin:$fin cur:$cur" # DEBUG
+}
+
+list_print() {
+    num=$1; shift
+    esc CUP "$top"
+
+    i=1
+    pos=$(( num * y - num + top ))
+    end=$(( fin + 1 ))
+    mid=$(( end / 4 < 5 ? 1 : end / 4 ))
+
+    case $hist in
+        2) # redraw after cmd run
+	    shift "$((pos >= y2 ? (pos - y2) / num : 0))"
+        ;;
+
+        1) # redraw after go back
+            old_reset "$@"
+	    shift "$((pos >= fin ? (pos - y2) / num : 0))"
+        ;;
+
+        *) # everything else
+	    shift "$((y >= (end - top) / num ? y - (end - top) / num : 0 ))"
+        ;;
+    esac
+
+    for file do
+
+	# same formula as $pos
+	case $(( num * i - num + top )) in
+	    $y2) esc SGR 33 7 ;;
+	esac
+
+	case $(( num * i - num + top - end )) in
+	    -*)
+		arg_format "$file"
+		esc CUD
+		;;
+	esac
+	i=$((i + 1))
+    done
+
+    esc CUP "$(( pos > y2 ? y2 : pos ))"
+}
+
+cur_assign() { # assign $cur > 9
+    shift "$1"
+    cur=$1
+}
+
+arg_print() {
+    offset=$1
+
+    case $offset in
+        "$y") esc SGR 33 7
+    esac
+
+    shift "$offset"
+
+    case $offset in
+        "$y") cur=$1
+    esac
+
+    arg_format "$1"
+}
+
+arg_format() { # token
+    esc EL0
+    case "$token" in
+	's'|'c'|'o'|'n'|'e') printf %s "${1%$nl}" ;;
+	'?'|'i') printf %s "$1" ;;
+        ''|'p'|'b'|'B'|'R'|'r') printf %s "${1##*/}" ;;
+	'q')
+	    case "$token_q" in
+	        ''|'p'|'sc'|'sg'|'so'|'e') printf %s "$1" ;;
+		'b'|'B'|'Rc'|'Re') printf %s "${1%$nl}" ;;
+	    esac
+	    ;;
+    esac
+    esc SGR
+    printf '\r'
+}
+
+status_line() {
+    caption=$1; shift
+    esc DECSC
+    case "$caption" in
+	't') esc CUP 1 ;;
+	'b') esc CUP "$LINES" ;;
+    esac
+
+    case $USER in
+        root) esc SGR 31 7 ;;
+           *)
+	       case "$caption" in
+	           't') esc SGR 36 7 ;;
+		   'b') esc SGR 34 7 ;;
+	       esac
+	       ;;
+    esac
+
+    case "$caption" in
+        't')
+	    printf '%*s\r' "$COLUMNS"
+	    case $msg in
+	        '') printf %s "Reference" ;;
+		*) printf %s "$msg" ;;
+	    esac
+	    ;;
+	'b')
+	    printf '%*s\r%s ' "$COLUMNS" "" "($y/$1)"
+	    case $ltype in
+		'') printf %s "$BIB_PDF_PATH" ;;
+		*) printf %s "$ltype" ;;
+	    esac
+    esac
+    esc SGR
+    esc DECRC
+}
+
+term_scroll_up() {
+    num=$1; shift
+
+    case $y in
+        -*|0|1) return ;;
+    esac
+
+    y=$((y - 1)) pos=$(( num * y - num + top ))
+
+    arg_print "$((y + 1))" "$@"
+
+    case "$y2" in
+	$top) [ $num -gt 1 ] && esc CUU $((num - 1)); esc IL "$num" ;;
+	*) esc CUU "$((num * 2 - 1))"; y2=$(( y2 > top ? y2 - num : top )) ;;
+    esac
+    arg_print "$y" "$@"
+
+    # Restore cursor to match y2
+    [ $num -gt 1 ] && esc CUU "$((num - 1))"
+    status_line 't'
+    status_line 'b' "$#"
+    # status_line 'b' "y2:$y2 pos:$pos num:$num top:$top fin:$fin" # DEBUG
+}
+
+
+term_scroll_down() {
+    num=$1; shift
+
+    case $((y - $#)) in
+	[0-9]*) return
+    esac
+
+    y=$((y + 1))  pos=$(( num * y - num + top ))
+    y2=$(( y2 + num < fin - (num - 1) ? y2 + num : fin - (num - 1) ))
+
+
+    arg_print "$((y - 1))" "$@"
+    printf '\n'
+    arg_print "$y" "$@"
+
+    [ $num -gt 1 ] && esc CUU "$((num - 1))"
+
+    status_line 't'
+    status_line 'b' "$#"
+    # status_line 'b' "y2:$y2 pos:$pos num:$num top:$top fin:$fin" # DEBUG
+}
+
+term_page_up() {
+    num=$1
+    fraction=$2; shift 2
+    move=$(((end - top) / (fraction * num) > 2 ? (end - top) / (fraction * num) : 2))
+
+    case $y in
+	-*|0|1) return ;;
+    esac
+    case $((y - 1 - move)) in
+	-*|0) move=$((y - 1)) ;;
+    esac
+    y=$((y - move)) pos=$(( num * y - num + top ))
+
+    for i in $(seq $((y + 1)) $((y + move))); do
+	arg_print "$((y + move - i + y + 1))" "$@"
+	case "$y2" in
+	    $top) [ $num -gt 1 ] && esc CUU $((num - 1)); esc IL "$num" ;;
+	    *) esc CUU "$((num * 2 - 1))"; y2=$(( y2 > top ? y2 - num : top )) ;;
+	esac
+    done
+    arg_print "$y" "$@"
+
+    # Restore cursor to match y2
+    [ $num -gt 1 ] && esc CUU "$((num - 1))"
+    status_line 't'
+    status_line 'b' "$#"
+    # status_line 'b' "y2:$y2 pos:$pos num:$num top:$top fin:$fin" # DEBUG
+}
+
+term_page_down() {
+    num=$1
+    fraction=$2; shift 2
+    move=$(((end - top) / (fraction * num) > 2 ? (end - top) / (fraction * num) : 2))
+    # move=$(((end - top) / (4 * num) > 2 ? (end - top) / (4 * num) : 2))
+    case $(( y - $# + move )) in
+	[1-9]*) move=$(($# - y)) ;;
+    esac
+    y=$(( y + move ))
+    pos=$(( num * y - num + top ))
+    y2=$(( y2 + num * move < fin - (num - 1) ? y2 + num * move : fin - (num - 1) ))
+
+
+    for i in $(seq $((y - move)) $((y - 1))); do
+	arg_print "$i" "$@"
+	printf '\n'
+    done
+    arg_print "$y" "$@"
+
+    [ $num -gt 1 ] && esc CUU "$((num - 1))"
+
+    status_line 't'
+    status_line 'b' "$#"
+    # status_line 'b' "y2:$y2 pos:$pos num:$num top:$top fin:$fin" # DEBUG
+}
+
+prompt() {
+    esc DECSC
+    esc CUP "$LINES"
+    printf %s "$1"
+    esc DECTCEM h
+    esc EL0
+
+    case $2 in
+        r)
+	    stty -cread icanon echo 1>/dev/null 2>&1
+	    read -r ans ||:
+	    stty -icanon -echo
+	    ;;
+    esac
+    esc DECRC
+    esc DECTCEM l
+    status_line 'b' "($y/$#) $PWD"
+}
+
+input() {
+    esc DECSC
+    esc DECTCEM h
+    esc ED2
+    esc CUP "$top"
+    msg=$1 ltype="Insert mode"
+    printf %s "$2"
+    place=$top
+    esc CUP "$place" "15"
+    status_line 't'
+    status_line 'b' "$#"
+
+    stty -cread icanon echo 1>/dev/null 2>&1
+    read -r label || return 1
+    place=$((place+1))
+    esc CUP "$place" "15"
+    read -r doi || return 1
+    place=$((place+1))
+    esc CUP "$place" "15"
+    read -r url || return 1
+    place=$((place+1))
+    esc CUP "$place" "15"
+    read -r year || return 1
+    place=$((place+1))
+    esc CUP "$place" "15"
+    read -r author || return 1
+    place=$((place+1))
+    esc CUP "$place" "15"
+    read -r title || return 1
+    place=$((place+1))
+    esc CUP "$place" "15"
+    read -r journal || return 1
+    stty -icanon -echo
+
+    esc DECRC
+    esc DECTCEM l
+}
+
+cmd_run() {
+    stty "$stty"
+    esc DECTCEM h
+    esc DECSTBM
+    esc ED2
+    esc DECAWM h
+    "$@" ||:
+    esc DECSTBM "$top" "$fin"
+    esc DECTCEM l
+    esc DECAWM l
+    stty -icanon -echo
+    hist=2
+}
+
+old_reset() {
+    hist=0 j=1
+    y=$old_y y2=$old_y2 pos=$old_pos cur=$old_cur
+}
+
+json_pretty_print() {
+    # only backward looking
+    unset tmplist
+    IFS=','
+    set -- $1
+    unset IFS
+    for line do
+	# Define level of object
+	while c=${line%%"${line##?}"}; do # %% is much efficient than %
+	    case $c in
+		'')
+		    case $quote in
+			0)
+			    sv=$((lv * 2))
+			    space="$(printf %${sv}s)" # space per lv*2
+			    safe="$safe,${nl}$space" ;;
+			10) safe="$safe," ;;
+		    esac
+		    break
+		    ;;
+		'{'|'[')
+		    lv=$((lv + 1)); sv=$((lv * 2))
+		    case $pre_c in
+			'{'|'[')
+			    space="$(printf %${sv}s)" # space per lv*2
+			    safe="$safe${nl}$space"
+			    # safe="$safe${nl}$space$c"  # for formal formatting
+			    ;;
+			*)
+			    # safe=$safe$c  # for formal formatting
+			    ;;
+		    esac
+		    ;;
+		'}'|']')
+		    lv=$((lv - 1)); sv=$((lv * 2))
+		    case $pre_c in
+			'{'|'[')
+			    # safe="$safe$c"  # for formal formatting
+			    ;;
+			'}'|']')
+			    space="$(printf %${sv}s)" # space per lv*2
+			    safe="$safe${nl}$space"
+			    # safe="$safe${nl}$space$c"  # for formal formatting
+			    ;;
+			*)
+			    space="$(printf %${sv}s)" # space per lv*2
+			    safe="$safe${nl}$space"
+			    # safe="$safe${nl}$space$c"  # for formal formatting
+			    ;;
+		    esac
+		    ;;
+		'"')
+		    quote=$(( quote > 5 ? 0 : 10 )) # with-in quote indicator
+		    case $pre_c in
+			'{'|'[')
+			    space="$(printf %${sv}s)" # space per lv*2
+			    safe="$safe${nl}$space"
+			    # safe="$safe${nl}$space$c"  # for formal formatting
+			    ;;
+			# *)
+			#     safe=$safe$c
+			#     ;;
+		    esac
+		    ;;
+		*)
+		    case $pre_c in
+			'{'|'[') safe="$safe${nl}$space$c" ;;
+			*) safe=$safe$c ;;
+		    esac
+		    ;;
+	    esac
+	    line=${line##?}
+	    pre_c=$c
+	done
+	tmplist="$tmplist$safe"
+	unset safe
+    done
+    unset safe lv sv quote pre_c
+}
+
+json_match() {
+    unset tmp2list
+    IFS="$nl"
+    set -- $1
+    unset IFS
+    for line do
+	case $preline in
+	    '        indexed'*) tmp2list="$tmp2list|" ;;
+	    '        title'*) tmp2list="$tmp2list${nl}1Title: ${line##${line%%[![:space:]]*}}";;
+	    '        container-title'*) tmp2list="$tmp2list${nl}4Journal: ${line##${line%%[![:space:]]*}}";;
+	esac
+	case $line in
+	    '            given'*)
+		tmp="${line##${line%%[![:space:]]*}}"
+		tmp="${tmp##*:}"
+		given="${tmp%%,*}"
+		;;
+	    '            family'*)
+		tmp="${line##${line%%[![:space:]]*}}"
+		tmp="${tmp##*:}"
+		tmp="${tmp%%,*}"
+		tmp2list="$tmp2list${nl}5Author(s): $given $tmp"
+		;;
+	    '        DOI'*)
+		tmp="${line##${line%%[![:space:]]*}}"
+		tmp="${tmp##*:}"
+		tmp="${tmp%%,*}"
+		tmp2list="$tmp2list${nl}6DOI: $tmp";;
+	    '        type'*)
+		tmp="${line##${line%%[![:space:]]*}}"
+		tmp="${tmp##*:}"
+		tmp="${tmp%%,*}"
+		tmp2list="$tmp2list${nl}2Category: $tmp" ;;
+	esac
+	case $pre3line$pre2line in
+	    '        published-print'*'          date-parts'*)
+		tmp="${line##${line%%[![:space:]]*}}"
+		tmp="${tmp##*:}"
+		tmp="${tmp%%,*}"
+		tmp2list="$tmp2list${nl}3Date: $tmp";;
+	esac
+	pre3line=$pre2line
+	pre2line=$preline
+	preline=$line
+    done
+}
+
+ref_search() {
+    to_clip "$ans"
+
+    tmplist= list=
+    str=$ans url=
+
+    # make space to +
+    set -- $str
+    IFS=+
+    url="$*"
+    unset IFS
+
+    case "$url" in
+        '') return 2 ;;
+	*)
+	    ltype="\"$ans\" copied to clipboard by $clipcopy; Searching..."
+	    status_line 'b' "$#"
+	    json=$(curl -s "https://api.crossref.org/works?query=$url")
+	    case "$json" in
+		*'Service Unavailable'*) return 1 ;;
+		*)
+
+		    json_pretty_print "$json" "$@"
+		    json_match "$tmplist" "$@"
+
+		    # Sort each field based on numbering
+		    IFS='|'
+		    set -- $tmp2list
+		    unset IFS
+		    for line do
+			tmp=${line##*1Title:}
+			case $(( ${#line} - ${#tmp} )) in
+			    0) shift ;;
+			    *) tmp3list="$tmp3list$(printf '%s' "$line" | sort -n)" ;;
+			esac
+		    done
+
+		    # Combining authors and Add '|' back to Title
+		    IFS="$nl"
+		    set -- $tmp3list
+		    unset IFS
+		    for line do
+			case $line in
+			    *'Author(s)'*)
+				case $preline in
+				    *'Author(s)'*) tmp4list="$tmp4list and ${line##*Author(s): }" ;;
+				    *) tmp4list="$tmp4list${nl}${tab}${line#?}" ;;
+				esac
+				;;
+			    *'Title'*) tmp4list="$tmp4list${nl}|${line#?}" ;;
+			    *) tmp4list="$tmp4list${nl}${tab}${line#?}" ;;
+			esac
+			preline=$line
+		    done
+
+		    # Add \n if some entry does not have 6 lines
+		    IFS='|'
+		    set -- $tmp4list; shift
+		    unset IFS
+
+		    # Each item must have totally 6 \n
+		    for line do
+			case $line in
+			    *${nl}*${nl}*${nl}*${nl}*${nl}*${nl}) list="$list|$line" ;;
+			    *${nl}*${nl}*${nl}*${nl}*${nl}) list="$list|$line${nl}" ;;
+			    *${nl}*${nl}*${nl}*${nl}) list="$list|$line${nl}${nl}" ;;
+			    *${nl}*${nl}*${nl}) list="$list|$line${nl}${nl}${nl}" ;;
+			    *${nl}*${nl}) list="$list|$line${nl}${nl}${nl}${nl}" ;;
+			    *${nl}) list="$list|$line${nl}${nl}${nl}${nl}${nl}" ;;
+			    *${nl}*${nl}*${nl}*${nl}*${nl}*) list="$list|$line${nl}" ;; # match last item
+			    *${nl}*${nl}*${nl}*${nl}*) list="$list|$line${nl}${nl}" ;; # match last item
+			    *${nl}*${nl}*${nl}*) list="$list|$line${nl}${nl}${nl}" ;; # match last item
+			    *${nl}*${nl}*) list="$list|$line${nl}${nl}${nl}${nl}" ;; # match last item
+			    *${nl}*) list="$list|$line${nl}${nl}${nl}${nl}${nl}" ;; # match last item
+			esac
+		    done
+		    list=${list#*|}
+		    unset tmplist tmp2list tmp3list tmp4list
+		    ;;
+	    esac
+    esac
+}
+
+ref_gen() {
+    tmplist= list=
+    IFS="$nl"
+    set -- $(cat -u $1)
+    unset IFS
+    case $# in
+        0) list='no content' ;;
+	*)
+	    for line do
+		case $line in
+		    @*)
+			tmp="${line##*\{}"
+			tmplist="$tmplist${nl}|BibTeX: ${tmp%,}"
+			;;
+		    *[[:space:]]title*=*)
+			tmp="${line#*\{}"
+			tmplist="$tmplist${nl}${tab}Title: ${tmp%\}*}"
+			;;
+		    *[[:space:]]author*=*)
+			tmp="${line#*\{}"
+			tmplist="$tmplist${nl}${tab}Author(s): ${tmp%\}*}"
+			;;
+		    *[[:space:]]year*)
+			tmp="${line#*=}"
+			tmp="${tmp#\{}"
+			tmp=${tmp%,}
+			tmp=${tmp%\}}
+			tmplist="$tmplist${nl}${tab}Year: $tmp"
+			;;
+		    *[[:space:]]journal*=*)
+			tmp="${line#*\{}"
+			tmplist="$tmplist${nl}${tab}Journal: ${tmp%\}*}"
+			;;
+		    *[[:space:]]doi*=*)
+			tmp="${line#*\{}"
+			tmplist="$tmplist${nl}${tab}Doi: ${tmp%\}*}"
+		esac
+	    done
+
+	    IFS='|'
+	    set -- $tmplist; shift
+	    unset IFS
+
+	    for line do
+		case $line in
+		    *${nl}*${nl}*${nl}*${nl}*${nl}*${nl}) list="$list|$line" ;;
+		    *${nl}*${nl}*${nl}*${nl}*${nl}) list="$list|$line${nl}" ;;
+		    *${nl}*${nl}*${nl}*${nl}) list="$list|$line${nl}${nl}" ;;
+		    *${nl}*${nl}*${nl}) list="$list|$line${nl}${nl}${nl}" ;;
+		    *${nl}*${nl}) list="$list|$line${nl}${nl}${nl}${nl}" ;;
+		    *${nl}) list="$list|$line${nl}${nl}${nl}${nl}${nl}" ;;
+		    *${nl}*${nl}*${nl}*${nl}*${nl}*) list="$list|$line${nl}" ;; # match last item
+		    *${nl}*${nl}*${nl}*${nl}*) list="$list|$line${nl}${nl}" ;; # match last item
+		    *${nl}*${nl}*${nl}*) list="$list|$line${nl}${nl}${nl}" ;; # match last item
+		    *${nl}*${nl}*) list="$list|$line${nl}${nl}${nl}${nl}" ;; # match last item
+		    *${nl}*) list="$list|$line${nl}${nl}${nl}${nl}${nl}" ;; # match last item
+		esac
+	    done
+	    list=${list#*|}
+		    ;;
+    esac
+}
+
+entry_gen() {
+    IFS="$nl"
+    set -- $cur
+    unset IFS
+    for line do
+	case $line in
+	    BibTeX*) label="${line#*: }" ;;
+	    *[[:space:]]Title*) title="${line#*: }" ;;
+	    *[[:space:]]Author*) author="${line#*: }" ;;
+	    *[[:space:]]Year*) year="${line#*: }" ;;
+	    *[[:space:]]Journal*) journal="${line#*: }" ;;
+	    *[[:space:]]Doi*) doi="${line#*: }" ;;
+	esac
+    done
+}
+
+meta_to_file() {
+    file="$1"; shift
+
+    gs -o "/tmp/$label.$extension" \
+       -sDEVICE=pdfwrite \
+       -f "$file"   \
+       -c "[ /Title ($title)
+	     /Author ($author)
+	     /Subject ($journal doi:$doi)
+	   /DOCINFO pdfmark" 1>/dev/null 2>&1
+
+    rm "$file"
+    mv "/tmp/$label.$extension" "$BIB_PDF_PATH/$label.$extension"
+}
+
+restore() {
+    unset faillist
+    num=1 y=1 y2=$top cur=$1 ltype= msg= token=
+    term_setup $num
+    redraw $num "$@"
+}
+
+yesno() {
+    msg=$1 item=$2 token_q=$3 shift 3
+
+    term_setup 1
+    num=1 y=1 y2=$top cur=$1 ltype= token=q
+    redraw $num "$@"
+
+    esc DECSC
+    esc CUP $((top - 1 + 5))
+    printf %s "$item"
+    esc DECRC
+}
+
+search() {
+    IFS="$2" str="$3"
+    set -- $1
+    for line do
+	case $str in
+	    *[[:upper:]]*) # contain uppercase, do case-sensitive filter
+		case $line in
+		    *$str*) filter="$filter$IFS$line" ;;
+		esac
+		;;
+	    *) # o/w, do case-insensitive filter
+		lower_line=$(printf '%s' "$line" | tr '[:upper:]' '[:lower:]')
+		lower_str=$(printf '%s' "$str" | tr '[:upper:]' '[:lower:]')
+		case $lower_line in
+		    *$lower_str*) filter="$filter$IFS$line" ;;
+		esac
+		;;
+	esac
+    done
+    filt_out=${filter#*$IFS}
+    unset IFS filter
+}
+
+to_clip() {
+    case "$clipcopy" in # copy $ans to clipboard
+	"pbcopy") printf '%s' "$1" | pbcopy ;;
+	"xclip") printf '%s' "$1" | xclip -selection clipboard ;;
+	"xsel") printf '%s' "$1" | xsel --clipboard ;;
+    esac
+}
+
+waitclip() {
+    unset bibtex clipcmd
+    case "$clipcopy" in
+	"pbcopy") clipcmd='pbpaste' ;;
+	"xclip") clipcmd='xclip -o -selection clipboard'; printf '%s' "" | xclip -selection clipboard ;;
+	"xsel") clipcmd='xsel -o --clipboard'; xsel -bc ;;
+    esac
+    count=1 countlimit=3600
+
+    # Allow shell to read keypress and break the loop
+    stty -icanon time 0 min 0
+
+    while [ -z "$bibtex" ] && [ $count -le $countlimit ] && [ "$key" != h ]; do
+	read key
+	set -- "Copy BibTeX within $countlimit second; Already $count second past"
+	num=1 y=1 y2=$top cur=$1 ltype="Copy BibTeX!" msg="Google Scholar Search"
+	redraw 1 "$@"
+	bibtex="$($clipcmd)"
+	sleep 1; count=$((count + 1))
+    done
+
+    # restore stty sanity
+    stty sane
+    stty -icanon -echo
+}
+
+key() {
+    while key=$(dd ibs=1 count=1 2>/dev/null); do
+	case $key${esc:=0} in
+	    "$ctrl_u"?|~5)
+		term_page_up $num 4 "$@"
+	    ;;
+
+	    "$ctrl_f"?|~6)
+		term_page_down $num 4 "$@"
+	    ;;
+
+	    k?|A2)
+		term_scroll_up $num "$@"
+	    ;;
+
+            j?|B2)
+		term_scroll_down $num "$@"
+	    ;;
+
+            g?|H2)
+                case $y in
+                    1) continue ;;
+                esac
+
+                y=1 y2=$top cur=$1
+		redraw "$num" "$@"
+            ;;
+
+            G?|F2)
+		y=$# pos=$(( num * y - num + top ))
+		y2=$(( pos < fin - (num - 1) ? pos : fin - (num - 1) ))
+		cur_assign "$y" "$@"
+		redraw "$num" "$@"
+            ;;
+
+            l?|C2|"$esc") # ARROW RIGHT # token
+
+		case "$token" in
+		    'p'|'s'|'R'|'r'|'i') old_y=$y old_y2=$y2 old_pos=$pos old_cur=$cur ;;
+		    'q')
+			case "$token_q" in
+			    'p'|'Re'|'Rc') old_y=$y old_y2=$y2 old_pos=$pos old_cur=$cur ;;
+			esac
+			;;
+		esac
+
+		case "$token" in
+		    'q')
+			case "$cur" in
+			    "Yes")
+				case "$token_q" in
+				    'e')
+					cp '/tmp/bibfile.tmp' "$BIB"
+					set -- "$BIB updated; press h to leave"
+					num=1 y=1 y2=$top cur=$1 ltype= msg="Result" token=?
+					redraw $num "$@"
+					;;
+				    'sc')
+					grep -q "${bibtex%%$nl*}" "$BIB"
+					case $? in
+					    0)
+						set -- 'Reference already added; press h to leave'
+						num=1 y=1 y2=$top cur=$1 ltype= msg="Result" token=?
+						redraw $num "$@"
+						;;
+					    *)
+						case "${bibtex%%$nl*}" in
+						    @[[:alpha:]]*[[:alnum:]_],)
+							printf '%s\n\n' "$bibtex" >> "$BIB"
+							set -- 'Yes' \
+							       'No'
+							yesno "Reference added to $BIB; Download PDF file?" "" 'so' "$@"
+							;;
+						    *)
+							set -- 'Not copying BibTeX; press h to leave'
+							num=1 y=1 y2=$top cur=$1 ltype= msg="Result" token=?
+							redraw $num "$@"
+						esac
+						;;
+					esac
+					;;
+				    'so')
+					IFS="$nl"
+					set -- $bibtex
+					for line do
+					    case $line in
+						'@'[[:alpha:]]*{[[:alnum:]_]*,) tmp="${line#*\{}"; label="${tmp%,}" ;;
+						*[[:space:]]url*=*) tmp="${line#*\{}"; url="${tmp%\}*}" ;;
+					    esac
+					done
+					"${BIB_OPENER:=${BROWSER:=xdg-open}}" "$BIB_UNI_KEY$url" 1>/dev/null &
+					set -- "Open $label; press h to leave"
+					num=1 y=1 y2=$top cur=$1 ltype= msg="Result" token=?
+					redraw $num "$@"
+					;;
+				    'sg')
+					"${BIB_OPENER:=${BROWSER:=xdg-open}}" "${BIB_UNI_KEY}https://scholar.google.com/scholar?&q=$ans" 1>/dev/null &
+					waitclip "$@"
+					set -- 'Yes' \
+					       'No'
+					case $bibtex in
+					    '')
+						IFS='|'
+						set -- $list \
+						    "$gscholar"
+						unset IFS
+						num=6 y=1 y2=$top cur=$1 ltype="search: $ans" msg="search by text" token=s
+						unset gscholar_indicator
+						term_setup $num
+						redraw $num "$@"
+						;;
+					    *) yesno "Copy bibtex to $BIB?" "$bibtex" 'sc' "$@" ;;
+					esac
+					;;
+				    'Re')
+					rm "$BIB_LIB_PATH/$name.bib"
+					set -- "Delete $name.bib; press h to leave"
+					num=1 y=1 y2=$top cur=$1 ltype= msg="Result" token=?
+					redraw $num "$@"
+					;;
+				esac
+				;;
+			    "No")
+				set -- $BIB_PDF_PATH/*.*
+				restore "$@"
+				;;
+			    *)
+				case "$token_q" in
+				    'p')
+					ans=${cur##*:          }
+					ans=${ans##*doi.org/}
+					ans="${ans%%$nl*}"
+
+					case "$ans" in
+					    10\.[0-9][0-9][0-9][0-9]\/[[:alnum:].]*) # match doi
+						bibtex=$(curl -s "http://api.crossref.org/works/$ans/transform/application/x-bibtex")
+						set -- 'Yes' \
+						       'No'
+						yesno "Copy bibtex to $BIB?" "$bibtex" 'sc' "$@"
+						;;
+					    *)
+						gscholar="There is no matching...\\(ㄒoㄒ)/${nl}${tab}Search in Google Scholar!${nl}${nl}${nl}${nl}${nl}"
+						ref_search "$@"
+						case $? in
+						    1)
+							set -- 'Yes' \
+  							       'No'
+							yesno "Fail to connect Crossref. Search in Google scholar?" "" 'sg' "$@"
+							;;
+						    0)
+							IFS='|'
+							set -- $list \
+							       $gscholar
+							unset IFS
+							num=6 y=1 y2=$top cur=$1 ltype="Search: $ans" msg="Search by text" token=s
+							;;
+						esac
+						p_indicator=1
+						term_setup $num
+						redraw $num "$@"
+						;;
+					esac
+					;;
+				    'b')
+					entry_gen "$@"
+
+					extension=${filename##*.}
+
+					meta_to_file "$filename" "$@"
+
+					case $? in
+					    0) set -- "Successfully update database; press h to leave" ;;
+					    *) set -- "Fail to update database; press h to leave" ;;
+					esac
+
+					num=1 y=1 y2=$top cur=$1 ltype= msg="Result" token=?
+					redraw $num "$@"
+					;;
+				    'B')
+					entry_gen "$@"
+
+					extension=${filename##*.}
+
+					meta_to_file "$filename" "$@"
+
+					case $? in
+					    0) msg="Successfully update database!" ;;
+					    *) msg="Fail to update database ㄒoㄒ" ;;
+					esac
+
+					faillist="${faillist#*"$filename"}${nl}${faillist%%"$filename"*}"
+					IFS="$nl"
+					set -- $faillist
+					unset IFS
+					num=1 y=1 y2=$top cur=$1 ltype="Building database, Automode!" token=B
+					case $# in
+					    0) set -- 'All PDF files in database is updated!'; token=? ;;
+					esac
+					redraw $num "$@"
+					;;
+				    'Rc')
+					bibkey=${cur%%$nl*}
+					bibkey=${bibkey##*BibTeX: }
+					search "$(cat -u "$BIB_LIB_PATH/$name.bib")" '@' "$bibkey"
+					case $filt_out in
+					    '')
+						search "$(cat -u $BIB)" '@' "$bibkey"
+						printf '\n%s\n' "@$filt_out" >> "$BIB_LIB_PATH/$name.bib"
+						msg_append="Add $bibkey;"
+						;;
+					    *)
+						msg_append="$bibkey already added;"
+						;;
+					esac
+
+					ref_gen "$BIB" "$@"
+
+					IFS='|'
+					set -- $list
+					unset IFS
+					num=6 y=1 y2=$top cur=$1 ltype="Create new sublibrary: $name.bib" msg="$msg_append Choose BibTeX entry to add: " token=q token_q=Rc
+					term_setup $num
+					redraw "$num" "$@"
+					;;
+				    'Re')
+					case $cur in
+					    $ADD)
+						ref_gen "$BIB" "$@"
+
+						IFS='|'
+						set -- $list
+						unset IFS
+						num=6 y=1 y2=$top cur=$1 ltype="Edit existing sublibrary: $name.bib" msg="Choose BibTeX entry to add: " token=q token_q=Rc
+						term_setup $num
+						redraw "$num" "$@"
+						;;
+					    $RM)
+						set -- 'Yes' \
+						       'No'
+						yesno "Remove sublibrary: " "Really delete sublibrary $name.bib?" "Re" "$@"
+						;;
+					    *)
+						case $cur in
+						    $DEL) ;;
+						    *)
+							bibkey=${cur%%$nl*}
+							bibkey=${bibkey##*BibTeX: }
+							sublib=$(cat -u "$BIB_LIB_PATH/$name.bib")
+							search "$sublib" '@' "$bibkey"
+							case "$filt_out" in
+							    '')
+								msg_append="Cannot find $bibkey; "
+								;;
+							    *)
+								printf '%s' "${sublib%%@$filt_out*}${sublib##*@$filt_out}" > "$BIB_LIB_PATH/$name.bib"
+								msg_append="$bibkey deleted; "
+								;;
+							esac
+							;;
+						esac
+						ref_gen "$BIB_LIB_PATH/$name.bib" "$@"
+
+						IFS='|'
+						set -- $list
+						unset IFS
+						num=6 y=1 y2=$top cur=$1 ltype="Edit existing sublibrary: $name.bib" msg="$msg_append Choose BibTeX entry to delete: " token=q token_q=Re
+						term_setup $num
+						redraw "$num" "$@"
+						;;
+					esac
+					;;
+				esac
+				;;
+			esac
+			;;
+		    's')
+			case $cur in
+			    "$gscholar")
+				"${BIB_OPENER:=${BROWSER:=xdg-open}}" "${BIB_UNI_KEY}https://scholar.google.com/scholar?&q=$ans" 1>/dev/null &
+				gscholar_indicator=1
+				waitclip "$@"
+				case $bibtex in
+				    '')
+					IFS='|'
+					set -- $list \
+					    "$gscholar"
+					unset IFS
+					num=6 y=1 y2=$top cur=$1 ltype="search: $ans" msg="search by text" token=s
+					unset gscholar_indicator
+					term_setup $num
+					redraw $num "$@"
+					;;
+				    *)
+					set -- 'Yes' \
+					       'No'
+					yesno "Copy bibtex to $BIB?" "$bibtex" 'sc' "$@"
+					;;
+				esac
+				;;
+			    *)
+				doi=${cur##*: }
+				doi=${doi##*doi.org/}
+				doi="${doi%%$nl*}"
+				IFS='\'
+				set -- $doi
+				IFS=
+				safedoi=$*
+				unset IFS
+
+				ltype="Searching for BibTeX..."
+				status_line 'b' "$#"
+				bibtex=$(curl -s "http://api.crossref.org/works/$safedoi/transform/application/x-bibtex")
+				unset safedoi
+
+				set -- 'Yes' \
+				       'No'
+				yesno "Copy bibtex to $BIB?" "$bibtex" 'sc' "$@"
+				;;
+			esac
+			;;
+		    'c')
+			bibkey=${cur%%$nl*}
+			bibkey=${bibkey##*BibTeX: }
+			to_clip "$bibkey"
+			set -- "$bibkey has copied to clipboard using $clipcopy; press h to leave"
+			num=1 y=1 y2=$top cur=$1 ltype= msg="Result" token=
+			redraw $num "$@"
+			;;
+		    'o')
+			bibkey=${cur%%$nl*}
+			bibkey=${bibkey##*BibTeX: }
+			item=$(printf "$BIB_PDF_PATH/$bibkey"*) # only choose first item matched
+			extension=${item##*.}
+			cmd_run "${BIB_OPENER:="${READER:=xdg-open}"}" "$BIB_PDF_PATH/$bibkey.$extension"
+			redraw "$num" "$@"
+			;;
+		    'e')
+			bibkey=${cur%%$nl*}
+			bibkey=${bibkey##*BibTeX: }
+			bibfile="$(cat -u $BIB)"
+			search "$bibfile" '@' "$bibkey"
+			[ -n "$filt_out" ] &&
+			    {
+				tmpfile="/tmp/shbib.tmp"
+				printf '%s' "@$filt_out" > "$tmpfile"
+				term_setup 1
+				cmd_run "${BIB_OPENER:="${EDITOR:=vi}"}" "$tmpfile"
+				bibtex="$(cat -u "$tmpfile")"
+				printf '%s%s\n\n%s\n\n' "${bibfile%%@$filt_out*}" "$bibtex" "${bibfile##*@$filt_out}" > "/tmp/bibfile.tmp"
+				comparison=$(diff -u "$BIB" "/tmp/bibfile.tmp")
+				set -- 'Yes' \
+				       'No'
+				yesno "Is the diff between original file and edited file correct?" "$comparison" 'e' "$@"
+			    }
+			;;
+		    'p')
+			read -r type < "$cur"
+			file=${cur##*/}
+			basename=${file%%.*}
+			case "$type" in
+			    '%PDF'*)
+				info=$(pdfinfo $cur)
+				tmpdoi=${info##*doi:}
+				doi=${tmpdoi%%${nl}*}
+				tmpDOI=${info##*DOI:}
+				DOI=${tmpDOI%%${nl}*}
+				;;
+			    *) info='PDF file is broken, or not choosing PDF file; press h to leave' ;;
+			esac
+			IFS="$nl"
+			set -- $info \
+			       $doi \
+			       $DOI \
+			       $basename
+			unset IFS
+			num=1 y=1 y2=$top cur=$1 ltype= msg='Search by which information?' token=q token_q=p
+			redraw $num "$@"
+			;;
+		    'b'|'B')
+			filename=$cur
+			unset cur
+			ref_gen "$BIB" "$@"
+
+			IFS='|'
+			set -- $list
+			unset IFS
+			case $token in
+			    'b') token_q=b ;;
+			    'B') token_q=B ;;
+			esac
+			num=6 y=1 y2=$top cur=$1 ltype="Build database" msg="Choose which BibTeX entry?" token=q
+			case $# in
+			    0)
+				num=1
+				set -- 'All PDF files in database is updated!'
+				;;
+			esac
+			term_setup $num
+			redraw "$num" "$@"
+			;;
+		    'R')
+			case $cur in
+			    $addlib)
+				prompt "Name for new sublibrary: " r
+
+				set -- $ans
+				IFS='_'
+				name="$*"
+				unset IFS
+
+				[ -e "$BIB_LIB_PATH/$name.bib" ] || touch "$BIB_LIB_PATH/$name.bib"
+
+				ref_gen "$BIB" "$@"
+
+				IFS='|'
+				set -- $list
+				unset IFS
+				num=6 y=1 y2=$top cur=$1 ltype="Create new sublibrary $name.bib" msg="Choose BibTeX entry to add:" token=q token_q=Rc
+				term_setup $num
+				redraw "$num" "$@"
+				;;
+			    *)
+				name="${cur##*/}"
+				name="${name%%.*}"
+				ADD="Add new BibTeX entry to $name.bib"
+				DEL="Delete existing BibTeX entry in $name.bib"
+				RM="Remove sublibrary $name.bib"
+				set -- "$ADD" \
+				       "$DEL" \
+				       "$RM"
+				num=1 y=1 y2=$top cur=$1 ltype="Edit existing sublibrary $name.bib" msg="Add or Delete: " token=q token_q=Re
+				term_setup $num
+				redraw "$num" "$@"
+				;;
+			esac
+			;;
+		    'r')
+
+			name="${cur##*/}"
+			name="${name%%.*}"
+
+			ref_gen "$BIB_LIB_PATH/$name.bib" "$@"
+
+			r_indicator=1
+
+			IFS='|'
+			set -- $list
+			unset IFS
+			num=6 y=1 y2=$top cur=$1 ltype="Open and view sublibrary: $name.bib" msg="Choose BibTeX entry to view: " token=o
+			term_setup $num
+			redraw "$num" "$@"
+
+			;;
+		    'n')
+			ref=${cur##*BibTeX: }
+			ref=${ref%%$nl*}
+			note="$BIB_NOTE_PATH/$ref/$ref.tex"
+			[ -w "$note" ] ||
+			    {
+				title=${cur##*Title: }
+				title=${title%%$nl*}
+				author=${cur##*Author(s): }
+				author=${author%%$nl*}
+				[ -d "$BIB_NOTE_PATH/$ref" ] || mkdir -p "$BIB_NOTE_PATH/$ref/"
+				tex_template "$@"
+			    }
+			term_setup 1
+			cmd_run "${BIB_OPENER:="${EDITOR:=vi}"}" "$note"
+			redraw 1 "$@"
+			num=6
+			term_setup $num
+			redraw "$num" "$@"
+			;;
+		    'i')
+			category="$cur"
+			bib_form="BibTeX: ${nl}Doi: ${nl}URL: ${nl}Year: ${nl}Author(s): ${nl}Title: ${nl}Journal:"
+			input "Manually generate bibtex; press enter to insert next field; press Ctrl-C to leave" "$bib_form"
+
+			case $? in
+			    1)
+				unset category label doi url year author title journal
+				IFS="$nl"
+				set -- $list
+				unset IFS
+				term_setup $num
+				redraw $num "$@"
+				;;
+			    0)
+				bibtex="@$category{$label,${nl}${tab}doi = {$doi},${nl}${tab}url = {$url},${nl}${tab}year = $year,${nl}${tab}author = {$author},${nl}${tab}title = {$title},${nl}${tab}journal = {$journal}${nl}}"
+				set -- 'Yes' \
+				       'No'
+				yesno "Input bibtex to $BIB?" "$bibtex" 'sc' "$@"
+				;;
+			esac
+
+			;;
+		    '')
+			[ -e "$cur" ] &&
+			    {
+				"${BIB_OPENER:="${READER:=xdg-open}"}" "$cur"
+				redraw 1 "$@"
+			    }
+			;;
+		    '?') ;;
+		esac
+            ;;
+
+            h?|D2|"$bs_char"?) # ARROW LEFT
+
+		case $token in
+		    's')
+			case $gscholar_indicator in
+			    '')
+				case $p_indicator in
+				    1)
+					unset p_indicator
+					IFS="$nl"
+					set -- $info \
+					       $doi \
+					       $DOI \
+					       $basename
+					unset IFS
+					num=1 y=1 y2=$top cur=$1 ltype= msg='Search by which information?' token=q token_q=p
+					hist=1
+					redraw $num "$@"
+					;;
+				    '')
+					set -- $BIB_PDF_PATH/*.*
+					restore "$@"
+					;;
+				esac
+				;;
+			esac
+			;;
+		    'q')
+			case $token_q in
+			    'sc'|'sg'|'so')
+				IFS='|'
+				set -- $list \
+				       "$gscholar"
+				unset IFS
+				num=6 y=1 y2=$top cur=$1 ltype="search: $ans" msg="search by text" token=s
+				hist=1
+				term_setup $num
+				redraw $num "$@"
+				;;
+			    'Rc'|'Re')
+				set -- "$addlib" \
+				       $BIB_LIB_PATH/*.bib
+				num=1 y=1 y2=$top cur=$1 ltype="Create new sublibrary / Edit exsting sublibrary" msg="Choose sublibrary: " token=R
+				hist=1
+				term_setup $num
+				redraw "$num" "$@"
+				;;
+			    *)
+				set -- $BIB_PDF_PATH/*.*
+				restore "$@"
+				;;
+			esac
+			;;
+		    'o')
+			case $r_indicator in
+			    1)
+				unset r_indicator
+				BIB_LIB_PATH="$BIB_PDF_PATH/Libs"
+				set -- $BIB_LIB_PATH/*.bib
+				num=1 y=1 y2=$top cur=$1 ltype="Open and view sublibrary" msg="Choose sublibrary: " token=r
+				hist=1
+				term_setup $num
+				redraw "$num" "$@"
+				;;
+			    '')
+				set -- $BIB_PDF_PATH/*.*
+				restore "$@"
+				;;
+			esac
+			;;
+		    *)
+			set -- $BIB_PDF_PATH/*.*
+			restore "$@"
+			;;
+		esac
+
+            ;;
+
+	    s?)
+		gscholar="There is no matching...\\(ㄒoㄒ)/${nl}${tab}Search in Google Scholar!${nl}${nl}${nl}${nl}${nl}"
+		prompt "Search in Crossref: " r
+
+		ref_search "$@"
+		case $? in
+		    2) set -- 'type something'; num=1 cur=$1 ltype="Error!" msg="Error messege: " token= ;;
+		    1)
+			set -- 'Yes' \
+			       'No'
+			yesno "$url Fail to connect Crossref. Search in Google scholar?" "" 'sg' "$@"
+			;;
+		    0)
+			IFS='|'
+			set -- $list \
+			       "$gscholar"
+			unset IFS
+			num=6 y=1 y2=$top cur=$1 ltype="search: $ans" msg="search by text" token=s
+			;;
+		esac
+		term_setup $num
+		redraw $num "$@"
+	    ;;
+
+	    p?)
+		set -- $BIB_PDF_PATH/*.*
+		num=1 y=1 y2=$top cur=$1 ltype= msg='Search by information in PDF' token=p
+		redraw $num "$@"
+	    ;;
+
+	    w?)
+		prompt "Search in google scholar: " r
+		to_clip "$ans"
+		"${BIB_OPENER:=${BROWSER:=xdg-open}}" "${BIB_UNI_KEY}https://scholar.google.com/scholar?&q=$ans" 1>/dev/null
+		waitclip "$@"
+		set -- 'Yes' \
+		       'No'
+		case $bibtex in
+		    '')
+			set -- $BIB_PDF_PATH/*.*
+			restore "$@"
+			;;
+		    *) yesno "Copy bibtex to $BIB?" "$bibtex" 'sc' "$@" ;;
+		esac
+	    ;;
+
+	    i?)
+		list="article${nl}book${nl}booklet${nl}inbook${nl}incollection${nl}inproceedings${nl}manual${nl}mastersthesis${nl}misc${nl}phdthesis${nl}proceedings${nl}techreport${nl}unpublished${nl}online"
+
+		IFS="$nl"
+		set -- $list
+		unset IFS
+
+		num=1 y=1 y2=$top cur=$1 ltype='Insert new BibTeX entry' msg='Choose entry category: ' token=i
+		redraw $num "$@"
+
+	    ;;
+
+
+	    o?|c?|e?)
+		ref_gen "$BIB" "$@"
+
+		IFS='|'
+		set -- $list
+		unset IFS
+		num=6 y=1 y2=$top cur=$1
+		case $key${esc:=0} in
+		    o?) ltype="Open PDF file by $BIB" msg="Open PDF file by BibTeX entry" token=o ;;
+		    c?) ltype="Copy BibTeX label" msg="Choose which BibTeX label?" token=c ;;
+		    e?) ltype="Edit BibTeX entry" msg="Edit which BibTeX entry?" token=e ;;
+		esac
+
+		term_setup $num
+		redraw "$num" "$@"
+	    ;;
+
+
+	    b?)
+		set -- $BIB_PDF_PATH/*.*
+		num=1 y=1 y2=$top cur=$1 ltype= msg='Choose PDF file to build database: ' token=b
+		redraw $num "$@"
+	    ;;
+
+	    B?)
+		set -- $BIB_PDF_PATH/*.*
+		for pdf do
+		    read -r type < "$pdf"
+		    case "$type" in
+			'%PDF'*)
+			    filename="${pdf##*/}"; basename="${filename%.*}"
+			    grep '@' "$BIB" | grep -q "$basename"
+			    case $? in
+				0) continue ;;
+				*)
+				    info=$(pdfinfo "$pdf")
+				    tmp=${info##*Title:          }
+				    title=${tmp%%$nl*}
+				    case $title in
+					'') faillist="$faillist${nl}$pdf" ;;
+					*)
+					    search "$(cat -u $BIB)" '@' "$title"
+					    case $filt_out in
+						'') faillist="$faillist${nl}$pdf" ;;
+						*)
+						    IFS="$nl"
+						    set -- $filt_out
+						    unset IFS
+						    for line do
+							case $line in
+							    [[:alpha:]]*{[[:alnum:]_]*,) tmp="${line#*\{}"; label="${tmp%,}" ;;
+							    *[[:space:]]title*=*) tmp="${line#*\{}"; title="${tmp%\}*}" ;;
+							    *[[:space:]]author*=*) tmp="${line#*\{}"; author="${tmp%\}*}" ;;
+							    *[[:space:]]journal*=*) tmp="${line#*\{}"; journal="${tmp%\}*}" ;;
+							    *[[:space:]]doi*=*) tmp="${line#*\{}"; doi="${tmp%\}*}" ;;
+							esac
+							unset tmp
+						    done
+						    extension=${filename##*.}
+
+						    meta_to_file "$pdf" "$@"
+
+						    successlist="$successlist${nl}$label.$extension updated"
+						    IFS="$nl"
+						    set -- $successlist
+						    unset IFS
+						    num=1 y=1 y2=$top cur=$1 ltype="Building database, Automode!" msg="Automode Result: "
+						    redraw $num "$@"
+						    ;;
+					    esac
+					    ;;
+				    esac
+				    ;;
+			    esac
+			    ;;
+		    esac
+		done
+
+		IFS="$nl"
+		set -- $faillist
+		unset IFS
+		num=1 y=1 y2=$top cur=$1 ltype="Building database, Automode!" msg="Choose pdf to manually update metadata: " token=B
+                case $# in
+                    0) set -- 'All PDF files in database is updated!'; token=? ;;
+                esac
+                redraw $num "$@"
+	    ;;
+
+	    n?)
+		BIB_NOTE_PATH="$BIB_PDF_PATH/Notes"
+		[ -d "$BIB_NOTE_PATH" ] || mkdir -p "$BIB_NOTE_PATH"
+		ref_gen "$BIB" "$@"
+
+		IFS='|'
+		set -- $list
+		unset IFS
+		num=6 y=1 y2=$top cur=$1 ltype="Write notes for BibTeX entry" msg="Choose BibTeX entry to write note on: " token=n
+		term_setup $num
+		redraw "$num" "$@"
+	    ;;
+
+	    R?)
+		addlib='Create new sublibrary'
+		BIB_LIB_PATH="$BIB_PDF_PATH/Libs"
+		[ -d "$BIB_LIB_PATH" ] || mkdir -p "$BIB_LIB_PATH"
+
+		set -- "$addlib" \
+		       $BIB_LIB_PATH/*.bib
+		num=1 y=1 y2=$top cur=$1 ltype="Create new sublibrary / Edit exsting sublibrary" msg="Choose sublibrary: " token=R
+		term_setup $num
+		redraw "$num" "$@"
+
+	    ;;
+
+	    r?)
+		BIB_LIB_PATH="$BIB_PDF_PATH/Libs"
+		set -- $BIB_LIB_PATH/*.bib
+		num=1 y=1 y2=$top cur=$1 ltype="Open and view sublibrary" msg="Choose sublibrary: " token=r
+		term_setup $num
+		redraw "$num" "$@"
+	    ;;
+
+            /?) # token
+                prompt / r
+
+		case "$token" in
+		    ''|'b'|'p')
+			set -- $BIB_PDF_PATH/*$ans*
+			case $1$# in
+			    "$BIB_PDF_PATH/*$ans*"1) set -- 'no result' ;;
+			esac
+			;;
+		    'r'|'R')
+			set -- $BIB_LIB_PATH/*$ans*
+			case $1$# in
+			    "$BIB_LIB_PATH/*$ans*"1) set -- 'no result' ;;
+			esac
+			;;
+		    's'|'c'|'o'|'e'|'n'|'B'|'i')
+			search "$list" '|' "$ans"
+			IFS='|'
+			set -- $filt_out
+			unset IFS
+			case $# in
+			    0) num=1; set -- 'no result' ;;
+			esac
+			;;
+		    'q')
+			case "$token_q" in
+			    'p'|'sc'|'sg'|'so'|'e')
+				num=1
+				search "$info" "$nl" "$ans"
+				IFS="$nl"
+				set -- $filt_out
+				unset IFS
+				;;
+			    'b'|'B'|'Rc'|'Re')
+				search "$list" '|' "$ans"
+				IFS='|'
+				set -- $filt_out
+				unset IFS
+				;;
+			esac
+			case $# in
+			    0) num=1; set -- 'no result' ;;
+			esac
+			;;
+		esac
+
+
+		y=1 y2=$top cur=$1 ltype= msg="search by *$ans*"
+                redraw $num "$@"
+            ;;
+
+            \??)
+                 set -- 'k/↑ - up' \
+			'j/↓ - down' \
+		        'l/→ - right' \
+		        'h/← - left' \
+			'Ctrl-f/PageDown - PageDown' \
+			'Ctrl-u/PageUp - PageUp' \
+                        'g/Home - go to top' \
+                        'G/End - go to bottom' \
+			's - search online by text' \
+			'p - search online by metadata in PDF file' \
+			'w - search google scholar by text' \
+			'c - copy BibTeX entry from your $BIB' \
+			'o - open PDF file by BibTeX entry' \
+			'i - insert new BibTeX entry' \
+			'e - edit existing BibTeX entry' \
+			'b - manually build database by rename and encode metadata into PDF file' \
+			'B - automatically build database by rename and encode metadata into PDF file' \
+			'R - create new BibTeX entry sublibrary' \
+			'    store at: $BIB_PDF_PATH/Libs' \
+			'r - open existing BibTeX entry sublibrary' \
+			'    store at: $BIB_PDF_PATH/Libs' \
+			'n - write notes for BibTeX entry' \
+			'    store at: $BIB_PDF_PATH/Notes' \
+			'/ - search the current page ' \
+			'    default: case-insensitive search' \
+			'    contain uppercase: case-sensitive search' \
+                        '? - show keybinds'
+                num=1 y=1 y2=$top cur=$1 ltype= msg=keybinds token='?'
+                redraw $num "$@"
+            ;;
+
+            q?) exit 0 ;;
+            "$esc_c"*) esc=1 ;;
+                 '[1') esc=2 ;;
+		   5?) esc=5 ;; # PageUp
+		   6?) esc=6 ;; # PageDown
+                    *) esc=0 ;;
+	esac
+    done
+}
+
+main() {
+    esc_c=$(printf '\033')
+    bs_char=$(printf '\177')
+    ctrl_f=$(printf '\006')
+    ctrl_u=$(printf '\025')
+
+    set -- $BIB_PDF_PATH/*.*
+    cur=$1 num=1
+    term_resize
+    term_setup $num
+
+    trap 'term_reset'  EXIT INT
+    trap 'term_resize; term_setup $num; y=1 y2=$top; redraw $num "$@"' WINCH
+
+    y=1 y2=$top
+    redraw $num "$@"
+
+    get_os
+    key "$@"
+}
+
+nl='
+'
+tab='	'
+CheckDeps read grep curl sort pdfinfo gs
+[ -z $Deps ] && main "$@" >/dev/tty
