@@ -6,6 +6,7 @@ if !has('nvim-0.5')
   echohl None
   finish
 endif
+try
 
 lua << END
 local plugins = {
@@ -29,17 +30,16 @@ local function handle_bufread(names)
   end
 end
 
-_packer_load = nil
-
+local packer_load = nil
 local function handle_after(name, before)
   local plugin = plugins[name]
   plugin.load_after[before] = nil
   if next(plugin.load_after) == nil then
-    _packer_load({name}, {})
+    packer_load({name}, {})
   end
 end
 
-_packer_load = function(names, cause)
+packer_load = function(names, cause)
   local some_unloaded = false
   for _, name in ipairs(names) do
     if not plugins[name].loaded then
@@ -110,7 +110,7 @@ _packer_load = function(names, cause)
     end
 
     if cause.prefix then
-      local prefix = vim.v.count and vim.v.count or ''
+      local prefix = vim.v.count ~= 0 and vim.v.count or ''
       prefix = prefix .. '"' .. vim.v.register .. cause.prefix
       if vim.fn.mode('full') == 'no' then
         if vim.v.operator == 'c' then
@@ -123,14 +123,23 @@ _packer_load = function(names, cause)
       vim.fn.feedkeys(prefix, 'n')
     end
 
-    -- NOTE: I'm not sure if the below substitution is correct; it might correspond to the literal
-    -- characters \<Plug> rather than the special <Plug> key.
-    vim.fn.feedkeys(string.gsub(string.gsub(cause.keys, '^<Plug>', '\\<Plug>') .. extra, '<[cC][rR]>', '\r'))
+    local escaped_keys = vim.api.nvim_replace_termcodes(cause.keys .. extra, true, true, true)
+    vim.api.nvim_feedkeys(escaped_keys, 'm', true)
   elseif cause.event then
     vim.cmd(fmt('doautocmd <nomodeline> %s', cause.event))
   elseif cause.ft then
     vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeplugin', cause.ft))
     vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeindent', cause.ft))
+  end
+end
+
+_packer_load_wrapper = function(names, cause)
+  success, err_msg = pcall(packer_load, names, cause)
+  if not success then
+    vim.cmd('echohl ErrorMsg')
+    vim.cmd('echomsg "Error in packer_compiled: ' .. vim.fn.escape(err_msg, '"') .. '"')
+    vim.cmd('echomsg "Please check your config for correctness"')
+    vim.cmd('echohl None')
   end
 end
 
@@ -143,7 +152,7 @@ end
 END
 
 function! s:load(names, cause) abort
-call luaeval('_packer_load(_A[1], _A[2])', [a:names, a:cause])
+  call luaeval('_packer_load_wrapper(_A[1], _A[2])', [a:names, a:cause])
 endfunction
 
 
@@ -155,4 +164,12 @@ augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
   " Event lazy-loads
+  " Function lazy-loads
 augroup END
+
+catch
+  echohl ErrorMsg
+  echom "Error in packer_compiled: " .. v:exception
+  echom "Please check your config for correctness"
+  echohl None
+endtry

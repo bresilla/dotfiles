@@ -18,6 +18,7 @@ require("config.keys")
 require("awful.autofocus")
 require("config.notif")
 
+require("run")
 -- Signals
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,

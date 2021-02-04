@@ -1,50 +1,31 @@
-# name: NOTE
-# windows:
-# - name: music
-  # layout: 8e51,280x57,0,0[280x43,0,0,89,280x13,0,44,118]
-  # panes:
-  # - commands:
-    # - spt
-    # root: /home/bresilla
-  # - commands:
-    # - ncpamixer
-    # focus: true
-    # root: /home/bresilla
-# - name: gotop
-  # layout: 6585,280x57,0,0,92
-  # panes:
-  # - commands:
-    # - ytop -b
-    # focus: true
-    # root: /home/bresilla
-    #
-
-
 name: NOTE
 windows:
 - name: spt
-  layout: 1069,310x66,0,0{124x66,0,0[124x33,0,0,10,124x32,0,34,22],185x66,125,0,20}
+  layout: 3b7b,310x66,0,0{181x66,0,0[181x48,0,0,2,181x17,0,49,18],128x66,182,0[128x19,182,0,16,128x46,182,20,19]}
   panes:
-  - commands:
-    - ncpamixer
-    root: /home/bresilla
   - commands:
     - spt
     root: /home/bresilla
   - commands:
-    - todo
-    focus: true
-    root: /home/bresilla
-- name: top
-  layout: ddfa,310x66,0,0{189x66,0,0,5,120x66,190,0[120x22,190,0,4,120x43,190,23,3]}
-  panes:
-  - commands:
-    - ytop -b
-    root: /home/bresilla
-    focus: true
-  - commands:
-    - doas bandwhich
+    - taskwarrior-tui
     root: /home/bresilla
   - commands:
     - tock -c
+    root: /home/bresilla
+  - commands:
+    - ncpamixer
+    focus: true
+    root: /home/bresilla
+- name: top
+  layout: 32d0,310x66,0,0{183x66,0,0,4,126x66,184,0[126x29,184,0,6,126x36,184,30,5]}
+  panes:
+  - commands:
+    - ytop
+    focus: true
+    root: /home/bresilla
+  - commands:
+    - battop
+    root: /home/bresilla
+  - commands:
+    - doas bandwhich
     root: /home/bresilla

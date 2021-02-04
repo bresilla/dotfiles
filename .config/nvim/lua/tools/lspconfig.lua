@@ -61,17 +61,17 @@ require'lspconfig'.clangd.setup{
     on_attach=require'completion'.on_attach;
 }
 
-require'lspconfig'.rust_analyzer.setup{
-    cmd = { "rust-analyzer" };
-    filetypes = { "rust" };
-    on_attach=require'completion'.on_attach;
-}
-
--- require'lspconfig'.rls.setup{
---     cmd = { "rls" };
+-- require'lspconfig'.rust_analyzer.setup{
+--     cmd = { "rust-analyzer" };
 --     filetypes = { "rust" };
 --     on_attach=require'completion'.on_attach;
 -- }
+
+require'lspconfig'.rls.setup{
+    cmd = { "rls" };
+    filetypes = { "rust" };
+    on_attach=require'completion'.on_attach;
+}
 
 require'lspconfig'.sumneko_lua.setup{
   cmd = {"/env/LSP/lua/lua-language-server"};
@@ -80,13 +80,13 @@ require'lspconfig'.sumneko_lua.setup{
 require'lspconfig'.pyls.setup{}
 
 --------------------------------- DIAGNOSTICS  -----------------------------------------
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---     vim.lsp.diagnostic.on_publish_diagnostics, {
---         underline = false,
---         virtual_text = { spacing = 30 },
---         update_in_insert = false,
---     }
--- )
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = false,
+        virtual_text = { spacing = 30 },
+        update_in_insert = false,
+    }
+)
 
 vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)
     local win_width = vim.api.nvim_win_get_width(0)

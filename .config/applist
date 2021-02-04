@@ -1,4 +1,4 @@
--------------------------------------------------------            SYSTEM								-----------------------------------------------------------
+-------------------------------------------------------             EDIT								-----------------------------------------------------------
 bat                         + a cat clone																						+ https://github.com/sharkdp/bat                        + rust 
 fzf                         + a command-line fuzzy finder														+ https://github.com/junegunn/fzf                       + go   
 sk      - skim              + a rusty fuzzy finder																	+ https://github.com/lotabout/skim                      + rust
@@ -13,6 +13,8 @@ fq      - fselect           + find files with SQL-like queries											+ https
 sd                          + an intuitive search & displace												+ https://github.com/chmln/sd                           + rust 
 tk      - tokei             + code statistics																				+ https://github.com/XAMPPRocky/tokei                   + rust
 aa      - alertafter        + notify after command																	+ https://github.com/frewsxcv/alert-after               + rust
+rp			- ruplacer					+ find and replace text in source files 								+ https://github.com/TankerHQ/ruplacer									+ rust
+-------------------------------------------------------            SYSTEM								-----------------------------------------------------------
 alt                         + binary version/path manager														+ https://github.com/dotboris/alt                       + rust
 handlr                      + better xdg-utils																			+ https://github.com/chmln/handlr                       + rust
 lnav                        + system LOG navigatior/viewer													+ https://github.com/tstack/lnav                        + cpp
@@ -87,10 +89,9 @@ adv[cp,mv]                  + cp & mv with progressbar															+ https://g
 scd                         + side/tab file manager																	+ https://github.com/cshuaimin/scd                      + rust
 ls      - exa               + modern version of ‘ls’																+ https://github.com/ogham/exa                          + rust 
 lsd                         + next-gen version of 'ls'															+ https://github.com/Peltoche/lsd                       + rust
-s       -scotty             + drectory fast beaming																	+ https://github.com/wdullaer/scotty                    + rust
 rn      - renamer           + regex batch renamer																		+ https://github.com/adriangoransson/renamer            + rust
-sw                          + swap names of multiple files													+ https://github.com/aypie/sw                           + cpp
 rip                         + safe and ergonomic alternative to rm									+ https://github.com/nivekuil/rip                       + rust
+sw                          + swap names of multiple files													+ https://github.com/aypie/sw                           + cpp
 unf                         + sanitize filenames unix format												+ https://github.com/io12/unf                           + rust
 psc     - periscope         + De-duplicate files																		+ https://github.com/anishathalye/periscope             + go
 -------------------------------------------------------             FILES								-----------------------------------------------------------
@@ -119,6 +120,9 @@ ledger                      + double-entry accounting system												+ https:
 -------------------------------------------------------             NOTES								-----------------------------------------------------------
 dnote                       + simple command line notebook													+ https://github.com/dnote/dnote                        + go
 eureka                      + store your ideas in the terminal											+ https://github.com/simeg/eureka                       + rust
+-------------------------------------------------------            ANDROID							-----------------------------------------------------------
+scrcpy											+ sent video from Android to computer										+ https://github.com/Genymobile/scrcpy									+ c+j
+sndcpy											+ sent sound from Android to computer										+ https://github.com/Genymobile/sndcpy  								+ c+j
 -------------------------------------------------------            SCHEDULE							-----------------------------------------------------------
 task    - taskwarrior       + commandline task management														+ https://github.com/GothenburgBitFactory/taskwarrior   + cpp  
 remind                      + commandline task management														+ https://github.com/GothenburgBitFactory/remind        + cpp  

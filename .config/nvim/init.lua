@@ -17,6 +17,7 @@ require('packer').startup(
         use 'tpope/vim-commentary'
         use 'sheerun/vim-polyglot'
         use { 'nvim-treesitter/nvim-treesitter' }
+        use 'mfussenegger/nvim-dap'                                             --debugging adapter protocol DAP
 
         use 'nvim-telescope/telescope.nvim'                                     --finder and runner
         use 'romgrk/barbar.nvim'
@@ -49,6 +50,7 @@ require('packer').startup(
         use 'ishan9299/modus-theme-vim'
 
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'  }
+        -- use { 'iamcco/markdown-preview.nvim', do = 'packloadall! | call mkdp#util#install()'  }
     end
 )
 

@@ -82,6 +82,8 @@ function mycolors(theme)
     Color.new('Violetish',  rainbow[42+1])
     Color.new('Orangeish',  rainbow[30+1])
 
+    Color.new('TrueRed',     '#ff0000')
+    Color.new('TrueGreen',   '#00ff00')
 
     vim.g.terminal_color_0  = rainbow[0+1]
     vim.g.terminal_color_1  = rainbow[1+1]
@@ -137,17 +139,17 @@ function mycolors(theme)
     Group.new('TabLineFill',            colors.r1,            colors.ac_d)
     Group.new('BufferCurrent',          colors.r1,            colors.r0,            styles.bold)
     Group.new('BufferCurrentMod',       colors.r1,            colors.r0)
-    Group.new('BufferCurrentSign',      colors.r1,            colors.r0)
+    Group.new('BufferCurrentSign',      colors.r0,            colors.r0)
     Group.new('BufferCurrentTarget',    colors.r15,           colors.r0)
-    Group.new('BufferVisible',          colors.ac_l,          colors.r235)
-    Group.new('BufferVisibleMod',       colors.r0,            colors.r235)
-    Group.new('BufferVisibleSign',      colors.r0,            colors.r235)
-    Group.new('BufferVisibleTarget',    colors.r0,            colors.r235)
-    Group.new('BufferInactive',         colors.ac_l,          colors.ac_d)
+    Group.new('BufferVisible',          colors.r15,            colors.r236,          styles.bold)
+    Group.new('BufferVisibleMod',       colors.r0,            colors.r236)
+    Group.new('BufferVisibleSign',      colors.r0,            colors.r236)
+    Group.new('BufferVisibleTarget',    colors.r0,            colors.r236)
+    Group.new('BufferInactive',         colors.r15,            colors.ac_d)
     Group.new('BufferInactiveMod',      colors.r0,            colors.ac_d)
     Group.new('BufferInactiveSign',     colors.r0,            colors.ac_d)
     Group.new('BufferInactiveTarget',   colors.r0,            colors.ac_d)
-    Group.new('BufferTabpages',         colors.r0,            colors.ac_d)
+    Group.new('BufferTabpages',         colors.r15,            colors.ac_d)
     Group.new('BufferTabpageFill',      colors.r0,            colors.ac_d)
 
 
@@ -186,6 +188,9 @@ function mycolors(theme)
     Group.new('LspDiagnosticsSignHint',                 colors.Violetish,     colors.r0,            styles.bold)
     Group.new('LspDiagnosticsFloatingHint',             colors.Violetish,     nil)
     -- Group.new('LspDiagnosticsUnderlineHint',            nil,                  nil,                  styles.undercurl) 
+    --
+    Group.new('DapBreakpointSign',                      colors.TrueRed,       nil)
+    Group.new('DapStopSign',                            colors.TrueGreen,     nil)
 
     -- === SEARCH ===
     Group.new('Search',                     colors.r0,            colors.r1)

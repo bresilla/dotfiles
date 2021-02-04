@@ -1,4 +1,4 @@
-name: "idrodet"
+name: "fol"
 windows:
 - name: nvim
   layout: e094,304x64,0,0,25
@@ -6,4 +6,4 @@ windows:
   - commands:
     - nvim
     focus: true
-    root:  /home/bresilla/code/univ/idroplan/idrodet 
+    root:  /home/bresilla/code/proj/folang/fol       

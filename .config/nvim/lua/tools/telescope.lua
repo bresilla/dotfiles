@@ -38,9 +38,19 @@ require('telescope').setup{
 }
 
 center_list = require'telescope.themes'.get_dropdown({
-  winblend = 10,
-  width = 0.5,
-  prompt = ">>",
-  results_height = 6,
-  previewer = false,
+    winblend = 10,
+    width = 0.5,
+    prompt = ">>",
+    results_height = 6,
+    previewer = false,
+    mappings = {
+        i = {
+            ["<M-s>"] = actions.goto_file_selection_split,
+            ["<M-v>"] = actions.goto_file_selection_vsplit,
+            ["<CR>"] = actions.goto_file_selection_edit + actions.center,
+        },
+        n = {
+            ["<esc>"] = actions.close
+        },
+    }
 })

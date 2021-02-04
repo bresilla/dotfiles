@@ -187,8 +187,13 @@ function __promptline_right_prompt {
     if [[ -n $(__dev_lang) ]]; then
         src=$(git rev-parse --show-toplevel)/src
         tkis=$(tokei -t $ENVNAME $src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4)
+        # todos=$(snitch list 2>/dev/null | wc -l)
         #PROG-LANG
         prefix="${redTX}${arrER}${arrFR}${redBG}${blackTX}" suffix="${blackTX}${arrFR}${greyTX}${blackBG}${conTX}${arrER}"; printf "%s" "$prefix" " $ENVNAME " "$suffix" 
+        #TODOS
+        # if [[ -n $todos ]]; then 
+            # prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "TODO: $(snitch list | wc -l)" "$suffix"
+        # fi
         #BINARY_SIZE
         prefix="${accentTX}${arrFR}${dark_TX}${accentBG}" suffix="${blackTX}${arrER}";
         if [[ -n $(__get_binsize) ]]; then
@@ -219,8 +224,9 @@ function __promptline_right_prompt {
 
 function __tmuxline_right_prompt {
     #WORKING DIR or GIT
-    if git ls-remote $@ -q ; then
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}"; printf "%s" "$prefix" "$(gitmux -cfg $HOME/.config/gitmux/gitmux.conf $@)" "$suffix"
+    gitroot=$(git -C $@ rev-parse --show-toplevel)
+    if git ls-remote $gitroot -q ; then
+        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}"; printf "%s" "$prefix" "$(gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
     else
         prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__promptline_cwd 2 right $@)" "$suffix"
     fi

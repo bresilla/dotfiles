@@ -22,18 +22,12 @@ rules = {
     -- Floating clients.
     { rule_any = {
         instance = {
-          "pinentry",
           "scratch",
           "scratch_NOTE",
           "scratch_MAIN",
         },
         class = {
-          "Arandr",
-          "Sxiv",
           "scratch"
-        },
-        name = {
-          "Event Tester",  -- xev.
         },
       }, 
         properties = { 

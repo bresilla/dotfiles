@@ -66,5 +66,6 @@
     fix = !git mergetool --tool=diffconflicts
     root = rev-parse --show-toplevel
     ignore = "!f(){ echo $@ >> .gitignore; }; f"
+    set = "!git add --all && git commit"
 [gc]
     writeCommitGraph = true

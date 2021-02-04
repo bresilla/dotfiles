@@ -25,8 +25,6 @@ keys.globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "q",       awesome.quit,               {description = "quit awesome", group = "awesome"}),
     awful.key({ modkey,           }, "s",       hotkeys_popup.show_help,    {description = "show help", group= "awesome"}),
 
-    awful.key({ }, "F7", function () awful.layout.inc( 1 ) end,             {description = "select next layout", group = "layout"}),
-
     awful.key({ modkey, altkey    }, "Up",      awful.tag.viewprev,         {description = "view previous", group = "tag"}),
     awful.key({ modkey, altkey    }, "Down",    awful.tag.viewnext,         {description = "view next", group = "tag"}),
     awful.key({ modkey, altkey, "Shift"   }, "Up",

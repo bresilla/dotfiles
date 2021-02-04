@@ -30,6 +30,9 @@ in {
     pkgs.exa
     pkgs.spotifyd
     pkgs.spotify-tui
+    pkgs.syncthing
+    pkgs.ipfs
+    pkgs.rclone
   ];
 
   systemd.user = let
@@ -43,8 +46,24 @@ in {
       Service = {
         Type = "simple";
         Environment = "IPFS_PATH=/home/bresilla/sync/planetary/ipfs";
-        ExecStart = "/usr/bin/ipfs daemon --migrate";
+        ExecStart = "${pkgs.ipfs}/bin/ipfs daemon --migrate";
         Restart = "on-failure";
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+    };
+    services.syncthing = {
+      Unit = {
+        Description = "Open Source Continuous File Synchronization";
+        Documentation = "man:syncthing(1)";
+        After = ["network.target"];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.syncthing}/bin/syncthing -no-browser -no-restart -logflags=0";
+        Restart = "on-failure";
+        RestartSec = "5";
       };
       Install = {
         WantedBy = ["default.target"];
@@ -58,7 +77,7 @@ in {
       Service = {
         Type = "simple";
         ExecStartPre = "/bin/sleep 5";
-        ExecStart = "rclone --vfs-cache-mode writes mount one: /home/bresilla/sync/onedrive";
+        ExecStart = "${pkgs.rclone}/bin/rclone --vfs-cache-mode writes mount one: /home/bresilla/sync/onedrive";
         ExecStop = "fusermount -u /home/bresilla/sync/onedrive";
         Restart = "on-failure";
       };
@@ -73,7 +92,6 @@ in {
       };
       Service = {
         Type = "simple";
-        # EnvironmentFile = "${ENVFILE}";
         ExecStartPre = "/bin/sleep 2";
         ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/hotspot wlp2s0 wlp2s0 algorithm dyhere024";
         ExecStop = "/usr/bin/doas rm /tmp/hotspot.all.lock";
@@ -83,23 +101,23 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    services.clight = {
-      Unit = {
-        Description = "Screen light,gama,dpms... manager";
-        Documentation = "https://github.com/FedeDP/Clight";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/usr/bin/espanso daemon";
-        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
-        Restart = "on-failure";
-        RestartSec = "2";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+    # services.clight = {
+    #   Unit = {
+    #     Description = "Screen light,gama,dpms... manager";
+    #     Documentation = "https://github.com/FedeDP/Clight";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStart = "clight daemon";
+    #     ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
+    #     Restart = "on-failure";
+    #     RestartSec = "2";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     services.buckle = {
       Unit = {
         Description = " Nostalgia bucklespring keyboard sound";
@@ -234,7 +252,7 @@ in {
         After = ["network-online.target"];
       };
       Service = {
-        ExecStart = "/usr/bin/spotifyd --no-daemon --config-path ${configFile}";
+        ExecStart = "${pkgs.spotifyd}/bin/spotifyd --no-daemon --config-path ${configFile}";
         Restart = "on-failure";
       };
       Install = {

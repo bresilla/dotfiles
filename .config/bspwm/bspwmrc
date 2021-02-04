@@ -39,6 +39,7 @@ bspc rule -a til state=tiled
 bspc rule -a feh state=floating
 bspc rule -a sxiv state=floating
 bspc rule -a mpv state=floating
+bspc rule -a scrcpy state=floating
 bspc rule -a MPlayer state=floating
 bspc rule -a matplotlib state=floating
 bspc rule -a URxvt state=floating

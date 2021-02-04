@@ -7,7 +7,7 @@ vim.cmd('syntax enable')
 vim.cmd('filetype on')
 vim.cmd('filetype indent on')
 vim.cmd('filetype plugin on')
--- vim.cmd('filetype plugin indent on')
+vim.cmd('filetype plugin indent on')
 
 vim.o.clipboard = "unnamedplus" .. vim.o.clipboard                      -- clipboard manager
 vim.o.termguicolors = true                                              -- truecolours for better experience
@@ -82,9 +82,12 @@ vimp = require'vimp'
 vim.g.mapleader = " "
 
 
+-- === DEFAULT FILETYPE === "
+vim.cmd([[au BufNewFile,BufRead *.envrc   set syntax=sh]])
+
 -- === FOCUS === "
-vim.cmd([[au WinLeave * set nocursorline nocursorcolumn]])
-vim.cmd([[au WinEnter * set cursorline cursorcolumn]])
+vim.cmd([[au WinLeave * set nocursorline nocursorcolumn norelativenumber]])
+vim.cmd([[au WinEnter * set cursorline cursorcolumn relativenumber]])
 
 
 -- === NAVIGATION === "
@@ -141,11 +144,11 @@ vim.highlight.on_yank { on_visual = true }
 
 --- === INDENTATION LINES === "
 vim.g.indentLine_char_list = { '┊' }
--- vim.g.indentLine_color_term = 235
--- vim.g.indentLine_bgcolor_term = 0
--- vim.g.indentLine_setConceal = 2
--- vim.g.indentLine_concealcursor = ""
-vim.g.indentLine_defaultGroup = 'NonText'
+vim.g.indentLine_color_term = 232
+vim.g.indentLine_bgcolor_term = 0
+vim.g.indentLine_setConceal = 2
+vim.g.indentLine_concealcursor = ""
+-- vim.g.indentLine_defaultGroup = 'NonText'
 vim.g.indentLine_fileTypeExclude ={ 'dashboard' }
 
 

@@ -26,9 +26,8 @@ require('nvim-treesitter.configs').setup {
         smart_rename = 'grr',
       },
     },
-
     navigation = {
-      enable = true,
+    enable = true,
       keymaps = {
         goto_definition = 'gnd', -- mapping to go to definition of symbol under cursor
         list_definitions = 'gnD', -- mapping to list all definitions in current file
