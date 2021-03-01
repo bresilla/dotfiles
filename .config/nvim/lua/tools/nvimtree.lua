@@ -28,19 +28,16 @@ vim.g.nvim_tree_icons = {
         open = ""
     }
 }
+
+local function get_lua_cb(cb_name)
+  return string.format(":lua require'nvim-tree'.on_keypress('%s')<CR>", cb_name)
+end
+
 vim.g.nvim_tree_bindings = {
-    edit =            '<CR>',
-    edit_vsplit =     'v',
-    edit_split =      's',
-    edit_tab =        't',
-    toggle_dotfiles = 'i',
-    refresh =         'r',
-    create =          'n',
-    remove =          'd',
-    rename =          'm',
-    cut =             'x',
-    copy =            'c',
-    paste =           'p',
+    ["<CR>"]           = get_lua_cb("edit"),
+    ["<M-v>"]          = get_lua_cb("vsplit"),
+    ["<M-x>"]          = get_lua_cb("split"),
+    ["<M-t>"]          = get_lua_cb("tabnew"),
 }
 
 -- vim.call( [[au FileType LuaTree vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':LuaTreeClose<CR>', {})]] )

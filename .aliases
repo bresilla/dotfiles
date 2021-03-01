@@ -75,7 +75,6 @@ alias dxe='chmod u-x'
 ##OTHER
 alias open='nohup mimeo $1 > /dev/null 2>&1 &!'
 alias headphones='pactl set-sink-port 0 analog-output-headphones'
-alias ps='procs'
 alias rn='renamer'
 alias rp='ruplacer'
 alias tk='tokei'
@@ -90,6 +89,7 @@ alias lzg='lazygit'
 alias crux='horcrux'
 alias pass='gopass'
 alias todo='taskwarrior-tui'
+alias forge='conda'
 
 ##MEDIA
 alias color='pastel format hex'	

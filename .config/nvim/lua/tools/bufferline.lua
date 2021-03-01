@@ -33,7 +33,7 @@ require'bufferline'.setup{
     tab_size = 18,
     show_buffer_close_icons = true,
     -- [focused and unfocused]. eg: { '|', '|' }
-    -- separator_style = "slant" | "thick" | "thin" | { 'any', 'any' },
+    separator_style = "thin",
     always_show_bufferline = true,
   },
     highlights = {
@@ -57,54 +57,54 @@ require'bufferline'.setup{
         guifg = TabLineFill,
         guibg = TabLineFill
       },
-      buffer_visible = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-      },
+    --   buffer_visible = {
+    --     guifg = BufferCurrent,
+    --     guibg = BufferCurrent
+    --   },
       buffer_selected = {
         guifg = BufferCurrent,
         guibg = BufferCurrent,
         gui = "bold,italic"
       },
-      modified = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-      },
-      modified_visible = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-      },
-      modified_selected = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-      },
-      duplicate_selected = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-        gui = "italic",
-      },
-      duplicate_visible = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-        gui = "italic",
-      },
-      duplicate = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-        gui = "italic",
-      },
+    --   modified = {
+    --     guifg = BufferCurrent,
+    --     guibg = BufferCurrent
+    --   },
+    --   modified_visible = {
+    --     guifg = BufferCurrent,
+    --     guibg = BufferCurrent
+    --   },
+    --   modified_selected = {
+    --     guifg = BufferCurrent,
+    --     guibg = BufferCurrent
+    --   },
+    --   duplicate_selected = {
+    --     guifg = BufferCurrent,
+    --     guibg = BufferCurrent,
+    --     gui = "italic",
+    --   },
+    --   duplicate_visible = {
+    --     guifg = BufferCurrent,
+    --     guibg = BufferCurrent,
+    --     gui = "italic",
+    --   },
+    --   duplicate = {
+    --     guifg = BufferCurrent,
+    --     guibg = BufferCurrent,
+    --     gui = "italic",
+    --   },
       separator_selected = {
         guifg = BufferCurrent,
         guibg = BufferCurrent
       },
-      separator_visible = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-      },
-      separator = {
-        guifg = BufferCurrent,
-        guibg = BufferCurrent
-      },
+      -- separator_visible = {
+      --   guifg = BufferCurrent,
+      --   guibg = BufferCurrent
+      -- },
+      -- separator = {
+      --   guifg = BufferCurrent,
+      --   guibg = BufferCurrent
+      -- },
       indicator_selected = {
         guifg = BufferCurrent,
         guibg = BufferCurrent

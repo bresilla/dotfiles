@@ -162,6 +162,13 @@ function __truncate_cwd() {
     fi
 }
 
+function __get_host() {
+      local cmd=$({ pgrep -flaP `tmux display-message -p $1` ; ps -o command -p `tmux display-message -p $1` ; } | xargs -I{} echo {} | grep ssh | sed -E 's/^[0-9]*[[:blank:]]*ssh //')
+      local user=$(echo $cmd | awk '{print $NF}'|cut -f1 -d@)
+      local host=$(echo $cmd | awk '{print $NF}'|cut -f2 -d@)
+      [[ -n $host ]] && printf $host || printf $(uname -n)
+}
+
 function __promptline_left_prompt {
     #HOST
     prefix="${light_TX}${dark_BG}${space}" suffix="${space}${blackBG}${dark_TX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
@@ -224,7 +231,7 @@ function __promptline_right_prompt {
 
 function __tmuxline_right_prompt {
     #WORKING DIR or GIT
-    gitroot=$(git -C $@ rev-parse --show-toplevel)
+    gitroot=$(git -C $1 rev-parse --show-toplevel)
     if git ls-remote $gitroot -q ; then
         prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}"; printf "%s" "$prefix" "$(gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
     else
@@ -245,17 +252,22 @@ function __tmuxline_left_prompt {
     #UPTIME
     prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__datetoday)" "$suffix"
     #UPTIME
-    prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}${space}"; printf "%s" "$prefix" "$(__uptime)" "$suffix"
+    prefix="${defaultBG}${space}${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "$(__uptime)" "$suffix"
 
 }
 
 function __tmuxline_center_prompt {
-    if [[  $1 == "active" ]]; then 
-        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}${BLD}" suffix="${NLD}${space}${accentTX}${defaultBG}${arrFL}";
+    if [[ $(__get_host $3) == $(uname -n) ]]; then
+        con=$(basename $2) 
+        [[  $1 == "active" ]] && conBG=$accentBG conTX=$dark_TX || conBG=$dark_BG conTX=$light_TX
     else
-        prefix="${dark_TX}${arrFR}${light_TX}${dark_BG}${space}" suffix="${space}${dark_TX}${defaultBG}${arrFL}";
+        con=$(__get_host $3)
+        [[  $1 == "active" ]] && conBG=$redBG conTX=$dark_TX || conBG=$red2BG conTX=$light_TX
     fi
-    printf "%s" "$prefix" "$(basename $2)" "$suffix"
+
+    prefix="${dark_TX}${arrFR}${conTX}${conBG}${space}"
+    suffix="${space}${conTX}${defaultBG}${arrFL}";
+    printf "%s" "$prefix" $con "$suffix"
 }
 
 
@@ -307,12 +319,16 @@ function __promptline {
     local whiteTX="${IN}38;5;15${EN}"
     local dark_BG="${IN}48;5;237${EN}"
     local dark_TX="${IN}38;5;237${EN}"
+    local dark2_BG="${IN}48;5;239${EN}"
+    local dark2_TX="${IN}38;5;239${EN}"
     local light_BG="${IN}48;5;250${EN}"
     local light_TX="${IN}38;5;250${EN}"
     local accentBG="${IN}48;5;1${EN}"
     local accentTX="${IN}38;5;1${EN}"
     local redTX="${IN}38;5;22${EN}"
     local redBG="${IN}48;5;22${EN}"
+    local red2BG="${IN}48;5;18${EN}"
+    local red2TX="${IN}38;5;18${EN}"
     local greyBG="${IN}48;5;7${EN}"
     local greyTX="${IN}38;5;7${EN}"
     local defaultFG="${IN}0${EN}"
@@ -344,12 +360,16 @@ function __tmuxline() {
     local whiteBG="#[bg=colour15]"
     local dark_BG="#[bg=colour237]"
     local dark_TX="#[fg=colour237]"
+    local dark2_BG="#[bg=colour239]"
+    local dark2_TX="#[fg=colour239]"
     local light_BG="#[bg=colour250]"
     local light_TX="#[fg=colour250]"
     local accentBG="#[bg=colour1]"
     local accentTX="#[fg=colour1]"
     local redBG="#[bg=colour22]"
     local redTX="#[fg=colour22]"
+    local red2BG="#[bg=colour18]"
+    local red2TX="#[fg=colour18]"
     local greyBG="#[bg=colour7]"
     local greyTX="#[fg=colour7]"
     local defaultBG="#[bg=default]"

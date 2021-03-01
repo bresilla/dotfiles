@@ -26,9 +26,9 @@ require('telescope').setup{
         use_less = true,
         mappings = {
             i = {
-                ["<M-s>"] = actions.goto_file_selection_split,
-                ["<M-v>"] = actions.goto_file_selection_vsplit,
-                ["<CR>"] = actions.goto_file_selection_edit + actions.center,
+                ["<M-s>"] = actions.select_horizontal,
+                ["<M-v>"] = actions.select_vertical,
+                ["<CR>"] = actions.select_default + actions.center,
             },
             n = {
                 ["<esc>"] = actions.close
@@ -45,9 +45,9 @@ center_list = require'telescope.themes'.get_dropdown({
     previewer = false,
     mappings = {
         i = {
-            ["<M-s>"] = actions.goto_file_selection_split,
-            ["<M-v>"] = actions.goto_file_selection_vsplit,
-            ["<CR>"] = actions.goto_file_selection_edit + actions.center,
+            ["<M-s>"] = actions.select_horizontal,
+            ["<M-v>"] = actions.select_vertical,
+            ["<CR>"] = actions.select_default + actions.center,
         },
         n = {
             ["<esc>"] = actions.close

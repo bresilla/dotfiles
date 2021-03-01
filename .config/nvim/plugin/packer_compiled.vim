@@ -6,166 +6,200 @@ if !has('nvim-0.5')
   echohl None
   finish
 endif
+
+packadd packer.nvim
+
 try
 
 lua << END
-local plugins = {
+local package_path_str = "/home/bresilla/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/bresilla/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/bresilla/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/bresilla/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/bresilla/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+if not string.find(package.path, package_path_str, 1, true) then
+  package.path = package.path .. ';' .. package_path_str
+end
+
+if not string.find(package.cpath, install_cpath_pattern, 1, true) then
+  package.cpath = package.cpath .. ';' .. install_cpath_pattern
+end
+
+local function try_loadstring(s, component, name)
+  local success, result = pcall(loadstring(s))
+  if not success then
+    print('Error running ' .. component .. ' for ' .. name)
+    error(result)
+  end
+  return result
+end
+
+_G.packer_plugins = {
+  ["auto-pairs"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/auto-pairs"
+  },
+  ["barbar.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/barbar.nvim"
+  },
+  ["colorbuddy.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/colorbuddy.nvim"
+  },
+  ["comfortable-motion.vim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/comfortable-motion.vim"
+  },
+  ["compe-tabnine"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/compe-tabnine"
+  },
+  ["cosco.vim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/cosco.vim"
+  },
+  ["dashboard-nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/dashboard-nvim"
+  },
+  direnv = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/direnv"
+  },
+  ["express_line.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/express_line.nvim"
+  },
+  ["formatter.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/formatter.nvim"
+  },
+  ["incsearch.vim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/incsearch.vim"
+  },
+  indentline = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/indentline"
+  },
+  ["markdown-preview.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
+  },
+  ["modus-theme-vim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/modus-theme-vim"
+  },
+  ["nvim-compe"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-compe"
+  },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-dap"
+  },
+  ["nvim-hlslens"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-hlslens"
+  },
+  ["nvim-lspconfig"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+  },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
+  },
+  ["nvim-treesitter"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+  },
   ["packer.nvim"] = {
     loaded = false,
-    only_sequence = false,
-    only_setup = false,
+    needs_bufread = false,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+  },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+  },
+  ["popup.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/popup.nvim"
+  },
+  ["snippets.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/snippets.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+  },
+  undotree = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/undotree"
+  },
+  ["vim-bufferclose"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-bufferclose"
+  },
+  ["vim-commentary"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-commentary"
+  },
+  ["vim-fakeclip"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-fakeclip"
+  },
+  ["vim-floaterm"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-floaterm"
+  },
+  ["vim-gitgutter"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-gitgutter"
+  },
+  ["vim-illuminate"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-illuminate"
+  },
+  ["vim-move"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-move"
+  },
+  ["vim-polyglot"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-polyglot"
+  },
+  ["vim-repeat"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-repeat"
+  },
+  ["vim-rooter"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-rooter"
+  },
+  ["vim-surround"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-surround"
+  },
+  ["vim-tmux-navigator"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator"
+  },
+  ["vim-visual-multi"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-visual-multi"
+  },
+  vimpeccable = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vimpeccable"
   }
 }
 
-local function handle_bufread(names)
-  for _, name in ipairs(names) do
-    local path = plugins[name].path
-    for _, dir in ipairs({ 'ftdetect', 'ftplugin', 'after/ftdetect', 'after/ftplugin' }) do
-      if #vim.fn.finddir(dir, path) > 0 then
-        vim.cmd('doautocmd BufRead')
-        return
-      end
-    end
-  end
-end
-
-local packer_load = nil
-local function handle_after(name, before)
-  local plugin = plugins[name]
-  plugin.load_after[before] = nil
-  if next(plugin.load_after) == nil then
-    packer_load({name}, {})
-  end
-end
-
-packer_load = function(names, cause)
-  local some_unloaded = false
-  for _, name in ipairs(names) do
-    if not plugins[name].loaded then
-      some_unloaded = true
-      break
-    end
-  end
-
-  if not some_unloaded then return end
-
-  local fmt = string.format
-  local del_cmds = {}
-  local del_maps = {}
-  for _, name in ipairs(names) do
-    if plugins[name].commands then
-      for _, cmd in ipairs(plugins[name].commands) do
-        del_cmds[cmd] = true
-      end
-    end
-
-    if plugins[name].keys then
-      for _, key in ipairs(plugins[name].keys) do
-        del_maps[key] = true
-      end
-    end
-  end
-
-  for cmd, _ in pairs(del_cmds) do
-    vim.cmd('silent! delcommand ' .. cmd)
-  end
-
-  for key, _ in pairs(del_maps) do
-    vim.cmd(fmt('silent! %sunmap %s', key[1], key[2]))
-  end
-
-  for _, name in ipairs(names) do
-    if not plugins[name].loaded then
-      vim.cmd('packadd ' .. name)
-      if plugins[name].config then
-        for _i, config_line in ipairs(plugins[name].config) do
-          loadstring(config_line)()
-        end
-      end
-
-      if plugins[name].after then
-        for _, after_name in ipairs(plugins[name].after) do
-          handle_after(after_name, name)
-          vim.cmd('redraw')
-        end
-      end
-
-      plugins[name].loaded = true
-    end
-  end
-
-  handle_bufread(names)
-
-  if cause.cmd then
-    local lines = cause.l1 == cause.l2 and '' or (cause.l1 .. ',' .. cause.l2)
-    vim.cmd(fmt('%s%s%s %s', lines, cause.cmd, cause.bang, cause.args))
-  elseif cause.keys then
-    local keys = cause.keys
-    local extra = ''
-    while true do
-      local c = vim.fn.getchar(0)
-      if c == 0 then break end
-      extra = extra .. vim.fn.nr2char(c)
-    end
-
-    if cause.prefix then
-      local prefix = vim.v.count ~= 0 and vim.v.count or ''
-      prefix = prefix .. '"' .. vim.v.register .. cause.prefix
-      if vim.fn.mode('full') == 'no' then
-        if vim.v.operator == 'c' then
-          prefix = '' .. prefix
-        end
-
-        prefix = prefix .. vim.v.operator
-      end
-
-      vim.fn.feedkeys(prefix, 'n')
-    end
-
-    local escaped_keys = vim.api.nvim_replace_termcodes(cause.keys .. extra, true, true, true)
-    vim.api.nvim_feedkeys(escaped_keys, 'm', true)
-  elseif cause.event then
-    vim.cmd(fmt('doautocmd <nomodeline> %s', cause.event))
-  elseif cause.ft then
-    vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeplugin', cause.ft))
-    vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeindent', cause.ft))
-  end
-end
-
-_packer_load_wrapper = function(names, cause)
-  success, err_msg = pcall(packer_load, names, cause)
-  if not success then
-    vim.cmd('echohl ErrorMsg')
-    vim.cmd('echomsg "Error in packer_compiled: ' .. vim.fn.escape(err_msg, '"') .. '"')
-    vim.cmd('echomsg "Please check your config for correctness"')
-    vim.cmd('echohl None')
-  end
-end
-
--- Runtimepath customization
-
--- Pre-load configuration
--- Post-load configuration
--- Conditional loads
--- Load plugins in order defined by `after`
 END
-
-function! s:load(names, cause) abort
-  call luaeval('_packer_load_wrapper(_A[1], _A[2])', [a:names, a:cause])
-endfunction
-
-
-" Command lazy-loads
-
-" Keymap lazy-loads
-
-augroup packer_load_aucmds
-  au!
-  " Filetype lazy-loads
-  " Event lazy-loads
-  " Function lazy-loads
-augroup END
 
 catch
   echohl ErrorMsg
