@@ -225,7 +225,13 @@ in {
       };
       Service = {
         Type = "forking";
-        ExecStart = "/home/bresilla/dots/.func/wm/lule set";
+        Environment=[
+          "TEMP=/tmp"
+          "LULE_S=/home/bresilla/code/proj/warp/lule/scripts/lule_colors"
+          "LULE_W=/home/bresilla/sets/.wallpaper"
+        ];
+        # ExecStart = "/home/bresilla/dots/.func/wm/lule set";
+        ExecStart = "/env/cargo/bin/lule create -- set";
       };
       Install = {
         WantedBy = ["default.target"];
@@ -236,7 +242,10 @@ in {
         Description = "Wallpaper switcher";
       };
       Timer = {
+        OnBootSec="1s";
+        OnActiveSec="1s";
         OnCalendar = "*:0/15";
+        # OnUnitActiveSec="*:0/15";
       };
       Install = {
         WantedBy = ["timers.target"];

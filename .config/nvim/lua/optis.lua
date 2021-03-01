@@ -58,7 +58,7 @@ vim.o.scrolloff = 2                                                     -- make 
 vim.o.sidescroll = 10                                                   -- make scrolling better
 vim.o.sidescrolloff = 15                                                -- make scrolling better
 
-vim.o.completeopt = 'longest,menuone,noinsert,noselect'                 -- better completion
+vim.o.completeopt = 'menu,menuone,noinsert,noselect'                 -- better completion
 vim.o.wildmode ='longest,list,full'
 vim.o.wildoptions = "pum"
 vim.o.pumblend = 10

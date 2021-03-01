@@ -238,6 +238,10 @@ function mycolors(theme)
     Group.new('DashboardHeader',            colors.r1,       nil)
     Group.new('DashboardCenter',            colors.ac_l,     nil)
     Group.new('DashboardFooter',            colors.r1,       nil)
+
+
+    -- === TREESITTER ===
+    Group.new('TSBoolean',                  colors.r1,      nil,            no)
 end
 
 

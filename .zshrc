@@ -39,12 +39,14 @@ setopt rmstarsilent
 #ignore commands that start with space
 setopt histignorespace
 
+
 #--------------------------------------------------------------------------------------------------------------------
 ###HISTORY STAFF
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 HISTFILE=~/.config/zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
+HISTORY_IGNORE='(reboot|restart|poweroff|suspend|_shko)'
 setopt append_history
 setopt sharehistory
 setopt incappendhistory

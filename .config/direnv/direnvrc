@@ -15,7 +15,7 @@ use_nix() {
 use_flake() {
   watch_file flake.nix
   watch_file flake.lock
-  eval "$(nix print-dev-env --profile "$(direnv_layout_dir)/flake-profile")"
+  eval "$(nix -L print-dev-env --profile "$(direnv_layout_dir)/flake-profile")"
 }
 
 nix-profile(){
@@ -31,7 +31,7 @@ nix-profile(){
 layout_conda() {
     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
     CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
-    CONDALENV="$PWD/.venv";
+    CONDALENV="$PWD/.direnv/venv/$(uname -m)";
 
     if [[ -d $CONDALENV/conda-meta ]]; then
         source activate $CONDALENV
@@ -43,7 +43,7 @@ layout_conda() {
     else
         # conda create --prefix=$PWD/.venv python=3 -y
         printf "\n crating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
-        conda create -p $CONDALENV python=${1:-3};
+        conda create -p $CONDALENV python=${1:-3.8};
         printf "\n activating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
         source activate $CONDALENV;
     fi

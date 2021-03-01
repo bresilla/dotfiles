@@ -1,7 +1,8 @@
 ---------------------------------------------- === TOOLS === ----------------------------------------------
 require('tools.lspconfig')
+require('tools.nvimcompe')
 require('tools.dapconfig')
--- require('tools.treesitter')
+require('tools.treesitter')
 require('tools.hlsearch')
 require('tools.telescope')
 require('tools.snippets')
@@ -10,6 +11,7 @@ require('tools.expressline')
 require('tools.nvimtree')
 require('tools.floaterm')
 require('tools.dashboard')
+require('tools.formatter')
 require('tools.colorbuddy')
 
 ---------------------------------------------- === OTHER === ----------------------------------------------

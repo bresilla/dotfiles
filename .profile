@@ -1,8 +1,11 @@
+export HOSTNAME=$(uname -n)
+
 export DOTS=$HOME/dots
 export SETS=$HOME/sets
 export DATA=$HOME/data
 export DOWN=$HOME/down
 export SYNC=$HOME/sync
+export TEMP=/tmp
 
 #PKGCONFIGS
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig

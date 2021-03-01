@@ -1,44 +1,7 @@
---------------------------------- COMPLETION  -----------------------------------------
-vim.g.completion_enable_snippet = 'snippets.nvim'
-vim.cmd([[ let g:completion_chain_complete_list = {'default':[{'complete_items': ['lsp','snippet','tabnine']}]} ]])
-vim.cmd([[autocmd BufEnter * lua require'completion'.on_attach()]])
-
 vim.cmd([[sign define LspDiagnosticsSignError text=× texthl=LspDiagnosticsSignError linehl= numhl=]])
 vim.cmd([[sign define LspDiagnosticsSignWarning text=! texthl=LspDiagnosticsSignWarning linehl= numhl=]])
 vim.cmd([[sign define LspDiagnosticsSignInformation text=+ texthl=LspDiagnosticsSignInformation linehl= numhl=]])
 vim.cmd([[sign define LspDiagnosticsSignHint text=➜ texthl=LspDiagnosticsSignHint linehl= numhl=]])
-
-
---------------------------------- KEYBINDINSGS  -----------------------------------------
-vimp.inoremap({'silent', 'expr'}, '<Esc>', function()
-    if vim.fn.pumvisible() == 1 then
-        return [[<C-e>]]
-    else
-        return [[<Esc>]]
-    end
-end)
-vimp.inoremap({'silent', 'expr'}, '<CR>', function()
-    if vim.fn.pumvisible() == 1 then
-        return [[<C-y>]]
-    else
-        return [[<CR>]]
-    end
-end)
-vimp.inoremap({'silent', 'expr'}, '<Down>', function()
-    if vim.fn.pumvisible() == 1 then
-        return [[<C-n>]]
-    else
-        return [[<Down>]]
-    end
-end)
-vimp.inoremap({'silent', 'expr'}, '<Up>', function()
-    if vim.fn.pumvisible() == 1 then
-        return [[<C-p>]]
-    else
-        return [[<Up>]]
-    end
-end)
-
 
 vimp.nnoremap('<c-]>',      [[<cmd>lua vim.lsp.buf.definition()<CR>]])
 vimp.nnoremap('<c-r>',      [[<cmd>lua vim.lsp.buf.rename()<CR>]])
@@ -58,19 +21,20 @@ vimp.nnoremap('f',          [[<cmd>lua vim.lsp.diagnostic.goto_next { min_severi
 require'lspconfig'.clangd.setup{
     cmd = { "clangd", "--background-index" };
     filetypes = { "cpp" };
-    on_attach=require'completion'.on_attach;
 }
+
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- require'lspconfig'.rust_analyzer.setup{
 --     cmd = { "rust-analyzer" };
 --     filetypes = { "rust" };
---     on_attach=require'completion'.on_attach;
+--     capabilities = capabilities;
 -- }
 
 require'lspconfig'.rls.setup{
     cmd = { "rls" };
     filetypes = { "rust" };
-    on_attach=require'completion'.on_attach;
 }
 
 require'lspconfig'.sumneko_lua.setup{
@@ -78,6 +42,7 @@ require'lspconfig'.sumneko_lua.setup{
 }
 
 require'lspconfig'.pyls.setup{}
+require'lspconfig'.pyls_ms.setup{}
 
 --------------------------------- DIAGNOSTICS  -----------------------------------------
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

@@ -1,6 +1,8 @@
 [user]
     email = trim.bresilla@gmail.com
     name = Trim Bresilla
+	  signingkey = F337B1747050659CABAAE714177223966B794B54
+
 [core]
     pager = delta --dark --plus-color="#012800" --minus-color="#340001" --theme="OneHalfDark"
     quotepath = false
@@ -47,6 +49,7 @@
     ban = "!fd -E ".git" -H . | fzf | parallel 'git ignore {}; git rm -rf --cached {};'"
     uncommit = reset --soft HEAD^
     master = "!git checkout master || git checkout main"
+    main = "!git checkout main || git checkout master"
     develop = checkout develop
     hub = "!f(){ gh $@; }; f"
     module = submodule
@@ -69,3 +72,7 @@
     set = "!git add --all && git commit"
 [gc]
     writeCommitGraph = true
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main

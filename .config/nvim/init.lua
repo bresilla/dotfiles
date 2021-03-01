@@ -10,8 +10,8 @@ require('packer').startup(
         use 'nvim-lua/plenary.nvim'                                             -- windowing and shit beta for NVIM
         use 'nvim-lua/popup.nvim'                                               -- hoepfully will get merget in mainsteream
         use 'neovim/nvim-lspconfig'
-        use 'nvim-lua/completion-nvim'
-        use { 'aca/completion-tabnine', run = './install.sh' }
+        use 'hrsh7th/nvim-compe'                                                -- COMPLETION
+        use { 'tzachar/compe-tabnine', run = './install.sh' }
         use 'norcalli/snippets.nvim'
         use 'lfilho/cosco.vim'                                                  --add semicolon or comma n the end
         use 'tpope/vim-commentary'
@@ -20,12 +20,12 @@ require('packer').startup(
         use 'mfussenegger/nvim-dap'                                             --debugging adapter protocol DAP
 
         use 'nvim-telescope/telescope.nvim'                                     --finder and runner
-        use 'romgrk/barbar.nvim'
         use 'voldikss/vim-floaterm'                                             --terminal
         use 'kyazdani42/nvim-tree.lua'                                          --side-bar file manager
         use 'yggdroot/indentline'                                               --indentation (characters)
         use 'mbbill/undotree'                                                   --show a tree of undos
         use 'glepnir/dashboard-nvim'
+        use 'mhartington/formatter.nvim'                                        -- formatter
 
         use 'matze/vim-move'                                                    --move lines with alt-arrow
         use 'mg979/vim-visual-multi'                                            --multi cursors
@@ -44,13 +44,14 @@ require('packer').startup(
         use 'kana/vim-fakeclip'                                                 --better clipboard
         use 'direnv/direnv'
 
+        use 'romgrk/barbar.nvim'
+        -- use 'akinsho/nvim-bufferline.lua'
         use 'tjdevries/express_line.nvim'
         use 'tjdevries/colorbuddy.nvim'
         use 'kyazdani42/nvim-web-devicons'                                      --file icons
         use 'ishan9299/modus-theme-vim'
 
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'  }
-        -- use { 'iamcco/markdown-preview.nvim', do = 'packloadall! | call mkdp#util#install()'  }
     end
 )
 

@@ -1,0 +1,10 @@
+#!/bin/bash
+  
+FILENAME=$@
+
+LINES=$(cat $FILENAME)
+
+for LINE in $LINES
+do
+    echo "$LINE"
+done
