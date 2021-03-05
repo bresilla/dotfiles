@@ -139,29 +139,20 @@ alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
 alias _conf='nvim $(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" | fzf)'
 
 
-# NNN
-_nnn() {
-    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
-        echo "nnn is already running"
-        return
-    fi
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-    nnn "$@"
-    if [ -f "$NNN_TMPFILE" ]; then
-            . "$NNN_TMPFILE"
-            rm -f "$NNN_TMPFILE" > /dev/null
-    fi
-}
-my-accept-line () {
+# RUN
+runner () {
     # check if the buffer does not contain any words
     if [ ${#${(z)BUFFER}} -eq 0 ]; then
-        _nnn
+      if [[ -n $(echo $ENVNAME) ]]; then
+        build && run
+      else
+        printf "\n" && exa -la
+      fi
     fi
     zle accept-line
 }
-zle -N my-accept-line
-bindkey '^M' my-accept-line
-
+zle -N runner
+bindkey '^M' runner
 
 #--------------------------------------------------------------------------------------------------------------------
 ###RE-ENTER SAME DIRECTORY

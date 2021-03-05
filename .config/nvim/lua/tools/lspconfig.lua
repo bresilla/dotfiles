@@ -23,19 +23,19 @@ require'lspconfig'.clangd.setup{
     filetypes = { "cpp" };
 }
 
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- require'lspconfig'.rust_analyzer.setup{
---     cmd = { "rust-analyzer" };
---     filetypes = { "rust" };
---     capabilities = capabilities;
--- }
-
-require'lspconfig'.rls.setup{
-    cmd = { "rls" };
+require'lspconfig'.rust_analyzer.setup{
+    cmd = { "rust-analyzer" };
     filetypes = { "rust" };
+    capabilities = capabilities;
 }
+
+-- require'lspconfig'.rls.setup{
+    -- cmd = { "rls" };
+    -- filetypes = { "rust" };
+-- }
 
 require'lspconfig'.sumneko_lua.setup{
   cmd = {"/env/LSP/lua/lua-language-server"};

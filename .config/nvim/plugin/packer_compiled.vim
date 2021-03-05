@@ -80,6 +80,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/indentline"
   },
+  ["lspsaga.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
+  },
   ["markdown-preview.nvim"] = {
     loaded = true,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
@@ -136,6 +140,10 @@ _G.packer_plugins = {
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+  },
+  ["timer.nvim"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/timer.nvim"
   },
   undotree = {
     loaded = true,

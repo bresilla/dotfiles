@@ -10,8 +10,6 @@ require('packer').startup(
         use 'nvim-lua/plenary.nvim'                                             -- windowing and shit beta for NVIM
         use 'nvim-lua/popup.nvim'                                               -- hoepfully will get merget in mainsteream
         use 'neovim/nvim-lspconfig'
-        use 'hrsh7th/nvim-compe'                                                -- COMPLETION
-        use { 'tzachar/compe-tabnine', run = './install.sh' }
         use 'norcalli/snippets.nvim'
         use 'lfilho/cosco.vim'                                                  --add semicolon or comma n the end
         use 'tpope/vim-commentary'
@@ -19,8 +17,12 @@ require('packer').startup(
         use { 'nvim-treesitter/nvim-treesitter' }
         use 'mfussenegger/nvim-dap'                                             --debugging adapter protocol DAP
 
+        use 'hrsh7th/nvim-compe'                                                -- COMPLETION
+        use { 'tzachar/compe-tabnine', run = './install.sh' }
         use 'nvim-telescope/telescope.nvim'                                     --finder and runner
+        use 'alex-popov-tech/timer.nvim'                                        --execute commands after some time
         use 'voldikss/vim-floaterm'                                             --terminal
+        use 'glepnir/lspsaga.nvim'                                              --lsp-UI
         use 'kyazdani42/nvim-tree.lua'                                          --side-bar file manager
         use 'yggdroot/indentline'                                               --indentation (characters)
         use 'mbbill/undotree'                                                   --show a tree of undos
