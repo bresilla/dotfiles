@@ -44,6 +44,8 @@ layout_conda() {
         # conda create --prefix=$PWD/.venv python=3 -y
         printf "\n crating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
         conda create -p $CONDALENV python=${1:-3.8};
+        conda install --yes pip;
+        conda config --set pip_interop_enabled True;
         printf "\n activating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
         source activate $CONDALENV;
     fi
