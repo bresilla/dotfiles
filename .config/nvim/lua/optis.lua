@@ -90,6 +90,12 @@ vim.cmd([[au WinLeave * set nocursorline nocursorcolumn norelativenumber]])
 vim.cmd([[au WinEnter * set cursorline cursorcolumn relativenumber]])
 
 
+-- === AUTOSAVE === "
+vim.cmd([[au WinLeave,BufLeave * silent wall]])
+vim.cmd([[au WinEnter * silent wall]])
+
+
+
 -- === NAVIGATION === "
 -- navigation panes
 vimp.bind('n',            '<C-Pagedown>',             [[:BufferNext<CR>]])

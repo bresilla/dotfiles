@@ -33,6 +33,7 @@ require('packer').startup(
         use 'mg979/vim-visual-multi'                                            --multi cursors
         use 'jiangmiao/auto-pairs'                                              --auto close brackets and parenthesis
         use 'christoomey/vim-tmux-navigator'
+        use 'tmux-plugins/vim-tmux-focus-events'                                --tmux focus/lose events
         use 'yuttie/comfortable-motion.vim'                                     --comfortable scroll
         use 'tpope/vim-repeat'                                                  -- '.' for better repeat functioalities
         use 'tpope/vim-surround'                                                --manipulating sorround objects

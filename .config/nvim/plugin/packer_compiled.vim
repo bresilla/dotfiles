@@ -193,6 +193,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-surround"
   },
+  ["vim-tmux-focus-events"] = {
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-tmux-focus-events"
+  },
   ["vim-tmux-navigator"] = {
     loaded = true,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator"

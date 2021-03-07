@@ -3,19 +3,6 @@ vim.cmd([[sign define LspDiagnosticsSignWarning text=! texthl=LspDiagnosticsSign
 vim.cmd([[sign define LspDiagnosticsSignInformation text=+ texthl=LspDiagnosticsSignInformation linehl= numhl=]])
 vim.cmd([[sign define LspDiagnosticsSignHint text=➜ texthl=LspDiagnosticsSignHint linehl= numhl=]])
 
-vimp.nnoremap('<c-]>',      [[<cmd>lua vim.lsp.buf.definition()<CR>]])
-vimp.nnoremap('<c-r>',      [[<cmd>lua vim.lsp.buf.rename()<CR>]])
-vimp.nnoremap('k',          [[<cmd>lua vim.lsp.buf.hover()<CR>]])
-vimp.nnoremap('<c-k>',      [[<cmd>lua vim.lsp.buf.signature_help()<CR>]])
-vimp.nnoremap('gD',         [[<cmd>lua vim.lsp.buf.type_definition()<CR>]])
-vimp.nnoremap('gI',         [[<cmd>lua vim.lsp.buf.implementation()<CR>]])
-vimp.nnoremap('gr',         [[<cmd>lua vim.lsp.buf.references()<CR>]])
-vimp.nnoremap('g0',         [[<cmd>lua vim.lsp.buf.document_symbol()<CR>]])
-vimp.nnoremap('gW',         [[<cmd>lua vim.lsp.buf.workspace_symbol()<CR>]])
-vimp.nnoremap('gd',         [[<cmd>lua vim.lsp.buf.declaration()<CR>]])
-vimp.nnoremap('f',          [[<cmd>lua vim.lsp.diagnostic.goto_next { min_severity = "info", show_config=true }<CR>]])
--- vimp.nnoremap('F',          [[<cmd>lua vim.lsp.buf.code_action()<cr>]])
-
 
 --------------------------------- LSP LANGUAGES  -----------------------------------------
 require'lspconfig'.clangd.setup{
