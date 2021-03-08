@@ -70,7 +70,7 @@
     root = rev-parse --show-toplevel
     ignore = "!f(){ echo $@ >> .gitignore; }; f"
     set = "!git add --all && git commit"
-    start = "!f(){ git flow feature start ${1:-NewFeature}; }; f"
+    start = "!f(){ git flow feature start ${1:-feature}; }; f"
     finish = "!f(){ git flow feature finish; }; f"
 [gc]
     writeCommitGraph = true

@@ -91,9 +91,7 @@ vim.cmd([[au WinEnter * set cursorline cursorcolumn relativenumber]])
 
 
 -- === AUTOSAVE === "
-vim.cmd([[au WinLeave,BufLeave * silent wall]])
-vim.cmd([[au WinEnter * silent wall]])
-
+vim.cmd([[au WinLeave,BufLeave,TabLeave,FocusLost * silent wall]])
 
 
 -- === NAVIGATION === "
@@ -102,10 +100,14 @@ vimp.bind('n',            '<C-Pagedown>',             [[:BufferNext<CR>]])
 vimp.bind('n',            '<C-Pageup>',               [[:BufferPrevious<CR>]])
 vimp.bind('n',            '<C-M-Pagedown>',           [[:BufferMoveNext<CR>]])
 vimp.bind('n',            '<C-M-Pageup>',             [[:BufferMovePrevious<CR>]])
-vimp.bind('n',            '<C-Up>',                   [[<C-k>]])
-vimp.bind('n',            '<C-Down>',                 [[<C-j>]])
-vimp.bind('n',            '<C-Left>',                 [[<C-h>]])
-vimp.bind('n',            '<C-Right>',                [[<C-l>]])
+vimp.bind('n',            '<C-Down>',                 [[:wincmd j<CR>]])
+vimp.bind('i',            '<C-Down>',                 [[<ESC>:wincmd j<CR>]])
+vimp.bind('n',            '<C-Up>',                   [[:wincmd k<CR>]])
+vimp.bind('i',            '<C-Up>',                   [[<ESC>:wincmd k<CR>]])
+vimp.bind('n',            '<C-Left>',                 [[:wincmd h<CR>]])
+vimp.bind('i',            '<C-Left>',                 [[<ESC>:wincmd h<CR>]])
+vimp.bind('n',            '<C-Right>',                [[:wincmd l<CR>]])
+vimp.bind('i',            '<C-Right>',                [[<ESC>:wincmd l<CR>]])
 -- move horizontally
 vimp.bind('n',            '<home>',                   [[%]])
 vimp.bind('n',            '<end>',                    [[$]])

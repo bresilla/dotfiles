@@ -11,14 +11,24 @@ local sorters = require('telescope.sorters')
 
 require('telescope').setup{
     defaults = {
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case'
+        },
         prompt_position = "bottom",
         prompt_prefix = ">>",
         selection_strategy = "reset",
         sorting_strategy = "descending",
         layout_strategy = "horizontal",
-        shorten_path = true,
+        -- shorten_path = true,
         width = 0.75,
         file_ignore_patterns = {"bash/*","resources/*"},
+        file_sorter =  require'telescope.sorters'.get_fuzzy_file,
         preview_cutoff = 120,
         results_height = 1,
         results_width = 0.8,
