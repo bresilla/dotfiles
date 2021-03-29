@@ -162,6 +162,9 @@ runner () {
 zle -N runner
 bindkey '^M' runner
 
+#TAB
+bindkey -s '^W' 'tab\n'
+
 #--------------------------------------------------------------------------------------------------------------------
 ###RE-ENTER SAME DIRECTORY
 recd(){

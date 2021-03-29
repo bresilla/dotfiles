@@ -68,5 +68,5 @@ scrolling:
   multiplier: 3
 live_config_reload: true
 
-# import: 
-  # - '/home/bresilla/.cache/wal/colors.yml'
+import: 
+  - '/home/bresilla/.cache/wal/colors.yml'

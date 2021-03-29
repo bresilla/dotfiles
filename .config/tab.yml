@@ -9,7 +9,7 @@
 # - multi-key sequences separated by spaces
 key_bindings:
   - action: Disconnect
-    keys: ctrl-W
+    keys: ctrl-E
 
   - action: SelectInteractive
-    keys: ctrl-E
+    keys: ctrl-W
