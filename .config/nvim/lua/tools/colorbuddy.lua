@@ -85,22 +85,22 @@ function mycolors(theme)
     Color.new('TrueRed',     '#ff0000')
     Color.new('TrueGreen',   '#00ff00')
 
-    vim.g.terminal_color_0  = rainbow[0+1]
-    vim.g.terminal_color_1  = rainbow[1+1]
-    vim.g.terminal_color_2  = rainbow[2+1]
-    vim.g.terminal_color_3  = rainbow[3+1]
-    vim.g.terminal_color_4  = rainbow[4+1]
-    vim.g.terminal_color_5  = rainbow[5+1]
-    vim.g.terminal_color_6  = rainbow[6+1]
-    vim.g.terminal_color_7  = rainbow[7+1]
-    vim.g.terminal_color_8  = rainbow[8+1]
-    vim.g.terminal_color_9  = rainbow[9+1]
-    vim.g.terminal_color_10 = rainbow[10+1]
-    vim.g.terminal_color_11 = rainbow[11+1]
-    vim.g.terminal_color_12 = rainbow[12+1]
-    vim.g.terminal_color_13 = rainbow[13+1]
-    vim.g.terminal_color_14 = rainbow[14+1]
-    vim.g.terminal_color_15 = rainbow[15+1]
+    -- vim.g.terminal_color_0  = rainbow[0+1]
+    -- vim.g.terminal_color_1  = rainbow[1+1]
+    -- vim.g.terminal_color_2  = rainbow[2+1]
+    -- vim.g.terminal_color_3  = rainbow[3+1]
+    -- vim.g.terminal_color_4  = rainbow[4+1]
+    -- vim.g.terminal_color_5  = rainbow[5+1]
+    -- vim.g.terminal_color_6  = rainbow[6+1]
+    -- vim.g.terminal_color_7  = rainbow[7+1]
+    -- vim.g.terminal_color_8  = rainbow[8+1]
+    -- vim.g.terminal_color_9  = rainbow[9+1]
+    -- vim.g.terminal_color_10 = rainbow[10+1]
+    -- vim.g.terminal_color_11 = rainbow[11+1]
+    -- vim.g.terminal_color_12 = rainbow[12+1]
+    -- vim.g.terminal_color_13 = rainbow[13+1]
+    -- vim.g.terminal_color_14 = rainbow[14+1]
+    -- vim.g.terminal_color_15 = rainbow[15+1]
 
 
     -- === HIGHLIGHTS === "
