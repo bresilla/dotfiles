@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #--------------------------------------------------------------------------------------------------------------------
 ###BRESILLA
-/home/bresilla/dots/.func/system/bresilla
+[ -f ~/dots/.func/system/bresilla ] && ~/dots/.func/system/bresilla
 ###THEME
 [ -f ~/.config/promptline ] && source ~/.config/promptline
 
