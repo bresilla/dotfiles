@@ -6,7 +6,6 @@
 [ -f ~/.config/promptline ] && source ~/.config/promptline
 
 
-
 #--------------------------------------------------------------------------------------------------------------------
 ###WAL COLORS
 (cat ~/.cache/wal/sequences &)
@@ -138,13 +137,22 @@ bindkey '^Z' fancy-ctrl-z
 alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
 alias _conf='nvim $(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" | fzf)'
 
+# RUN
+n (){
+  export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+  if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then echo "already running"; return; fi
+  nnn -deoHQ "$@"
+  if [ -f "$NNN_TMPFILE" ]; then
+    . "$NNN_TMPFILE"; rm -f "$NNN_TMPFILE" > /dev/null
+  fi
+}
 
 # RUN
 runner () {
     # check if the buffer does not contain any words
     if [ ${#${(z)BUFFER}} -eq 0 ]; then
       if [[ -n $(echo $ENVNAME) ]]; then
-        build && run
+        build && clear && run
       else
         printf "\n" && exa -la
       fi
@@ -215,6 +223,7 @@ cd() {
 ###DIRENV
 eval "$(direnv hook zsh)"
 
-###NAVI
-source <(navi widget zsh)
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+###SSH&GPG
+export GPG_TTY=$(tty)
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+

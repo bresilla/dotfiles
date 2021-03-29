@@ -4,57 +4,63 @@ vim.cmd('packadd packer.nvim')
 
 require('packer').startup(
     function()
-        use { 'wbthomason/packer.nvim', opt = true }                            -- package manager
-        use 'svermeulen/vimpeccable'
+        use { 'wbthomason/packer.nvim', opt = true }                            -- LUA -- package manager
+        use 'svermeulen/vimpeccable'                                            -- LUA --
 
-        use 'nvim-lua/plenary.nvim'                                             -- windowing and shit beta for NVIM
-        use 'nvim-lua/popup.nvim'                                               -- hoepfully will get merget in mainsteream
-        use 'neovim/nvim-lspconfig'
-        use 'norcalli/snippets.nvim'
-        use 'lfilho/cosco.vim'                                                  --add semicolon or comma n the end
-        use 'tpope/vim-commentary'
-        use 'sheerun/vim-polyglot'
-        use { 'nvim-treesitter/nvim-treesitter' }
-        use 'mfussenegger/nvim-dap'                                             --debugging adapter protocol DAP
+        use 'nvim-lua/plenary.nvim'                                             -- LUA -- windowing and shit beta for NVIM
+        use 'nvim-lua/popup.nvim'                                               -- LUA -- hoepfully will get merget in mainsteream
+        use 'neovim/nvim-lspconfig'                                             -- LUA --
+        use 'norcalli/snippets.nvim'                                            -- LUA --
+        use 'lfilho/cosco.vim'                                                  -- VIM -- add semicolon or comma n the end
+        use 'tpope/vim-commentary'                                              -- VIM --
+        use 'sheerun/vim-polyglot'                                              -- VIM --
+        use { 'nvim-treesitter/nvim-treesitter' }                               -- LUA --
+        use 'mfussenegger/nvim-dap'                                             -- LUA -- debugging adapter protocol DAP
 
-        use 'hrsh7th/nvim-compe'                                                -- COMPLETION
-        use { 'tzachar/compe-tabnine', run = './install.sh' }
-        use 'nvim-telescope/telescope.nvim'                                     --finder and runner
-        use 'alex-popov-tech/timer.nvim'                                        --execute commands after some time
-        use 'voldikss/vim-floaterm'                                             --terminal
-        use 'glepnir/lspsaga.nvim'                                              --lsp-UI
-        use 'kyazdani42/nvim-tree.lua'                                          --side-bar file manager
-        use 'yggdroot/indentline'                                               --indentation (characters)
-        use 'mbbill/undotree'                                                   --show a tree of undos
-        use 'glepnir/dashboard-nvim'
-        use 'mhartington/formatter.nvim'                                        -- formatter
+        use 'hrsh7th/nvim-compe'                                                -- LUA -- COMPLETION
+        use { 'tzachar/compe-tabnine', run = './install.sh' }                   -- LUA --
+        use 'nvim-telescope/telescope.nvim'                                     -- LUA -- finder and runner
+        use 'alex-popov-tech/timer.nvim'                                        -- LUA -- execute commands after some time
+        use 'voldikss/vim-floaterm'                                             -- VIM -- terminal
+        use 'glepnir/lspsaga.nvim'                                              -- LUA -- lsp-UI
+        use 'kyazdani42/nvim-tree.lua'                                          -- LUA -- side-bar file manager
+        use {'lukas-reineke/indent-blankline.nvim', 
+            branch = 'lua' 
+        }                                                                       -- LUA -- ndentation lines
+        use 'mbbill/undotree'                                                   -- VIM -- show a tree of undos
+        use 'glepnir/dashboard-nvim'                                            -- VIM --
+        use 'mhartington/formatter.nvim'                                        -- LUA -- formatter
 
-        use 'matze/vim-move'                                                    --move lines with alt-arrow
-        use 'mg979/vim-visual-multi'                                            --multi cursors
-        use 'jiangmiao/auto-pairs'                                              --auto close brackets and parenthesis
-        use 'christoomey/vim-tmux-navigator'
-        use 'tmux-plugins/vim-tmux-focus-events'                                --tmux focus/lose events
-        use 'yuttie/comfortable-motion.vim'                                     --comfortable scroll
-        use 'tpope/vim-repeat'                                                  -- '.' for better repeat functioalities
-        use 'tpope/vim-surround'                                                --manipulating sorround objects
+        use 'matze/vim-move'                                                    -- VIM -- move lines with alt-arrow
+        use 'mg979/vim-visual-multi'                                            -- VIM -- multi cursors
+        use 'jiangmiao/auto-pairs'                                              -- VIM -- auto close brackets and parenthesis
+        use 'christoomey/vim-tmux-navigator'                                    -- VIM --
+        use 'yuttie/comfortable-motion.vim'                                     -- VIM -- comfortable scroll
+        use 'tpope/vim-repeat'                                                  -- VIM -- '.' for better repeat functioalities
+        use 'tpope/vim-surround'                                                -- VIM -- manipulating sorround objects
 
-        use 'ingolemo/vim-bufferclose'
-        use 'airblade/vim-rooter'
-        use 'airblade/vim-gitgutter'                                            --show differences (GIT)
-        use 'rrethy/vim-illuminate'                                             --highlightusert same words as cursor
-        use 'haya14busa/incsearch.vim'
-        use 'kevinhwang91/nvim-hlslens'
-        use 'kana/vim-fakeclip'                                                 --better clipboard
-        use 'direnv/direnv'
+        use 'ingolemo/vim-bufferclose'                                          -- LUA --
+        use 'airblade/vim-rooter'                                               -- VIM --
+        use { 'lewis6991/gitsigns.nvim', 
+            requires = { 'nvim-lua/plenary.nvim' }
+        }                                                                       -- LUA -- show github signs
+        use 'yamatsum/nvim-cursorline'
+        use 'haya14busa/incsearch.vim'                                          -- VIM --
+        use 'kevinhwang91/nvim-hlslens'                                         -- LUA --
+        use 'kana/vim-fakeclip'                                                 -- VIM -- better clipboard
+        use 'direnv/direnv'                                                     -- VIM --
 
-        use 'romgrk/barbar.nvim'
-        -- use 'akinsho/nvim-bufferline.lua'
-        use 'tjdevries/express_line.nvim'
-        use 'tjdevries/colorbuddy.nvim'
-        use 'kyazdani42/nvim-web-devicons'                                      --file icons
-        use 'ishan9299/modus-theme-vim'
-
-        use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'  }
+        use 'romgrk/barbar.nvim'                                                -- LUA --
+        -- use 'akinsho/nvim-bufferline.lua'                                    -- LUA --
+        use 'tjdevries/express_line.nvim'                                       -- LUA --
+        use 'tjdevries/colorbuddy.nvim'                                         -- LUA --
+        use 'kyazdani42/nvim-web-devicons'                                      -- LUA -- file icons
+        use {'ishan9299/modus-theme-vim', 
+            branch = 'stable' 
+        }                                                                       -- LUA --
+        use { 'iamcco/markdown-preview.nvim', 
+            run = 'cd app && yarn install' 
+        }                                                                       -- VIM --
     end
 )
 

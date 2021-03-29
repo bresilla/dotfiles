@@ -37,8 +37,8 @@ vimp.inoremap({'silent', 'expr'}, '<Esc>', function()
 end)
 vimp.inoremap({'silent', 'expr'}, '<CR>', function()
     if vim.fn.pumvisible() == 1 then
+        vim.fn['compe#confirm']()
         return [[<C-y>]]
-        -- return vim.fn['compe#complete']()
     else
         return [[<CR>]]
     end

@@ -20,13 +20,24 @@ keys.desktopbuttons = gears.table.join(
 )
 
 keys.globalkeys = gears.table.join(
-    awful.key({ modkey, "Control" }, "r",       awesome.restart,            {description = "reload awesome", group = "awesome"}),
+    awful.key({ modkey, "Control" }, "r",       
+        function ()
+            awesome.restart()
+            awful.spawn.easy_async_with_shell("lule create -- set", function(out)
+                naughty.notify { text = "RESTARTED" }
+            end)
+        end,
+        {description = "reload awesome", group = "awesome"}
+    ),
+
     awful.key({ modkey, "Control" }, "l",       awesome.emit_signal("awesome::refresh"),            {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Control" }, "q",       awesome.quit,               {description = "quit awesome", group = "awesome"}),
     awful.key({ modkey,           }, "s",       hotkeys_popup.show_help,    {description = "show help", group= "awesome"}),
 
     awful.key({ modkey, altkey    }, "Up",      awful.tag.viewprev,         {description = "view previous", group = "tag"}),
     awful.key({ modkey, altkey    }, "Down",    awful.tag.viewnext,         {description = "view next", group = "tag"}),
+
+        -- Move client to another workspace by direction (up+down)
     awful.key({ modkey, altkey, "Shift"   }, "Up",
         function ()
             if client.focus then util.client.rel_send(-1) end
@@ -59,6 +70,7 @@ keys.globalkeys = gears.table.join(
             awful.client.focus.global_bydirection("right")
         end,
         {description = "focus right", group = "client"}),
+
         -- Swap client by direction (arrow keys)
     awful.key({ altkey }, "Down",
         function()
@@ -117,7 +129,15 @@ keys.globalkeys = gears.table.join( keys.globalkeys,
     awful.key({ modkey }, "space", function () awful.spawn("/home/bresilla/.config/rofi/menu/BROWSE") end,
         {description = "user launcher", group = "launcher"}),
     awful.key({ altkey }, "space", function () awful.spawn("/home/bresilla/.config/rofi/menu/USER") end,
+        {description = "user launcher", group = "launcher"}),
+    
+    awful.key({ modkey, altkey }, "Insert", function () awful.spawn("/home/bresilla/.config/rofi/menu/screens") end,
+        {description = "user launcher", group = "launcher"}),
+    awful.key({ modkey, altkey }, "Escape", function () awful.spawn("/home/bresilla/.config/rofi/menu/power") end,
+        {description = "user launcher", group = "launcher"}),
+    awful.key({ modkey, altkey }, "Delete", function () awful.spawn("/home/bresilla/.config/rofi/menu/CONFIG") end,
         {description = "user launcher", group = "launcher"})
+
 )
 
 for i = 1, 9 do
@@ -177,6 +197,12 @@ keys.globalkeys = gears.table.join( keys.globalkeys,
         end)
     end),
 
+    awful.key({ modkey, altkey }, "XF86AudioPlay", function ()
+        awful.spawn.easy_async_with_shell("play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd", function(stdout)
+            awesome.emit_signal("popup::volume")
+        end)
+    end),
+
     -- Brightness
    awful.key({ }, "XF86MonBrightnessDown", function ()
        awful.spawn.easy_async_with_shell("light -U 2", function(stdout)
@@ -198,7 +224,7 @@ keys.clientbuttons = gears.table.join(
         c:emit_signal("request::activate", "mouse_click", {raise = true})
         awful.mouse.client.move(c)
     end),
-    awful.button({ modkey }, 3, function (c)
+    awful.button({ altkey }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
         awful.mouse.client.resize(c)
     end)

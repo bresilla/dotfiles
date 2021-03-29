@@ -1,0 +1,15 @@
+# The global workspace file can also be used to configure key_bindings
+# Supported actions:
+# - Disconnect
+# - SelectInteractive (fuzzy finder)
+# Supported keys:
+# - ctrl-[A-Z]
+# - ESC
+# - visible characters, such as a-z, A-Z, 0-9, and special characters
+# - multi-key sequences separated by spaces
+key_bindings:
+  - action: Disconnect
+    keys: ctrl-W
+
+  - action: SelectInteractive
+    keys: ctrl-E

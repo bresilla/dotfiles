@@ -133,6 +133,8 @@ function mycolors(theme)
     Group.new('NormalFloat',            colors.r15,           colors.ac_d,          styles.bold)
     --parenthesis
     Group.new('MatchParen',             colors.r0,            colors.r1,            styles.bold)
+    -- indentlines
+    Group.new('IndentLine',             colors.ac_d,          nil)
 
 
     -- === TABS === "
@@ -197,7 +199,8 @@ function mycolors(theme)
     Group.new('HlSearchCur',                colors.r0,            colors.r1)
     Group.new('HlSearchLensCur',            colors.r0,            colors.ac_d)
     Group.new('HlSearchLens',               colors.r0,            colors.ac_d)
-    Group.new('illuminatedWord',            nil,                  colors.ac_d,            styles.bold)
+    -- Group.new('illuminatedWord',            nil,                  colors.ac_d,            styles.bold)
+    Group.new('CursorWord',                 nil,                  colors.ac_d,            nil)
 
 
 

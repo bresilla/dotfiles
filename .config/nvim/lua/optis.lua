@@ -100,14 +100,14 @@ vimp.bind('n',            '<C-Pagedown>',             [[:BufferNext<CR>]])
 vimp.bind('n',            '<C-Pageup>',               [[:BufferPrevious<CR>]])
 vimp.bind('n',            '<C-M-Pagedown>',           [[:BufferMoveNext<CR>]])
 vimp.bind('n',            '<C-M-Pageup>',             [[:BufferMovePrevious<CR>]])
-vimp.bind('n',            '<C-Down>',                 [[:wincmd j<CR>]])
-vimp.bind('i',            '<C-Down>',                 [[<ESC>:wincmd j<CR>]])
-vimp.bind('n',            '<C-Up>',                   [[:wincmd k<CR>]])
-vimp.bind('i',            '<C-Up>',                   [[<ESC>:wincmd k<CR>]])
-vimp.bind('n',            '<C-Left>',                 [[:wincmd h<CR>]])
-vimp.bind('i',            '<C-Left>',                 [[<ESC>:wincmd h<CR>]])
-vimp.bind('n',            '<C-Right>',                [[:wincmd l<CR>]])
-vimp.bind('i',            '<C-Right>',                [[<ESC>:wincmd l<CR>]])
+vimp.nnoremap({'silent'},       '<C-j>',              [[:wincmd j<CR>]])
+vimp.inoremap({'silent'},       '<C-j>',              [[<ESC><ESC>:wincmd j<CR>]])
+vimp.nnoremap({'silent'},       '<C-k>',              [[:wincmd k<CR>]])
+vimp.inoremap({'silent'},       '<C-k>',              [[<ESC><ESC>:wincmd k<CR>]])
+vimp.nnoremap({'silent'},       '<C-h>',              [[:wincmd h<CR>]])
+vimp.inoremap({'silent'},       '<C-h>',              [[<ESC><ESC>:wincmd h<CR>]])
+vimp.nnoremap({'silent'},       '<C-l>',              [[:wincmd l<CR>]])
+vimp.inoremap({'silent'},       '<C-l>',              [[<ESC><ESC>:wincmd l<CR>]])
 -- move horizontally
 vimp.bind('n',            '<home>',                   [[%]])
 vimp.bind('n',            '<end>',                    [[$]])
@@ -151,12 +151,10 @@ vim.highlight.on_yank { on_visual = true }
 
 
 --- === INDENTATION LINES === "
-vim.g.indentLine_char_list = { '┊' }
-vim.g.indentLine_color_term = 232
-vim.g.indentLine_bgcolor_term = 0
-vim.g.indentLine_setConceal = 2
-vim.g.indentLine_concealcursor = ""
--- vim.g.indentLine_defaultGroup = 'NonText'
+vim.g.indentLine_char_list = { '│' }
+vim.g.indent_blankline_show_current_context = true
+vim.g.indent_blankline_char_highlight_list = {'IndentLine'}
+vim.g.indent_blankline_context_patterns = {'class', 'function', 'method', 'if', 'while', 'for'}
 vim.g.indentLine_fileTypeExclude ={ 'dashboard' }
 
 

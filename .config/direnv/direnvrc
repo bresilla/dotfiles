@@ -33,13 +33,10 @@ layout_conda() {
     CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
     CONDALENV="$PWD/.direnv/venv/$(uname -m)";
 
-    if [[ -d $CONDALENV/conda-meta ]]; then
+    if [[ $(git rev-parse --show-toplevel) == "/env" ]]; then
+        source activate $CONDA_HOME
+    elif [[ -d $CONDALENV/conda-meta ]]; then
         source activate $CONDALENV
-        conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
-        python_v=$(python --version)
-        conda_v=$(conda --version)
-        printf "\nenvironment ver.: \t ${BLUE}${python_v}${NC} and ${BLUE}${conda_v}${NC}";
-        printf "\nenvironment path: \t${BLUE}${conda_env}${NC}\n\n";
     else
         # conda create --prefix=$PWD/.venv python=3 -y
         printf "\n crating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
@@ -49,6 +46,11 @@ layout_conda() {
         printf "\n activating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
         source activate $CONDALENV;
     fi
+    conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
+    python_v=$(python --version)
+    conda_v=$(conda --version)
+    printf "\nenvironment ver.: \t ${BLUE}${python_v}${NC} and ${BLUE}${conda_v}${NC}";
+    printf "\nenvironment path: \t${BLUE}${conda_env}${NC}\n\n";
 }
 
 

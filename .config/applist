@@ -102,6 +102,7 @@ send    - ffsend            + command line file share																+ https://g
 qrcp                        + QR-code file network transfer													+ https://github.com/claudiodangelis/qrcp               + go
 transfer                    + easy and fast file sharing from cli										+ https://github.com/dutchcoders/transfer.sh            + go
 croc                        + send from one computer to other												+ https://github.com/schollz/croc                       + go
+wutag												+ tagging and organizing files by tags									+ https://github.com/wojciechkepka/wutag								+ rust
 -------------------------------------------------------             NAVIGATR							---------------------------------------------------------
 nnn													+ the unorthodox terminal file manager									+ https://github.com/jarun/nnn													+ cpp
 vifm												+ vim-like file manager for terminal										+ https://github.com/vifm/vifm													+ cpp

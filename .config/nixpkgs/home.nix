@@ -203,28 +203,28 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    services.picom = {
-      Unit = {
-        Description = "Compositor for X11";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/usr/bin/picom --config %h/.config/compton/compton";
-        Restart = "always";
-        RestartSec = "2";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+    # services.picom = {
+    #   Unit = {
+    #     Description = "Compositor for X11";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "forking";
+    #     ExecStart = "/usr/bin/picom --config %h/.config/compton/compton";
+    #     Restart = "always";
+    #     RestartSec = "2";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     services.wallpaper = {
       Unit = {
         Description = "Wallpaper switcher";
         After = ["graphical.target"];
       };
       Service = {
-        Type = "forking";
+        Type = "oneshot";
         Environment=[
           "TEMP=/tmp"
           "LULE_S=/home/bresilla/code/proj/warp/lule/scripts/lule_colors"

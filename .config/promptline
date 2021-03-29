@@ -26,6 +26,11 @@ function __memoryuse() {
     printf $mem
 }
 
+function __ssid() {
+    ssid=$(iwgetid -r);
+    printf $ssid
+}
+
 function __netspeed() {
     [[ -z $INLABEL ]] && INLABEL="▼"
     [[ -z $OUTLABEL ]] && OUTLABEL="▲"
@@ -40,15 +45,7 @@ function __netspeed() {
     rx_rate=$(echo $((RXBN - RXB)) )
     tx_rate=$(echo $((TXBN - TXB)) )
 
-    # incoming
-    echo -n "$INLABEL"
-    rx_kib=$(( $rx_rate >> 10 ))
-    if [[ "$rx_rate" -gt 1048576 ]]; then
-    printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
-    else
-    echo -n "${rx_kib}K"
-    fi
-    echo -n " "
+
     # outgoing
     echo -n "$OUTLABEL"
     tx_kib=$(( $tx_rate >> 10 ))
@@ -56,6 +53,15 @@ function __netspeed() {
     printf '%sM' "`echo "scale=1; $tx_kib / 1024" | bc`"
     else
     echo -n "${tx_kib}K"
+    fi
+    echo -n " | "
+    # incoming
+    echo -n "$INLABEL"
+    rx_kib=$(( $rx_rate >> 10 ))
+    if [[ "$rx_rate" -gt 1048576 ]]; then
+    printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
+    else
+    echo -n "${rx_kib}K"
     fi
 }
 
@@ -154,7 +160,6 @@ function __promptline_cwd {
 
 function __truncate_cwd() {
     dir=$(echo "$1" | rev | cut -d'/' -f-$2 | rev)
-
     if [[ $2 == "1" ]]; then
         if [[ $dir == "" ]]; then echo "/"; else echo $dir; fi
     else
@@ -185,7 +190,9 @@ function __promptline_left_prompt {
     if [[ $last_exit_code -gt 0 ]]; then
         prefix="${blackTX}${redBG}${arrFL}${blackTX}" suffix="${space}${blackBG}${redTX}${arrFL}${greyTX}"; printf "%s" "$prefix " $last_exit_code "$suffix"
     fi
-    printf "%s" "${conTX}${arrEL}${greyTX}${space}"
+    #TAB
+    prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; [[ -n $TAB ]] && printf "%s" "$prefix" " >> $(echo $TAB | tr -d '/') " "$suffix"
+    printf "%s" "${blackBG}${conTX}${arrEL}${greyTX}${space}"
 }
 
 ## tk -t $ENVNAME src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4
@@ -233,26 +240,27 @@ function __tmuxline_right_prompt {
     #WORKING DIR or GIT
     gitroot=$(git -C $1 rev-parse --show-toplevel)
     if git ls-remote $gitroot -q ; then
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}"; printf "%s" "$prefix" "$(gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
+        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}"; printf "%s" "$prefix" "$(/env/go/bin/gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
     else
         prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__promptline_cwd 2 right $@)" "$suffix"
     fi
     #CMD TIME
     prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; printf "%s" "$prefix" "$(__cpustats)" "$suffix"
     #LOAD AVERAGE
-    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__memoryuse)" "$suffix"
+    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__memoryuse)" "$suffix"
     #BATTERY
     [[ $(acpi | awk '{print $3}' | tr -d '%,') == "Discharging" ]] && conTX=$redTX || conTX=$light_TX
     prefix="${accentBG}${blackTX}${arrFR}${blackBG}${dark_TX}${arrFR}${light_TX}${dark_BG}${space}$conTX${space}" suffix="${space}";printf "%s" "$BLD$prefix" "$(__battery)%" "$suffix"
 }
 
 function __tmuxline_left_prompt {
-    #TIME
+    #NETSPPED
     prefix="${light_TX}${dark_BG}${space}" suffix="${space}${dark_TX}"; printf "%s" "$BLD$prefix" "$(__timenow)" "$suffix$NLD"
-    #UPTIME
-    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__datetoday)" "$suffix"
-    #UPTIME
-    prefix="${defaultBG}${space}${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "$(__uptime)" "$suffix"
+    #TIME
+    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__netspeed)" "$suffix"
+    #WIFI-ID
+    if [[ -z $(__ssid) ]]; then oneTX=$redTX; ssid="offline"; else oneTX=$conTX; ssid=$(__ssid); fi
+    prefix="${defaultBG}${space}${defaultBG}${arrFL}${oneTX}${space}" suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "$ssid" "$suffix"
 
 }
 
