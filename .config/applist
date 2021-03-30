@@ -55,6 +55,8 @@ pd                          + view process details																	+ https://git
 inxi                        + all-n-one system info																	+ https://github.com/smxi/inxi                          + perl
 battop                      + Interactive batteriy monitor													+ https://github.com/svartalf/rust-battop               + rust
 nvtop												+ nvidia gpu terminal monitor														+ https://github.com/Syllo/nvtop												+ cpp
+-------------------------------------------------------             UTILS								-----------------------------------------------------------
+grex												+ generae regex from user cases													+ https://github.com/pemistahl/grex											+ rust
 -------------------------------------------------------              GIT								-----------------------------------------------------------
 lzg     - lazygit           + simple terminal UI for git commands										+ https://github.com/jesseduffield/lazygit              + go
 gitui                       + blazng fast git cmd ui																+ https://github.com/extrawurst/gitui                   + rust

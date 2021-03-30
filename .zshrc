@@ -137,8 +137,8 @@ bindkey '^Z' fancy-ctrl-z
 alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
 alias _conf='nvim $(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" | fzf)'
 
-# RUN
-n (){
+# NNN
+nnnn(){
   export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
   if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then echo "already running"; return; fi
   nnn -deoHQ "$@"
@@ -146,6 +146,7 @@ n (){
     . "$NNN_TMPFILE"; rm -f "$NNN_TMPFILE" > /dev/null
   fi
 }
+bindkey -s '^W' ' nnnn\n'
 
 # RUN
 runner () {
@@ -163,7 +164,7 @@ zle -N runner
 bindkey '^M' runner
 
 #TAB
-bindkey -s '^W' 'tab\n'
+bindkey -s '^E' ' tab\n'
 
 #--------------------------------------------------------------------------------------------------------------------
 ###RE-ENTER SAME DIRECTORY
@@ -229,4 +230,3 @@ eval "$(direnv hook zsh)"
 ###SSH&GPG
 export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-

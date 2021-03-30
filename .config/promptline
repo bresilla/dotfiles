@@ -191,7 +191,12 @@ function __promptline_left_prompt {
         prefix="${blackTX}${redBG}${arrFL}${blackTX}" suffix="${space}${blackBG}${redTX}${arrFL}${greyTX}"; printf "%s" "$prefix " $last_exit_code "$suffix"
     fi
     #TAB
-    prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; [[ -n $TAB ]] && printf "%s" "$prefix" " >> $(echo $TAB | tr -d '/') " "$suffix"
+    if [[ -n $TAB ]]; then
+        prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; printf "%s" "$prefix" " >> $(echo $TAB | tr -d '/') " "$suffix"
+    else
+        prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; 
+        [[ $(( $(tab -l | wc -l) - 2 )) -ne 0  ]] && printf "%s" "$prefix" " $(( $(tab -l | wc -l) - 2 )) " "$suffix"
+    fi
     printf "%s" "${blackBG}${conTX}${arrEL}${greyTX}${space}"
 }
 
