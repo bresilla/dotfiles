@@ -24,8 +24,10 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 #NIM
 [[ -d "/env/nimble/bin" ]] && PATH="/env/nimble/bin:$PATH"
 
-#NIX
+#BLINDSPOT
+[[ -d "/env/bin" ]] && PATH="/env/bin:$PATH"
 
+#NIX
 # if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
@@ -69,6 +71,9 @@ export BAT_THEME="TwoDark"
 export LULE_W="/home/bresilla/sets/.wallpaper"
 export LULE_S="/home/bresilla/code/proj/warp/lule/scripts/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
+
+export GRAVEYARD="/tmp/graveyard-$USER"
+export BSPM_BIN_DIR="/env/bin"
 
 export WINEPREFIX=/wine
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive

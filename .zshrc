@@ -138,10 +138,11 @@ alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
 alias _conf='nvim $(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" | fzf)'
 
 # NNN
+[[ -e ~/.config/nnn/config.sh ]] && emulate sh -c 'source ~/.config/nnn/config.sh'
 nnnn(){
   export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
   if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then echo "already running"; return; fi
-  nnn -deoHQ "$@"
+  nnn -deHQ "$@"
   if [ -f "$NNN_TMPFILE" ]; then
     . "$NNN_TMPFILE"; rm -f "$NNN_TMPFILE" > /dev/null
   fi

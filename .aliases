@@ -29,6 +29,7 @@ alias vim='nvim'
 alias mut='neomutt'
 
 ##PACKAGE_MANAGER
+alias box='blindspot'
 alias pack='unset GOPATH; unset GOBIN && paru'
 alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
 alias branch='doas pacman-mirrors --api -S'

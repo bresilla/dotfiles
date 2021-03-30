@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+if which zoxide >/dev/null 2>&1 && which whiptail >/dev/null 2>&1; then
+    export NEWT_COLORS='root=,black entry=black,red'
+    dir=$(whiptail --inputbox "GOTO:" 8 60 3>&1 1>&2 2>&3)
+    odir="$(zoxide query -- $dir)"
+    printf "%s" "0c$odir" > "$NNN_PIPE"
+else
+    printf "zoxide or newt in not installed, install it with 'cargo install zoxide'"
+    read -r _
+fi
+

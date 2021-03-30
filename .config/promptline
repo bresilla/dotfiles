@@ -192,16 +192,18 @@ function __promptline_left_prompt {
     fi
     #TAB
     if [[ -n $TAB ]]; then
-        prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; printf "%s" "$prefix" " >> $(echo $TAB | tr -d '/') " "$suffix"
+        prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; printf "%s" "$prefix" " >> " "$suffix"
     else
         prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; 
-        [[ $(( $(tab -l | wc -l) - 2 )) -ne 0  ]] && printf "%s" "$prefix" " $(( $(tab -l | wc -l) - 2 )) " "$suffix"
+        [[ $(( $(tab -l 2> /dev/null | wc -l) - 1 )) -ne 0  ]] && printf "%s" "$prefix" " $(( $(tab -l 2> /dev/null | wc -l) - 1 )) " "$suffix"
     fi
     printf "%s" "${blackBG}${conTX}${arrEL}${greyTX}${space}"
 }
 
 ## tk -t $ENVNAME src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4
 function __promptline_right_prompt {
+    #TAB
+    prefix="${conTX}${arrEL}${defaultBG}" suffix="${blackBG}${greyTX}"; [[ -n $TAB ]] && printf "%s" "$prefix" " $(echo $TAB | tr -d '/') " "$suffix"
     #DEVSHELL
     if [[ -n $(__dev_lang) ]]; then
         src=$(git rev-parse --show-toplevel)/src
@@ -230,7 +232,7 @@ function __promptline_right_prompt {
         #LOAD AVERAGE
         prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__load_average)" "$suffix"
     fi
-    #VIM MODE
+    #VIM MOD  
     prefix="${dark_TX}${arrFR}${light_TX}${dark_BG}${space}" suffix="${space}${defaultBG}${defaultFG}";
     if [[ -n ${ZSH_VERSION-} ]]; then
         vimode='${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}'

@@ -14,6 +14,10 @@ sd                          + an intuitive search & displace												+ https:
 tk      - tokei             + code statistics																				+ https://github.com/XAMPPRocky/tokei                   + rust
 aa      - alertafter        + notify after command																	+ https://github.com/frewsxcv/alert-after               + rust
 rp			- ruplacer					+ find and replace text in source files 								+ https://github.com/TankerHQ/ruplacer									+ rust
+-------------------------------------------------------           PACKAGES			  			-----------------------------------------------------------
+yay													+ yet another AUR helper																+ https://github.com/Jguer/yay													+ go
+pack		- paru							+ featured packed AUR helper 														+ https://github.com/morganamilo/paru										+ rust
+box			- blindspot					+ binary app manager																		+ https://github.com/xermicus/blindspot									+ rust
 -------------------------------------------------------            SYSTEM								-----------------------------------------------------------
 alt                         + binary version/path manager														+ https://github.com/dotboris/alt                       + rust
 handlr                      + better xdg-utils																			+ https://github.com/chmln/handlr                       + rust
