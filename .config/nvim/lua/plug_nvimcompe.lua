@@ -16,13 +16,13 @@ require'compe'.setup {
     buffer = true;
     calc = true;
     vsnip = true;
-    nvim_lsp = { kind = 'you want', priority = 1 } ;
+    nvim_lsp = { kind = 'you want', priority = 9 } ;
     nvim_lua = true;
     spell = true;
     tags = true;
     snippets_nvim = true;
     treesitter = true;
-    tabnine = { menu = '  TabNine', priority = 100000 };
+    tabnine = { menu = '  TabNine', priority = 5 };
   };
 }
 
@@ -36,12 +36,26 @@ vimp.inoremap({'silent', 'expr'}, '<Esc>', function()
     end
 end)
 vimp.inoremap({'silent', 'expr'}, '<CR>', function()
-    if vim.fn.pumvisible() == 1 then
-        vim.fn['compe#confirm']()
-        return [[<C-y>]]
+    local npairs = require('nvim-autopairs')
+    if vim.fn.pumvisible() ~= 0  then
+        if vim.fn.complete_info()["selected"] ~= -1 then
+            vim.fn["compe#confirm"]()
+            return npairs.esc("<c-y>")
+        else
+            vim.defer_fn(function()
+                vim.fn["compe#confirm"]("<cr>")
+            end, 20)
+            return npairs.esc("<c-n>")
+        end
     else
-        return [[<CR>]]
+        return npairs.check_break_line_char()
     end
+    -- if vim.fn.pumvisible() == 1 then
+    --     vim.fn['compe#confirm']()
+    --     return [[<C-y>]]
+    -- else
+    --     return [[<CR>]]
+    -- end
 end)
 vimp.inoremap({'silent', 'expr'}, '<Down>', function()
     if vim.fn.pumvisible() == 1 then

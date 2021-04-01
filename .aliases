@@ -54,7 +54,7 @@ alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
 
 ##PROGRAMS
-alias x='dtrx --one-entry=rename'
+alias x='atool -D -x'
 alias ari='aria2c'
 alias inxi='optirun inxi -Fxxxz'
 alias note='dnote'

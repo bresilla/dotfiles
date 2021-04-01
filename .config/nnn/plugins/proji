@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if which proji >/dev/null 2>&1 && which fzf >/dev/null 2>&1; then
+    odir="$(zoxide query -- $(proji ls | head -n-1 | tail -n+4 | fzf | cut -d '|' -f4))"
+    printf "%s" "0c$odir" > "$NNN_PIPE"
+else
+    printf "proji or fzf are not installed"
+    read -r _
+fi
+

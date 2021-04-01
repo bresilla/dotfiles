@@ -200,7 +200,8 @@ function mycolors(theme)
     Group.new('HlSearchLensCur',            colors.r0,            colors.ac_d)
     Group.new('HlSearchLens',               colors.r0,            colors.ac_d)
     -- Group.new('illuminatedWord',            nil,                  colors.ac_d,            styles.bold)
-    Group.new('CursorWord',                 nil,                  colors.ac_d,            nil)
+    Group.new('CursorWord',                 colors.ac_l,          colors.ac_d,            nil)
+    Group.new('CursorJump',                 colors.ac_d,          colors.ac_l,            nil)
 
 
 

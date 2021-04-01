@@ -211,7 +211,7 @@ alias \$=''
 ###PROFILE
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
-###ZOXIDE
+###TMUX && CD && ZOXIDE
 eval "$(zoxide init zsh)"
 cd() {
   if [[ -z $1 ]]; then

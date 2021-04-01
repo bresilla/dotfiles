@@ -247,9 +247,11 @@ function __tmuxline_right_prompt {
     #WORKING DIR or GIT
     gitroot=$(git -C $1 rev-parse --show-toplevel)
     if git ls-remote $gitroot -q ; then
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}"; printf "%s" "$prefix" "$(/env/go/bin/gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
+        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}";
+        printf "%s" "$prefix" "$(/env/go/bin/gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
     else
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__promptline_cwd 2 right $@)" "$suffix"
+        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; 
+        printf "%s" "$prefix" "$(__promptline_cwd 2 right $(tmux showenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %)  | sed 's/^.*=//'))" "$suffix"
     fi
     #CMD TIME
     prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; printf "%s" "$prefix" "$(__cpustats)" "$suffix"
@@ -352,10 +354,15 @@ function __promptline {
     local BLD=$(tput bold)
     local NLD=$(tput sgr0)
 
+    TMUX_PWD=$(
+        if [ -n $TMUX ]; then
+            tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD
+        fi
+    )
 
     if [[ -n ${ZSH_VERSION-} ]]; then
         # PROMPT="$(__one_line_prompt)"
-        PROMPT="$(__promptline_left_prompt)"
+        PROMPT="$(__promptline_left_prompt) $(eval $TMUX_PWD)"
         RPROMPT=" $(__promptline_right_prompt)"
     elif [[ -n ${FISH_VERSION-} ]]; then
         if [[ -n "$1" ]]; then

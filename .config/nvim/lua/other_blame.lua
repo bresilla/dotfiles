@@ -1,6 +1,6 @@
-vim.cmd([[au CursorHold   * lua require'other.blame'.blameVirtText() ]]) 
-vim.cmd([[au CursorMoved  * lua require'other.blame'.clearBlameVirtText() ]]) 
-vim.cmd([[au CursorMovedI * lua require'other.blame'.clearBlameVirtText() ]]) 
+vim.cmd([[au CursorHold   * lua require'other_blame'.blameVirtText() ]]) 
+vim.cmd([[au CursorMoved  * lua require'other_blame'.clearBlameVirtText() ]]) 
+vim.cmd([[au CursorMovedI * lua require'other_blame'.clearBlameVirtText() ]]) 
 
 local M = {}
 
