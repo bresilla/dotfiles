@@ -355,8 +355,8 @@ function __promptline {
     local NLD=$(tput sgr0)
 
     TMUX_PWD=$(
-        if [ -n $TMUX && command -v tmux &> /dev/null ]; then
-            tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD
+        if [ -n $TMUX ]; then
+            [[ -x "$(command -v tmux)" ]] && tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD
         fi
     )
 
