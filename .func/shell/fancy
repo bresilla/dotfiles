@@ -1,0 +1,9 @@
+#!/bin/bash
+
+WORDLIST="$HOME/.config/dict/wordlist.txt"
+ADJECTIVELIST="$HOME/.config/dict/adjective.txt"
+NOUNLIST="$HOME/.config/dict/noun.txt"
+
+echo $(shuf -n1 $ADJECTIVELIST)"_"$(shuf -n1 $NOUNLIST)
+
+

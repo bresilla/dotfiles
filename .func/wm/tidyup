@@ -2,3 +2,12 @@
 
 rm $HOME/.fehbg &
 rm $HOME/.lyxauth &
+rm $HOME/.wget-hstsr &
+rm $HOME/.Xauthority &
+rm $HOME/.lldb &
+rm $HOME/.fltk &
+rm $HOME/.dbus &
+rm $HOME/.conda &
+rm $HOME/.pki &
+rm $HOME/.vnc &
+rm $HOME/.gnupg &

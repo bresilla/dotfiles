@@ -136,8 +136,10 @@ keys.globalkeys = gears.table.join( keys.globalkeys,
     awful.key({ modkey, altkey }, "Escape", function () awful.spawn("/home/bresilla/.config/rofi/menu/power") end,
         {description = "user launcher", group = "launcher"}),
     awful.key({ modkey, altkey }, "Delete", function () awful.spawn("/home/bresilla/.config/rofi/menu/CONFIG") end,
-        {description = "user launcher", group = "launcher"})
+        {description = "user launcher", group = "launcher"}),
 
+    awful.key({}, "Print", function () awful.spawn("flameshot gui") end,
+        {description = "user application", group = "application"})
 )
 
 for i = 1, 9 do

@@ -69,11 +69,16 @@ export PASTEL_COLOR_MODE=24bit
 export COLORTERM=truecolor
 export BAT_THEME="TwoDark"
 export LULE_W="/home/bresilla/sets/.wallpaper"
-export LULE_S="/home/bresilla/code/proj/warp/lule/scripts/lule_colors"
+export LULE_S="/home/bresilla/dots/.func/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
 
 export GRAVEYARD="/tmp/graveyard-$USER"
 export BSPM_BIN_DIR="/env/bin"
+
+export WORDLIST="$HOME/.config/dict/wordlist.txt"
+export ADJECTIVELIST="$HOME/.config/dict/adjective.txt"
+export NOUNLIST="$HOME/.config/dict/noun.txt"
+export FANCY=$(printf "%s" $(shuf -n1 $ADJECTIVELIST) "_" $(shuf -n1 $NOUNLIST))
 
 export WINEPREFIX=/wine
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive

@@ -268,8 +268,13 @@ require('packer').startup(
             end
         }                                            
 
-        -- VIM --
-        use { 'christoomey/vim-tmux-navigator' }                                
+        -- LUA -- tmux and pane movementsv
+        use {
+            'numToStr/Navigator.nvim',
+            config = function()
+                require('plug_navigator')
+            end
+        }
 
         -- VIM -- comfortable scroll
         use { 'yuttie/comfortable-motion.vim',
@@ -296,7 +301,7 @@ require('packer').startup(
                 require('plug_gitsign')
             end
         }                                                                       
-        use { 'yamatsum/nvim-cursorline' }
+        --use { 'yamatsum/nvim-cursorline' }
 
         -- VIM --
         use { 'haya14busa/incsearch.vim' }                                      
@@ -314,7 +319,11 @@ require('packer').startup(
         use { 'direnv/direnv' }                                                 
 
         -- LUA --
-        use { 'romgrk/barbar.nvim' }                                            
+        use { 'romgrk/barbar.nvim',                                            
+            config = function()
+                require('plug_bufferline')
+            end
+        }
 
         -- LUA --
         use { 'tjdevries/express_line.nvim',
@@ -366,20 +375,6 @@ vim.highlight.on_yank { on_visual = true }
 ---------------------------------------------- === BINDINGS === ----------------------------------------------
 vim.g.mapleader = " "
 
--- === NAVIGATION === "
-vimp.bind('n',            '<C-Pagedown>',             [[:BufferNext<CR>]])
-vimp.bind('n',            '<C-Pageup>',               [[:BufferPrevious<CR>]])
-vimp.bind('n',            '<C-M-Pagedown>',           [[:BufferMoveNext<CR>]])
-vimp.bind('n',            '<C-M-Pageup>',             [[:BufferMovePrevious<CR>]])
-vimp.nnoremap({'silent'},       '<C-j>',              [[:wincmd j<CR>]])
-vimp.inoremap({'silent'},       '<C-j>',              [[<ESC><ESC>:wincmd j<CR>]])
-vimp.nnoremap({'silent'},       '<C-k>',              [[:wincmd k<CR>]])
-vimp.inoremap({'silent'},       '<C-k>',              [[<ESC><ESC>:wincmd k<CR>]])
-vimp.nnoremap({'silent'},       '<C-h>',              [[:wincmd h<CR>]])
-vimp.inoremap({'silent'},       '<C-h>',              [[<ESC><ESC>:wincmd h<CR>]])
-vimp.nnoremap({'silent'},       '<C-l>',              [[:wincmd l<CR>]])
-vimp.inoremap({'silent'},       '<C-l>',              [[<ESC><ESC>:wincmd l<CR>]])
-
 -- === REMOVE HABITS === "
 vimp.nnoremap('d',              [["_d]])
 vimp.vnoremap('d',              [["_d]])
@@ -391,10 +386,6 @@ vimp.nnoremap('<S-Down>',       [[<Nop>]])
 -- === CHANGE CASE === "
 vimp.inoremap('<M-u>',          [[<ESC>viw~]])
 vimp.nnoremap('<M-u>',          [[viw~<ESC>]])
-
--- === CHANGE INDENT === "
-vimp.vnoremap('>', [[>gv]])
-vimp.vnoremap('<', [[<gv]])
 
 -------------------------------------------- === LAST MAP === ---------------------------------------------
 vimp.nnoremap({'silent', 'expr'}, '<ESC>', function()
