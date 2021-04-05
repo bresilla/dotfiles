@@ -111,6 +111,7 @@ croc                        + send from one computer to other												+ https
 wutag												+ tagging and organizing files by tags									+ https://github.com/wojciechkepka/wutag								+ rust
 -------------------------------------------------------             NAVIGATR							---------------------------------------------------------
 nnn													+ the unorthodox terminal file manager									+ https://github.com/jarun/nnn													+ cpp
+xplr												+ hackable, minimal, fast TUI file explorer							+ https://github.com/sayanarijit/xplr										+ rust
 vifm												+ vim-like file manager for terminal										+ https://github.com/vifm/vifm													+ cpp
 -------------------------------------------------------            BACKUP								-----------------------------------------------------------
 borg                        + backup & deduplicating archiver												+ https://github.com/borgbackup/borg                    + cpp  
