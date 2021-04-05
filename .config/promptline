@@ -357,7 +357,7 @@ function __promptline {
 
     TMUX_PWD=$(
         if [ -n $TMUX ]; then
-            [[ command -v tmux >/dev/null 2>&1 ]] && tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD
+            [[ -x "$(command -v tmux)" ]] && tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD
         fi
     )
 

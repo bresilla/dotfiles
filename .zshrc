@@ -137,8 +137,8 @@ alias \$=''
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 ##NAME
-[[ command -v tmux >/dev/null 2>&1 ]] && tmux setenv -g TMUX_FANCY_$(tmux display -p "#D" | tr -d %) $FANCY
-[[ command -v tmux >/dev/null 2>&1 ]] && tmux setenv FANCY $FANCY
+[[ -x "$(command -v tmux)" ]] && tmux setenv -g TMUX_FANCY_$(tmux display -p "#D" | tr -d %) $FANCY
+[[ -x "$(command -v tmux)" ]] && tmux setenv FANCY $FANCY
 
 ###DIRENV
 eval "$(direnv hook zsh)"
