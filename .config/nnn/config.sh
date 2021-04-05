@@ -5,3 +5,4 @@ export NNN_TRASH=1
 export NNN_USE_EDITOR=1
 export NNN_PLUG='d:dragdrop;j:zoxide;t:preview-tui;p:proji'
 export NNN_FIFO="/tmp/nnn_$USER.fifo"
+export NNN_OPENER="$HOME/.config/nnn/plugins/nuke"
