@@ -90,66 +90,43 @@ end
 vim.cmd('packadd packer.nvim')
 require('packer').startup(
     function()
-        -- LUA -- package manager
-        use { 'wbthomason/packer.nvim', opt = true }                            
-
-        -- LUA --
-        use { 'svermeulen/vimpeccable' }                                        
-
-        -- LUA -- windowing and shit beta for NVIM
-        use { 'nvim-lua/plenary.nvim' }                                         
-
-        -- LUA -- hoepfully will get merget in mainsteream
-        use { 'nvim-lua/popup.nvim' }                                           
-
-        -- LUA --
+        use { 'wbthomason/packer.nvim', opt = true }
+        use { 'svermeulen/vimpeccable' }
+        use { 'nvim-lua/plenary.nvim' }
+        use { 'nvim-lua/popup.nvim' }
         use { 'neovim/nvim-lspconfig', 
             config = function()
                 require('plug_lspconfis')
             end
-        }                                         
-
-        -- LUA --
+        }
         use { 'norcalli/snippets.nvim',
             config = function()
                 require('plug_snippets')
             end
-        }                                        
-
-        -- VIM -- add semicolon or comma n the end
-        use { 'lfilho/cosco.vim',
+        }
+        use { "folke/which-key.nvim",
             config = function()
-                vim.cmd([[autocmd FileType cpp nmap <silent> , <Plug>(cosco-commaOrSemiColon)]])
-                vim.cmd([[autocmd FileType rust nmap <silent> , <Plug>(cosco-commaOrSemiColon)]])
+                require('plug_whichkey')
             end
-        }                                              
-
-        -- VIM --
-        use { 'tpope/vim-commentary',
+        }
+        use { 'b3nj5m1n/kommentary',
             config = function()
-                vimp.bind('nv', '#', [[:Commentary<CR>]])
+                vim.api.nvim_set_keymap("n", "<leader>#", "<Plug>kommentary_motion_default", {})
+                vim.api.nvim_set_keymap("n", "#", "<Plug>kommentary_line_default", {})
+                vim.api.nvim_set_keymap("v", "#", "<Plug>kommentary_visual_default", {})
             end
-        }                                          
-
-        -- VIM --
-        use { 'sheerun/vim-polyglot' }                                          
-
-        -- LUA --
+        }
         use { 'nvim-treesitter/nvim-treesitter',
             config = function()
                 require('plug_treesitter')
             end
-        }                               
-
-        -- LUA -- debugging adapter protocol DAP
+        }
         use { 'mfussenegger/nvim-dap',
             config = function()
                 require('plug_dapconfig')
             end
-        }                                         
-
-        -- LUA -- Spell checker
-        use { 'lewis6991/spellsitter.nvim',                                     
+        }
+        use { 'lewis6991/spellsitter.nvim',
            config = function()
                require('spellsitter').setup {
                     hl = 'SpellBad',
@@ -159,83 +136,116 @@ require('packer').startup(
                 }
            end
         }
-
-        -- LUA -- COMPLETION
         use { 'hrsh7th/nvim-compe', 
             config = function()
                 require('plug_nvimcompe')
             end
-        }                                            
-
-        -- LUA --
-        use { 'tzachar/compe-tabnine', run = './install.sh' }                   
-
-        -- LUA -- finder and runner
-        use {'nvim-telescope/telescope.nvim',                                   
+        }
+        use { 'tzachar/compe-tabnine', run = './install.sh' }
+        use {'nvim-telescope/telescope.nvim',
             config = function()
                 require('plug_telescopy')
             end
         }
-
-        -- LUA -- execute commands after some time
         use { 'alex-popov-tech/timer.nvim',
             config = function()
                 require('plug_timernvim')
             end
-        }                                    
-
-        -- VIM -- terminal
-        use { 'voldikss/vim-floaterm',
+        }
+        use { "numtostr/FTerm.nvim",
             config = function()
                 require('plug_floaterm')
             end
-        }                                         
-
-        -- LUA -- lsp-UI
+        }
         use { 'glepnir/lspsaga.nvim',
             config = function()
                 require('plug_lspsaga')
             end
-        }                                          
-
-        -- LUA -- side-bar file manager
-        use { 'kyazdani42/nvim-tree.lua',
+        }
+        --[[ use { 'kyazdani42/nvim-tree.lua',
             config = function()
                 require('plug_nvimtree')
             end
-        }                                      
-
-        -- LUA -- ndentation lines
-        use {'lukas-reineke/indent-blankline.nvim',                             
+        } ]]
+        use {'lukas-reineke/indent-blankline.nvim',
             branch = 'lua',
             config = function()
                 require('plug_indentline')
             end
         }
-
-        -- VIM -- show a tree of undos
-        use { 'mbbill/undotree',
-            config = function()
-                vimp.bind({'silent'},  'U',     [[:redo<CR>]])
-                vimp.bind({'silent'},  '<C-U>', [[:UndotreeToggle<CR> :UndotreeFocus<CR>]])
-            end
-        }                                               
-
-        -- VIM --
         use { 'glepnir/dashboard-nvim',
             config = function()
                 require('plug_dashboard')
             end
-        }                                        
-
-        -- LUA -- formatter
+        }
         use { 'mhartington/formatter.nvim',
             config = function()
                 require('plug_formatter')
             end
-        }                                    
+        }
+        use { 'windwp/nvim-autopairs',
+            config = function()
+                require('nvim-autopairs').setup({
+                    disable_filetype = { "TelescopePrompt" , "vim" },
+                })
+            end
+        }
+        use { 'edluffy/specs.nvim',
+            config = function()
+                require('plug_specscursor')
+            end
+        }
+        use {
+            'numToStr/Navigator.nvim',
+            config = function()
+                require('plug_navigator')
+            end
+        }
+        use { 'karb94/neoscroll.nvim',
+            config = function()
+                require('plug_comfscroll')
+            end
+        }
+        use { 'lewis6991/gitsigns.nvim', 
+            requires = { 'nvim-lua/plenary.nvim' },
+            config = function()
+                require('plug_gitsign')
+            end
+        }
+        use { 'kevinhwang91/nvim-hlslens',
+            config = function()
+                require('plug_hlsearch')
+            end
+        }
+        use { 'romgrk/barbar.nvim',
+            config = function()
+                require('plug_bufferline')
+            end
+        }
+        use { 'tjdevries/express_line.nvim',
+            config = function()
+                require('plug_expressline')
+            end
+        }
+        use { 'tjdevries/colorbuddy.nvim',
+            config = function()
+                require('plug_colorbuddy')
+            end
+        }
+        use {
+            'yamatsum/nvim-web-nonicons',
+            requires = {'kyazdani42/nvim-web-devicons'}
+        }
+        use { 'ishan9299/modus-theme-vim', 
+            branch = 'stable' 
+        }
 
-        -- VIM -- move lines with alt-arrow
+        -- VIM --
+        use { 'sheerun/vim-polyglot' }
+        use { 'tpope/vim-surround' }
+        use { 'kana/vim-fakeclip' }
+        use { 'haya14busa/incsearch.vim' }
+        use { 'direnv/direnv' }
         use { 'matze/vim-move', 
             config = function()
                 vimp.rbind('n',                 '<C-A-Down>',       [[<Plug>MoveLineDown]])
@@ -243,116 +253,19 @@ require('packer').startup(
                 vim.api.nvim_set_keymap("v",    "<C-A-Down>",       "<Plug>MoveBlockDown", {})
                 vim.api.nvim_set_keymap("v",    "<C-A-Up>",         "<Plug>MoveBlockUp", {})
             end
-        }                                                
-
-        -- VIM -- multi cursors
+        }
         use { 'mg979/vim-visual-multi',
             config = function()
                 require('plug_visualmulti')
             end
-        }                                        
-
-        -- LUA -- auto close brackets and parenthesis
-        use { 'windwp/nvim-autopairs',                                          
+        }
+        use { 'mbbill/undotree',
             config = function()
-                require('nvim-autopairs').setup({
-                    disable_filetype = { "TelescopePrompt" , "vim" },
-                })
+                vimp.bind({'silent'},  'U',     [[:redo<CR>]])
+                vimp.bind({'silent'},  '<C-U>', [[:UndotreeToggle<CR> :UndotreeFocus<CR>]])
             end
         }
-
-        -- LUA -- cursor movements
-        use { 'edluffy/specs.nvim',
-            config = function()
-                require('plug_specscursor')
-            end
-        }                                            
-
-        -- LUA -- tmux and pane movementsv
-        use {
-            'numToStr/Navigator.nvim',
-            config = function()
-                require('plug_navigator')
-            end
-        }
-
-        -- VIM -- comfortable scroll
-        use { 'yuttie/comfortable-motion.vim',
-            config = function()
-                require('plug_comfscroll')
-            end
-        }                                 
-
-        -- VIM -- '.' for better repeat functioalities
-        use { 'tpope/vim-repeat' }                                              
-
-        -- VIM -- manipulating sorround objects
-        use { 'tpope/vim-surround' }                                            
-
-        -- LUA --
-        use { 'ingolemo/vim-bufferclose' }                                      
-
-        -- VIM --
-        use { 'airblade/vim-rooter' }                                           
-
-        use { 'lewis6991/gitsigns.nvim', 
-            requires = { 'nvim-lua/plenary.nvim' },
-            config = function()
-                require('plug_gitsign')
-            end
-        }                                                                       
-        --use { 'yamatsum/nvim-cursorline' }
-
-        -- VIM --
-        use { 'haya14busa/incsearch.vim' }                                      
-
-        use { 'kevinhwang91/nvim-hlslens',
-            config = function()
-                require('plug_hlsearch')
-            end
-        }                                     
-
-        -- VIM -- better clipboard
-        use { 'kana/vim-fakeclip' }                                             
-
-        -- VIM --
-        use { 'direnv/direnv' }                                                 
-
-        -- LUA --
-        use { 'romgrk/barbar.nvim',                                            
-            config = function()
-                require('plug_bufferline')
-            end
-        }
-
-        -- LUA --
-        use { 'tjdevries/express_line.nvim',
-            config = function()
-                require('plug_expressline')
-            end
-        }                                   
-
-        -- LUA --
-        use { 'tjdevries/colorbuddy.nvim',
-            config = function()
-                require('plug_colorbuddy')
-            end
-        }                                     
-
-        use {
-            'yamatsum/nvim-web-nonicons',
-            requires = {'kyazdani42/nvim-web-devicons'}
-        }
-
-        -- LUA --
-        use { 'ishan9299/modus-theme-vim', 
-            branch = 'stable' 
-        }                                                                       
-
-        -- VIM --
-        use { 'iamcco/markdown-preview.nvim', 
-            run = 'cd app && yarn install' 
-        }                                                                       
+        use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
     end
 )
 require('other_blame')

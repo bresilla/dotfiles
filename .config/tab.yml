@@ -1,4 +1,4 @@
 key_bindings:
   - action: SelectInteractive
-    keys: ctrl-E
+    keys: ctrl-A
 # workspace: []

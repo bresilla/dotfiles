@@ -203,52 +203,19 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    # services.picom = {
-    #   Unit = {
-    #     Description = "Compositor for X11";
-    #     After = ["graphical.target"];
-    #   };
-    #   Service = {
-    #     Type = "forking";
-    #     ExecStart = "/usr/bin/picom --config %h/.config/compton/compton";
-    #     Restart = "always";
-    #     RestartSec = "2";
-    #   };
-    #   Install = {
-    #     WantedBy = ["default.target"];
-    #   };
-    # };
-    services.wallpaper = {
+    services.mullvad = {
       Unit = {
-        Description = "Wallpaper switcher";
-        After = ["graphical.target"];
+        Description = "mullvad vpn";
+        After = ["network.target"];
       };
       Service = {
         Type = "oneshot";
-        Environment=[
-          "TEMP=/tmp"
-          "LULE_S=/home/bresilla/code/proj/warp/lule/scripts/lule_colors"
-          "LULE_W=/home/bresilla/sets/.wallpaper"
-        ];
-        # ExecStart = "/home/bresilla/dots/.func/wm/lule set";
-        ExecStart = "/env/cargo/bin/lule create -- set";
+        ExecStart = "doas wg-quick up mlvd";
+        # ExecReload = "doas wg-quick down mlvd && doas wg-quick up mlvd";
+        # ExecStop = "doas wg-quick down mlvd";
       };
       Install = {
         WantedBy = ["default.target"];
-      };
-    };
-    timers.wallpaper = {
-      Unit = {
-        Description = "Wallpaper switcher";
-      };
-      Timer = {
-        OnBootSec="1s";
-        OnActiveSec="1s";
-        OnCalendar = "*:0/15";
-        # OnUnitActiveSec="*:0/15";
-      };
-      Install = {
-        WantedBy = ["timers.target"];
       };
     };
     services.spotifyd = let

@@ -26,8 +26,44 @@ function __memoryuse() {
     printf $mem
 }
 
+function __wireguard() {
+    connection_status=$(doas wg 2>/dev/null | head -n 1 | awk '{print $NF }')
+    if [ "$connection_status" = "mlvd" ]; then
+        printf " V $arrEL"
+    fi
+}
+
+function __tor() {
+    connection_status=$(systemctl status tor.service | grep Active | xargs | cut -d" " -f2)
+    answer_status=active
+    if [ "$connection_status" = "$answer_status" ]; then
+        printf " T $arrEL"
+    fi
+}
+
+function __hotspot() {
+    connection_status=$(systemctl --user status hotspot.service | grep Active | xargs | cut -d" " -f2)
+    answer_status=active
+    if [ "$connection_status" = "$answer_status" ]; then
+        printf " H $arrEL"
+    fi
+}
+
+function __firewall() {
+    connection_status=$(doas ufw status | cut -d":" -f2 | xargs)
+    answer_status=active
+    if [ "$connection_status" = "$answer_status" ]; then
+        printf " F $arrEL"
+    fi
+}
+
 function __ssid() {
     ssid=$(iwgetid -r);
+    if [[ -z $ssid ]]; then
+        ssid="offline";
+    else
+        sid=$ssid;
+    fi
     printf $ssid
 }
 
@@ -91,7 +127,6 @@ function precmd() {
         unset timer
     fi
 }
-
 function __promptline_host {
     printf $(uname -a | cut -d" "  -f2)
 }
@@ -197,7 +232,7 @@ function __promptline_left_prompt {
         prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; 
         [[ $(( $(tab -l 2> /dev/null | wc -l) - 1 )) -ne 0  ]] && printf "%s" "$prefix" " $(( $(tab -l 2> /dev/null | wc -l) - 1 )) " "$suffix"
     fi
-    printf "%s" "${blackBG}${conTX}${arrEL}${greyTX}${space}"
+    printf "%s" "${darkBG}${conTX}${arrEL}${greyTX}${space}"
 }
 
 ## tk -t $ENVNAME src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4
@@ -268,10 +303,10 @@ function __tmuxline_left_prompt {
     prefix="${light_TX}${dark_BG}${space}" suffix="${space}${dark_TX}"; printf "%s" "$BLD$prefix" "$(__timenow)" "$suffix$NLD"
     #TIME
     prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__netspeed)" "$suffix"
-    #WIFI-ID
-    if [[ -z $(__ssid) ]]; then oneTX=$redTX; ssid="offline"; else oneTX=$conTX; ssid=$(__ssid); fi
-    prefix="${defaultBG}${space}${defaultBG}${arrFL}${oneTX}${space}" suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "$ssid" "$suffix"
-
+    #INTERNET
+    prefix="${defaultBG}${space}${defaultBG}${arrFL}${conTX}"
+    # suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}";
+    printf "%s" "$prefix" "$(__firewall)$(__wireguard)$(__tor)$(__hotspot)" "$suffix"
 }
 
 function __tmuxline_center_prompt {
@@ -288,7 +323,6 @@ function __tmuxline_center_prompt {
     printf "%s" "$prefix" $con "$suffix"
 }
 
-
 function __one_line_prompt {
     LEFTPROMPT=$(echo __promptline_left_prompt | wc -m)
     size_left=${#LEFTPROMPT}
@@ -299,9 +333,25 @@ function __one_line_prompt {
     echo $LEFTPROMPT
     echo $size_right
 }
+
 function __emptyline() {
     echo
 }
+
+function __doneline() {
+    ERR=$( ($(echo $1) $(echo ${@:2})) 2>&1 )
+    while read -r line; do
+        if [[ -z $line ]]; then
+            echo -ne "\e[35m  \e[0m"
+            echo -e " DONE \e[0m"
+        else
+            echo -ne "\e[91m  \e[0m"
+            echo -n $(echo $line | sed "s/$1: //g" | sed 's/^[^:]*://g')
+            echo -e "\e[0m"
+        fi
+    done <<<$ERR
+}
+
 function __breakline() {
     COLS="${COLUMNS:-10}"
     local WORD="─"
@@ -415,6 +465,7 @@ if [[  $1 != "tmux" ]]; then
   if [[ -n ${ZSH_VERSION-} ]]; then
     if [[ ! ${precmd_functions[(r)__promptline]} == __promptline ]]; then
       precmd_functions+=(__promptline)
+      # precmd_functions+=(__doneline)
       precmd_functions+=(__emptyline)
     fi
   elif [[ -n ${FISH_VERSION-} ]]; then

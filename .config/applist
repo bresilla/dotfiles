@@ -11,6 +11,7 @@ rg                          + (ripgrep) grep alternative														+ https://
 fd                          + fast find alternative																	+ https://github.com/sharkdp/fd                         + rust 
 fq      - fselect           + find files with SQL-like queries											+ https://github.com/jhspetersson/fselect               + rust
 sd                          + an intuitive search & displace												+ https://github.com/chmln/sd                           + rust 
+sad													+ CLI search and replace																+ https://github.com/ms-jpq/sad													+ rust
 tk      - tokei             + code statistics																				+ https://github.com/XAMPPRocky/tokei                   + rust
 aa      - alertafter        + notify after command																	+ https://github.com/frewsxcv/alert-after               + rust
 rp			- ruplacer					+ find and replace text in source files 								+ https://github.com/TankerHQ/ruplacer									+ rust
@@ -42,6 +43,7 @@ hblock                      + hosts adblocker																				+ https://githu
 -------------------------------------------------------           BROWSER								-----------------------------------------------------------
 bookmark                    + terminal bookmark manager															+ https://github.com/Szymongib/bookmark                 + rust
 -------------------------------------------------------             SHELL								-----------------------------------------------------------
+atuin												+ Magical shell history																	+ https://github.com/ellie/atuin												+ rust
 pet                         + CLI Snippet Manager																		+ https://github.com/knqyf263/pet                       + go
 mn      - tealdeer          + faster TLDR/MAN																				+ https://github.com/dbrgn/tealdeer                     + rust
 cod                         + a completion daemon for bash/zsh											+ https://github.com/dim-an/cod                         + go
@@ -67,6 +69,7 @@ gitui                       + blazng fast git cmd ui																+ https://gi
 grv                         + TUI for viewing git repositories											+ https://github.com/rgburke/grv                        + go
 hub                         + github command-line tool															+ https://github.com/github/hub                         + go
 gitmux 											+ a github status for tmux															+ https://github.com/arl/gitmux													+ go
+fac													+ TUI for fixing git conflicts													+ https://github.com/mkchoi212/fac											+ go
 -------------------------------------------------------           CONTAINER							-----------------------------------------------------------
 lxc     - lxd               + daemon based on liblxc																+ https://github.com/lxc/lxd                            + go
 dive                        + exploring docker layers																+ https://github.com/wagoodman/dive                     + go
@@ -77,12 +80,15 @@ direnv                      + OTF local load and unload variables										+ htt
 envy                        + OTF global load and unload variables									+ https://github.com/mre/envy                           + rust
 dtool                       + command-line tool collection for devs									+ https://github.com/guoxbin/dtool                      + rust
 onefetch										+ repository summary on your terminal										+ https://github.com/o2sh/onefetch											+ rust
+-------------------------------------------------------             BUILD								-----------------------------------------------------------
+xmake												+ cross-platform build utility based on Lua							+ https://github.com/xmake-io/xmake											+ c
 -------------------------------------------------------             DATAS								-----------------------------------------------------------
 xsv                         + a cli CSV edtor/reader																+ https://github.com/BurntSushi/xsv                     + rust
 csview                      + a cli CSV viewer																			+ https://github.com/wfxr/csview                        + rust
 define                      + command-line dictionary																+ https://github.com/Rican7/define                      + go
 faker                       + fake data gererator																		+ https://github.com/jiro4989/faker                     + nim
 -------------------------------------------------------           ENCRYPTION						-----------------------------------------------------------
+gpgtui											+ manage GnuPG keys with TUI														+ https://github.com/orhun/gpg-tui											+ rust
 gopass                      + standard unix password manage													+ https://github.com/gopasspw/gopass                    + go
 age                         + file encryption tool																	+ https://github.com/FiloSottile/age                    + go
 crux    - horcrux           + split file into encrypted fragments										+ https://github.com/jesseduffield/horcrux              + go
@@ -96,6 +102,7 @@ scd                         + side/tab file manager																	+ https://gi
 ls      - exa               + modern version of ‘ls’																+ https://github.com/ogham/exa                          + rust 
 lsd                         + next-gen version of 'ls'															+ https://github.com/Peltoche/lsd                       + rust
 rn      - renamer           + regex batch renamer																		+ https://github.com/adriangoransson/renamer            + rust
+f2													+ batch renaming files																	+ https://github.com/ayoisaiah/f2												+ go
 rip                         + safe and ergonomic alternative to rm									+ https://github.com/nivekuil/rip                       + rust
 sw                          + swap names of multiple files													+ https://github.com/aypie/sw                           + cpp
 unf                         + sanitize filenames unix format												+ https://github.com/io12/unf                           + rust

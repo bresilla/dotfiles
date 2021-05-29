@@ -143,6 +143,9 @@ alias \$=''
 ###DIRENV
 eval "$(direnv hook zsh)"
 
+###AUTIN
+eval "$(atuin init zsh)"
+
 ###SSH&GPG
 export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -150,15 +153,15 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 #--------------------------------------------------------------------------------------------------------------------
 # NNN
 [[ -e ~/.config/nnn/config.sh ]] && emulate sh -c 'source ~/.config/nnn/config.sh'
-nnnn(){
+n(){
   export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
   if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then echo "already running"; return; fi
-  nnn -decHQ "$@"
+  nnn -deuUHQ "$@"
   if [ -f "$NNN_TMPFILE" ]; then
     . "$NNN_TMPFILE"; rm -f "$NNN_TMPFILE" > /dev/null
   fi
 }
-bindkey -s '^W' ' nnnn\n'
+bindkey -s '^W' ' n\n'
 
 #--------------------------------------------------------------------------------------------------------------------
 #RUN OR LS (shotrcut: Enter)
@@ -212,4 +215,4 @@ done
 #--------------------------------------------------------------------------------------------------------------------
 #TAB-RS (shotrcut: Ctrl + e)
 [[ -n $TAB ]] && [ -f ~/data/docs/BRAND/logo/ascii ] && ~/dots/.func/system/bresilla
-bindkey -s '^E' ' tab\n'
+bindkey -s '^A' ' tab\n'

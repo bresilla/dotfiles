@@ -54,7 +54,11 @@ alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
 
 ##PROGRAMS
-alias x='atool -D -x'
+alias a='atool -D -x'
+alias x='xplr'
+alias e="nvim"
+
+
 alias ari='aria2c'
 alias inxi='optirun inxi -Fxxxz'
 alias note='dnote'

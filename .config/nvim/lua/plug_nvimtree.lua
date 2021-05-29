@@ -1,5 +1,6 @@
 vim.cmd([[au FileType NvimTree set nocursorcolumn]])
 
+-- vim.call( [[au FileType LuaTree vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':LuaTreeClose<CR>', {})]] )
 vim.cmd([[au FileType NvimTree lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':NvimTreeClose<CR>', {})]])
 vim.cmd([[au FileType * lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':NvimTreeToggle<CR>', {})]])
 
@@ -38,6 +39,6 @@ vim.g.nvim_tree_bindings = {
     ["<M-v>"]          = get_lua_cb("vsplit"),
     ["<M-x>"]          = get_lua_cb("split"),
     ["<M-t>"]          = get_lua_cb("tabnew"),
+    ["<Tab>"]          = get_lua_cb("close"),
 }
 
--- vim.call( [[au FileType LuaTree vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':LuaTreeClose<CR>', {})]] )

@@ -1,0 +1,130 @@
+<eww>
+  <definitions>
+      <def name="profile">
+          <box orientation="v" space-evenly="true">
+              <box class="text">Welcome!</box>
+              <box class="username">@ChocolateBread</box>
+          </box>
+      </def>
+        <def name="shutdown">
+            <box orientation="h" space-evenly="true">
+              <box class="shutdown-btn" orientation="h" halign="center">
+                  <button onclick="shutdown now"></button>
+                </box>
+            </box>
+        </def>
+        <def name="reboot">
+            <box orientation="h" space-evenly="true">
+              <box class="reboot-btn" orientation="h" halign="center">
+                  <button onclick="reboot"></button>
+                </box>
+            </box>
+        </def>
+        <def name="quit">
+            <box orientation="h" space-evenly="true">
+              <box class="quit-btn" orientation="h" halign="center">
+                  <button onclick="eww close-all"></button>
+                </box>
+            </box>
+        </def>
+        <def name="date">
+            <box orientation="v" space-evenly="true">
+                <box orientation="h" class="time">
+                    <box class="hour">{{hour}}</box>
+                    <box class="semicolon">:</box>
+                    <box class="minute">{{minute}}</box>
+                </box>
+                <box class="day">{{day}}</box>
+            </box>
+        </def>
+        <def name="player">
+            <box orientation="h" space-evenly="true">
+                <box class="song-art" style="background-image: url('{{art}}');">{{song_art}}</box>
+                <box class="song-data" orientation="v" space-evenly="false">
+                    <box class="song-title">{{song_title}}</box>
+                    <box class="player-btn" orientation="h" halign="center">
+                        <button onclick="playerctl previous"></button>
+                        <button class="pause-play" onclick="playerctl play-pause"></button>
+                        <button onclick="playerctl next"></button>
+                    </box>
+                </box>
+            </box>
+        </def>
+        <def name="background">
+            <box/>
+        </def>
+    <def name="volume">
+        <box orientation="v" space-evenly="false">
+          <box class="cpu-bar" orientation="h">
+              <box class="label-cpu-bar"></box>
+              <scale min="0" max="101" active="false" value="{{cpu}}"></scale>
+            </box>
+            <box class="vol-bar" orientation="h">
+                <box class="label-vol-bar"></box>
+                <scale min="0" max="101" active="false" value="{{volume}}"></scale>
+            </box>
+        </box>
+    </def>
+</definitions>
+
+    <variables>
+        <!-- DATE VARS -->
+        <script-var name="minute" interval="10s">date "+%M"</script-var>
+        <script-var name="hour" interval="5m">date "+%H"</script-var>
+        <script-var name="day" interval="12h">~/.config/eww/scripts/getDay</script-var>
+
+        <!-- PLAYER VARS -->
+        <script-var name="art" interval="5s">~/.config/eww/scripts/echoSongArt</script-var>
+        <script-var name="song_art" interval="5s">~/.config/eww/scripts/getSongArt</script-var>
+        <script-var name="song_title" interval="2s">~/.config/eww/scripts/getSongTitle</script-var>
+
+        <!-- SYSTEM VARS -->
+        <script-var name="cpu" interval="1s">~/.config/eww/scripts/getCpu</script-var>
+        <script-var name="volume" interval="1s">~/.config/eww/scripts/getVolume</script-var>
+    </variables>
+
+    <windows>
+        <window name="profile">
+            <geometry x="680px" y="400px" width="300px" height="110px"/>
+            <widget>
+                <profile/>
+            </widget>
+        </window>
+        <window name="date">
+            <geometry x="1000px" y="515px" width="310px" height="100px"/>
+            <widget>
+                <date/>
+            </widget>
+        </window>
+        <window name="shutdown">
+            <geometry x= "590px" y="401px" width="70px" height="70px"/>
+            <widget>
+                <shutdown/>
+            </widget>
+        </window>
+        <window name="reboot">
+            <geometry x="590px" y="490px" width="70px" height="70px"/>
+            <widget>
+                <reboot/>
+            </widget>
+        </window>
+        <window name="quit">
+            <geometry x="590px" y="580px" width="70px" height="70px"/>
+            <widget>
+                <quit/>
+            </widget>
+        </window>
+        <window name="player">
+            <geometry x="680px" y="550px" width="300px" height="100px"/>
+            <widget>
+                <player/>
+            </widget>
+        </window>
+        <window name="volume">
+            <geometry x="1000px" y="400px" width="310px" height="98px"/>
+            <widget>
+                <volume/>
+            </widget>
+        </window>
+    </windows>
+</eww>

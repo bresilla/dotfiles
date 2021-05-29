@@ -106,8 +106,8 @@ function mycolors(theme)
     -- === HIGHLIGHTS === "
     --background
     Group.new('Error',                  nil,                  nil,                  styles.undercurl)
-    Group.new('Normal',                 nil,                  colors.r0)
-    Group.new('NormalNC',               nil,                  colors.r0)
+    Group.new('Normal',                 nil,                  nil)
+    Group.new('NormalNC',               nil,                  nil)
     Group.new('Comment',                colors.r8,            nil,                  styles.italic)
     --visual select
     Group.new('Visual',                 nil,                  colors.ac_d,          styles.bold)
