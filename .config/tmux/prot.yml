@@ -6,4 +6,4 @@ windows:
   - commands:
     - nvim
     focus: true
-    root:  /home/bresilla/code/proj/folang/fol          
+    root:  /home/bresilla/data/code/proj/folang/fol 

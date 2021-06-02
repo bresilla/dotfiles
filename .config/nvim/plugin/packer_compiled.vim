@@ -176,6 +176,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
   },
+  ["nvim-tree.lua"] = {
+    config = { "\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_nvimtree\frequire\0" },
+    loaded = true,
+    path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
     config = { "\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_treesitter\frequire\0" },
     loaded = true,
@@ -213,7 +218,7 @@ _G.packer_plugins = {
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/specs.nvim"
   },
   ["spellsitter.nvim"] = {
-    config = { "\27LJ\2\n\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rcaptures\1\2\0\0\fcomment\1\0\2\17hunspell_cmd\rhunspell\ahl\rSpellBad\nsetup\16spellsitter\frequire\0" },
+    config = { "\27LJ\2\n\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rcaptures\1\2\0\0\fcomment\1\0\2\ahl\rSpellBad\17hunspell_cmd\rhunspell\nsetup\16spellsitter\frequire\0" },
     loaded = true,
     path = "/home/bresilla/.local/share/nvim/site/pack/packer/start/spellsitter.nvim"
   },
@@ -266,58 +271,50 @@ _G.packer_plugins = {
 }
 
 time("Defining packer_plugins", false)
--- Config for: nvim-treesitter
-time("Config for nvim-treesitter", true)
-try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_treesitter\frequire\0", "config", "nvim-treesitter")
-time("Config for nvim-treesitter", false)
--- Config for: specs.nvim
-time("Config for specs.nvim", true)
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plug_specscursor\frequire\0", "config", "specs.nvim")
-time("Config for specs.nvim", false)
--- Config for: express_line.nvim
-time("Config for express_line.nvim", true)
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plug_expressline\frequire\0", "config", "express_line.nvim")
-time("Config for express_line.nvim", false)
--- Config for: spellsitter.nvim
-time("Config for spellsitter.nvim", true)
-try_loadstring("\27LJ\2\n\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rcaptures\1\2\0\0\fcomment\1\0\2\17hunspell_cmd\rhunspell\ahl\rSpellBad\nsetup\16spellsitter\frequire\0", "config", "spellsitter.nvim")
-time("Config for spellsitter.nvim", false)
--- Config for: timer.nvim
-time("Config for timer.nvim", true)
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_timernvim\frequire\0", "config", "timer.nvim")
-time("Config for timer.nvim", false)
--- Config for: gitsigns.nvim
-time("Config for gitsigns.nvim", true)
-try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17plug_gitsign\frequire\0", "config", "gitsigns.nvim")
-time("Config for gitsigns.nvim", false)
--- Config for: neoscroll.nvim
-time("Config for neoscroll.nvim", true)
-try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_comfscroll\frequire\0", "config", "neoscroll.nvim")
-time("Config for neoscroll.nvim", false)
--- Config for: vim-visual-multi
-time("Config for vim-visual-multi", true)
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plug_visualmulti\frequire\0", "config", "vim-visual-multi")
-time("Config for vim-visual-multi", false)
--- Config for: formatter.nvim
-time("Config for formatter.nvim", true)
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_formatter\frequire\0", "config", "formatter.nvim")
-time("Config for formatter.nvim", false)
--- Config for: nvim-hlslens
-time("Config for nvim-hlslens", true)
-try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_hlsearch\frequire\0", "config", "nvim-hlslens")
-time("Config for nvim-hlslens", false)
--- Config for: dashboard-nvim
-time("Config for dashboard-nvim", true)
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_dashboard\frequire\0", "config", "dashboard-nvim")
-time("Config for dashboard-nvim", false)
+-- Config for: Navigator.nvim
+time("Config for Navigator.nvim", true)
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_navigator\frequire\0", "config", "Navigator.nvim")
+time("Config for Navigator.nvim", false)
 -- Config for: nvim-compe
 time("Config for nvim-compe", true)
 try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_nvimcompe\frequire\0", "config", "nvim-compe")
 time("Config for nvim-compe", false)
+-- Config for: snippets.nvim
+time("Config for snippets.nvim", true)
+try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_snippets\frequire\0", "config", "snippets.nvim")
+time("Config for snippets.nvim", false)
+-- Config for: timer.nvim
+time("Config for timer.nvim", true)
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_timernvim\frequire\0", "config", "timer.nvim")
+time("Config for timer.nvim", false)
 -- Config for: vim-move
 time("Config for vim-move", true)
 try_loadstring("\27LJ\2\n€\2\0\0\6\0\r\0\0296\0\0\0009\0\1\0'\2\2\0'\3\3\0'\4\4\0B\0\4\0016\0\0\0009\0\1\0'\2\2\0'\3\5\0'\4\6\0B\0\4\0016\0\a\0009\0\b\0009\0\t\0'\2\n\0'\3\3\0'\4\v\0004\5\0\0B\0\5\0016\0\a\0009\0\b\0009\0\t\0'\2\n\0'\3\5\0'\4\f\0004\5\0\0B\0\5\1K\0\1\0\22<Plug>MoveBlockUp\24<Plug>MoveBlockDown\6v\20nvim_set_keymap\bapi\bvim\21<Plug>MoveLineUp\r<C-A-Up>\23<Plug>MoveLineDown\15<C-A-Down>\6n\nrbind\tvimp\0", "config", "vim-move")
 time("Config for vim-move", false)
+-- Config for: dashboard-nvim
+time("Config for dashboard-nvim", true)
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_dashboard\frequire\0", "config", "dashboard-nvim")
+time("Config for dashboard-nvim", false)
+-- Config for: barbar.nvim
+time("Config for barbar.nvim", true)
+try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_bufferline\frequire\0", "config", "barbar.nvim")
+time("Config for barbar.nvim", false)
+-- Config for: kommentary
+time("Config for kommentary", true)
+try_loadstring("\27LJ\2\nñ\1\0\0\6\0\n\0\0256\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\b\0'\3\6\0'\4\t\0004\5\0\0B\0\5\1K\0\1\0$<Plug>kommentary_visual_default\6v\"<Plug>kommentary_line_default\6#$<Plug>kommentary_motion_default\14<leader>#\6n\20nvim_set_keymap\bapi\bvim\0", "config", "kommentary")
+time("Config for kommentary", false)
+-- Config for: undotree
+time("Config for undotree", true)
+try_loadstring("\27LJ\2\n”\1\0\0\5\0\b\0\r6\0\0\0009\0\1\0005\2\2\0'\3\3\0'\4\4\0B\0\4\0016\0\0\0009\0\1\0005\2\5\0'\3\6\0'\4\a\0B\0\4\1K\0\1\0+:UndotreeToggle<CR> :UndotreeFocus<CR>\n<C-U>\1\2\0\0\vsilent\14:redo<CR>\6U\1\2\0\0\vsilent\tbind\tvimp\0", "config", "undotree")
+time("Config for undotree", false)
+-- Config for: lspsaga.nvim
+time("Config for lspsaga.nvim", true)
+try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17plug_lspsaga\frequire\0", "config", "lspsaga.nvim")
+time("Config for lspsaga.nvim", false)
+-- Config for: spellsitter.nvim
+time("Config for spellsitter.nvim", true)
+try_loadstring("\27LJ\2\n\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rcaptures\1\2\0\0\fcomment\1\0\2\ahl\rSpellBad\17hunspell_cmd\rhunspell\nsetup\16spellsitter\frequire\0", "config", "spellsitter.nvim")
+time("Config for spellsitter.nvim", false)
 -- Config for: colorbuddy.nvim
 time("Config for colorbuddy.nvim", true)
 try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_colorbuddy\frequire\0", "config", "colorbuddy.nvim")
@@ -326,54 +323,66 @@ time("Config for colorbuddy.nvim", false)
 time("Config for nvim-lspconfig", true)
 try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_lspconfis\frequire\0", "config", "nvim-lspconfig")
 time("Config for nvim-lspconfig", false)
--- Config for: barbar.nvim
-time("Config for barbar.nvim", true)
-try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_bufferline\frequire\0", "config", "barbar.nvim")
-time("Config for barbar.nvim", false)
--- Config for: nvim-dap
-time("Config for nvim-dap", true)
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_dapconfig\frequire\0", "config", "nvim-dap")
-time("Config for nvim-dap", false)
 -- Config for: indent-blankline.nvim
 time("Config for indent-blankline.nvim", true)
 try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_indentline\frequire\0", "config", "indent-blankline.nvim")
 time("Config for indent-blankline.nvim", false)
--- Config for: kommentary
-time("Config for kommentary", true)
-try_loadstring("\27LJ\2\nñ\1\0\0\6\0\n\0\0256\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\b\0'\3\6\0'\4\t\0004\5\0\0B\0\5\1K\0\1\0$<Plug>kommentary_visual_default\6v\"<Plug>kommentary_line_default\6#$<Plug>kommentary_motion_default\14<leader>#\6n\20nvim_set_keymap\bapi\bvim\0", "config", "kommentary")
-time("Config for kommentary", false)
--- Config for: Navigator.nvim
-time("Config for Navigator.nvim", true)
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_navigator\frequire\0", "config", "Navigator.nvim")
-time("Config for Navigator.nvim", false)
--- Config for: nvim-autopairs
-time("Config for nvim-autopairs", true)
-try_loadstring("\27LJ\2\nt\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21disable_filetype\1\0\0\1\3\0\0\20TelescopePrompt\bvim\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time("Config for nvim-autopairs", false)
--- Config for: which-key.nvim
-time("Config for which-key.nvim", true)
-try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_whichkey\frequire\0", "config", "which-key.nvim")
-time("Config for which-key.nvim", false)
--- Config for: FTerm.nvim
-time("Config for FTerm.nvim", true)
-try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_floaterm\frequire\0", "config", "FTerm.nvim")
-time("Config for FTerm.nvim", false)
--- Config for: lspsaga.nvim
-time("Config for lspsaga.nvim", true)
-try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17plug_lspsaga\frequire\0", "config", "lspsaga.nvim")
-time("Config for lspsaga.nvim", false)
 -- Config for: telescope.nvim
 time("Config for telescope.nvim", true)
 try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_telescopy\frequire\0", "config", "telescope.nvim")
 time("Config for telescope.nvim", false)
--- Config for: snippets.nvim
-time("Config for snippets.nvim", true)
-try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_snippets\frequire\0", "config", "snippets.nvim")
-time("Config for snippets.nvim", false)
--- Config for: undotree
-time("Config for undotree", true)
-try_loadstring("\27LJ\2\n”\1\0\0\5\0\b\0\r6\0\0\0009\0\1\0005\2\2\0'\3\3\0'\4\4\0B\0\4\0016\0\0\0009\0\1\0005\2\5\0'\3\6\0'\4\a\0B\0\4\1K\0\1\0+:UndotreeToggle<CR> :UndotreeFocus<CR>\n<C-U>\1\2\0\0\vsilent\14:redo<CR>\6U\1\2\0\0\vsilent\tbind\tvimp\0", "config", "undotree")
-time("Config for undotree", false)
+-- Config for: neoscroll.nvim
+time("Config for neoscroll.nvim", true)
+try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_comfscroll\frequire\0", "config", "neoscroll.nvim")
+time("Config for neoscroll.nvim", false)
+-- Config for: FTerm.nvim
+time("Config for FTerm.nvim", true)
+try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_floaterm\frequire\0", "config", "FTerm.nvim")
+time("Config for FTerm.nvim", false)
+-- Config for: gitsigns.nvim
+time("Config for gitsigns.nvim", true)
+try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17plug_gitsign\frequire\0", "config", "gitsigns.nvim")
+time("Config for gitsigns.nvim", false)
+-- Config for: nvim-hlslens
+time("Config for nvim-hlslens", true)
+try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_hlsearch\frequire\0", "config", "nvim-hlslens")
+time("Config for nvim-hlslens", false)
+-- Config for: which-key.nvim
+time("Config for which-key.nvim", true)
+try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_whichkey\frequire\0", "config", "which-key.nvim")
+time("Config for which-key.nvim", false)
+-- Config for: vim-visual-multi
+time("Config for vim-visual-multi", true)
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plug_visualmulti\frequire\0", "config", "vim-visual-multi")
+time("Config for vim-visual-multi", false)
+-- Config for: nvim-dap
+time("Config for nvim-dap", true)
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_dapconfig\frequire\0", "config", "nvim-dap")
+time("Config for nvim-dap", false)
+-- Config for: formatter.nvim
+time("Config for formatter.nvim", true)
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plug_formatter\frequire\0", "config", "formatter.nvim")
+time("Config for formatter.nvim", false)
+-- Config for: nvim-autopairs
+time("Config for nvim-autopairs", true)
+try_loadstring("\27LJ\2\nt\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21disable_filetype\1\0\0\1\3\0\0\20TelescopePrompt\bvim\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time("Config for nvim-autopairs", false)
+-- Config for: express_line.nvim
+time("Config for express_line.nvim", true)
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plug_expressline\frequire\0", "config", "express_line.nvim")
+time("Config for express_line.nvim", false)
+-- Config for: specs.nvim
+time("Config for specs.nvim", true)
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plug_specscursor\frequire\0", "config", "specs.nvim")
+time("Config for specs.nvim", false)
+-- Config for: nvim-treesitter
+time("Config for nvim-treesitter", true)
+try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plug_treesitter\frequire\0", "config", "nvim-treesitter")
+time("Config for nvim-treesitter", false)
+-- Config for: nvim-tree.lua
+time("Config for nvim-tree.lua", true)
+try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plug_nvimtree\frequire\0", "config", "nvim-tree.lua")
+time("Config for nvim-tree.lua", false)
 if should_profile then save_profiles() end
 
 END

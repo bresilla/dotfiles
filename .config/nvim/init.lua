@@ -162,11 +162,11 @@ require('packer').startup(
                 require('plug_lspsaga')
             end
         }
-        --[[ use { 'kyazdani42/nvim-tree.lua',
+        use { 'kyazdani42/nvim-tree.lua',
             config = function()
                 require('plug_nvimtree')
             end
-        } ]]
+        }
         use {'lukas-reineke/indent-blankline.nvim',
             branch = 'lua',
             config = function()

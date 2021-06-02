@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
-# COLORS
-/home/bresilla/dots/.func/wm/rainbow regen &
+###PROFILE
+source /home/bresilla/.profile
 
 
 #MONITORS
@@ -10,13 +10,32 @@ xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate norma
 
 
 #TASKBAR
+/env/cpp/bin/btops &
 /home/bresilla/.config/polybar/poly &
+
+
+#LULE
+pkill lule
+while pgrep -x lule >/dev/null; do sleep 1; done
+lule daemon -- start &
 
 
 #SHORTCUTS
 pkill sxhkd
 while pgrep -x sxhkd >/dev/null; do sleep 1; done
 sxhkd -c /home/bresilla/.config/sxhkd/sxhkdrc &
+
+
+#EWW
+pkill eww
+while pgrep -x eww >/dev/null; do sleep 1; done
+eww daemon &
+
+
+#PICOM
+pkill picom
+while pgrep -x picom >/dev/null; do sleep 1; done
+picom --experimental-backends --config $HOME/.config/picom/config &
 
 
 #KEYBOARD

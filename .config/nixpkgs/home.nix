@@ -177,7 +177,7 @@ in {
       };
       Service = {
         Type = "simple";
-        ExecStart = "/env/cargo/bin/espanso daemon";
+        ExecStart = "/env/bin/espanso daemon";
         ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
         Restart = "always";
         RestartSec = "5";
@@ -186,6 +186,21 @@ in {
         WantedBy = ["default.target"];
       };
     };
+    # services.picom = {
+    #   Unit = {
+    #     Description = "Compositor for X11";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "forking";
+    #     ExecStart = "/usr/bin/picom --config %h/.config/picom/config";
+    #     # Restart = "always";
+    #     # RestartSec = "2";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     services.dunst = {
       Unit = {
         Description = "Dunst Notification Daemon";
@@ -228,7 +243,7 @@ in {
         After = ["network-online.target"];
       };
       Service = {
-        ExecStart = "${pkgs.spotifyd}/bin/spotifyd --no-daemon --config-path ${configFile}";
+        ExecStart = "/env/bin/spotifyd --no-daemon --config-path ${configFile}";
         Restart = "on-failure";
       };
       Install = {

@@ -8,7 +8,7 @@ use-damage = false;
 
 
 # Corners with ibhagwan's fork
-corner-radius = 12;
+corner-radius = 20;
 round-borders = 2;
 rounded-corners-exclude = [
     "class_g = 'firefox' && window_type = 'utility'",

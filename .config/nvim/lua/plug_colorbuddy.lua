@@ -135,6 +135,13 @@ function mycolors(theme)
     Group.new('MatchParen',             colors.r0,            colors.r1,            styles.bold)
     -- indentlines
     Group.new('IndentLine',             colors.ac_d,          nil)
+    -- nvimtree
+    Group.new('NvimTreeNormal',         nil,                  colors.ac_d)
+    Group.new('NvimTreeEndOfBuffer',    colors.ac_d,            colors.ac_d)
+    Group.new('NvimTreeVertSplit',      colors.ac_d,          colors.ac_d)
+    Group.new('NvimTreeStatusLine',     colors.ac_d,          colors.ac_d)
+    Group.new('NvimTreeCursorLine',     nil,                  colors.r0,            styles.bold)
+
 
 
     -- === TABS === "
