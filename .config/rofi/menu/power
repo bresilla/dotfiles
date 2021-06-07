@@ -1,14 +1,14 @@
 #!/bin/bash
 source /home/bresilla/.cache/wal/colors.sh
+uptime=$(uptime -p | sed -e 's/up /􀟪  System Uptime /g')
 PADDINGS="40% 0 0 37%"
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon -theme-str "*{accent: ${color1:-#FFFFFF}; spacing: $PADDINGS;}")
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_icon  -p " $uptime " -theme-str "*{accent: ${color1:-#FFFFFF}; spacing: $PADDINGS;}")
 
 power_off=""
 reboot=""
 lock=""
 suspend="鈴"
 log_out=""
-
 options="$power_off\n$reboot\n$lock\n$suspend\n$log_out"
 chosen="$(echo -e "$options" | rofi "${ROFI_OPTIONS[@]}" -dmenu -selected-row 2)"
 
@@ -24,12 +24,12 @@ case $chosen in
         [ $(echo -e $YESNO | rofi "${ROFI_OPTIONS[@]}" -theme-str "*{accent: #e53714;}" -dmenu -i -p "Are you shure you want to proceed?") ==  ] && systemctl reboot
         ;;
     $lock)
-	    exec  /home/bresilla/.config/i3lock/blurlock;
+        exec  /home/bresilla/.config/i3lock/blurlock;
         ;;
     $suspend)
-	    [ $(echo -e $YESNO | rofi "${ROFI_OPTIONS[@]}" -theme-str "*{accent: #e53714;}" -dmenu -i -p "Are you shure you want to proceed?") ==  ] && systemctl suspend
+        [ $(echo -e $YESNO | rofi "${ROFI_OPTIONS[@]}" -theme-str "*{accent: #e53714;}" -dmenu -i -p "Are you shure you want to proceed?") ==  ] && systemctl suspend
         ;;
     $log_out)
-	    [ $(echo -e $YESNO | rofi "${ROFI_OPTIONS[@]}" -theme-str "*{accent: #e53714;}" -dmenu -i -p "Are you shure you want to proceed?") ==  ] && bspc quit
+        [ $(echo -e $YESNO | rofi "${ROFI_OPTIONS[@]}" -theme-str "*{accent: #e53714;}" -dmenu -i -p "Are you shure you want to proceed?") ==  ] && bspc quit
         ;;
 esac

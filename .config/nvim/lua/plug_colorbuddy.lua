@@ -133,8 +133,6 @@ function mycolors(theme)
     Group.new('NormalFloat',            colors.r15,           colors.ac_d,          styles.bold)
     --parenthesis
     Group.new('MatchParen',             colors.r0,            colors.r1,            styles.bold)
-    -- indentlines
-    Group.new('IndentLine',             colors.ac_d,          nil)
     -- nvimtree
     Group.new('NvimTreeNormal',         nil,                  colors.ac_d)
     Group.new('NvimTreeEndOfBuffer',    colors.ac_d,            colors.ac_d)
@@ -143,6 +141,10 @@ function mycolors(theme)
     Group.new('NvimTreeCursorLine',     nil,                  colors.r0,            styles.bold)
 
 
+    -- === INDENTATIONS === "
+    Group.new('IndentLine',             colors.ac_d,          nil)
+    Group.new('IndentOdd',              colors.ac_d,                  colors.r0)
+    Group.new('IndentEven',             colors.ac_d,                  colors.r236)
 
     -- === TABS === "
     Group.new('TabLineFill',            colors.r1,            colors.ac_d)

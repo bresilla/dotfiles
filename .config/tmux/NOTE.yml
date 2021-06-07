@@ -13,7 +13,7 @@ windows:
     - tock -c
     root: /home/bresilla
   - commands:
-    - ncpamixer
+    - rsmixer
     focus: true
     root: /home/bresilla
 - name: top

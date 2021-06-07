@@ -12,20 +12,20 @@ require'compe'.setup {
   max_menu_width = 100;
 
   source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    vsnip = true;
-    nvim_lsp = { kind = 'you want', priority = 9 } ;
-    nvim_lua = true;
-    spell = true;
-    tags = true;
-    snippets_nvim = true;
-    treesitter = true;
-    tabnine = { menu = '  TabNine', priority = 5 };
+    path = { menu = '[PAT]'};
+    buffer = { menu = '[BUF]'};
+    calc = false;
+    vsnip = false;
+    vsnip = false;
+    nvim_lsp = { menu = '[LSP]', priority = 9 } ;
+    nvim_lua = false;
+    spell = false;
+    tags = false;
+    snippets_nvim = false;
+    treesitter = { menu = '[TRE]'};
+    tabnine = { menu = '[TAB]', priority = 5 };
   };
 }
-
 
 --------------------------------- KEYBINDINSGS  -----------------------------------------
 vimp.inoremap({'silent', 'expr'}, '<Esc>', function()
@@ -73,7 +73,7 @@ vimp.inoremap({'silent', 'expr'}, '<Up>', function()
 end)
 
 
-require('vim.lsp.protocol').CompletionItemKind = {
+--[[ require('vim.lsp.protocol').CompletionItemKind = {
       '  Text';          -- = 1
       '  Function';      -- = 2;
       '  Method';        -- = 3;
@@ -99,5 +99,32 @@ require('vim.lsp.protocol').CompletionItemKind = {
       '  Event';         -- = 23;
       '  Operator';      -- = 24;
       '  TypeParameter'; -- = 25;
-}
+} ]]
 
+require('vim.lsp.protocol').CompletionItemKind = {
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+      ' ';
+}

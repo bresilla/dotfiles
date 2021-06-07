@@ -22,8 +22,7 @@ XF86Search
 {super,alt} + Escape
     bspc node -{c,k}
 {super, alt, mode_switch} + Delete
-    {systemctl --user restart picom, systemctl --user restart wallpaper, /home/bresilla/.startup}
-
+    {lule create -- set, lule create -- set, /home/bresilla/.startup}
 
 {_,super} + dead_circumflex
     /home/bresilla/dots/.func/wm/termop {kitty, alacritty} MAIN 2500 1050
@@ -47,6 +46,9 @@ super + alt + {Down,Up}
     bspc node -m {prev,next} --follow
 
 super + alt + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
+    bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
+
+super + alt + Return; {f,b,t,s}
     bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
 
 XF86Audio{Prev,Next,Play}

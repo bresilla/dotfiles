@@ -65,7 +65,7 @@ colors_to_nvim(){
 colors_to_nvim &
 
 #colors awesomewm
-awesome-client 'require("beautiful").init(require("awful").util.getdir("config") .. "theme.lua" )'
+# awesome-client 'require("beautiful").init(require("awful").util.getdir("config") .. "theme.lua" )'
 
 source $HOME/.cache/wal/colors.sh
 
@@ -77,3 +77,10 @@ bspc config active_border_color $color239 &
 python $HOME/.local/bin/pywalfox update &
 
 feh --no-fehbg --bg-scale $(cat $TEMP/lule_wallpaper) &
+
+# if pgrep -x "glava" > /dev/null
+# then
+#     killall glava && echo $color1 | glava -i &
+# else
+#     echo $color1 | glava -i &
+# fi

@@ -42,6 +42,7 @@ bspc rule -a URxvt:launcher state=floating center sticky
 bspc rule -a LAUNCHER state=floating center sticky
 bspc rule -a Boomer state=fullscreen sticky
 bspc rule -a Screenkey manage=off
+bspc rule -a GLava manage=off
 
 ###############################################################################################################################
 #|||	SCRIPTS

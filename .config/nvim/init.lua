@@ -1,5 +1,6 @@
 -- https://github.com/wbthomason/packer.nvim
 -- git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/opt/packer.nvim
+-- TODO: do something
 
 ---------------------------------------------- === OPTIONS === ----------------------------------------------
 vim.api.nvim_set_var( 'python_host_prog', '/usr/bin/python3' )
@@ -42,8 +43,8 @@ vim.o.re = 0                                                            -- set r
 vim.o.inccommand = "split"                                              -- incrementally show result of command
 
 vim.o.laststatus = 2                                                    -- always enable statusline
-vim.o.cursorline = true                                                 -- enable cursorline
-vim.o.cursorcolumn = true
+-- vim.o.cursorline = true                                                 -- enable cursorline
+-- vim.o.cursorcolumn = true
 vim.o.splitbelow = true                                                 -- split below instead of above
 vim.o.splitright = true                                                 -- split right instead of left
 vim.o.startofline = false                                               -- don't go to the start of the line when moving to another file
@@ -81,7 +82,6 @@ vim.o.listchars = "extends:›,precedes:‹,nbsp:␣,trail:·,tab:→\\ ,eol:¬"
 
 
 ---------------------------------------------- === PLUGINS === ----------------------------------------------
-vimp = require('vimp')
 
 local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -99,11 +99,6 @@ require('packer').startup(
                 require('plug_lspconfis')
             end
         }
-        use { 'norcalli/snippets.nvim',
-            config = function()
-                require('plug_snippets')
-            end
-        }
         use { "folke/which-key.nvim",
             config = function()
                 require('plug_whichkey')
@@ -119,6 +114,18 @@ require('packer').startup(
         use { 'nvim-treesitter/nvim-treesitter',
             config = function()
                 require('plug_treesitter')
+            end
+        }
+        use { 'RRethy/nvim-treesitter-textsubjects',
+            config = function()
+                require'nvim-treesitter.configs'.setup {
+                    textsubjects = {
+                        enable = true,
+                        keymaps = {
+                            ['.'] = 'textsubjects-smart',
+                        }
+                    },
+                }
             end
         }
         use { 'mfussenegger/nvim-dap',
@@ -147,19 +154,15 @@ require('packer').startup(
                 require('plug_telescopy')
             end
         }
-        use { 'alex-popov-tech/timer.nvim',
-            config = function()
-                require('plug_timernvim')
-            end
-        }
-        use { "numtostr/FTerm.nvim",
-            config = function()
-                require('plug_floaterm')
-            end
-        }
         use { 'glepnir/lspsaga.nvim',
             config = function()
                 require('plug_lspsaga')
+            end
+        }
+        use { "numToStr/FTerm.nvim",
+            requires = { 'akinsho/nvim-toggleterm.lua' },
+            config = function()
+                require('plug_floaterm')
             end
         }
         use { 'kyazdani42/nvim-tree.lua',
@@ -190,11 +193,6 @@ require('packer').startup(
                 })
             end
         }
-        use { 'edluffy/specs.nvim',
-            config = function()
-                require('plug_specscursor')
-            end
-        }
         use {
             'numToStr/Navigator.nvim',
             config = function()
@@ -204,6 +202,17 @@ require('packer').startup(
         use { 'karb94/neoscroll.nvim',
             config = function()
                 require('plug_comfscroll')
+            end
+        }
+        use { 'sindrets/diffview.nvim',
+            config = function()
+                require'diffview'.setup {
+                    diff_binaries = false,
+                    file_panel = {
+                        width = 35,
+                        use_icons = true
+                    }
+                }
             end
         }
         use { 'lewis6991/gitsigns.nvim', 
@@ -239,6 +248,22 @@ require('packer').startup(
         use { 'ishan9299/modus-theme-vim', 
             branch = 'stable' 
         }
+        use { 'Pocco81/NoCLC.nvim',
+            config = function()
+                require("no-clc").setup({
+                    load_at_startup = true,
+                    cursorline = true,
+                    cursorcolumn = true
+                })
+            end
+        }
+        use {
+            "folke/todo-comments.nvim",
+            requires = "nvim-lua/plenary.nvim",
+            config = function()
+                require('plug_todolist')
+            end
+        }
 
         -- VIM --
         use { 'sheerun/vim-polyglot' }
@@ -248,8 +273,8 @@ require('packer').startup(
         use { 'direnv/direnv' }
         use { 'matze/vim-move', 
             config = function()
-                vimp.rbind('n',                 '<C-A-Down>',       [[<Plug>MoveLineDown]])
-                vimp.rbind('n',                 '<C-A-Up>',         [[<Plug>MoveLineUp]])
+                require('vimp').rbind('n',                 '<C-A-Down>',       [[<Plug>MoveLineDown]])
+                require('vimp').rbind('n',                 '<C-A-Up>',         [[<Plug>MoveLineUp]])
                 vim.api.nvim_set_keymap("v",    "<C-A-Down>",       "<Plug>MoveBlockDown", {})
                 vim.api.nvim_set_keymap("v",    "<C-A-Up>",         "<Plug>MoveBlockUp", {})
             end
@@ -261,8 +286,8 @@ require('packer').startup(
         }
         use { 'mbbill/undotree',
             config = function()
-                vimp.bind({'silent'},  'U',     [[:redo<CR>]])
-                vimp.bind({'silent'},  '<C-U>', [[:UndotreeToggle<CR> :UndotreeFocus<CR>]])
+                require('vimp').bind({'silent'},  'U',     [[:redo<CR>]])
+                require('vimp').bind({'silent'},  '<C-U>', [[:UndotreeToggle<CR> :UndotreeFocus<CR>]])
             end
         }
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
@@ -275,8 +300,8 @@ require('other_blame')
 vim.cmd([[au BufNewFile,BufRead *.envrc   set syntax=sh]])
 
 -- === FOCUS === "
-vim.cmd([[au WinLeave * set nocursorline nocursorcolumn norelativenumber]])
-vim.cmd([[au WinEnter * set cursorline cursorcolumn relativenumber]])
+-- vim.cmd([[au WinLeave * set nocursorline nocursorcolumn norelativenumber]])
+-- vim.cmd([[au WinEnter * set cursorline cursorcolumn relativenumber]])
 
 -- === AUTOSAVE === "
 vim.cmd([[au WinLeave,BufLeave,TabLeave,FocusLost * silent wall]])
@@ -286,6 +311,7 @@ vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank()]])
 vim.highlight.on_yank { on_visual = true }
 
 ---------------------------------------------- === BINDINGS === ----------------------------------------------
+vimp = require('vimp')
 vim.g.mapleader = " "
 
 -- === REMOVE HABITS === "
@@ -301,6 +327,16 @@ vimp.inoremap('<M-u>',          [[<ESC>viw~]])
 vimp.nnoremap('<M-u>',          [[viw~<ESC>]])
 
 -------------------------------------------- === LAST MAP === ---------------------------------------------
+function closer()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local config = vim.api.nvim_win_get_config(win);
+            if config.relative ~= "" then
+                vim.api.nvim_win_close(win, false); 
+                print('Closing window', win) 
+            end
+        end
+end
+
 vimp.nnoremap({'silent', 'expr'}, '<ESC>', function()
     vim.cmd('nohlsearch')
     -- vim.cmd(':FloatermKill!')
@@ -308,5 +344,6 @@ vimp.nnoremap({'silent', 'expr'}, '<ESC>', function()
     vim.lsp.diagnostic.display(nil, 0)
     vim.api.nvim_buf_clear_namespace(0, -1, 0, -1)
     require('hlslens').disable()
+    -- vim.cmd('lua closer()')
     return [[<ESC>]]
 end)

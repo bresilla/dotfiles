@@ -1,7 +1,7 @@
 #!/bin/bash
 source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
-BROWSER=surf
+BROWSER=firefox
 
 srch=search
 mark=bookmarks

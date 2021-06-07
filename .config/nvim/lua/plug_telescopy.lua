@@ -1,6 +1,6 @@
 --------------------------------- TELESCOPE  -----------------------------------------
 vimp.nnoremap('<leader><leader>',       [[<cmd>lua require('telescope.builtin').git_files()<cr>]])
-vimp.nnoremap('<C-Space>',              [[<cmd>lua require('telescope.builtin').buffers(center_list)<cr>]])
+vimp.nnoremap('<C-Space>',                  [[<cmd>lua require('telescope.builtin').buffers(center_list)<cr>]])
 vimp.nnoremap('<C-p>',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
 vimp.nnoremap('<C-g>',                  [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
 vimp.nnoremap('<C-f>',                  [[<cmd>lua require('telescope.builtin').lsp_code_actions(center_list)<cr>]])
