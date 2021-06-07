@@ -1,6 +1,7 @@
 -- https://github.com/wbthomason/packer.nvim
 -- git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/opt/packer.nvim
 -- TODO: do something
+-- HACK: somethnig
 
 ---------------------------------------------- === OPTIONS === ----------------------------------------------
 vim.api.nvim_set_var( 'python_host_prog', '/usr/bin/python3' )
@@ -52,8 +53,8 @@ vim.o.lazyredraw = true                                                 -- lazyr
 
 vim.o.tabstop = 4                                                       -- tabsize
 vim.o.shiftwidth = 4                                                    -- set indentation width
+vim.o.softtabstop = 4
 vim.o.expandtab = true                                                  -- use spaces instead of tabs
-vim.o.softtabstop = 0
 vim.o.autoindent = true                                                 -- enable autoindent
 vim.o.smarttab = true                                                   -- make tab behaviour smarter
 -- vim.o.smartindent = true                                                -- smarter indentation
@@ -297,8 +298,9 @@ require('other_blame')
 
 ---------------------------------------------- === ATUOCMDS === ----------------------------------------------
 -- === DEFAULT FILETYPE === "
-vim.cmd([[au BufNewFile,BufRead *.envrc   set syntax=sh]])
+vim.cmd([[retab]])
 
+vim.cmd([[au BufNewFile,BufRead *.envrc   set syntax=sh]])
 -- === FOCUS === "
 -- vim.cmd([[au WinLeave * set nocursorline nocursorcolumn norelativenumber]])
 -- vim.cmd([[au WinEnter * set cursorline cursorcolumn relativenumber]])
