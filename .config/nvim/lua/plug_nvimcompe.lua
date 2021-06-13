@@ -73,7 +73,7 @@ vimp.inoremap({'silent', 'expr'}, '<Up>', function()
 end)
 
 
---[[ require('vim.lsp.protocol').CompletionItemKind = {
+require('vim.lsp.protocol').CompletionItemKind = {
       '  Text';          -- = 1
       '  Function';      -- = 2;
       '  Method';        -- = 3;
@@ -99,32 +99,4 @@ end)
       '  Event';         -- = 23;
       '  Operator';      -- = 24;
       '  TypeParameter'; -- = 25;
-} ]]
-
-require('vim.lsp.protocol').CompletionItemKind = {
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
-      ' ';
 }

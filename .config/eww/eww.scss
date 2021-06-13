@@ -2,17 +2,20 @@
     all: unset;
 }
 
+
+@import "../../../.cache/wal/colors.scss";
+
 window {
-    color: #ffffff;
+    color: $color0;
 }
 
 .profile, .date, .shutdown, .reboot, .quit, .volume, .player {
-    background-color: #192025;
+    background-color: $color1;
     border-radius: 10px;
     font-family: "Font Awesome 5";
-    border-radius: 12px;
-    border: 3px solid;
-    border-color: #252d33;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: $color238;
 }
 
 .titlebar {
@@ -24,56 +27,56 @@ window {
     margin-left: -20px;
 }
 
-.text {
+.wellcome {
     margin-top: 30px;
-    font-family: "CaskaydiaCove Nerd Font Mono";
-    color: #ffffff;
-    font-size: 25px;
+    font-family: "VictorMono Nerd Font Mono";
+    color: $color0;
+    font-size: 45px;
     font-weight: 800;
 }
 
 .username {
     margin-top: 10px;
-    font-family: "CaskaydiaCove Nerd Font Mono";
-    color: #41505c;
-    font-size: 14px;
+    font-family: "VictorMono Nerd Font Mono";
+    color: $color0;
+    font-size: 24px;
     font-weight: 500;
 }
 
 .time {
     margin: 15px 60px -30px 61px;
-    font-size: 50px;
-    font-family: "CaskaydiaCove Nerd Font Mono";
+    font-size: 100px;
+    font-family: "VictorMono Nerd Font Mono";
 }
 
 .semicolon {
     margin: 0px;
     margin-top: -5px;
-    color: #d6d6d6;
-    font-family: "CaskaydiaCove Nerd Font Mono";
+    color: $color0;
+    font-family: "VictorMono Nerd Font Mono";
 }
 
 .day {
     margin-top: 25px;
     margin-bottom: 20px;
-    font-family: "CaskaydiaCove Nerd Font Mono";
-    font-size: 16px;
+    font-family: "VictorMono Nerd Font Mono";
+    font-size: 26px;
     font-weight: 500;
-    color: #d6d6d6;
+    color: $color0;
 }
 
 .song-data {
-    font-size: 12px;
+    font-size: 22px;
     font-weight: bold;
-    font-family: "CaskaydiaCove Nerd Font Mono";
+    font-family: "VictorMono Nerd Font Mono";
     margin: 17px 0px 0px -25px;
 }
 
 .song-title {
-    font-family: "CaskaydiaCove Nerd Font Mono";
-    font-size: 14px;
+    font-family: "VictorMono Nerd Font Mono";
+    font-size: 24px;
     font-weight: 400;
-    color: #ffffff;
+    color: $color0;
     padding-right: 30px;
 }
 
@@ -84,7 +87,7 @@ window {
 }
 
 .player-btn button {
-    color: #d6d6d6;
+    color: $color0;
 
     font-family: "FontAwesome5";
     font-weight: normal;
@@ -92,7 +95,7 @@ window {
 }
 
 .player-btn button:hover {
-    color: #d6d6d6;
+    color: $color0;
 }
 
 .player-btn pause-play button  {
@@ -111,63 +114,59 @@ window {
 }
 
 .label-vol-bar {
-    font-size: 18px;
+    font-size: 28px;
     font-weight: normal;
     font-family: "FontAwesome5";
-    margin-left: -100px;
-    color: #ffffff;
+    margin-left: -200px;
+    color: $color0;
     margin-top: 15px;
 }
 
  .vol-bar scale trough highlight {
- all: unset;
- background-image: linear-gradient(to right, #d6d6d6, #ffffff);
- color: #a3d4ae;
- border-radius: 10px;
- margin-top: 0px;
+    all: unset;
+    background-image: linear-gradient(to right, $color0, $color232);
+    color: $color0;
+    border-radius: 10px;
+    margin-top: 0px;
  }
 
 .vol-bar scale trough,{
 	all: unset;
-	background-color: #252d33;
+	background-color: $color242;
 	border-radius: 30px;
-
 	min-height: 10px;
     min-width: 170px;
-
-    margin: 8px 25px -2px -90px;
+    margin: 8px 25px -2px -200px;
 }
 
 .label-cpu-bar {
-    font-size: 18px;
+    font-size: 28px;
     font-weight: normal;
     font-family: "FontAwesome5";
-    margin-left: -100px;
-    color: #ffffff;
+    margin-left: -200px;
+    color: $color0;
     margin-top: 20px;
 }
 
  .cpu-bar scale trough highlight {
- all: unset;
- background-image: linear-gradient(to right, #d6d6d6, #ffffff);
- color: #a3d4ae;
- border-radius: 10px;
- margin-top: 0px;
+    all: unset;
+    background-image: linear-gradient(to right, $color0, $color232);
+    color: $color0;
+    border-radius: 10px;
+    margin-top: 0px;
  }
 
 .cpu-bar scale trough,{
 	all: unset;
-	background-color: #252d33;
+	background-color: $color242;
 	border-radius: 30px;
-
 	min-height: 10px;
     min-width: 170px;
-
-    margin: 8px 25px -10px -90px;
+    margin: 8px 25px -10px -200px;
 }
 
 .shutdown-btn button {
-    color: #d6d6d6;
+    color: $color0;
     font-weight: normal;
     padding-right: 9px;
     padding-top: 3px;
@@ -175,7 +174,7 @@ window {
 }
 
 .reboot-btn button {
-    color: #d6d6d6;
+    color: $color0;
     font-weight: normal;
     padding-right: 10px;
     padding-top: 2px;
@@ -183,7 +182,7 @@ window {
 }
 
 .quit-btn button {
-    color: #d6d6d6;
+    color: $color0;
     padding-right: 2px;
     padding-top: 3px;
     font-size: 30px;

@@ -100,49 +100,16 @@ require('packer').startup(
                 require('plug_lspconfis')
             end
         }
-        use { "folke/which-key.nvim",
-            config = function()
-                require('plug_whichkey')
-            end
-        }
-        use { 'b3nj5m1n/kommentary',
-            config = function()
-                vim.api.nvim_set_keymap("n", "<leader>#", "<Plug>kommentary_motion_default", {})
-                vim.api.nvim_set_keymap("n", "#", "<Plug>kommentary_line_default", {})
-                vim.api.nvim_set_keymap("v", "#", "<Plug>kommentary_visual_default", {})
-            end
-        }
         use { 'nvim-treesitter/nvim-treesitter',
             config = function()
                 require('plug_treesitter')
             end
         }
-        use { 'RRethy/nvim-treesitter-textsubjects',
-            config = function()
-                require'nvim-treesitter.configs'.setup {
-                    textsubjects = {
-                        enable = true,
-                        keymaps = {
-                            ['.'] = 'textsubjects-smart',
-                        }
-                    },
-                }
-            end
-        }
-        use { 'mfussenegger/nvim-dap',
+        use { "rcarriga/nvim-dap-ui",
+            requires = {"mfussenegger/nvim-dap"},
             config = function()
                 require('plug_dapconfig')
             end
-        }
-        use { 'lewis6991/spellsitter.nvim',
-           config = function()
-               require('spellsitter').setup {
-                    hl = 'SpellBad',
-                    captures = {'comment'},  -- set to {} to spellcheck everything
-                    hunspell_cmd = 'hunspell',
-                    -- hunspell_args = {'d' 'en_US'},
-                }
-           end
         }
         use { 'hrsh7th/nvim-compe', 
             config = function()
@@ -166,6 +133,11 @@ require('packer').startup(
                 require('plug_floaterm')
             end
         }
+        use { 'mhartington/formatter.nvim',
+            config = function()
+                require('plug_formatter')
+            end
+        }
         use { 'kyazdani42/nvim-tree.lua',
             config = function()
                 require('plug_nvimtree')
@@ -182,9 +154,16 @@ require('packer').startup(
                 require('plug_dashboard')
             end
         }
-        use { 'mhartington/formatter.nvim',
+        use { "folke/which-key.nvim",
             config = function()
-                require('plug_formatter')
+                require('plug_whichkey')
+            end
+        }
+        use { 'b3nj5m1n/kommentary',
+            config = function()
+                vim.api.nvim_set_keymap("n", "<leader>#", "<Plug>kommentary_motion_default", {})
+                vim.api.nvim_set_keymap("n", "#", "<Plug>kommentary_line_default", {})
+                vim.api.nvim_set_keymap("v", "#", "<Plug>kommentary_visual_default", {})
             end
         }
         use { 'windwp/nvim-autopairs',
@@ -242,12 +221,19 @@ require('packer').startup(
                 require('plug_colorbuddy')
             end
         }
+        --[[ use { 'rktjmp/lush.nvim',
+            config = function()
+                require('plug_lushnvim')
+            end
+        } ]]
+        use { 'norcalli/nvim-colorizer.lua',
+            config = function()
+                require'colorizer'.setup()
+            end
+        }
         use {
             'yamatsum/nvim-web-nonicons',
             requires = {'kyazdani42/nvim-web-devicons'}
-        }
-        use { 'ishan9299/modus-theme-vim', 
-            branch = 'stable' 
         }
         use { 'Pocco81/NoCLC.nvim',
             config = function()
@@ -265,10 +251,20 @@ require('packer').startup(
                 require('plug_todolist')
             end
         }
+        use { 'lewis6991/spellsitter.nvim',
+           config = function()
+               require('spellsitter').setup {
+                    hl = 'SpellBad',
+                    captures = {'comment'},  -- set to {} to spellcheck everything
+                    hunspell_cmd = 'hunspell',
+                    -- hunspell_args = {'d' 'en_US'},
+                }
+           end
+        }
 
         -- VIM --
-        use { 'sheerun/vim-polyglot' }
-        use { 'tpope/vim-surround' }
+        -- use { 'sheerun/vim-polyglot' }
+        -- use { 'tpope/vim-surround' }
         use { 'kana/vim-fakeclip' }
         use { 'haya14busa/incsearch.vim' }
         use { 'direnv/direnv' }
@@ -325,27 +321,22 @@ vimp.nnoremap('<S-Up>',         [[<Nop>]])
 vimp.nnoremap('<S-Down>',       [[<Nop>]])
 
 -- === CHANGE CASE === "
-vimp.inoremap('<M-u>',          [[<ESC>viw~]])
-vimp.nnoremap('<M-u>',          [[viw~<ESC>]])
-
+vimp.nnoremap('~',          [[g~aw]])
 -------------------------------------------- === LAST MAP === ---------------------------------------------
 function closer()
     for _, win in ipairs(vim.api.nvim_list_wins()) do
         local config = vim.api.nvim_win_get_config(win);
             if config.relative ~= "" then
                 vim.api.nvim_win_close(win, false); 
-                print('Closing window', win) 
             end
         end
 end
 
 vimp.nnoremap({'silent', 'expr'}, '<ESC>', function()
-    vim.cmd('nohlsearch')
-    -- vim.cmd(':FloatermKill!')
-    -- vim.lsp.diagnostic.clear(0)
-    vim.lsp.diagnostic.display(nil, 0)
-    vim.api.nvim_buf_clear_namespace(0, -1, 0, -1)
-    require('hlslens').disable()
+    -- vim.cmd(':lua require("goto-preview").close_all_win()')
+    vim.cmd(':noh')
+    -- vim.lsp.diagnostic.clear(0, 0, 0)
+    -- vim.api.nvim_buf_clear_namespace(0, -1, 0, -1)
     -- vim.cmd('lua closer()')
     return [[<ESC>]]
 end)

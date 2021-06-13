@@ -1,11 +1,11 @@
 <eww>
-  <definitions>
-      <def name="profile">
-          <box orientation="v" space-evenly="true">
-              <box class="text">Welcome!</box>
-              <box class="username">@ChocolateBread</box>
-          </box>
-      </def>
+    <definitions>
+        <def name="profile">
+            <box orientation="v" space-evenly="true">
+                <box class="wellcome">Welcome!</box>
+                <box class="username">B R E S I L L A</box>
+            </box>
+        </def>
         <def name="shutdown">
             <box orientation="h" space-evenly="true">
               <box class="shutdown-btn" orientation="h" halign="center">
@@ -39,7 +39,7 @@
         </def>
         <def name="player">
             <box orientation="h" space-evenly="true">
-                <box class="song-art" style="background-image: url('{{art}}');">{{song_art}}</box>
+                <box class="song-art" style="background-image: url('{{art}}');background-size:cover;">{{song_art}}</box>
                 <box class="song-data" orientation="v" space-evenly="false">
                     <box class="song-title">{{song_title}}</box>
                     <box class="player-btn" orientation="h" halign="center">
@@ -53,19 +53,19 @@
         <def name="background">
             <box/>
         </def>
-    <def name="volume">
-        <box orientation="v" space-evenly="false">
-          <box class="cpu-bar" orientation="h">
-              <box class="label-cpu-bar"></box>
-              <scale min="0" max="101" active="false" value="{{cpu}}"></scale>
+        <def name="volume">
+            <box orientation="v" space-evenly="false">
+            <box class="cpu-bar" orientation="h">
+                <box class="label-cpu-bar"></box>
+                <scale min="0" max="101" active="false" value="{{cpu}}"></scale>
+                </box>
+                <box class="vol-bar" orientation="h">
+                    <box class="label-vol-bar"></box>
+                    <scale min="0" max="101" active="false" value="{{volume}}"></scale>
+                </box>
             </box>
-            <box class="vol-bar" orientation="h">
-                <box class="label-vol-bar"></box>
-                <scale min="0" max="101" active="false" value="{{volume}}"></scale>
-            </box>
-        </box>
-    </def>
-</definitions>
+        </def>
+    </definitions>
 
     <variables>
         <!-- DATE VARS -->
@@ -85,43 +85,43 @@
 
     <windows>
         <window name="profile">
-            <geometry x="680px" y="400px" width="300px" height="110px"/>
+            <geometry x="1360" y="800px" width="600px" height="200px"/>
             <widget>
                 <profile/>
             </widget>
         </window>
         <window name="date">
-            <geometry x="1000px" y="515px" width="310px" height="100px"/>
+            <geometry x="2000px" y="1030px" width="620px" height="270px"/>
             <widget>
                 <date/>
             </widget>
         </window>
         <window name="shutdown">
-            <geometry x= "590px" y="401px" width="70px" height="70px"/>
+            <geometry x= "1180px" y="802px" width="140px" height="140px"/>
             <widget>
                 <shutdown/>
             </widget>
         </window>
         <window name="reboot">
-            <geometry x="590px" y="490px" width="70px" height="70px"/>
+            <geometry x="1180px" y="980px" width="140px" height="140px"/>
             <widget>
                 <reboot/>
             </widget>
         </window>
         <window name="quit">
-            <geometry x="590px" y="580px" width="70px" height="70px"/>
+            <geometry x="1180px" y="1160px" width="140px" height="140px"/>
             <widget>
                 <quit/>
             </widget>
         </window>
         <window name="player">
-            <geometry x="680px" y="550px" width="300px" height="100px"/>
+            <geometry x="1360px" y="1050px" width="600px" height="250px"/>
             <widget>
                 <player/>
             </widget>
         </window>
         <window name="volume">
-            <geometry x="1000px" y="400px" width="310px" height="98px"/>
+            <geometry x="2000px" y="800px" width="620px" height="196px"/>
             <widget>
                 <volume/>
             </widget>

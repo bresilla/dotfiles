@@ -28,6 +28,10 @@ create_files(){
     # COLORS.INI (used by POLYBAR)
     printf "[colors]\n\tforeground=$fore\n\tbackground=$back\n\tcursor=$col1\n" > $HOME/.cache/wal/colors.ini
     awk '{print "\tcolor" NR-1 "=" $0 }' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.ini
+    
+    # COLORS.SCSS (used for STYLING)
+    printf "\$foreground: $fore;\n\$background: $back;\n\n" > $HOME/.cache/wal/colors.scss
+    awk '{print "$color" NR-1 ": " $0 ";"}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.scss
 
     # COLORS.CONF (used by KITTY)
     printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors.conf

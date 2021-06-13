@@ -13,6 +13,7 @@ round-borders = 2;
 rounded-corners-exclude = [
     "class_g = 'firefox' && window_type = 'utility'",
     "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+    "_NET_WM_WINDOW_TYPE@:a *= '_NET_WM_WINDOW_TYPE_DOCK'",
     "_GTK_FRAME_EXTENTS@:c"
 ];
 
@@ -30,6 +31,7 @@ shadow-exclude = [
     "class_g *?= 'GLava'",
     "class_g = 'firefox' && window_type = 'utility'",
     "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+    "_NET_WM_WINDOW_TYPE@:a *= '_NET_WM_WINDOW_TYPE_DOCK'",
     "_GTK_FRAME_EXTENTS@:c"
 ];
 shadow-ignore-shaped = false
@@ -61,7 +63,7 @@ fade-exclude = [ ];
 
 ### Opacity
 active-opacity = 1;
-inactive-opacity = 0.99;
+inactive-opacity = 0.98;
 opacity-rule = [
     "100:class_g = 'mpv'",
     "100:class_g = 'Firefox' && focused",

@@ -1,9 +1,13 @@
 --------------------------------- TELESCOPE  -----------------------------------------
 vimp.nnoremap('<leader><leader>',       [[<cmd>lua require('telescope.builtin').git_files()<cr>]])
-vimp.nnoremap('<C-Space>',                  [[<cmd>lua require('telescope.builtin').buffers(center_list)<cr>]])
-vimp.nnoremap('<C-p>',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
-vimp.nnoremap('<C-g>',                  [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
-vimp.nnoremap('<C-f>',                  [[<cmd>lua require('telescope.builtin').lsp_code_actions(center_list)<cr>]])
+vimp.nnoremap('<C-Space>',              [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
+vimp.nnoremap('<C-b>',                  [[<cmd>lua require('telescope.builtin').buffers(center_list)<cr>]])
+
+vimp.nnoremap('<leader>lf',                  [[<cmd>lua require('telescope.builtin').lsp_code_actions(center_list)<cr>]])
+vimp.nnoremap('<leader>lr',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
+vimp.nnoremap('<leader>ll',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
+vimp.nnoremap('<leader>li',                  [[<cmd>lua require('telescope.builtin').lsp_implementations()<cr>]])
+vimp.nnoremap('<leader>ld',                  [[<cmd>lua require('telescope.builtin').lsp_definitions()<cr>]])
 
 
 local actions = require('telescope.actions')

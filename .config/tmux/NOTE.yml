@@ -1,20 +1,20 @@
 name: NOTE
 windows:
 - name: spt
-  layout: 3b7b,310x66,0,0{181x66,0,0[181x48,0,0,2,181x17,0,49,18],128x66,182,0[128x19,182,0,16,128x46,182,20,19]}
+  layout: a9a5,310x69,0,0{181x69,0,0[181x55,0,0,3,181x13,0,56,42],128x69,182,0[128x30,182,0,5,128x38,182,31,4]}
   panes:
   - commands:
     - spt
+    focus: true
     root: /home/bresilla
   - commands:
     - taskwarrior-tui
     root: /home/bresilla
   - commands:
-    - tock -c
+    - rsmixer
     root: /home/bresilla
   - commands:
-    - rsmixer
-    focus: true
+    - tock -c
     root: /home/bresilla
 - name: top
   layout: 32d0,310x66,0,0{183x66,0,0,4,126x66,184,0[126x29,184,0,6,126x36,184,30,5]}
