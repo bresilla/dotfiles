@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+if which zoxide >/dev/null 2>&1 && which whiptail >/dev/null 2>&1; then
+    export NEWT_COLORS='root=,black entry=black,red'
+    word="$(whiptail --inputbox 'SEARCH WORD:' 8 60 3>&1 1>&2 2>&3)"
+    path="$(zoxide query -- $word)"
+    printf "%s" "0c$path" > "$NNN_PIPE"
+else
+    printf "zoxide or newt are not installed"
+    read -r _
+fi
+

@@ -1,11 +1,7 @@
 #!/usr/bin/env zsh
 #--------------------------------------------------------------------------------------------------------------------
-###BRESILLA
-/home/bresilla/dots/.func/system/bresilla
 ###THEME
 [ -f ~/.config/promptline ] && source ~/.config/promptline
-
-
 
 #--------------------------------------------------------------------------------------------------------------------
 ###WAL COLORS
@@ -86,31 +82,30 @@ bindkey -M vicmd '^Y' vi-yank-x-selection
 
 
 #--------------------------------------------------------------------------------------------------------------------
-# use SUDO for last command
-sudo-command-line() {
-    [[ -z $BUFFER ]] && zle up-history
-    if [[ $BUFFER == sudo\ * ]]; then
-        LBUFFER="${LBUFFER#sudo }"
-    elif [[ $BUFFER == $EDITOR\ * ]]; then
-        LBUFFER="${LBUFFER#$EDITOR }"
-        LBUFFER="sudoedit $LBUFFER"
-    elif [[ $BUFFER == sudoedit\ * ]]; then
-        LBUFFER="${LBUFFER#sudoedit }"
-        LBUFFER="$EDITOR $LBUFFER"
-    else
-        LBUFFER="sudo $LBUFFER"
-    fi
-}
-zle -N sudo-command-line
-bindkey '^S' sudo-command-line
+###MODULES
+autoload -U colors && colors
+autoload compinit && compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
+
+# TMOUT=1
+TRAPALRM() { [[ "$WIDGET" != "complete-word" ]] && zle reset-prompt }
+
+[ -d ~/.config/zsh/insult ] && . ~/.config/zsh/insult
+[ -f ~/.config/zsh/async ] && autoload -U async
+[ -d ~/.config/zsh/cmdtime ] && source ~/.config/zsh/cmdtime/zsh-command-time.zsh
+[ -d ~/.config/zsh/visualvi ] && source ~/.config/zsh/visualvi/zsh-vimode-visual.zsh
+[ -d ~/.config/zsh/autosuggestions ] && source ~/.config/zsh/autosuggestions/zsh-autosuggestions.zsh
+[ -d ~/.config/zsh/syntax ] && source ~/.config/zsh/syntax/zsh-syntax-highlighting.zsh
+#[ -d ~/.config/zsh/almostontop ] && source ~/.config/zsh/almostontop/almostontop.plugin.zsh
+[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-history-substring-search.zsh
+[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
+[ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
+[ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
+
+[ -d ~/.config/zsh/cmp ] && source ~/.config/zsh/cmp/cmp.plugin.zsh
 
 
 #--------------------------------------------------------------------------------------------------------------------
-###other
-push-line-and-clear() { zle .push-line; zle .clear-screen }
-zle -N push-line-and-clear
-bindkey '^L' push-line-and-clear
-
+###KILLER
 function run_killer(){ killer; zle reset-prompt; zle redisplay; }
 zle -N run_killer
 bindkey -M vicmd '^k' run_killer
@@ -132,21 +127,53 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
+#--------------------------------------------------------------------------------------------------------------------
+###SCRIPTS PATH
+export FPATH=~/.config/zsh:$FPATH
+
+###ALIASES
+[[ -f ~/.aliases ]] && source ~/.aliases
+alias \$=''
+
+###PROFILE
+[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
+
+##NAME
+[[ -x "$(command -v tmux)" ]] && tmux setenv -g TMUX_FANCY_$(tmux display -p "#D" | tr -d %) $FANCY
+[[ -x "$(command -v tmux)" ]] && tmux setenv FANCY $FANCY
+
+###DIRENV
+eval "$(direnv hook zsh)"
+
+###AUTIN
+eval "$(atuin init zsh)"
+
+###SSH&GPG
+export GPG_TTY=$(tty)
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
 #--------------------------------------------------------------------------------------------------------------------
-#SHKO
-alias _shko='shko -c --short 19 && cd "$(cat ~/.config/shko/settings/chdir)"'
-alias _conf='nvim $(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" | fzf)'
+# NNN
+[[ -e ~/.config/nnn/config.sh ]] && emulate sh -c 'source ~/.config/nnn/config.sh'
+n(){
+  export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+  if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then echo "already running"; return; fi
+  nnn -deuUHQ "$@"
+  if [ -f "$NNN_TMPFILE" ]; then
+    . "$NNN_TMPFILE"; rm -f "$NNN_TMPFILE" > /dev/null
+  fi
+}
+bindkey -s '^W' ' n\n'
 
-
-# RUN
+#--------------------------------------------------------------------------------------------------------------------
+#RUN OR LS (shotrcut: Enter)
 runner () {
     # check if the buffer does not contain any words
     if [ ${#${(z)BUFFER}} -eq 0 ]; then
       if [[ -n $(echo $ENVNAME) ]]; then
-        build && run
+        clear && run
       else
-        printf "\n" && exa -la
+        printf "\n" && exa -laiSHF --header --git --group-directories-first --tree -L1
       fi
     fi
     zle accept-line
@@ -155,66 +182,40 @@ zle -N runner
 bindkey '^M' runner
 
 #--------------------------------------------------------------------------------------------------------------------
-###RE-ENTER SAME DIRECTORY
-recd(){
-    if [ -z ${cdre+x} ]; then
-        export cdre="cdre";
-        cd .. && cd - ;
-    fi
-}
-
-#--------------------------------------------------------------------------------------------------------------------
-###MODULES
-autoload -U colors && colors
-autoload compinit && compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
-
-# TMOUT=1
-TRAPALRM() {
-    if [ "$WIDGET" != "complete-word" ]; then
-        zle reset-prompt
-    fi
-}
-
-[ -d ~/.config/zsh/insult ] && . ~/.config/zsh/insult
-[ -f ~/.config/zsh/async ] && autoload -U async
-[ -d ~/.config/zsh/cmdtime ] && source ~/.config/zsh/cmdtime/zsh-command-time.zsh
-[ -d ~/.config/zsh/visualvi ] && source ~/.config/zsh/visualvi/zsh-vimode-visual.zsh
-[ -d ~/.config/zsh/autosuggestions ] && source ~/.config/zsh/autosuggestions/zsh-autosuggestions.zsh
-[ -d ~/.config/zsh/syntax ] && source ~/.config/zsh/syntax/zsh-syntax-highlighting.zsh
-#[ -d ~/.config/zsh/almostontop ] && source ~/.config/zsh/almostontop/almostontop.plugin.zsh
-[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-history-substring-search.zsh
-[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
-[ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
-[ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
-
-#--------------------------------------------------------------------------------------------------------------------
-###SCRIPTS PATH
-export FPATH=~/.config/zsh:$FPATH
-
-###ALIASES
-[[ -f ~/dots/.aliases ]] && source ~/dots/.aliases
-alias \$=''
-
-###PROFILE
-[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-
-###ZOXIDE
+###TMUX && CD && ZOXIDE
 eval "$(zoxide init zsh)"
 cd() {
-  if [[ -z $1 ]]; then
-    cd $(proji ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4)
-  elif [[ -d $1 ]] ; then
-    builtin cd $1
-  elif [[ $1 == root ]] && [[ -d $(git rev-parse --show-toplevel) ]] ; then
-    cd $(git rev-parse --show-toplevel)
-  else 
-    z $1;
-  fi
+    if [[ -z $1 ]]; then
+        cd $(proji ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4)
+    elif [[ -d $1 ]] ; then
+        builtin cd $1
+    elif [[ $1 == root ]] && [[ -d $(git rev-parse --show-toplevel) ]] ; then
+        cd $(git rev-parse --show-toplevel)
+    else 
+        z $1;
+    fi
 }
 
-###DIRENV
-eval "$(direnv hook zsh)"
+#--------------------------------------------------------------------------------------------------------------------
+#JUMP (shotrcut: Alt + j)
+jump () {
+  export NEWT_COLORS='root=,black entry=black,red'
+  diri=$(whiptail --inputbox 'GOTO:' 8 60 3>&1 1>&2 2>&3)
+  zoxi=$(zoxide query -- $diri)
+  cd $zoxi
+}
+bindkey -s '^[j' ' jump\n'
 
-###NAVI
-source <(navi widget zsh)
+#--------------------------------------------------------------------------------------------------------------------
+#PROJI (shotrcut: Alt + [1 2 3 4 5 6 7 8 9])
+proj() { cd $(proji ls | head -n-1 | tail -n+4 | sed -n "$1"p | cut -d '|' -f4) }
+for i in 1 2 3 4 5 6 7 8 9
+do
+  bindkey -s "^[$i" "proj $i\n"
+done
+
+#--------------------------------------------------------------------------------------------------------------------
+#TAB-RS (shotrcut: Ctrl + e)
+[[ -n $TAB ]] && [ -f ~/data/docs/BRAND/logo/ascii ] && ~/dots/.func/system/bresilla
+bindkey -s '^A' ' tab\n'
 if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

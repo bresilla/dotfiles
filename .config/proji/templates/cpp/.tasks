@@ -1,7 +1,0 @@
-# vim: set fenc=utf-8 ft=dosini:
-[file-build]
-command=recd && clear && run
-; command=cd .. && cd - && clear && cargo run
-cwd=$(VIM_ROOT)
-output=terminal
-# pos=floaterm

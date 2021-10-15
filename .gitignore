@@ -11,3 +11,4 @@ OSS/
 .config/direnv/allow
 .config/nvim/rainbow.lua
 .config/nvim/plugin
+.Trash-1000/

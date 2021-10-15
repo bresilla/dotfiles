@@ -105,8 +105,8 @@ monitor_aware=false
 pointer_monitor_detection=false
 wm=
 user_set_wm=false
-class=
-name=
+class=true
+name=true
 while getopts :h:w:x:y:s:n:c:C:l:L:p:P:u:U:d:S:i:f:-:amt opt
 do
 	case $opt in
@@ -381,25 +381,7 @@ decoration_settings() {
 
 set_class() {
 	if [[ -z $class ]]; then
-		if [[ $program =~ ^emacsclient ]]; then
-			class=emacs
-		elif [[ $program =~ ^google-chrome ]]; then
-			class=google-chrome
-		elif [[ $program == st ]]; then
-			class=st-256color
-		elif [[ $program == gnome-terminal ]]; then
-			class=Gnome-terminal
-		elif [[ $program =~ ^urxvt.* ]]; then
-			class=urxvt
-		elif [[ $program == xiatec ]]; then
-			class=xiate
-		elif [[ $program == alacritty ]]; then
-			class=Alacritty
-		elif [[ $program == current ]]; then
-			class=$(cat "$MUTDROP_PATH"/current"$num"_class  2> /dev/null)
-		else
-			class=$program
-		fi
+		class=$program
 	fi
 }
 

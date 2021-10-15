@@ -26,6 +26,47 @@ function __memoryuse() {
     printf $mem
 }
 
+function __wireguard() {
+    connection_status=$(doas wg 2>/dev/null | head -n 1 | awk '{print $NF }')
+    if [ "$connection_status" = "mlvd" ]; then
+        printf " V $arrEL"
+    fi
+}
+
+function __tor() {
+    connection_status=$(systemctl status tor.service | grep Active | xargs | cut -d" " -f2)
+    answer_status=active
+    if [ "$connection_status" = "$answer_status" ]; then
+        printf " T $arrEL"
+    fi
+}
+
+function __hotspot() {
+    connection_status=$(systemctl --user status hotspot.service | grep Active | xargs | cut -d" " -f2)
+    answer_status=active
+    if [ "$connection_status" = "$answer_status" ]; then
+        printf " H $arrEL"
+    fi
+}
+
+function __firewall() {
+    connection_status=$(doas ufw status | cut -d":" -f2 | xargs)
+    answer_status=active
+    if [ "$connection_status" = "$answer_status" ]; then
+        printf " F $arrEL"
+    fi
+}
+
+function __ssid() {
+    ssid=$(iwgetid -r);
+    if [[ -z $ssid ]]; then
+        ssid="offline";
+    else
+        sid=$ssid;
+    fi
+    printf $ssid
+}
+
 function __netspeed() {
     [[ -z $INLABEL ]] && INLABEL="▼"
     [[ -z $OUTLABEL ]] && OUTLABEL="▲"
@@ -40,15 +81,7 @@ function __netspeed() {
     rx_rate=$(echo $((RXBN - RXB)) )
     tx_rate=$(echo $((TXBN - TXB)) )
 
-    # incoming
-    echo -n "$INLABEL"
-    rx_kib=$(( $rx_rate >> 10 ))
-    if [[ "$rx_rate" -gt 1048576 ]]; then
-    printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
-    else
-    echo -n "${rx_kib}K"
-    fi
-    echo -n " "
+
     # outgoing
     echo -n "$OUTLABEL"
     tx_kib=$(( $tx_rate >> 10 ))
@@ -56,6 +89,15 @@ function __netspeed() {
     printf '%sM' "`echo "scale=1; $tx_kib / 1024" | bc`"
     else
     echo -n "${tx_kib}K"
+    fi
+    echo -n " | "
+    # incoming
+    echo -n "$INLABEL"
+    rx_kib=$(( $rx_rate >> 10 ))
+    if [[ "$rx_rate" -gt 1048576 ]]; then
+    printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
+    else
+    echo -n "${rx_kib}K"
     fi
 }
 
@@ -85,7 +127,6 @@ function precmd() {
         unset timer
     fi
 }
-
 function __promptline_host {
     printf $(uname -a | cut -d" "  -f2)
 }
@@ -129,6 +170,29 @@ function __get_binsize {
         printf "$(binsize)"
     fi
 }
+function __get_condlines {
+    if command -v tokei >/dev/null 2>&1 && [[ ! -z $(__dev_lang) ]]; then 
+        src=$(git rev-parse --show-toplevel)/src
+        [[ ! -d $src ]] && return 1
+        tkis=$(tokei -t $ENVNAME $src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4)
+        echo $tkis | cut -d" " -f3
+    fi
+}
+function __get_condfiles {
+    if command -v tokei >/dev/null 2>&1 && [[ ! -z $(__dev_lang) ]]; then 
+        src=$(git rev-parse --show-toplevel)/src
+        [[ ! -d $src ]] && return 1
+        tkis=$(tokei -t $ENVNAME $src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4)
+        echo $tkis | cut -d" " -f2
+    fi
+}
+
+function __todos {
+    if command -v snitch >/dev/null 2>&1; then 
+        todos=$(snitch list 2>/dev/null | wc -l)
+        echo "TODO: $(snitch list | wc -l)"
+    fi
+}
 
 function __promptline_cwd {
     [[ $1 -eq 0 ]] && local dir_limit="3" || local dir_limit="$1"
@@ -154,7 +218,6 @@ function __promptline_cwd {
 
 function __truncate_cwd() {
     dir=$(echo "$1" | rev | cut -d'/' -f-$2 | rev)
-
     if [[ $2 == "1" ]]; then
         if [[ $dir == "" ]]; then echo "/"; else echo $dir; fi
     else
@@ -185,32 +248,33 @@ function __promptline_left_prompt {
     if [[ $last_exit_code -gt 0 ]]; then
         prefix="${blackTX}${redBG}${arrFL}${blackTX}" suffix="${space}${blackBG}${redTX}${arrFL}${greyTX}"; printf "%s" "$prefix " $last_exit_code "$suffix"
     fi
-    printf "%s" "${conTX}${arrEL}${greyTX}${space}"
+    #TAB
+    if [[ -n $TAB ]]; then
+        prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; printf "%s" "$prefix" " >> " "$suffix"
+    else
+        prefix="${conTX}${arrEL}${accentBG}${arrFL}${light_TX}${dark_BG}" suffix="${blackBG}${greyTX}"; 
+        [[ $(( $(tab -l 2> /dev/null | wc -l) - 1 )) -ne 0  ]] && printf "%s" "$prefix" " $(( $(tab -l 2> /dev/null | wc -l) - 1 )) " "$suffix"
+    fi
+    printf "%s" "${darkBG}${conTX}${arrEL}${greyTX}${space}"
 }
 
 ## tk -t $ENVNAME src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4
 function __promptline_right_prompt {
+    #TAB
+    prefix="${conTX}${arrEL}${defaultBG}" suffix="${blackBG}${greyTX}"; [[ -n $TAB ]] && printf "%s" "$prefix" " $(echo $TAB | tr -d '/') " "$suffix"
     #DEVSHELL
     if [[ -n $(__dev_lang) ]]; then
-        src=$(git rev-parse --show-toplevel)/src
-        tkis=$(tokei -t $ENVNAME $src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4)
-        # todos=$(snitch list 2>/dev/null | wc -l)
         #PROG-LANG
         prefix="${redTX}${arrER}${arrFR}${redBG}${blackTX}" suffix="${blackTX}${arrFR}${greyTX}${blackBG}${conTX}${arrER}"; printf "%s" "$prefix" " $ENVNAME " "$suffix" 
         #TODOS
-        # if [[ -n $todos ]]; then 
-            # prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "TODO: $(snitch list | wc -l)" "$suffix"
-        # fi
-        #BINARY_SIZE
+        prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}"; [[ -n $(__todos) ]] && printf "%s" "$prefix" "$(__todos)" "$suffix"
+        #BINARY_SIZE    or      NUMBER OF CODE FILES
         prefix="${accentTX}${arrFR}${dark_TX}${accentBG}" suffix="${blackTX}${arrER}";
-        if [[ -n $(__get_binsize) ]]; then
-            printf "%s" "$prefix "$(__get_binsize)" $suffix"
-        else
-            #NUMBER OF CODE FILES
-            printf "%s" "$prefix" " $(echo $tkis | cut -d" " -f2) " "$suffix"
+        if [[ -n $(__get_binsize) ]]; then printf "%s" "$prefix "$(__get_binsize)" $suffix";
+        elif [[ -n $(__get_condfiles) ]]; then printf "%s" "$prefix" "$(__get_condlines)" "$suffix";
         fi
         #NUMBER OF LINES OF CODE
-        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(echo $tkis | cut -d" " -f3)" "$suffix"
+        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; [[ -n $(__get_condlines) ]] && printf "%s" "$prefix" "$(__get_condlines)" "$suffix"
         # prefix="${blackBG}${arrFL}${blackTX}${dark_BG}${arrFL}${light_TX}${dark_BG}" suffix="${dark_TX}"; [[ -n $(__dev_lang) ]] && printf "%s" "$prefix" "$(__dev_lang)" "$suffix"
     else
         #CMD TIME
@@ -218,7 +282,7 @@ function __promptline_right_prompt {
         #LOAD AVERAGE
         prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__load_average)" "$suffix"
     fi
-    #VIM MODE
+    #VIM MOD  
     prefix="${dark_TX}${arrFR}${light_TX}${dark_BG}${space}" suffix="${space}${defaultBG}${defaultFG}";
     if [[ -n ${ZSH_VERSION-} ]]; then
         vimode='${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}'
@@ -231,29 +295,33 @@ function __promptline_right_prompt {
 
 function __tmuxline_right_prompt {
     #WORKING DIR or GIT
+    # local w=$(tmux showenv -g TMUX_PWD_$(tmux display -p "$3" | tr -d %)  | sed 's/^.*=//')
     gitroot=$(git -C $1 rev-parse --show-toplevel)
     if git ls-remote $gitroot -q ; then
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}"; printf "%s" "$prefix" "$(gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
+        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}";
+        printf "%s" "$prefix" "$(/env/go/bin/gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
     else
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; printf "%s" "$prefix" "$(__promptline_cwd 2 right $@)" "$suffix"
+        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; 
+        printf "%s" "$prefix" "$(__promptline_cwd 2 right $1)" "$suffix"
     fi
     #CMD TIME
     prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; printf "%s" "$prefix" "$(__cpustats)" "$suffix"
     #LOAD AVERAGE
-    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__memoryuse)" "$suffix"
+    prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(__memoryuse)" "$suffix"
     #BATTERY
     [[ $(acpi | awk '{print $3}' | tr -d '%,') == "Discharging" ]] && conTX=$redTX || conTX=$light_TX
     prefix="${accentBG}${blackTX}${arrFR}${blackBG}${dark_TX}${arrFR}${light_TX}${dark_BG}${space}$conTX${space}" suffix="${space}";printf "%s" "$BLD$prefix" "$(__battery)%" "$suffix"
 }
 
 function __tmuxline_left_prompt {
-    #TIME
+    #NETSPPED
     prefix="${light_TX}${dark_BG}${space}" suffix="${space}${dark_TX}"; printf "%s" "$BLD$prefix" "$(__timenow)" "$suffix$NLD"
-    #UPTIME
-    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__datetoday)" "$suffix"
-    #UPTIME
-    prefix="${defaultBG}${space}${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "$(__uptime)" "$suffix"
-
+    #TIME
+    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__netspeed)" "$suffix"
+    #INTERNET
+    prefix="${defaultBG}${space}${defaultBG}${arrFL}${conTX}"
+    # suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}";
+    printf "%s" "$prefix" "$(__uptime)" "$suffix"
 }
 
 function __tmuxline_center_prompt {
@@ -270,7 +338,6 @@ function __tmuxline_center_prompt {
     printf "%s" "$prefix" $con "$suffix"
 }
 
-
 function __one_line_prompt {
     LEFTPROMPT=$(echo __promptline_left_prompt | wc -m)
     size_left=${#LEFTPROMPT}
@@ -281,9 +348,25 @@ function __one_line_prompt {
     echo $LEFTPROMPT
     echo $size_right
 }
+
 function __emptyline() {
     echo
 }
+
+function __doneline() {
+    ERR=$( ($(echo $1) $(echo ${@:2})) 2>&1 )
+    while read -r line; do
+        if [[ -z $line ]]; then
+            echo -ne "\e[35m  \e[0m"
+            echo -e " DONE \e[0m"
+        else
+            echo -ne "\e[91m  \e[0m"
+            echo -n $(echo $line | sed "s/$1: //g" | sed 's/^[^:]*://g')
+            echo -e "\e[0m"
+        fi
+    done <<<$ERR
+}
+
 function __breakline() {
     COLS="${COLUMNS:-10}"
     local WORD="─"
@@ -337,10 +420,15 @@ function __promptline {
     local BLD=$(tput bold)
     local NLD=$(tput sgr0)
 
+    TMUX_PWD=$(
+        if [ -n $TMUX ]; then
+            [[ -x "$(command -v tmux)" ]] && tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD
+        fi
+    )
 
     if [[ -n ${ZSH_VERSION-} ]]; then
         # PROMPT="$(__one_line_prompt)"
-        PROMPT="$(__promptline_left_prompt)"
+        PROMPT="$(__promptline_left_prompt) $(eval $TMUX_PWD)"
         RPROMPT=" $(__promptline_right_prompt)"
     elif [[ -n ${FISH_VERSION-} ]]; then
         if [[ -n "$1" ]]; then
@@ -392,6 +480,7 @@ if [[  $1 != "tmux" ]]; then
   if [[ -n ${ZSH_VERSION-} ]]; then
     if [[ ! ${precmd_functions[(r)__promptline]} == __promptline ]]; then
       precmd_functions+=(__promptline)
+      # precmd_functions+=(__doneline)
       precmd_functions+=(__emptyline)
     fi
   elif [[ -n ${FISH_VERSION-} ]]; then

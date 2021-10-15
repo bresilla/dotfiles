@@ -1,0 +1,4 @@
+key_bindings:
+  - action: SelectInteractive
+    keys: ctrl-A
+# workspace: []

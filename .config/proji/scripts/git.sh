@@ -5,10 +5,10 @@ echo "> Initializing git-repo"
 
 if [ -d ".git" ]; then
     echo "> Warning: Existing git repo was found."
-    exit
+else
+    git init . >/dev/null
 fi
 
-git init . >/dev/null
 added_remote=0
 remote_name=""
 
@@ -63,7 +63,7 @@ while true; do
 done
 
 # Git add and commit
-git add . >/dev/null
+git add --all >/dev/null
 git commit -m "Create project" >/dev/null
 git tag -a v0.1.0 -m "Version 0.1.0" >/dev/null
 # git checkout --quiet -b develop >/dev/null

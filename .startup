@@ -1,16 +1,24 @@
 #!/usr/bin/env sh
-# COLORS
-/home/bresilla/dots/.func/wm/rainbow regen &
+###PROFILE
+source /home/bresilla/.profile
 
 
 #MONITORS
 MONITOR1=eDP-1
 MONITOR2=DP-1
-xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate normal --output $MONITOR2 --mode 3840x2160 --pos 0x0 --rotate normal --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off &
+# xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate normal --output $MONITOR2 --mode 3840x2160 --pos 0x0 --rotate normal --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off &
+xrandr --output eDP-1 --primary --mode 3840x2160 --pos 0x1080 --rotate normal --output DP-1 --off --output HDMI-1 --off --output DP-2 --off --output HDMI-2 --off --output DVI-I-2-2 --mode 1920x1080 --pos 0x0 --rotate normal --output DVI-I-1-1 --mode 1920x1080 --pos 1920x0 --rotate normal &
 
 
 #TASKBAR
+/env/cpp/bin/btops &
 /home/bresilla/.config/polybar/poly &
+
+
+#LULE
+pkill lule
+while pgrep -x lule >/dev/null; do sleep 1; done
+lule daemon -- start &
 
 
 #SHORTCUTS
@@ -19,6 +27,25 @@ while pgrep -x sxhkd >/dev/null; do sleep 1; done
 sxhkd -c /home/bresilla/.config/sxhkd/sxhkdrc &
 
 
+#EWW
+pkill eww
+while pgrep -x eww >/dev/null; do sleep 1; done
+eww daemon &
+
+
+#PICOM
+pkill picom
+while pgrep -x picom >/dev/null; do sleep 1; done
+picom --experimental-backends --config $HOME/.config/picom/config &
+
+
 #KEYBOARD
 xset -r 118 & #Insert
 xset -r 107 & #Print
+xset -r 21 &  #´
+xset -r 49 &  #^
+
+
+#TMUX
+/env/cpp/bin/tmass -l /home/bresilla/.config/tmux load NOTE
+/env/cpp/bin/tmass -l /home/bresilla/.config/tmux load MAIN

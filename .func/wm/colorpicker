@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+slop -qr crosshair 2>&1 > /dev/null
+xcolor -n | tee /tmp/colorpick | xclip -sel clip &
+xdotool click 1
+
+if [[ $1 == "-s" ]]; then
+    cat /tmp/colorpick | xargs
+else
+    /env/cargo/bin/eww open colorpick
+    sleep 5
+    /env/cargo/bin/eww close colorpick
+fi
+

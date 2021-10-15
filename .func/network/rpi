@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "-d" ]]; then
+    vncviewer passwd="/home/bresilla/.cache/vncpass" rpi:1
+elif [[ $1 == "-t" ]]; then
+    ssh -X bresilla@rpi
+else
+    ssh -X bresilla@rpi
+fi

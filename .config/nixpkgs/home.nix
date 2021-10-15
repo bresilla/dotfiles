@@ -38,53 +38,53 @@ in {
   systemd.user = let
     ENVFILE = "${dots}/.profile";
   in {
-    services.ipfs = {
-      Unit = {
-        Description = "Inter-Planetary File System daemon";
-        After = ["network.target"];
-      };
-      Service = {
-        Type = "simple";
-        Environment = "IPFS_PATH=/home/bresilla/sync/planetary/ipfs";
-        ExecStart = "${pkgs.ipfs}/bin/ipfs daemon --migrate";
-        Restart = "on-failure";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    services.syncthing = {
-      Unit = {
-        Description = "Open Source Continuous File Synchronization";
-        Documentation = "man:syncthing(1)";
-        After = ["network.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.syncthing}/bin/syncthing -no-browser -no-restart -logflags=0";
-        Restart = "on-failure";
-        RestartSec = "5";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    services.onedrive = {
-      Unit = {
-        Description = "OneDrive with RCLONE deamon";
-        After = ["network.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStartPre = "/bin/sleep 5";
-        ExecStart = "${pkgs.rclone}/bin/rclone --vfs-cache-mode writes mount one: /home/bresilla/sync/onedrive";
-        ExecStop = "fusermount -u /home/bresilla/sync/onedrive";
-        Restart = "on-failure";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+    # services.ipfs = {
+    #   Unit = {
+    #     Description = "Inter-Planetary File System daemon";
+    #     After = ["network.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     Environment = "IPFS_PATH=/home/bresilla/sync/planetary/ipfs";
+    #     ExecStart = "${pkgs.ipfs}/bin/ipfs daemon --migrate";
+    #     Restart = "on-failure";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
+     services.syncthing = {
+       Unit = {
+         Description = "Open Source Continuous File Synchronization";
+         Documentation = "man:syncthing(1)";
+         After = ["network.target"];
+       };
+       Service = {
+         Type = "simple";
+         ExecStart = "${pkgs.syncthing}/bin/syncthing -no-browser -no-restart -logflags=0";
+         Restart = "on-failure";
+         RestartSec = "5";
+       };
+       Install = {
+         WantedBy = ["default.target"];
+       };
+     };
+    # services.onedrive = {
+    #   Unit = {
+    #     Description = "OneDrive with RCLONE deamon";
+    #     After = ["network.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStartPre = "/bin/sleep 5";
+    #     ExecStart = "${pkgs.rclone}/bin/rclone --vfs-cache-mode writes mount one: /home/bresilla/sync/onedrive";
+    #     ExecStop = "fusermount -u /home/bresilla/sync/onedrive";
+    #     Restart = "on-failure";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     services.hotspot = {
       Unit = {
         Description = "Hotspot daemon";
@@ -93,7 +93,7 @@ in {
       Service = {
         Type = "simple";
         ExecStartPre = "/bin/sleep 2";
-        ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/hotspot wlp2s0 wlp2s0 algorithm dyhere024";
+        ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/hotspot wlp2s0 wlp2s0 matrix algorithm";
         ExecStop = "/usr/bin/doas rm /tmp/hotspot.all.lock";
         Restart = "on-failure";
       };
@@ -135,23 +135,23 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    services.xob = {
-      Unit = {
-        Description = "Bar overlay daemon";
-        Documentation = "https://github.com/florentc/xob";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/bin/sh -c 'tail -f /home/bresilla/.local/share/fifo/xob | /env/cpp/bin/xob'";
-        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
-        Restart = "always";
-        RestartSec = "5";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+    # services.xob = {
+    #   Unit = {
+    #     Description = "Bar overlay daemon";
+    #     Documentation = "https://github.com/florentc/xob";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStart = "/bin/sh -c 'tail -f /home/bresilla/.local/share/fifo/xob | /env/cpp/bin/xob'";
+    #     ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
+    #     Restart = "always";
+    #     RestartSec = "5";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     services.greenclip = {
       Unit = {
         Description = "Clipboard manager for ROFI";
@@ -177,7 +177,7 @@ in {
       };
       Service = {
         Type = "simple";
-        ExecStart = "/env/cargo/bin/espanso daemon";
+        ExecStart = "/env/bin/espanso daemon";
         ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
         Restart = "always";
         RestartSec = "5";
@@ -186,73 +186,56 @@ in {
         WantedBy = ["default.target"];
       };
     };
-    services.dunst = {
-      Unit = {
-        Description = "Dunst Notification Daemon";
-        Documentation = "man:dunst(1)";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/usr/bin/dunst -config %h/.config/dunst/dunstrc";
-        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
-        Restart = "always";
-        RestartSec = "5";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    services.picom = {
-      Unit = {
-        Description = "Compositor for X11";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/usr/bin/picom --config %h/.config/compton/compton";
-        Restart = "always";
-        RestartSec = "2";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    services.wallpaper = {
-      Unit = {
-        Description = "Wallpaper switcher";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "forking";
-        Environment=[
-          "TEMP=/tmp"
-          "LULE_S=/home/bresilla/code/proj/warp/lule/scripts/lule_colors"
-          "LULE_W=/home/bresilla/sets/.wallpaper"
-        ];
-        # ExecStart = "/home/bresilla/dots/.func/wm/lule set";
-        ExecStart = "/env/cargo/bin/lule create -- set";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    timers.wallpaper = {
-      Unit = {
-        Description = "Wallpaper switcher";
-      };
-      Timer = {
-        OnBootSec="1s";
-        OnActiveSec="1s";
-        OnCalendar = "*:0/15";
-        # OnUnitActiveSec="*:0/15";
-      };
-      Install = {
-        WantedBy = ["timers.target"];
-      };
-    };
+    # services.picom = {
+    #   Unit = {
+    #     Description = "Compositor for X11";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "forking";
+    #     ExecStart = "/usr/bin/picom --config %h/.config/picom/config";
+    #     # Restart = "always";
+    #     # RestartSec = "2";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
+    # services.dunst = {
+    #   Unit = {
+    #     Description = "Dunst Notification Daemon";
+    #     Documentation = "man:dunst(1)";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStart = "/usr/bin/dunst -config %h/.config/dunst/dunstrc";
+    #     ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
+    #     Restart = "always";
+    #     RestartSec = "5";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
+    # services.mullvad = {
+    #   Unit = {
+    #     Description = "mullvad vpn";
+    #     After = ["network.target"];
+    #   };
+    #   Service = {
+    #     Type = "oneshot";
+    #     ExecStart = "doas wg-quick up mlvd";
+    #     # ExecReload = "doas wg-quick down mlvd && doas wg-quick up mlvd";
+    #     # ExecStop = "doas wg-quick down mlvd";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     services.spotifyd = let
       configFile = "${configs}/spotifyd/spotifyd.conf";
+      onevent = "${configs}/spotifyd/onevent.sh";
     in {
       Unit = {
         Description = "A spotify playing daemon";
@@ -261,7 +244,8 @@ in {
         After = ["network-online.target"];
       };
       Service = {
-        ExecStart = "${pkgs.spotifyd}/bin/spotifyd --no-daemon --config-path ${configFile}";
+        EnvironmentFile = "/home/bresilla/sets/variables";
+        ExecStart = "/env/bin/spotifyd --no-daemon --config-path ${configFile} --onevent ${onevent}";
         Restart = "on-failure";
       };
       Install = {

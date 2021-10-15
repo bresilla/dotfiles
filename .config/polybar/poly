@@ -2,5 +2,8 @@
 
 killall -q polybar &
 while pgrep -x polybar >/dev/null; do sleep 1; done
-MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini worktops &
-MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini worktops &
+for MON in $(bspc query --names --monitors); do 
+    MONITOR=$MON polybar -r -c ~/.config/polybar/config.ini worktops &
+done
+# MONITOR=$MONITOR1 polybar -r -c ~/.config/polybar/config.ini worktops &
+# MONITOR=$MONITOR2 polybar -r -c ~/.config/polybar/config.ini worktops &

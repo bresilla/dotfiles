@@ -1,0 +1,22 @@
+#!/bin/sh
+
+connection_status=$(doas wg show mlvd 2>/dev/null | head -n 1 | awk '{print $NF }' | xargs)
+
+case "$1" in
+--toggle)
+    if [ "$connection_status" = "mlvd" ]; then
+        doas wg-quick down mlvd 2>/dev/null
+        systemctl --user restart spotifyd.service
+    else
+        doas wg-quick up mlvd 2>/dev/null
+        systemctl --user restart spotifyd.service
+    fi
+    ;;
+*)
+    if [ "$connection_status" = "mlvd" ]; then
+        echo "OFF"
+    else
+        echo "ON"
+    fi
+    ;;
+esac

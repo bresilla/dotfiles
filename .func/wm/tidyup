@@ -2,3 +2,27 @@
 
 rm $HOME/.fehbg &
 rm $HOME/.lyxauth &
+rm $HOME/.wget-hstsr &
+rm $HOME/.Xauthority &
+rm -r $HOME/.lldb &
+rm -r $HOME/.fltk &
+rm -r $HOME/.dbus &
+rm -r $HOME/.conda &
+rm -r $HOME/.pki &
+rm -r $HOME/.vnc &
+#rm -r $HOME/.gnupg &
+
+rm -r $HOME/.condarc &
+rm -r $HOME/.viminfo &
+rm -r $HOME/.zcompdump &
+
+rm -r $HOME/.gazebo &
+rm -r $HOME/.ignition &
+rm -r $HOME/.jupyter &
+rm -r $HOME/.ipython &
+rm -r $HOME/.ros &
+rm -r $HOME/.sdformat &
+
+
+
+rm $HOME/data/proj/*; proji ls | head -n-1 | tail -n+4 | cut -d "|" -f4 | while read line ; do ln -sf $line $HOME/data/proj/ ; done

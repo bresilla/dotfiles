@@ -24,18 +24,11 @@ bspc config remove_unplugged_monitors true
 bspc config remove_disabled_monitors true
 
 ###############################################################################################################################
-#|||	WORKSPACES & MONITORS
-###############################################################################################################################
-
-# bspc monitor $MONITOR1 -d 1 2 3 4 5
-# bspc monitor $MONITOR2 -d 1 2 3 4 5
-
-###############################################################################################################################
 #|||	ASSIGNMENTS
 ###############################################################################################################################
 bspc rule -a kitty state=floating sticky
 bspc rule -a cool-retro-term state=floating sticky
-bspc rule -a til state=tiled
+bspc rule -a kittyled state=tiled
 bspc rule -a feh state=floating
 bspc rule -a sxiv state=floating
 bspc rule -a mpv state=floating
@@ -49,10 +42,9 @@ bspc rule -a URxvt:launcher state=floating center sticky
 bspc rule -a LAUNCHER state=floating center sticky
 bspc rule -a Boomer state=fullscreen sticky
 bspc rule -a Screenkey manage=off
+bspc rule -a GLava manage=off
 
 ###############################################################################################################################
 #|||	SCRIPTS
 ###############################################################################################################################
-/env/cpp/bin/btops &
-/home/bresilla/.startup &
-sxhkd -c /home/bresilla/.config/sxhkd/sxhkdrc &
+$HOME/.startup &

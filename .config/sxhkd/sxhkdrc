@@ -8,27 +8,33 @@ mode_switch + space
 super + alt + {Escape,Delete,Insert}
     /home/bresilla/.config/rofi/menu/{power,CONFIG,screens}
 super + alt + space; {space, Return}
-    {kitty --class=til tmux, alacritty -e tmux}
+    {kitty --class=kittyled, alacritty -e tmux}
 super + alt + space; {Delete, Insert}
     {/home/bresilla/dots/.func/media/audioandroid, scrcpy}
 
-Insert; {Print,Insert,Delete,1,2,3,4}
-    /home/bresilla/dots/.func/wm/rainbow {theme,wall,pick,regen pigmnts, regen schemer2, regen imagemagick, regen imgscheme}
+F8; {1, 2}
+    xrandr --output eDP-1 --primary --mode 3840x2160 --pos 0x0 --output DP-1 {--off, --mode 3840x2160 --pos 0x0}
+
+{Insert, @Insert}
+    /home/bresilla/.config/sxhkd/scripts/eww {--open, --close}
+super + Insert
+    /home/bresilla/.config/sxhkd/scripts/eww --open
+
 Print; {Print,Insert}
-    {/usr/bin/flameshot gui, filename=/tmp/$(date +%s).png; maim -s | tee $filename | xclip -sel clip -t image/png -i && sxiv $filename}
-XF86Search
-    pkill slop; slop -r boxzoom
+    /home/bresilla/dots/.func/wm/sshoot {--flame, --maim}
+XF86Search; {XF86Search, c}
+    {pkill slop; slop -r boxzoom, /home/bresilla/dots/.func/wm/colorpicker}
+
 
 {super,alt} + Escape
     bspc node -{c,k}
 {super, alt, mode_switch} + Delete
-    {systemctl --user restart picom, systemctl --user restart wallpaper, /home/bresilla/.startup}
-
+    {lule create -- set, lule create -- set, /home/bresilla/.startup}
 
 {_,super} + dead_circumflex
-    /home/bresilla/dots/.func/wm/termop {kitty, alacritty} MAIN 2500 1050
+    /home/bresilla/dots/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1050 {-m -n,-r}
 {_,super} + dead_acute
-    /home/bresilla/dots/.func/wm/termop {kitty, alacritty} NOTE 3500 1900
+    /home/bresilla/dots/.func/wm/scratch --term=kitty --class=NOTE --width=3500 --height=1900 {-m -n,-r}
 
 
 super + alt + {Left,Right}
@@ -49,18 +55,24 @@ super + alt + {Down,Up}
 super + alt + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
     bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
 
+super + {w,f,t,s}
+    bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
+
+super + @p
+    /home/bresilla/dots/.func/wm/youtube_play
+
 XF86Audio{Prev,Next,Play}
-    playerctl {previous,next,play-pause} || mpc -q {prev,next,toggle}
+    playerctl {previous,next,play-pause}
 XF86Audio{Raise,Lower}Volume
-    pulsemixer --change-volume {+,-}2 && [[ $(pulsemixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pulsemixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
+    pulsemixer --change-volume {+,-}2; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
 XF86AudioMute
-    pulsemixer --toggle-mute && [[ $(pulsemixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pulsemixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
+    pulsemixer --toggle-mute; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
 XF86MonBrightness{Up,Down}
-    light -{A,U} 2 && light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
+    light -{A,U} 2; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
 
 
-ctrl + super + alt + {space,Left,Right}
-    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,backwards,forewards}
+ctrl + super + alt + {space,Left,Right,Return}
+    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,backwards,forewards,hide}
 alt+super + XF86AudioPlay
     play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
 alt+super + XF86AudioMute

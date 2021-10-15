@@ -4,10 +4,10 @@
  copy those lines to: ~/.conf/rofi/ or ~/.Xdefaults
 	rofi.fullscreen:true
 	rofi.theme: ~/.i3/rofi.rasi
+    theme: "~/.cache/wal/colors-rofi-dark.rasi";
  */
 
 * {
-    theme: "~/.cache/wal/colors-rofi-dark.rasi";
 	accent: #FFFFFF;
 	bckgrd: #000000;
 	select: @accent;
