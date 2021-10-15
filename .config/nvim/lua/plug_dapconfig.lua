@@ -6,44 +6,83 @@ vimp.nnoremap('<M-b>',      [[<cmd>lua require'dap'.toggle_breakpoint()<CR>]])
 vim.fn.sign_define('DapBreakpoint', {text='', texthl='DapBreakpointSign', linehl='', numhl=''})
 vim.fn.sign_define('DapStopped', {text='', texthl='DapStopSign', linehl='', numhl=''})
 
-dap.adapters.cpp = {
+
+local dap = require('dap')
+dap.adapters.lldb = {
   type = 'executable',
-  attach = {
-    pidProperty = "pid",
-    pidSelect = "ask"
-  },
-  command = 'lldb-vscode',
+  command = '/usr/bin/lldb-vscode', -- adjust as needed
   name = "lldb"
 }
 
 dap.configurations.cpp = {
-  {
-    name = "lldb",
-    type = "cpp",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-  },
+      -- If you get an "Operation not permitted" error using this, try disabling YAMA:
+      --  echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    {
+        name = "Launch",
+        type = "lldb",
+        request = "launch",
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+        runInTerminal = true,
+    },
+    {
+        name = "Attach",
+        type = 'lldb',
+        request = 'attach',
+        pid = require('dap.utils').pick_process,
+        args = {},
+        runInTerminal = true,
+    },
 }
 
-function rebugger (args)
-    local dap = require "dap"
-    local last_gdb_config = {
-        type = "cpp",
-        name = args[1],
-        request = "launch",
-        program = table.remove(args, 1),
-        args = args,
-        cwd = vim.fn.getcwd(),
-        env = {"NO_COLOR=1"},
-        console = "integratedTerminal",
-        integratedTerminal = true,
-    }
-    dap.run(last_gdb_config)
-    dap.repl.open()
-end
+
+-- If you want to use this for rust and c, add something like this:
+
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+
+-- dap.adapters.cpp = {
+--   type = 'executable',
+--   attach = {
+--     pidProperty = "pid",
+--     pidSelect = "ask"
+--   },
+--   command = 'lldb-vscode',
+--   name = "lldb"
+-- }
+
+-- dap.configurations.cpp = {
+--   {
+--     name = "lldb",
+--     type = "cpp",
+--     request = "launch",
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+--     cwd = '${workspaceFolder}',
+--   },
+-- }
+
+-- function rebugger (args)
+--     local dap = require "dap"
+--     local last_gdb_config = {
+--         type = "cpp",
+--         name = args[1],
+--         request = "launch",
+--         program = table.remove(args, 1),
+--         args = args,
+--         cwd = vim.fn.getcwd(),
+--         env = {"NO_COLOR=1"},
+--         console = "integratedTerminal",
+--         integratedTerminal = true,
+--     }
+--     dap.run(last_gdb_config)
+--     dap.repl.open()
+-- end
 
 
 -- dap.adapters.lldb = function(cb, config)
@@ -109,7 +148,7 @@ end
 
 
 -- =================== UI ====================== --
-require("dapui").setup()
+-- require("dapui").setup()
 --[[
 require("dapui").setup({
   icons = {

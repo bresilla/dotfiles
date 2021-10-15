@@ -170,6 +170,29 @@ function __get_binsize {
         printf "$(binsize)"
     fi
 }
+function __get_condlines {
+    if command -v tokei >/dev/null 2>&1 && [[ ! -z $(__dev_lang) ]]; then 
+        src=$(git rev-parse --show-toplevel)/src
+        [[ ! -d $src ]] && return 1
+        tkis=$(tokei -t $ENVNAME $src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4)
+        echo $tkis | cut -d" " -f3
+    fi
+}
+function __get_condfiles {
+    if command -v tokei >/dev/null 2>&1 && [[ ! -z $(__dev_lang) ]]; then 
+        src=$(git rev-parse --show-toplevel)/src
+        [[ ! -d $src ]] && return 1
+        tkis=$(tokei -t $ENVNAME $src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4)
+        echo $tkis | cut -d" " -f2
+    fi
+}
+
+function __todos {
+    if command -v snitch >/dev/null 2>&1; then 
+        todos=$(snitch list 2>/dev/null | wc -l)
+        echo "TODO: $(snitch list | wc -l)"
+    fi
+}
 
 function __promptline_cwd {
     [[ $1 -eq 0 ]] && local dir_limit="3" || local dir_limit="$1"
@@ -241,25 +264,17 @@ function __promptline_right_prompt {
     prefix="${conTX}${arrEL}${defaultBG}" suffix="${blackBG}${greyTX}"; [[ -n $TAB ]] && printf "%s" "$prefix" " $(echo $TAB | tr -d '/') " "$suffix"
     #DEVSHELL
     if [[ -n $(__dev_lang) ]]; then
-        src=$(git rev-parse --show-toplevel)/src
-        tkis=$(tokei -t $ENVNAME $src | sed '4q;d' | sed 's/[ ][ ]*/ /g' | cut -d" " -f2-4)
-        # todos=$(snitch list 2>/dev/null | wc -l)
         #PROG-LANG
         prefix="${redTX}${arrER}${arrFR}${redBG}${blackTX}" suffix="${blackTX}${arrFR}${greyTX}${blackBG}${conTX}${arrER}"; printf "%s" "$prefix" " $ENVNAME " "$suffix" 
         #TODOS
-        # if [[ -n $todos ]]; then 
-            # prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}"; printf "%s" "$prefix" "TODO: $(snitch list | wc -l)" "$suffix"
-        # fi
-        #BINARY_SIZE
+        prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}${conTX}${arrEL}${greyTX}"; [[ -n $(__todos) ]] && printf "%s" "$prefix" "$(__todos)" "$suffix"
+        #BINARY_SIZE    or      NUMBER OF CODE FILES
         prefix="${accentTX}${arrFR}${dark_TX}${accentBG}" suffix="${blackTX}${arrER}";
-        if [[ -n $(__get_binsize) ]]; then
-            printf "%s" "$prefix "$(__get_binsize)" $suffix"
-        else
-            #NUMBER OF CODE FILES
-            printf "%s" "$prefix" " $(echo $tkis | cut -d" " -f2) " "$suffix"
+        if [[ -n $(__get_binsize) ]]; then printf "%s" "$prefix "$(__get_binsize)" $suffix";
+        elif [[ -n $(__get_condfiles) ]]; then printf "%s" "$prefix" "$(__get_condlines)" "$suffix";
         fi
         #NUMBER OF LINES OF CODE
-        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; printf "%s" "$prefix" "$(echo $tkis | cut -d" " -f3)" "$suffix"
+        prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${whiteTX}"; [[ -n $(__get_condlines) ]] && printf "%s" "$prefix" "$(__get_condlines)" "$suffix"
         # prefix="${blackBG}${arrFL}${blackTX}${dark_BG}${arrFL}${light_TX}${dark_BG}" suffix="${dark_TX}"; [[ -n $(__dev_lang) ]] && printf "%s" "$prefix" "$(__dev_lang)" "$suffix"
     else
         #CMD TIME
@@ -306,7 +321,7 @@ function __tmuxline_left_prompt {
     #INTERNET
     prefix="${defaultBG}${space}${defaultBG}${arrFL}${conTX}"
     # suffix="${space}${defaultBG}${conTX}${arrEL}${greyTX}";
-    printf "%s" "$prefix" "$(__firewall)$(__wireguard)$(__tor)$(__hotspot)" "$suffix"
+    printf "%s" "$prefix" "$(__uptime)" "$suffix"
 }
 
 function __tmuxline_center_prompt {

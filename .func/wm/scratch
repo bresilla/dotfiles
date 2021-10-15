@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+
+declare -ra col=(
+    $'\e[1;0m'      # normal  ## col[0]
+    $'\e[1;31;40m'  # red     ## col[1]
+    $'\e[1;32;40m'  # green   ## col[2]
+    $'\e[1;33;40m'  # orange  ## col[3]
+    $'\e[1;34;40m'  # cyan    ## col[4]
+    $'\e[1;35;40m'  # magenta ## col[5]
+)
+
+usage() {
+    [[ -z $USAGE ]] && printf "${col[2]}USAGE:${col[0]}\n scratch [options][flags] \"<command>\"\n"
+
+    printf "\n${col[2]}OPTIONS:${col[0]}\n\
+    ${col[2]}--class[=]<name>${col[0]}
+    \tspecify window classnme to set to the terminal\n\
+    ${col[2]}--term[=]<name>${col[0]}
+    \tspecify terminal to use as scratch\n\
+    ${col[2]}--height[=]<pixels>${col[0]} -> only ${col[3]}numbers${col[0]} are valid
+    \tspecify the height of the scratchpad\n\
+    ${col[2]}--width[=]<pixels>${col[0]} -> only ${col[3]}numbers${col[0]} are valid
+    \tspecify the width of the scratchpad\n\
+    ${col[2]}--xoffset[=]<pixels>${col[0]} -> only ${col[3]}numbers${col[0]} are valid
+    \tspecify the x offset from top of the screen\n\
+    ${col[2]}--yoffset[=]<pixels>${col[0]} -> only ${col[3]}numbers${col[0]} are valid
+    \tspecify the y offset from top of the screen${col[0]})\n"
+
+
+    printf "\n${col[2]}FLAGS:${col[0]}\n\
+    ${col[2]}-r ${col[0]}\tset size to defined one each-time ${col[0]}\n\
+    ${col[2]}-m ${col[0]}\tuse only main monitor ${col[0]}
+    ${col[2]}-n ${col[0]}\tuse size that was set before ${col[0]}\n"
+}
+
+parse_command() {
+    _positionals_count=0
+    _optionals_count=0
+    while test $# -gt 0
+    do
+        _key="$1"
+        case "$_key" in
+            --height)
+                if [[ $# -lt 2 ]]; then 1>&2 printf "${col[1]}Missing value for the argument: ${col[3]}'$_key'.\n${col[0]}" && usage && exit; fi
+                _arg_height="$2"
+                [[ $_arg_height =~ $num ]] && _default_loop=$_arg_height || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                shift
+                ;;
+            --height=*)
+                _arg_height="${_key##--height=}"
+                [[ $_arg_height =~ $num ]] && _default_loop=$_arg_height || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                ;;
+            --width)
+                if [[ $# -lt 2 ]]; then 1>&2 printf "${col[1]}Missing value for the argument: ${col[3]}'$_key'.\n${col[0]}" && usage && exit; fi
+                _arg_width="$2"
+                [[ $_arg_width =~ $num ]] && _default_loop=$_arg_width || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                shift
+                ;;
+            --width=*)
+                _arg_width="${_key##--width=}"
+                [[ $_arg_width =~ $num ]] && _default_loop=$_arg_width || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                ;;
+            --xoffset)
+                if [[ $# -lt 2 ]]; then 1>&2 printf "${col[1]}Missing value for the argument: ${col[3]}'$_key'.\n${col[0]}" && usage && exit; fi
+                _arg_xoffset="$2"
+                [[ $_arg_xoffset =~ $num ]] && _default_loop=$_arg_xoffset || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                shift
+                ;;
+            --xoffset=*)
+                _arg_xoffset="${_key##--xoffset=}"
+                [[ $_arg_xoffset =~ $num ]] && _default_loop=$_arg_xoffset || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                ;;
+            --yoffxet)
+                if [[ $# -lt 2 ]]; then 1>&2 printf "${col[1]}Missing value for the argument: ${col[3]}'$_key'.\n${col[0]}" && usage && exit; fi
+                _arg_yoffset="$2"
+                [[ $_arg_yoffset =~ $num ]] && _default_loop=$_arg_yoffset || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                shift
+                ;;
+            --yoffxet=*)
+                _arg_yoffset="${_key##--yoffxet=}"
+                [[ $_arg_yoffset =~ $num ]] && _default_loop=$_arg_yoffset || 1>&2 printf "${col[3]}--loop${col[1]} argument is not a ${col[3]}number${col[0]}\n"
+                ;;
+
+            --term)
+                if [[ $# -lt 2 ]]; then 1>&2 printf "${col[1]}Missing value for the argument: ${col[3]}'$_key'.\n${col[0]}" && usage && exit; fi
+                _arg_term="$2"
+                shift
+                ;;
+            --term=*)
+                _arg_term="${_key##--term=}"
+                ;;
+            --class)
+                if [[ $# -lt 2 ]]; then 1>&2 printf "${col[1]}Missing value for the argument: ${col[3]}'$_key'.\n${col[0]}" && usage && exit; fi
+                _arg_class="$2"
+                shift
+                ;;
+            --class=*)
+                _arg_class="${_key##--class=}"
+                ;;
+            -m)
+                _arg_m="true"
+                ;;
+            -n)
+                _arg_n="true"
+                ;;
+            -r)
+                _arg_r="true"
+                ;;
+            -h|--help)
+                usage
+                exit
+                ;;
+            *)
+                1>&2 printf "\n${col[1]}Incorret useage of arguments --- expected one of those commands:${col[0]}\n"
+                USAGE=true
+                usage
+                exit
+                ;;
+        esac
+        shift
+    done
+}
+
+if [[ -z $@ ]] ; then
+    usage
+    exit
+else
+    parse_command $@
+fi
+
+term=${_arg_term:-kitty}
+name=${_arg_class:-MAIN}
+
+[[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP-1
+
+mon=$(bspc query --names --monitors --monitor)
+des=$(bspc query --names --desktops --desktop)
+win=$(xdotool search -classname $name)
+
+m_width=$( bspc query --monitor -T | jq ".rectangle | { width, height }" | jq ".width")
+m_heigh=$( bspc query --monitor -T | jq ".rectangle | { width, height }" | jq ".height")
+width=${_arg_width:-$(expr $m_width / 2)}
+heigh=${_arg_height:-$(expr $m_heigh / 2)}
+xoffset=${_arg_xoffset:-$(expr $m_width / 2 - $width / 2)}
+yoffset=${_arg_yoffset:-$(expr $m_heigh / 2 - $heigh / 2 )}
+
+if [[ -z $win ]]; then
+    /env/cpp/bin/tmass -l /home/bresilla/.config/tmux load $name 2> /dev/null
+    $term --name=$name sh -c "tmux attach -t $name" &
+    xdotool windowmap "$win" windowmove "$win" "$xoffset" "$yoffset" windowsize "$win" "$width" "$heigh" 2> /dev/null
+fi
+
+
+if [[ -z "$(bspc query --desktop focused -T | grep $name)" ]]; then
+    bspc node $win --flag hidden=off
+    bspc node $win --to-desktop $des
+    bspc node $win --to-monitor $mon
+    bspc node $win --focus
+    if [[ "$_arg_r" == "true" ]]; then
+        xdotool windowmap "$win" windowmove "$win" "$xoffset" "$yoffset" windowsize "$win" "$width" "$heigh" 2> /dev/null
+    fi
+else
+    [[ -z $win ]] && exit
+    if [[ "$_arg_r" == "true" ]]; then
+        [[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP-1
+        if [[ "$(echo $xoffset,$yoffset | xargs)" != "$(echo $(xdotool getwindowgeometry $win | grep 'Position' | cut -d':' -f2 | cut -d'(' -f1) | xargs)" ]] ||
+            [[ "$(echo $width,$heigh | tr "," "x" | xargs)" != "$(echo $(xdotool getwindowgeometry $win | grep 'Geometry' | cut -d':' -f2) | xargs)" ]]; then
+            xdotool windowmap "$win" windowmove "$win" "$xoffset" "$yoffset" windowsize "$win" "$width" "$heigh" 2> /dev/null
+            [[ "$(bspc query --node $win --tree | jq -e '.hidden')" != true ]] && exit;
+        fi
+    fi
+    bspc node $win --flag hidden -f
+fi

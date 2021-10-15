@@ -1,15 +1,10 @@
-[user]
-    email = trim.bresilla@gmail.com
-    name = Trim Bresilla
-	  signingkey = F337B1747050659CABAAE714177223966B794B54
-
 [core]
     pager = delta --dark --plus-color="#012800" --minus-color="#340001" --theme="OneHalfDark"
     quotepath = false
     commitGraph = true
 
 [credential]
-    helper = cache --timeout=10000
+	helper = cache
 
 [color]
     ui = true
@@ -78,3 +73,12 @@
 	gpgsign = true
 [init]
 	defaultBranch = main
+
+[user]
+    name = Trim Bresilla
+    email = trim.bresilla@gmail.com
+	signingkey = F337B1747050659CABAAE714177223966B794B54
+
+[includeIf "gitdir:~/data/code/WUR"]
+    path = ~/.config/git/wur
+

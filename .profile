@@ -15,6 +15,10 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
 [[ -d $DOTS/.func ]] && for file in $DOTS/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
+#NVIDIA
+[[ -d "/usr/local/cuda" ]] && PATH="/usr/local/cuda/bin:$PATH" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
+[[ -d "/opt/cuda" ]] && PATH="/opt/cuda/bin:$PATH" LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
+
 #CPP
 [[ -d "/env/cpp/bin" ]] && PATH="/env/cpp/bin:$PATH"
 #GO
@@ -33,6 +37,9 @@ export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/cha
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
 export NIXPKGS_ALLOW_UNFREE=1
 
+#FLATPAK
+FLATPAK_ENABLE_SDK_EXT=rust-nightly
+
 #SECRETS
 [[ -e "/home/bresilla/sets/variables" ]] && source /home/bresilla/sets/variables
 
@@ -43,6 +50,7 @@ export PATH="$HOME/.local/alt/shims:$PATH"
 export BROWSER=firefox
 export EDITOR=nvim
 export TERMINAL=kitty
+export CONSOLE=kitty
 export TZ='Europe/Berlin'
 export LC_ALL="en_US.UTF-8"
 
@@ -71,6 +79,8 @@ export BAT_THEME="TwoDark"
 export LULE_W="/home/bresilla/sets/.wallpaper"
 export LULE_S="/home/bresilla/dots/.func/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
+
+export SCREENSHOT_FILE="/tmp/screenshot_file"
 
 export GRAVEYARD="/tmp/graveyard-$USER"
 export BSPM_BIN_DIR="/env/bin"
@@ -103,3 +113,5 @@ export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp

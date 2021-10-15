@@ -101,6 +101,8 @@ TRAPALRM() { [[ "$WIDGET" != "complete-word" ]] && zle reset-prompt }
 [ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
 [ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
 
+[ -d ~/.config/zsh/cmp ] && source ~/.config/zsh/cmp/cmp.plugin.zsh
+
 
 #--------------------------------------------------------------------------------------------------------------------
 ###KILLER
@@ -169,7 +171,7 @@ runner () {
     # check if the buffer does not contain any words
     if [ ${#${(z)BUFFER}} -eq 0 ]; then
       if [[ -n $(echo $ENVNAME) ]]; then
-        build && clear && run
+        clear && run
       else
         printf "\n" && exa -laiSHF --header --git --group-directories-first --tree -L1
       fi
@@ -216,3 +218,4 @@ done
 #TAB-RS (shotrcut: Ctrl + e)
 [[ -n $TAB ]] && [ -f ~/data/docs/BRAND/logo/ascii ] && ~/dots/.func/system/bresilla
 bindkey -s '^A' ' tab\n'
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

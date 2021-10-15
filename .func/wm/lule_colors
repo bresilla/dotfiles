@@ -77,6 +77,11 @@ bspc config focused_border_color $color1 &
 bspc config normal_border_color $color239 &
 bspc config active_border_color $color239 &
 
+ewwback=$(cat $HOME/.cache/wal/colors.sh | grep $(cat $HOME/.config/eww/eww.scss | grep 'fore' | head -n 1 | cut -d' ' -f2 | tr -d ';' | tr -d '$') | cut -d'=' -f2 | tr -d '"' | head -n 1 | xargs)
+sed -i 's/^.*fill.*$/style="fill:'"$ewwback"';"/' ~/dots/.config/eww/images/bresilla_logo.svg
+sed -i 's/^.*fill.*$/style="fill:'"$ewwback"';"/' ~/dots/.config/eww/images/bresilla_name.svg
+eww reload &
+
 
 python $HOME/.local/bin/pywalfox update &
 

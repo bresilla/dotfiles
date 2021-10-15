@@ -1,4 +1,4 @@
--------------------------------------------------------                 EDIT                      -----------------------------------------------------------
+------------------------------------------------------                 EDIT                      -----------------------------------------------------------
 bat                         + a cat clone                                                     + https://github.com/sharkdp/bat                        + rust
 fzf                         + a command-line fuzzy finder                                     + https://github.com/junegunn/fzf                       + go
 sk      - skim              + a rusty fuzzy finder                                            + https://github.com/lotabout/skim                      + rust
@@ -15,6 +15,8 @@ sad                         + CLI search and replace                            
 tk      - tokei             + code statistics                                                 + https://github.com/XAMPPRocky/tokei                   + rust
 aa      - alertafter        + notify after command                                            + https://github.com/frewsxcv/alert-after               + rust
 rp      - ruplacer          + find and replace text in source files                           + https://github.com/TankerHQ/ruplacer                  + rust
+choose                      + alternative to cut + awk together                               + https://github.com/theryangeary/choose                + rust
+hck     - tuc               + a sharp cut clone                                               + https://github.com/sstadick/hck                       + rust
 -------------------------------------------------------               PACKAGES                    -----------------------------------------------------------
 yay                         + yet another AUR helper                                          + https://github.com/Jguer/yay                          + go
 pack    - paru              + featured packed AUR helper                                      + https://github.com/morganamilo/paru                   + rust
@@ -33,6 +35,7 @@ ari     - aria2             + swissarmy knife of downloaders                    
 band    - bandwhitch        + bandwidth utilization                                           + https://github.com/imsnif/bandwhich                   + rust
 ipinfo                      + info about public IP                                            + https://github.com/Surendrajat/IPinfo                 + go
 torrent                     + torrent client package and utilities                            + https://github.com/anacrolix/torrent                  + go
+imdl                        + torrent metadata and utilities                                  + https://github.com/casey/intermodal                   + rust
 mole                        + cli app to create ssh tunnels                                   + https://github.com/davrodpin/mole                     + go
 rclone                      + rsync for cloud storage                                         + https://github.com/rclone/rclone                      + go
 gotty                       + share CLI as a web application                                  + https://github.com/yudai/gotty                        + go
@@ -77,16 +80,21 @@ lzd     - lazydocker        + lazier way to manage docker                       
 -------------------------------------------------------                  DEV                      -----------------------------------------------------------
 pro     - proji             + CLI project templating tool                                     + https://github.com/nikoksr/proji                      + go
 direnv                      + OTF local load and unload variables                             + https://github.com/direnv/direnv                      + go
+procenv                     + Command-line utility to show process environment                + https://github.com/jamesodhunt/procenv                + cpp
 envy                        + OTF global load and unload variables                            + https://github.com/mre/envy                           + rust
 dtool                       + command-line tool collection for devs                           + https://github.com/guoxbin/dtool                      + rust
 onefetch                    + repository summary on your terminal                             + https://github.com/o2sh/onefetch                      + rust
 -------------------------------------------------------                 BUILD                     -----------------------------------------------------------
 xmake                       + cross-platform build utility based on Lua                       + https://github.com/xmake-io/xmake                     + c
 -------------------------------------------------------                 DATAS                     -----------------------------------------------------------
+pspg                        + advanced unix pager                                             + https://github.com/okbob/pspg                         + c
 xsv                         + a cli CSV edtor/reader                                          + https://github.com/BurntSushi/xsv                     + rust
 csview                      + a cli CSV viewer                                                + https://github.com/wfxr/csview                        + rust
 define                      + command-line dictionary                                         + https://github.com/Rican7/define                      + go
 faker                       + fake data gererator                                             + https://github.com/jiro4989/faker                     + nim
+jq                          + JSON processor                                                  + https://github.com/stedolan/jq                        + cpp
+jo                          + utility to create JSON objects                                  + https://github.com/jpmens/jo                          + cpp
+ledger                      + double-entry accounting system                                  + https://github.com/ledger/ledger                      + cpp
 -------------------------------------------------------               ENCRYPTION                  -----------------------------------------------------------
 gpgtui                      + manage GnuPG keys with TUI                                      + https://github.com/orhun/gpg-tui                      + rust
 gopass                      + standard unix password manage                                   + https://github.com/gopasspw/gopass                    + go
@@ -116,6 +124,8 @@ qrcp                        + QR-code file network transfer                     
 transfer                    + easy and fast file sharing from cli                             + https://github.com/dutchcoders/transfer.sh            + go
 croc                        + send from one computer to other                                 + https://github.com/schollz/croc                       + go
 wutag                       + tagging and organizing files by tags                            + https://github.com/wojciechkepka/wutag                + rust
+xcompress                   + multi-format archiving to and extracting tool                   + https://github.com/magiclen/xcompress                 + rust
+feel                        + like `touch` but bette -  vreates mussing dirs                  + https://github.com/jbr/feel                           + rust
 -------------------------------------------------------                 NAVIGATR                  -----------------------------------------------------------
 nnn                         + the unorthodox terminal file manager                            + https://github.com/jarun/nnn                          + cpp
 xplr                        + hackable, minimal, fast TUI file explorer                       + https://github.com/sayanarijit/xplr                   + rust
@@ -125,13 +135,10 @@ borg                        + backup & deduplicating archiver                   
 -------------------------------------------------------               HTML & MD                   -----------------------------------------------------------
 gomd                        + Serve markdown to localhost                                     + https://github.com/wojciechkepka/gomd                 + go
 mdp                         + markdown presentation tool                                      + https://github.com/visit1985/mdp                      + cpp
+slides                      + markdown presentation tool                                      + https://github.com/maaslalani/slides                  + go
 pandoc                      + universal markup converter                                      + https://github.com/jgm/pandoc                         + hs
 hugo                        + Static website builder                                          + https://github.com/gohugoio/hugo                      + go
 zola                        + Static site generator                                           + https://github.com/getzola/zola                       + rust
--------------------------------------------------------                 DATAS                     -----------------------------------------------------------
-jq                          + JSON processor                                                  + https://github.com/stedolan/jq                        + cpp
-jo                          + utility to create JSON objects                                  + https://github.com/jpmens/jo                          + cpp
-ledger                      + double-entry accounting system                                  + https://github.com/ledger/ledger                      + cpp
 -------------------------------------------------------                 NOTES                     -----------------------------------------------------------
 dnote                       + simple command line notebook                                    + https://github.com/dnote/dnote                        + go
 eureka                      + store your ideas in the terminal                                + https://github.com/simeg/eureka                       + rust
@@ -148,6 +155,7 @@ dijo                        + scriptable digital habit tracker                  
 meli                        + experimental tui mail client                                    + https://github.com/meli/meli                          + rust
 -------------------------------------------------------                 IMAGE                     -----------------------------------------------------------
 imagemagick                 + swissarmy knife of image editor                                 + https://github.com/ImageMagick/ImageMagick            + cpp
+gmic                        + imag processng and manipulation                                 + https://github.com/dtschump/gmic                      + cpp
 fim                         + costumizable image viewer                                       + https://www.nongnu.org/fbi-improved/                  + cpp
 viu                         + terminal image viewer                                           + https://github.com/atanunq/viu                        + rust
 sic                         + image processing and converter                                  + https://github.com/foresterre/sic                     + rust
@@ -172,6 +180,7 @@ stego                       + stegonographic swiss army knife                   
 alacritty                   + GPU-accelerated terminal emulator                               + https://github.com/alacritty/alacritty                + rust
 kitty                       + GPU based terminal emulator                                     + https://github.com/kovidgoyal/kitty                   + cpp
 tab                         + terminal multiplexer                                            + https://github.com/austinjones/tab-rs                 + rust
+rargs                       + xargs terminal laternative                                      + https://github.com/lotabout/rargs                     + rust
 tmux                        + THE terminal multiplexer                                        + https://github.com/tmux/tmux                          + cpp
 textimg                     + command colors to image                                         + https://github.com/jiro4989/textimg                   + go
 menyoki                     + ImageOps on the command line                                    + https://github.com/orhun/menyoki                      + rust

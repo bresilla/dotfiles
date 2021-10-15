@@ -1,0 +1,9 @@
+#!/bin/bash
+total=$(timeout 2s playerctl -p spotifyd metadata mpris:length)
+position=$(timeout 2s playerctl -p spotifyd position | tr -d '.')
+
+total=${total::-6}
+position=${position::-6}
+percet="$(($position*100/$total))"
+
+echo $percet

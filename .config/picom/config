@@ -63,7 +63,7 @@ fade-exclude = [ ];
 
 ### Opacity
 active-opacity = 1;
-inactive-opacity = 0.98;
+inactive-opacity = 1;
 opacity-rule = [
     "100:class_g = 'mpv'",
     "100:class_g = 'Firefox' && focused",

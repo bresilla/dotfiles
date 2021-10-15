@@ -5,5 +5,10 @@ ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:
 NOTE=$(/env/go/bin/dnote view | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'notes: ' | awk '{print $2}');
 [[ -z $NOTE ]] && exit 1
 PAGE=$(/env/go/bin/dnote view $NOTE | tail -n+2 | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'pages: ' | awk '{print $1}' | cut -d "(" -f2 | cut -d ")" -f1);
-[[ -z $PAGE ]] && exit 1
-kitty -e /env/go/bin/dnote edit $NOTE $PAGE
+if [[ -z $PAGE ]]; then
+    exit 1
+elif (( $PAGE > 0 )); then
+    kitty -e /env/go/bin/dnote edit $NOTE $PAGE
+else
+    kitty -e /env/go/bin/dnote add $NOTE
+fi

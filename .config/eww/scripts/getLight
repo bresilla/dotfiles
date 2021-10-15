@@ -1,0 +1,2 @@
+#!/bin/bash
+light -G | cut -d "." -f1

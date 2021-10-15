@@ -14,9 +14,9 @@ case "$1" in
     ;;
 *)
     if [ "$connection_status" = "wg0" ]; then
-        echo "UP"
+        echo "ON"
     else
-        echo "DOWN"
+        echo "OFF"
     fi
     ;;
 esac

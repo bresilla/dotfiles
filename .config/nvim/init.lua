@@ -1,4 +1,4 @@
--- https://github.com/wbthomason/packer.nvim
+-- pack https://github.com/wbthomason/packer.nvim
 -- git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/opt/packer.nvim
 -- TODO: do something
 -- HACK: somethnig
@@ -90,12 +90,12 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 vim.cmd('packadd packer.nvim')
 require('packer').startup(
-    function()
+    function(use)
         use { 'wbthomason/packer.nvim', opt = true }
         use { 'svermeulen/vimpeccable' }
         use { 'nvim-lua/plenary.nvim' }
         use { 'nvim-lua/popup.nvim' }
-        use { 'neovim/nvim-lspconfig', 
+        use { 'neovim/nvim-lspconfig',
             config = function()
                 require('plug_lspconfis')
             end
@@ -105,18 +105,25 @@ require('packer').startup(
                 require('plug_treesitter')
             end
         }
-        use { "rcarriga/nvim-dap-ui",
-            requires = {"mfussenegger/nvim-dap"},
+        use {"mfussenegger/nvim-dap",
+            requires = { "rcarriga/nvim-dap-ui" },
             config = function()
                 require('plug_dapconfig')
             end
         }
-        use { 'hrsh7th/nvim-compe', 
+        use { 'hrsh7th/nvim-cmp',
+            requires = {
+                'hrsh7th/cmp-nvim-lsp',
+                'hrsh7th/cmp-buffer',
+                'hrsh7th/cmp-path',
+                'ray-x/lsp_signature.nvim',
+                {'dcampos/cmp-snippy', requires = { 'dcampos/nvim-snippy'}},
+                -- {'tzachar/cmp-tabnine', run = './install.sh'},
+            },
             config = function()
                 require('plug_nvimcompe')
             end
         }
-        use { 'tzachar/compe-tabnine', run = './install.sh' }
         use {'nvim-telescope/telescope.nvim',
             config = function()
                 require('plug_telescopy')
@@ -139,12 +146,13 @@ require('packer').startup(
             end
         }
         use { 'kyazdani42/nvim-tree.lua',
+            -- commit = '37f1598bd4388c8089cf08007b17a3555c0328f0',
             config = function()
                 require('plug_nvimtree')
             end
         }
         use {'lukas-reineke/indent-blankline.nvim',
-            branch = 'lua',
+            -- branch = 'lua',
             config = function()
                 require('plug_indentline')
             end
@@ -154,24 +162,40 @@ require('packer').startup(
                 require('plug_dashboard')
             end
         }
-        use { "folke/which-key.nvim",
+        use {
+            "folke/which-key.nvim",
             config = function()
                 require('plug_whichkey')
             end
         }
-        use { 'b3nj5m1n/kommentary',
+        use {
+            "folke/trouble.nvim",
+            requires = "kyazdani42/nvim-web-devicons",
             config = function()
-                vim.api.nvim_set_keymap("n", "<leader>#", "<Plug>kommentary_motion_default", {})
-                vim.api.nvim_set_keymap("n", "#", "<Plug>kommentary_line_default", {})
-                vim.api.nvim_set_keymap("v", "#", "<Plug>kommentary_visual_default", {})
+                require('plug_trouble')
             end
         }
-        use { 'windwp/nvim-autopairs',
+        use {
+            'b3nj5m1n/kommentary',
+            config = function()
+                require('kommentary.config').configure_language("default", {
+                    prefer_single_line_comments = true,
+                })
+                vim.api.nvim_set_keymap("n", "<leader>#", "<Plug>kommentary_motion_default", {})
+                vim.api.nvim_set_keymap("n", "#", "<Plug>kommentary_line_default", {})
+                vim.api.nvim_set_keymap('v', '#', '<Plug>kommentary_visual_default', { silent = true })
+            end
+        }
+        use {
+            'windwp/nvim-autopairs',
             config = function()
                 require('nvim-autopairs').setup({
                     disable_filetype = { "TelescopePrompt" , "vim" },
                 })
             end
+        }
+        use { -- tabbing out from parentheses
+            'abecodes/tabout.nvim',
         }
         use {
             'numToStr/Navigator.nvim',
@@ -186,16 +210,13 @@ require('packer').startup(
         }
         use { 'sindrets/diffview.nvim',
             config = function()
-                require'diffview'.setup {
-                    diff_binaries = false,
-                    file_panel = {
-                        width = 35,
-                        use_icons = true
-                    }
-                }
+                require('plug_diffview')
             end
         }
-        use { 'lewis6991/gitsigns.nvim', 
+        use { 'TimUntersberger/neogit',
+            requires = 'nvim-lua/plenary.nvim'
+        }
+        use { 'lewis6991/gitsigns.nvim',
             requires = { 'nvim-lua/plenary.nvim' },
             config = function()
                 require('plug_gitsign')
@@ -216,6 +237,11 @@ require('packer').startup(
                 require('plug_expressline')
             end
         }
+        -- use { 'windwp/windline.nvim',
+        --     config = function()
+        --         require('plug_statusline')
+        --     end
+        -- }
         use { 'tjdevries/colorbuddy.nvim',
             config = function()
                 require('plug_colorbuddy')
@@ -235,6 +261,7 @@ require('packer').startup(
             'yamatsum/nvim-web-nonicons',
             requires = {'kyazdani42/nvim-web-devicons'}
         }
+        -- disabling the cursor-line/column in unused win/buffer
         use { 'Pocco81/NoCLC.nvim',
             config = function()
                 require("no-clc").setup({
@@ -262,20 +289,20 @@ require('packer').startup(
            end
         }
 
+        use { 'fedepujol/move.nvim',
+            config = function()
+                vim.api.nvim_set_keymap('n', '<C-A-Down>', "<Cmd>lua require('move').MoveLine(1)<CR>", { noremap = true, silent = true })
+                vim.api.nvim_set_keymap('n', '<C-A-Up>', "<Cmd>lua require('move').MoveLine(-1)<CR>", { noremap = true, silent = true })
+                vim.api.nvim_set_keymap('v', '<C-A-Down>', "<Cmd>lua require('move').MoveBlock(1)<CR>", { noremap = true, silent = true })
+                vim.api.nvim_set_keymap('v', '<C-A-Up>', "<Cmd>lua require('move').MoveBlock(-1)<CR>", { noremap = true, silent = true })
+            end
+        }
+
         -- VIM --
-        -- use { 'sheerun/vim-polyglot' }
-        -- use { 'tpope/vim-surround' }
+        use { 'sheerun/vim-polyglot' }
         use { 'kana/vim-fakeclip' }
         use { 'haya14busa/incsearch.vim' }
         use { 'direnv/direnv' }
-        use { 'matze/vim-move', 
-            config = function()
-                require('vimp').rbind('n',                 '<C-A-Down>',       [[<Plug>MoveLineDown]])
-                require('vimp').rbind('n',                 '<C-A-Up>',         [[<Plug>MoveLineUp]])
-                vim.api.nvim_set_keymap("v",    "<C-A-Down>",       "<Plug>MoveBlockDown", {})
-                vim.api.nvim_set_keymap("v",    "<C-A-Up>",         "<Plug>MoveBlockUp", {})
-            end
-        }
         use { 'mg979/vim-visual-multi',
             config = function()
                 require('plug_visualmulti')
@@ -290,7 +317,7 @@ require('packer').startup(
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
     end
 )
-require('other_blame')
+-- require('other_blame')
 
 ---------------------------------------------- === ATUOCMDS === ----------------------------------------------
 -- === DEFAULT FILETYPE === "

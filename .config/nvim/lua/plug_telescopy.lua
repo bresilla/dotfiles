@@ -1,6 +1,7 @@
 --------------------------------- TELESCOPE  -----------------------------------------
 vimp.nnoremap('<leader><leader>',       [[<cmd>lua require('telescope.builtin').git_files()<cr>]])
-vimp.nnoremap('<C-Space>',              [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
+vimp.nnoremap('<C-Space>',                  [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
+vimp.nnoremap('<C-p>',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
 vimp.nnoremap('<C-b>',                  [[<cmd>lua require('telescope.builtin').buffers(center_list)<cr>]])
 
 vimp.nnoremap('<leader>lf',                  [[<cmd>lua require('telescope.builtin').lsp_code_actions(center_list)<cr>]])
@@ -24,18 +25,18 @@ require('telescope').setup{
             '--column',
             '--smart-case'
         },
-        prompt_position = "bottom",
+        layout_config = {
+            prompt_position = "bottom",
+            width = 0.75,
+            preview_cutoff = 120,
+        },
         prompt_prefix = ">>",
         selection_strategy = "reset",
         sorting_strategy = "descending",
         layout_strategy = "horizontal",
         -- shorten_path = true,
-        width = 0.75,
         file_ignore_patterns = {"bash/*","resources/*"},
         file_sorter =  require'telescope.sorters'.get_fuzzy_file,
-        preview_cutoff = 120,
-        results_height = 1,
-        results_width = 0.8,
         color_devicons = true,
         use_less = true,
         mappings = {

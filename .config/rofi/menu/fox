@@ -4,7 +4,7 @@ ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:
 BROWSER=firefox
 
 
-PLACES_PATH="/home/bresilla/dots/.other/.mozilla/firefox/13kgbp7a.default/places.sqlite"
+PLACES_PATH="/home/bresilla/.mozilla/firefox/13kgbp7a.default/places.sqlite"
 DB_PATH=$(mktemp /tmp/ffhist.XXXXX)
 cp -f $PLACES_PATH $DB_PATH
 

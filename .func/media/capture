@@ -9,8 +9,8 @@ nvenc(){
     -i :0.0+$X,$Y \
     -r 30 -framerate 60 \
     -vcodec h264_nvenc \
-    -profile high444p -pixel_format yuv444p -qmin 10 -qmax 52 -preset lossless -level 51\
-    /home/bresilla/temp/$(date +%s).mkv
+    -profile:v high444p -pixel_format yuv444p -qmin 10 -qmax 52 -preset lossless -level 51\
+    /home/bresilla/temp/rec_$(date +%s).mp4
   echo "" > /home/bresilla/.config/rec
 }
 
@@ -22,16 +22,16 @@ libx264(){
     -s "$W"x"$H" \
     -i :0.0+$X,$Y \
     -vcodec libx264rgb \
-    -profile high444 -pixel_format yuv444p -crf 19 -preset ultrafast -qp 0 -level 51\
-    /home/bresilla/temp/$(date +%s).mkv
+    -profile:v high444 -pixel_format yuv444p -crf 19 -preset ultrafast -qp 0 -level 51\
+    /home/bresilla/temp/rec_$(date +%s).mp4
   echo "" > /home/bresilla/.config/rec
-#    -f alsa -i pulse \
+    # -f alsa -i pulse \
 }
 
 if [ "$1" == "-w" ] ;then
-  mpv --geometry=-0-0 --autofit=20% /dev/video0
+    ffmpeg -f video4linux2 -s 1280x720 -i /dev/video$2 /home/bresilla/temp/cam$2_$(date +%s).mp4
 elif [ "$1" == "-c" ] ;then
-  libx264
+    libx264
 elif [ "$1" == "-g" ] ;then
-  nvenc
+    nvenc
 fi

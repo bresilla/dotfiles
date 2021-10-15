@@ -57,7 +57,11 @@ function term(cmd)
         shell = vim.o.shell,
         direction = "float",
         float_opts = {
-            border = "none",
+            border = "curved",
+            highlights = {
+                border = "ToggleTermBorder",
+                background = "ToggleTermBack",
+            }
         },
         -- function to run on opening the terminal
         on_open = function(term)
@@ -78,5 +82,5 @@ function term(cmd)
     newterm:toggle()
 end
 
-map('n',    '<F7>',                       [[<CMD>lua term('build')<CR>]],                    opts)
+map('n',    '<F7>',                       [[<CMD>lua term('build && run')<CR>]],                    opts)
 map('t',    '<F7>',                       [[<CMD>ToggleTerm<CR>]],                           opts)

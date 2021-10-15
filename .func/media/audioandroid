@@ -17,17 +17,19 @@ else
 fi
 
 "$ADB" $serial wait-for-device
-# "$ADB" $serial install -t -r -g "$SNDCPY_APK" ||
-# {
-#     echo 'Uninstalling existing version first...'
-#     "$ADB" $serial uninstall com.rom1v.sndcpy
-#     "$ADB" $serial install -t -g "$SNDCPY_APK"
-# }
+if [ -n $($ADB shell cmd package list packages | grep sndcpy) ]; then
+    echo "sndcpy is already installed"; 
+    # echo 'Uninstalling existing version first...'
+    # "$ADB" $serial uninstall com.rom1v.sndcpy
+    # "$ADB" $serial install -t -g "$SNDCPY_APK"
+else
+    "$ADB" $serial install -t -r -g "$SNDCPY_APK"
+fi
 
 "$ADB" $serial forward tcp:$SNDCPY_PORT localabstract:sndcpy
 "$ADB" $serial shell am start com.rom1v.sndcpy/.MainActivity
 
-sleep 2
+sleep 5
 while pgrep -x vlc >/dev/null; do pkill vlc; sleep 1; done;
 
 "$VLC" -Idummy --demux rawaud --network-caching=0 tcp://localhost:"$SNDCPY_PORT"

@@ -419,6 +419,9 @@ function define_groups()
     Group.new('Visual',                 nil,                  colors.ac_d,          styles.bold)
 
 
+    Group.new('ToggleTermBack',         nil,                  colors.r236)
+    Group.new('ToggleTermBorder',       colors.r1,            colors.r236)
+
     -- === SPECAL CHARACTER === "
     --squicky lines "~" hide
     Group.new('EndOfBuffer',            colors.r0,            colors.r0)

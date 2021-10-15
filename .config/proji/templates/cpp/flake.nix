@@ -37,6 +37,8 @@
           pkgs.cudnn
           opencv
           realsense
+          pkgs.flann
+          pkgs.pcl
           pkgs.stdenv
           pkgs.fmt
           pkgs.doctest
@@ -49,6 +51,7 @@
           pkgs.boost
           pkgs.libtorch-bin
           pkgs.ncurses
+          pkgs.libusb
           # pkgs.python3
           # (pkgs.python38.withPackages (py: [
           #   py.python-language-server
@@ -60,6 +63,14 @@
           #   py.pytorch
           # ]))
         ];
+        RUST_BACKTRACE = "1";
+        CXX = "clang++";
+        CC = "clang";
+        shellHook =''
+          export LD_LIBRARY_PATH=$PWD/vendor/vcpkg/installed/x64-linux/lib:$LD_LIBRARY_PATH
+          export CPLUS_INCLUDE_PATH=$PWD/vendor/vcpkg/installed/x64-linux/include:$CPLUS_INCLUDE_PATH
+          export TEST_PATH=${pkgs.fmt}
+        '';
       };
     }
   );

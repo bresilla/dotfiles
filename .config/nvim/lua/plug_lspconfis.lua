@@ -3,20 +3,20 @@ vim.cmd([[sign define LspDiagnosticsSignWarning text=! texthl=LspDiagnosticsSign
 vim.cmd([[sign define LspDiagnosticsSignInformation text=+ texthl=LspDiagnosticsSignInformation linehl= numhl=]])
 vim.cmd([[sign define LspDiagnosticsSignHint text=➜ texthl=LspDiagnosticsSignHint linehl= numhl=]])
 
-
 --------------------------------- LSP LANGUAGES  -----------------------------------------
 require'lspconfig'.clangd.setup{
     cmd = { "clangd", "--background-index" };
     filetypes = { "cpp" };
+    -- on_attach = function() signature_setup() end;
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require'lspconfig'.rust_analyzer.setup{
     cmd = { "rust-analyzer" };
     filetypes = { "rust" };
-    capabilities = capabilities;
+    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 
 -- require'lspconfig'.rls.setup{
@@ -25,11 +25,11 @@ require'lspconfig'.rust_analyzer.setup{
 -- }
 
 require'lspconfig'.sumneko_lua.setup{
-  cmd = {"/env/LSP/lua/lua-language-server"};
+  cmd = {"lua-language-server"};
 }
-
-require'lspconfig'.pyls.setup{}
-require'lspconfig'.pyls_ms.setup{}
+require'lspconfig'.pylsp.setup{}
+-- require'lspconfig'.pyls.setup{}
+-- require'lspconfig'.pyls_ms.setup{}
 
 --------------------------------- DIAGNOSTICS  -----------------------------------------
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

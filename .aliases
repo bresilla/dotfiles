@@ -1,8 +1,7 @@
 ##SUDO
 alias virsh="doas virsh"
 alias virt-viewer="doas virt-viewer"
-alias chroot="doas chroot"
-alias chroot="doas schroot"
+# alias chroot="doas schroot"
 alias mount="doas mount"
 alias umount="doas umount"
 alias nmap="doas nmap"
@@ -28,6 +27,11 @@ alias wifis='nmcli -t -f ssid dev wifi'
 alias vim='nvim'
 alias mut='neomutt'
 
+##WINDOW_MANAGER
+alias win='xprop'
+alias key='xev -event keyboard'
+
+
 ##PACKAGE_MANAGER
 alias box='blindspot'
 alias pack='unset GOPATH; unset GOBIN && paru'
@@ -35,6 +39,8 @@ alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
 alias branch='doas pacman-mirrors --api -S'
 
 ##SYSTEM
+alias path='echo "${PATH//:/\n}"'
+alias sys='procenv'
 alias cp='acp -g -r -p'
 alias mv='amv -g -u'
 alias rm='rm -rf'
@@ -65,12 +71,13 @@ alias note='dnote'
 alias font='fc-query'
 alias pomo='pomo -p /home/bresilla/.config/pomo'
 alias git='hub'
-alias doc='docker'
-alias docker='supdock'
 alias dev='devenv'
 alias pro='proji'
 alias lines='tokei'
 alias search="rg"
+
+##ROBO
+alias ros="ros2"
 
 ##FILES
 alias own='doas chown -R $USER:$USER'

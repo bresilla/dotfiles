@@ -1,0 +1,254 @@
+#!/bin/sh
+
+source /home/bresilla/.cache/wal/colors.sh
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+edit_with="kitty --class=til"
+
+
+exit_on_esc () {
+  EXIT_CODE=$?
+  if [ $EXIT_CODE -ne 0 ]; then
+    sed -Ei "/#message \{/,/\}/ s/(\s*)\/\* (border.*) \*\//\1\2/" $HOME/.config/rofi/rofi_bar
+    exit $EXIT_CODE
+  fi
+}
+
+run_again () {
+  if [ "$2" ]; then
+    sed -Ei "/#message \{/,/\}/ s/(\s*)\/\* (border.*) \*\//\1\2/" $HOME/.config/rofi/rofi_bar
+    WORD=$(echo "$2" | rofi "${ROFI_OPTIONS[@]}" -dmenu -p $COMMAND -i -mesg "$1")
+    exit_on_esc
+
+    WORD_LENGTH=$(($(echo -n "$WORD" | wc -m) - 1))
+    if [ $WORD_LENGTH -gt 0 ]; then
+      NEW_WORD=$(echo -n "$WORD" | cut -c 1-$WORD_LENGTH)
+      echo "$2" | grep -w "$NEW_WORD" > /dev/null
+      IN_SUGGESTIONS=$?
+      if [ $IN_SUGGESTIONS -eq 0 ]; then
+        echo -n "$NEW_WORD" | xclip -r -selection clipboard
+        notify-send -a "rofi_et" "\"$NEW_WORD\" has been copied to clipboard"
+        exit 0
+      fi
+    fi
+  else
+    if [ "$1" ]; then
+      sed -Ei "/#message \{/,/\}/ s/^(\s*)(border.*);{0,1}$/\1\/* \2 *\//" $HOME/.config/rofi/rofi_bar
+
+      WORD=$(rofi "${ROFI_OPTIONS[@]}" -dmenu -p $COMMAND -i -mesg "$1" -lines 0)
+      exit_on_esc
+    else
+      WORD=$(rofi "${ROFI_OPTIONS[@]}" -dmenu -p $COMMAND -i)
+      exit_on_esc
+    fi
+  fi
+
+  $0 "$WORD"
+  exit 0
+}
+
+escape_html () {
+  echo -n "$1" | sed -E "s/&[^amp\;]/\&amp\; /g"
+}
+
+usage () {
+  cat << EOF
+<u>Usage (in rofi's input bar)</u>:
+  COMMAND [WORD]
+
+<u>Commands</u>:
+  <b><i>help</i></b>
+    display this help message
+
+  <b><i>define</i></b> or <b><i>def</i></b>
+    get definitions for WORD from wordnik.com if correctly spelled, otherwise display spell suggestions. (WORD is required for this command)
+
+  <b><i>spell</i></b> or <b><i>spl</i></b>
+    get spell suggestions for WORD from wordlist if not spelled correctly, otherwise display a message indicating that WORD is spelled correctly. (WORD is required for this command)
+
+  <b><i>abbreviations</i></b> or <b><i>abr</i></b>
+    get what WORD might stand for from abbreviations.com. (WORD is required for this command)
+
+  <b><i>synonyms</i></b> or <b><i>syn</i></b>
+    get synonyms for WORD from bighugelabs.com. (WORD is required for this command)
+
+  <b><i>antonyms</i></b> or <b><i>ant</i></b>
+    get antonyms for WORD from bighugelabs.com. (WORD is required for this command)
+EOF
+}
+
+spell () {
+  agrep -iB "$1" $HOME/dots/.config/dictwordlist.txt | grep -iw "$1" > /dev/null
+  FOUND=$?
+  PROCEED_TO_DEFINE=$2
+  if [ $FOUND -eq 0 ]; then
+    if [ $PROCEED_TO_DEFINE -ne 0 ]; then
+      run_again "<span foreground=\"green\">\"$1\" appears to be spelled correctly</span>"
+    fi
+  else
+    MESG=$(
+cat << EOF
+<span foreground="red">"$1" doesn't appear to be spelled correctly.</span>
+<b><i>Suggestions:</i></b>
+EOF
+    )
+
+    SUGGESTIONS=$(agrep -iB "$1" $HOME/.local/share/rofi/rofi_et_wordlist.txt | awk '{print length, $0}' | sort -n | cut -d " " -f2-)
+
+    run_again "$MESG" "$SUGGESTIONS"
+  fi
+}
+
+get_definitions () {
+  D=";;;"
+
+  WORD=$(echo "$1" | awk '{print tolower($0)}')
+
+  WORDNIK_URL="https://www.wordnik.com/words/$WORD"
+  DEFINITIONS=$(
+  echo -n "$(curl -s $WORDNIK_URL)" |\
+  sed "/guts active/,/<\/ul>/!d;\
+  /<li>/!d" |\
+  sed -E "s/\s*<li><abbr title=\"partOfSpeech\">(.+)<\/abbr> <i>(.*)<\/i> (.*)<\/li>/=> <${D}b${D}><${D}i${D}>\1<${D}\/i${D}><${D}\/b${D}> [<${D}small${D}>\2<${D}\/small${D}>] \3/;\
+  s/ \[<${D}small${D}><${D}\/small${D}>\]//g;\
+  s/\s{2,}/ /g;\
+  s/<[^\;][^>]*>//g;\
+  s/$D//g;" |\
+  head -n 13
+  )
+
+  DEFINITIONS=$(escape_html "$DEFINITIONS")
+
+  echo "$DEFINITIONS"
+}
+
+define () {
+  COMMAND="spell"
+  spell $1 0
+  COMMAND="define"
+
+  DEFINITIONS=$(
+cat << EOF
+<b><i><u>Definitions for "$1" from Wordnik:</u></i></b>
+$(get_definitions $1)
+EOF
+  )
+
+  run_again "$DEFINITIONS"
+}
+
+get_abbreviations () {
+  ABBRS_URL="https://www.abbreviations.com/$1"
+
+  ABBREVIATIONS=$(
+  echo -n "$(curl -s $ABBRS_URL)" |\
+  sed -E "/<table class=\"table tdata no-margin\">.+<\/table>/ !d" |\
+  perl -pe "s/(<td class=\"tal dx fsl\">.+?<\/td>)/\n\$1\n/g" |\
+  sed -E "/^<td class=\"tal dx fsl\">/ !d;\
+  s/<td class=\"tal dx fsl\"><p class=\"desc\">(.*)<\/p><p class=\"path\">(.*)<\/p><\/td>/[<small>\2<\/small>] \1/;\
+  s/<\/{0,1}a[^>]*>//g;\
+  s/&raquo\;/»/g;\
+  s/ -- and more...//g" |\
+  head -n 13
+  )
+
+  ABBREVIATIONS=$(escape_html "$ABBREVIATIONS")
+
+  ABBREVIATIONS=$(
+cat << EOF
+<b><i><u>What "$1" might stand for from Abbreviations.com:</u></i></b>
+$ABBREVIATIONS
+EOF
+  )
+
+  run_again "$ABBREVIATIONS"
+}
+
+get_synonyms () {
+  SYNONYMS_URL="https://words.bighugelabs.com/$1"
+  SYNONYMS_RES="$(curl -s $SYNONYMS_URL)"
+
+  SYNONYMS=""
+
+  declare -a SYN_TYPES=("noun" "verb" "adjective" "adverb")
+
+  for SYN_TYPE in "${SYN_TYPES[@]}"
+  do
+    SYNONYMS+=$(
+cat << EOF
+
+$(echo -n "$SYNONYMS_RES" |\
+sed -E "/<h3>$SYN_TYPE<\/h3>/,/<\/ul>/ !d;\
+/<li>/ !d;\
+s/\s*<li><a.*>(.*)<\/a><\/li>/($SYN_TYPE) \1/g"
+)
+EOF
+)
+  done
+
+  SYNONYMS=$(echo -n "$SYNONYMS" | sed '1 d')
+
+  run_again "<b><i>Synonyms for \"$1\" from bighugelabs.com:</i></b>" "$SYNONYMS"
+}
+
+get_antonyms () {
+  ANTONYMS_URL="https://words.bighugelabs.com/$1"
+  ANTONYMS_RES="$(curl -s $ANTONYMS_URL)"
+
+  ANTONYMS=""
+
+  declare -a ANT_TYPES=("noun" "verb" "adjective" "adverb")
+
+  for ANT_TYPE in "${ANT_TYPES[@]}"
+  do
+    ANTONYMS+=$(
+cat << EOF
+
+$(echo -n "$ANTONYMS_RES" |\
+sed -E "/<h3>$ANT_TYPE<\/h3>/,/(<h3>)|(<\/div>)/ !d;\
+/<h4>antonyms<\/h4>/,/<\/ul>/ !d;\
+/<li>/ !d;\
+s/\s*<li><a.*>(.*)<\/a><\/li>/($ANT_TYPE) \1/g"
+)
+EOF
+)
+  done
+
+  ANTONYMS=$(echo -n "$ANTONYMS" | sed '1 d')
+
+  run_again "<b><i>Antonyms for \"$1\" from bighugelabs.com:</i></b>" "$ANTONYMS"
+}
+
+COMMAND="query"
+
+if [ "$@" ]; then
+  COMMAND=$(echo "$@" | cut -d " " -f 1)
+  WORD=$(echo "$@" | cut -d " " -f 2)
+
+  if [ "$COMMAND" == "help" ]; then
+    run_again "$(usage)"
+  else
+    SPACE_COUNT=$(echo "$@" | tr -cd " \t" | wc -c)
+    if [ "$WORD" == "" ] || [ $SPACE_COUNT -lt 1 ]; then
+      COMMAND="query"
+      run_again "<span foreground=\"red\">You need to specifiy a command and a word</span>"
+    else
+      if [ "$COMMAND" == "spell" ] || [ "$COMMAND" == "spl" ]; then
+        spell $WORD 1
+      elif [ "$COMMAND" == "define" ] || [ "$COMMAND" == "def" ]; then
+        define $WORD
+      elif [ "$COMMAND" == "abbreviations" ] || [ "$COMMAND" == "abr" ]; then
+        get_abbreviations $WORD
+      elif [ "$COMMAND" == "synonyms" ] || [ "$COMMAND" == "syn" ]; then
+        get_synonyms $WORD
+      elif [ "$COMMAND" == "antonyms" ] || [ "$COMMAND" == "ant" ]; then
+        get_antonyms $WORD
+      else
+        UNKNOWN_COMMAND=$COMMAND
+        COMMAND="query"
+        run_again "<span foreground=\"red\">Unkown command \"$UNKNOWN_COMMAND\"</span>"
+      fi
+    fi
+  fi
+else
+  run_again
+fi
