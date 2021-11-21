@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-[[ -d $DOTS ]] && echo "No \$DOTS directory found!" && exit 1
+DOTS=/home/bresilla/dots
 
 FILES=$DOTS/.config/*
 for f in $FILES; do

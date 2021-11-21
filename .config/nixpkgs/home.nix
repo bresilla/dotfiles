@@ -85,6 +85,20 @@ in {
     #     WantedBy = ["default.target"];
     #   };
     # };
+    services.vcan = {
+      Unit = {
+        Description = "Bring VCAN up";
+        After = ["network.target"];
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/canup";
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+    };
+
     services.hotspot = {
       Unit = {
         Description = "Hotspot daemon";
@@ -118,6 +132,24 @@ in {
     #     WantedBy = ["default.target"];
     #   };
     # };
+    # services.forti = {
+    #   Unit = {
+    #     Description = "Client for PPP+SSL VPN tunnel services";
+    #     Documentation = "https://github.com/adrienverge/openfortivpn";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStart = "/usr/bin/doas /usr/bin/openfortivpn";
+    #     ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
+    #     Restart = "always";
+    #     RestartSec = "5";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
+
     services.buckle = {
       Unit = {
         Description = " Nostalgia bucklespring keyboard sound";

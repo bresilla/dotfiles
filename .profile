@@ -90,7 +90,7 @@ export ADJECTIVELIST="$HOME/.config/dict/adjective.txt"
 export NOUNLIST="$HOME/.config/dict/noun.txt"
 export FANCY=$(printf "%s" $(shuf -n1 $ADJECTIVELIST) "_" $(shuf -n1 $NOUNLIST))
 
-export WINEPREFIX=/wine
+export WINEPREFIX=/var/lib/wine
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 export XDG_CONFIG_HOME=/home/$USER/.config
 export XDG_CONFIG_PATH=/home/$USER/.config

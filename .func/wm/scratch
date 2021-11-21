@@ -105,6 +105,7 @@ parse_command() {
                 ;;
             -r)
                 _arg_r="true"
+                _arg_m="true"
                 ;;
             -h|--help)
                 usage
@@ -128,6 +129,9 @@ else
     parse_command $@
 fi
 
+echo $_arg_width
+echo $_arg_height
+
 term=${_arg_term:-kitty}
 name=${_arg_class:-MAIN}
 
@@ -139,15 +143,20 @@ win=$(xdotool search -classname $name)
 
 m_width=$( bspc query --monitor -T | jq ".rectangle | { width, height }" | jq ".width")
 m_heigh=$( bspc query --monitor -T | jq ".rectangle | { width, height }" | jq ".height")
-width=${_arg_width:-$(expr $m_width / 2)}
-heigh=${_arg_height:-$(expr $m_heigh / 2)}
-xoffset=${_arg_xoffset:-$(expr $m_width / 2 - $width / 2)}
-yoffset=${_arg_yoffset:-$(expr $m_heigh / 2 - $heigh / 2 )}
+x_pos=$( bspc query --monitor -T | jq ".rectangle | { x, y }" | jq ".x")
+y_pos=$( bspc query --monitor -T | jq ".rectangle | { x, y }" | jq ".y")
+width=${_arg_width:-$(($m_width / 2))}
+heigh=${_arg_height:-$(($m_heigh / 2))}
+xoffset=${_arg_xoffset:-$(($m_width / 2 - $width / 2))}
+yoffset=${_arg_yoffset:-$(($m_heigh / 2 - $heigh / 2 ))}
+
 
 if [[ -z $win ]]; then
     /env/cpp/bin/tmass -l /home/bresilla/.config/tmux load $name 2> /dev/null
+    # [[ $name == "MAIN" ]] && width=3000 heigh=1050
+    # [[ $name == "NOTE" ]] && width=3500 heigh=1900
     $term --name=$name sh -c "tmux attach -t $name" &
-    xdotool windowmap "$win" windowmove "$win" "$xoffset" "$yoffset" windowsize "$win" "$width" "$heigh" 2> /dev/null
+    xdotool windowmap "$win" windowmove "$win" "$(( $xoffset + $x_pos))" "$(( $yoffset + $y_pos ))" windowsize "$win" "$width" "$heigh" 2> /dev/null
 fi
 
 
@@ -157,7 +166,7 @@ if [[ -z "$(bspc query --desktop focused -T | grep $name)" ]]; then
     bspc node $win --to-monitor $mon
     bspc node $win --focus
     if [[ "$_arg_r" == "true" ]]; then
-        xdotool windowmap "$win" windowmove "$win" "$xoffset" "$yoffset" windowsize "$win" "$width" "$heigh" 2> /dev/null
+        xdotool windowmap "$win" windowmove "$win" "$(( $xoffset + $x_pos))" "$(( $yoffset + $y_pos ))" windowsize "$win" "$width" "$heigh" 2> /dev/null
     fi
 else
     [[ -z $win ]] && exit
@@ -165,7 +174,7 @@ else
         [[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP-1
         if [[ "$(echo $xoffset,$yoffset | xargs)" != "$(echo $(xdotool getwindowgeometry $win | grep 'Position' | cut -d':' -f2 | cut -d'(' -f1) | xargs)" ]] ||
             [[ "$(echo $width,$heigh | tr "," "x" | xargs)" != "$(echo $(xdotool getwindowgeometry $win | grep 'Geometry' | cut -d':' -f2) | xargs)" ]]; then
-            xdotool windowmap "$win" windowmove "$win" "$xoffset" "$yoffset" windowsize "$win" "$width" "$heigh" 2> /dev/null
+            xdotool windowmap "$win" windowmove "$win" "$(( $xoffset + $x_pos))" "$(( $yoffset + $y_pos ))" windowsize "$win" "$width" "$heigh" 2> /dev/null
             [[ "$(bspc query --node $win --tree | jq -e '.hidden')" != true ]] && exit;
         fi
     fi

@@ -64,15 +64,15 @@ cmp.setup({
 })
 
 --------------------------------- SIGNATURE  -----------------------------------------
-require "lsp_signature".setup({
-    bind = true, -- This is mandatory, otherwise border config won't get registered.
-    handler_opts = {
-        border = "none",
-    },
-    hint_enable = false,
-    max_width = 200,
-    padding = ' ',
-})
+-- require "lsp_signature".setup({
+--     bind = true, -- This is mandatory, otherwise border config won't get registered.
+--     handler_opts = {
+--         border = "none",
+--     },
+--     hint_enable = false,
+--     max_width = 200,
+--     padding = ' ',
+-- })
 
 -- local tabnine = require('cmp_tabnine.config')
 -- tabnine:setup({

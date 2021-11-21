@@ -13,6 +13,7 @@ alias btrfs="doas btrfs"
 alias tent="doas tent"
 alias hexy="xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex"
 alias argz="xargs -0 | head -n -1"
+alias vgl="vglconnect"
 
 ##NETWORK
 alias dnsinuse='nmcli dev show | grep IP4.DNS'
@@ -22,6 +23,7 @@ alias portgraph='doas lsof -n -F | ./lsofgraph | dot -Tjpg > /tmp/a.jpg'
 alias portmon='doas lsof -Pnl -i4'
 alias openports='doas netstat -tulpn'
 alias wifis='nmcli -t -f ssid dev wifi'
+alias ip='ip -c'
 
 ##ALTERNATIVES
 alias vim='nvim'
@@ -52,7 +54,7 @@ alias la='exa -laiSHF --header --git --group-directories-first --tree -L1'
 alias lt='exa -liSHF --header --git --tree -L2'
 alias lu='dutree -d1 --usage -x .git -x .direnv'
 alias df='dfc -dTomw -p -/dev/loop,tmp,dev,run,one'
-alias lsblk='lsblk -f'
+alias lsblk='lsblk --output NAME,VENDOR,MODEL,UUID,TRAN,TYPE,SIZE,FSTYPE,MOUNTPOINTS'
 alias dd='dd status=progress'
 alias home='home-manager'
 alias clip='xclip -sel clip'

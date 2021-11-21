@@ -37,6 +37,23 @@ setopt histignorespace
 
 
 #--------------------------------------------------------------------------------------------------------------------
+###ZSTYLE
+zstyle ':completion:*' menu select
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:*:-command-:*:*' group-order alias builtins functions commands
+zstyle ':completion:*' file-list all
+zstyle ':completion:*' file-sort dummyvalue
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' complete-options true
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+#--------------------------------------------------------------------------------------------------------------------
 ###HISTORY STAFF
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 HISTFILE=~/.config/zsh_history
@@ -103,6 +120,7 @@ TRAPALRM() { [[ "$WIDGET" != "complete-word" ]] && zle reset-prompt }
 
 [ -d ~/.config/zsh/cmp ] && source ~/.config/zsh/cmp/cmp.plugin.zsh
 
+fpath+="/home/bresilla/.config/zsh/completions/src"
 
 #--------------------------------------------------------------------------------------------------------------------
 ###KILLER
@@ -148,6 +166,9 @@ eval "$(direnv hook zsh)"
 ###AUTIN
 eval "$(atuin init zsh)"
 
+###COD
+source <(cod init $$ zsh)
+
 ###SSH&GPG
 export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -186,7 +207,7 @@ bindkey '^M' runner
 eval "$(zoxide init zsh)"
 cd() {
     if [[ -z $1 ]]; then
-        cd $(proji ls | head -n-1 | tail -n+4 | fzy | cut -d "|" -f4)
+        cd $(proji ls | head -n-1 | tail -n+4 | fzy -l 20 | cut -d "|" -f4)
     elif [[ -d $1 ]] ; then
         builtin cd $1
     elif [[ $1 == root ]] && [[ -d $(git rev-parse --show-toplevel) ]] ; then
@@ -219,3 +240,22 @@ done
 [[ -n $TAB ]] && [ -f ~/data/docs/BRAND/logo/ascii ] && ~/dots/.func/system/bresilla
 bindkey -s '^A' ' tab\n'
 if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/env/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/env/conda/etc/profile.d/conda.sh" ]; then
+        . "/env/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/env/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

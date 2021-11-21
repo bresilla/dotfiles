@@ -4,7 +4,6 @@ fzf                         + a command-line fuzzy finder                       
 sk      - skim              + a rusty fuzzy finder                                            + https://github.com/lotabout/skim                      + rust
 fzy                         + simplier fuzzy finder                                           + https://github.com/jhawthorn/fzy                      + cpp
 get     - sysget            + One package manager to rule them all                            + https://github.com/emilengler/sysget                  + cpp
-peep                        + less alternative                                                + https://github.com/ryochack/peep                      + rust
 delta                       + viewer for git and diff output                                  + https://github.com/dandavison/delta                   + rust
 tap     - teip              + Standard input replace                                          + https://github.com/greymd/teip                        + rust
 rg                          + (ripgrep) grep alternative                                      + https://github.com/BurntSushi/ripgrep                 + rust
@@ -27,6 +26,10 @@ handlr                      + better xdg-utils                                  
 lnav                        + system LOG navigatior/viewer                                    + https://github.com/tstack/lnav                        + cpp
 bootiso                     + create a bootable USB devices                                   + https://github.com/jsamr/bootiso                      + bash
 pier                        + script management CLI                                           + https://github.com/pier-cli/pier                      + rust
+-------------------------------------------------------                 PAGER                    -----------------------------------------------------------
+pspg                        + advanced unix pager                                             + https://github.com/okbob/pspg                         + c
+peep                        + less alternative                                                + https://github.com/ryochack/peep                      + rust
+ov                          +  feature rich terminal pager                                    + https://github.com/noborus/ov                         + go
 -------------------------------------------------------                CHANGE                     -----------------------------------------------------------
 entr                        + run commands on files change                                    + https://github.com/eradman/entr                       + cpp
 watcher                     + watch files or directory changes                                + https://github.com/radovskyb/watcher                  + go
@@ -40,9 +43,17 @@ mole                        + cli app to create ssh tunnels                     
 rclone                      + rsync for cloud storage                                         + https://github.com/rclone/rclone                      + go
 gotty                       + share CLI as a web application                                  + https://github.com/yudai/gotty                        + go
 tunnelto                    + expose local web-server to internet                             + https://github.com/agrinman/tunnelto                  + go
-mtr                         + 'traceroute' and 'ping' combines                                + https://github.com/traviscross/mtr                    + cpp  
+mtr                         + 'traceroute' and 'ping' combines                                + https://github.com/traviscross/mtr                    + cpp
+innernet                    + private network system                                          + https://github.com/tonarino/innernet                  + rust
+hostapd
+dnsmasq
+traceroute
+ufw
+tor
+------------------------------------------------------                  ADBLOCK               --------------------------------------------------------------
 maza                        + local ad blocker, like Pi-hole                                  + https://github.com/tanrax/maza-ad-blocking            + bash
 hblock                      + hosts adblocker                                                 + https://github.com/hectorm/hblock                     + bash
+
 -------------------------------------------------------                BROWSER                    -----------------------------------------------------------
 bookmark                    + terminal bookmark manager                                       + https://github.com/Szymongib/bookmark                 + rust
 -------------------------------------------------------                 SHELL                     -----------------------------------------------------------
@@ -52,6 +63,7 @@ mn      - tealdeer          + faster TLDR/MAN                                   
 cod                         + a completion daemon for bash/zsh                                + https://github.com/dim-an/cod                         + go
 navi                        + interactive cheatsheet tool                                     + https://github.com/denisidoro/navi                    + rust
 z       - zoxide            + faster way to navigate filesystem                               + https://github.com/ajeetdsouza/zoxide                 + rust
+rng                         + stream range of input to stdout                                 + https://github.com/nickolasburr/rng                   + cpp
 -------------------------------------------------------                 COLOR                     -----------------------------------------------------------
 pastel                      + convert and manipulate colors                                   + https://github.com/sharkdp/pastel                     + rust
 pigments                    + color palete from image                                         + https://github.com/blenderskool/pigmnts               + rust
@@ -77,17 +89,19 @@ fac                         + TUI for fixing git conflicts                      
 lxc     - lxd               + daemon based on liblxc                                          + https://github.com/lxc/lxd                            + go
 dive                        + exploring docker layers                                         + https://github.com/wagoodman/dive                     + go
 lzd     - lazydocker        + lazier way to manage docker                                     + https://github.com/jesseduffield/lazydocker           + go
+-------------------------------------------------------                  ENV                      -----------------------------------------------------------
+direnv                      + OTF local load and unload variables                             + https://github.com/direnv/direnv                      + go
+env-modules                 + Dynamic modification of a user's environment                    + https://github.com/cea-hpc/modules                    + tcl
+lmod                        + Environment Module System based on Lua (suports TLC)            + https://github.com/TACC/Lmod                          + lua
+envy                        + OTF global load and unload variables                            + https://github.com/mre/envy                           + rust
 -------------------------------------------------------                  DEV                      -----------------------------------------------------------
 pro     - proji             + CLI project templating tool                                     + https://github.com/nikoksr/proji                      + go
-direnv                      + OTF local load and unload variables                             + https://github.com/direnv/direnv                      + go
 procenv                     + Command-line utility to show process environment                + https://github.com/jamesodhunt/procenv                + cpp
-envy                        + OTF global load and unload variables                            + https://github.com/mre/envy                           + rust
 dtool                       + command-line tool collection for devs                           + https://github.com/guoxbin/dtool                      + rust
 onefetch                    + repository summary on your terminal                             + https://github.com/o2sh/onefetch                      + rust
 -------------------------------------------------------                 BUILD                     -----------------------------------------------------------
 xmake                       + cross-platform build utility based on Lua                       + https://github.com/xmake-io/xmake                     + c
 -------------------------------------------------------                 DATAS                     -----------------------------------------------------------
-pspg                        + advanced unix pager                                             + https://github.com/okbob/pspg                         + c
 xsv                         + a cli CSV edtor/reader                                          + https://github.com/BurntSushi/xsv                     + rust
 csview                      + a cli CSV viewer                                                + https://github.com/wfxr/csview                        + rust
 define                      + command-line dictionary                                         + https://github.com/Rican7/define                      + go
@@ -95,6 +109,8 @@ faker                       + fake data gererator                               
 jq                          + JSON processor                                                  + https://github.com/stedolan/jq                        + cpp
 jo                          + utility to create JSON objects                                  + https://github.com/jpmens/jo                          + cpp
 ledger                      + double-entry accounting system                                  + https://github.com/ledger/ledger                      + cpp
+-------------------------------------------------------                DATABASE                   -----------------------------------------------------------
+usql                        + universal CLI for SQL databases                                 + https://github.com/xo/usql                            + go
 -------------------------------------------------------               ENCRYPTION                  -----------------------------------------------------------
 gpgtui                      + manage GnuPG keys with TUI                                      + https://github.com/orhun/gpg-tui                      + rust
 gopass                      + standard unix password manage                                   + https://github.com/gopasspw/gopass                    + go
@@ -170,9 +186,12 @@ sox                         + swissarmy knife of sound processing               
 annie                       + fast and simple video downloader                                + https://github.com/iawia002/annie                     + go
 tube    -youtube-dl         + download videos from YouTube.com                                + https://github.com/ytdl-org/youtube-dl                + py
 mpv                         + command line video player                                       + https://github.com/mpv-player/mpv                     + cpp
+gifgen                      + simple high quality GIF encoding                                + https://github.com/lukechilds/gifgen                  + bash
 -------------------------------------------------------                HACKING                    -----------------------------------------------------------
 r2      - radare2           + reverse engineering framework                                   + https://github.com/radareorg/radare2                  + cpp
 termshark                   + terminal UI for tshark                                          + https://github.com/gcla/termshark                     + go
+rustscan                    + modern port scanner                                             + https://github.com/RustScan/RustScan                  + rust
+nmap                        + network port scanner                                            + https://github.com/nmap/nmap                          + c
 hexyl                       + command-line hex viewer                                         + https://github.com/sharkdp/hexyl                      + rust
 bingrep                     + grep binary files                                               + https://github.com/m4b/bingrep                        + rust
 stego                       + stegonographic swiss army knife                                 + https://github.com/ajmwagar/stego                     + rust
@@ -184,8 +203,6 @@ rargs                       + xargs terminal laternative                        
 tmux                        + THE terminal multiplexer                                        + https://github.com/tmux/tmux                          + cpp
 textimg                     + command colors to image                                         + https://github.com/jiro4989/textimg                   + go
 menyoki                     + ImageOps on the command line                                    + https://github.com/orhun/menyoki                      + rust
--------------------------------------------------------                 SHELL                     -----------------------------------------------------------
-rng                         + stream range of input to stdout                                 + https://github.com/nickolasburr/rng                   + cpp
 -------------------------------------------------------             WINDOW-MANAGER                -----------------------------------------------------------
 boomer                      + zoom tool for boomers                                           + https://github.com/tsoding/boomer                     + nim
 ly                          + a tui display manager                                           + https://github.com/cylgom/ly                          + cpp
@@ -208,6 +225,8 @@ maim                        + takes a screenshot of your desktop                
 scrot
 -------------------------------------------------------               DEVINPUT                    -----------------------------------------------------------
 intercept                   + keybord infrastructure on libudev and libevdev                  + https://gitlab.com/interception/linux/tools           + cpp
+-------------------------------------------------------                  BPF                      -----------------------------------------------------------
+nhi                         + capture stdout of all termis using eBPF                         + https://github.com/strang1ato/nhi                     + go
 -------------------------------------------------------                SANDBOX                    -----------------------------------------------------------
 appvm                       + Nix-based app VMs                                               + https://github.com/jollheef/appvm
 bubblewrap
@@ -219,3 +238,58 @@ debootstrap
 debtap
 -------------------------------------------------------                  OTHER                    -----------------------------------------------------------
 eva                         + a calculator REPL, similar to bc                                + https://github.com/NerdyPepper/eva                    + rust
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------                NETWORK                    -----------------------------------------------------------
+hostapd
+dnsmasq
+traceroute
+ufw
+tor
+-------------------------------------------------------                  USB                      -----------------------------------------------------------
+usbip
+usbredir
+-------------------------------------------------------                CONTAINER                  -----------------------------------------------------------
+docker
+lxd
+wine
+-------------------------------------------------------                 EDITORS                   -----------------------------------------------------------
+neovim
+kakoune
+-------------------------------------------------------                 INTERNET                  -----------------------------------------------------------
+buku
+neomutt
+surf
+surfraw
+-------------------------------------------------------                FILESYSTEM                 -----------------------------------------------------------
+fuseiso
+sshfs
+btfs
+unionfs
+vdfuse
+wdfs
+bindfs
+ipfs
+-------------------------------------------------------                ENCRYPTION                 -----------------------------------------------------------
+keybase
+encfs
+gocryptfs
+qrencode
+-------------------------------------------------------                  VIEWERS                  -----------------------------------------------------------
+f3d
+feh
+sxiv
+-------------------------------------------------------                   DISKS                   -----------------------------------------------------------
+dfc
+dtrx
+clonezilla
+smartctl
+udisk2          - udiskctl
+udevil
+-------------------------------------------------------                 EMULATION                 -----------------------------------------------------------
+qemu
+kvm

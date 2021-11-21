@@ -116,7 +116,6 @@ require('packer').startup(
                 'hrsh7th/cmp-nvim-lsp',
                 'hrsh7th/cmp-buffer',
                 'hrsh7th/cmp-path',
-                'ray-x/lsp_signature.nvim',
                 {'dcampos/cmp-snippy', requires = { 'dcampos/nvim-snippy'}},
                 -- {'tzachar/cmp-tabnine', run = './install.sh'},
             },
@@ -258,7 +257,7 @@ require('packer').startup(
             end
         }
         use {
-            'yamatsum/nvim-web-nonicons',
+            'yamatsum/nvim-nonicons',
             requires = {'kyazdani42/nvim-web-devicons'}
         }
         -- disabling the cursor-line/column in unused win/buffer

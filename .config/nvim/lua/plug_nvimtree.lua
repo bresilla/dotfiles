@@ -56,7 +56,7 @@ require'nvim-tree'.setup {
     enable      = true,
     update_cwd  = true,
     ignore_list = {
-        '.git', 
+        '.git',
         'node_modules',
         '.cache',
     }
@@ -70,9 +70,10 @@ require'nvim-tree'.setup {
     side = 'left',
     auto_resize = false,
     mappings = {
-      custom_only = false,
+      custom_only = true,
       list = {
         { key =  "<CR>",     cb = [[ :lua tree_comm('edit')<CR> ]] },
+        { key = "<M-n>",     cb = [[ :lua tree_comm('create')<CR> ]] },
         { key = "<M-v>",     cb = [[ :lua tree_comm('vsplit')<CR> ]] },
         { key = "<M-x>",     cb = [[ :lua tree_comm('split')<CR> ]] },
         { key = "<M-t>",     cb = [[ :lua tree_comm('tabnew')<CR> ]] },

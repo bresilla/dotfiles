@@ -110,6 +110,10 @@
                 <box class="buttons buttons_top vpn" orientation="h" halign="center">
                     <button class="{{vpn}}" onclick="~/.config/eww/scripts/sysWireguard --toggle">VPN</button>
                 </box>
+                <box class="buttons buttons_top wur" orientation="h" halign="center">
+                    <button class="{{forty}}" onclick="~/.config/eww/scripts/sysForty --toggle">WUR</button>
+                </box>
+
             </box>
 
         </def>
@@ -158,6 +162,7 @@
         <script-var name="ufw" interval="2s">~/.config/eww/scripts/sysUfw</script-var>
         <script-var name="hotspot" interval="2s">~/.config/eww/scripts/sysHotspot</script-var>
         <script-var name="vpn" interval="2s">~/.config/eww/scripts/sysWireguard</script-var>
+        <script-var name="forty" interval="2s">~/.config/eww/scripts/sysForty</script-var>
     </variables>
 
     <windows>
