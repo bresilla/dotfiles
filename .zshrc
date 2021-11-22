@@ -169,6 +169,10 @@ eval "$(atuin init zsh)"
 ###COD
 source <(cod init $$ zsh)
 
+
+###NOSTROMO
+eval "$(nostromo completion)"
+
 ###SSH&GPG
 export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -258,4 +262,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-

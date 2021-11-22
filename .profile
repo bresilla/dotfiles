@@ -113,5 +113,6 @@ export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+export NOSTROMO_HOME=/home/bresilla/.config/nostromo
 
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp

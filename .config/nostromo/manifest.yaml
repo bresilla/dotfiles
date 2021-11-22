@@ -1,0 +1,30 @@
+version: 0.7.7
+config:
+  verbose: false
+  aliasesonly: false
+  mode: 0
+commands:
+  foxy:
+    keypath: foxy
+    name: lxc exec foxy -- sudo --user ubuntu --login
+    alias: foxy
+    aliasonly: false
+    description: ""
+    commands: {}
+    subs: {}
+    code:
+      language: ""
+      snippet: ""
+    mode: 0
+  melo:
+    keypath: melo
+    name: lxc exec melo -- sudo --user ubuntu --login
+    alias: melo
+    aliasonly: false
+    description: ""
+    commands: {}
+    subs: {}
+    code:
+      language: ""
+      snippet: ""
+    mode: 0

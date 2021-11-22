@@ -1,3 +1,4 @@
 TASKRC override: /home/bresilla/.config/task/taskrc
 TASKDATA override: /home/bresilla/.local/share/task
 No matches.
+Recently upgraded to 2.6.0. Please run 'task news' to read higlights about the new release.

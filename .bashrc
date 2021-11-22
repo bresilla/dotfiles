@@ -16,3 +16,7 @@ HISTFILE=~/.config/bash_history
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
 # source ~/.config/promptline
+
+# nostromo [section begin]
+eval "$(nostromo completion)"
+# nostromo [section end]

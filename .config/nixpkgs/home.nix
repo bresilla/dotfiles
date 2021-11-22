@@ -99,22 +99,22 @@ in {
       };
     };
 
-    services.hotspot = {
-      Unit = {
-        Description = "Hotspot daemon";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStartPre = "/bin/sleep 2";
-        ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/hotspot wlp2s0 wlp2s0 matrix algorithm";
-        ExecStop = "/usr/bin/doas rm /tmp/hotspot.all.lock";
-        Restart = "on-failure";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+    # services.hotspot = {
+    #   Unit = {
+    #     Description = "Hotspot daemon";
+    #     After = ["graphical.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStartPre = "/bin/sleep 2";
+    #     ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/hotspot wlp2s0 wlp2s0 matrix algorithm";
+    #     ExecStop = "/usr/bin/doas rm /tmp/hotspot.all.lock";
+    #     Restart = "on-failure";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     # services.clight = {
     #   Unit = {
     #     Description = "Screen light,gama,dpms... manager";

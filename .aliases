@@ -24,6 +24,8 @@ alias portmon='doas lsof -Pnl -i4'
 alias openports='doas netstat -tulpn'
 alias wifis='nmcli -t -f ssid dev wifi'
 alias ip='ip -c'
+alias ins='doas innernet-server'
+alias sshm='doas manssh -f /etc/ssh/ssh_config'
 
 ##ALTERNATIVES
 alias vim='nvim'
@@ -39,6 +41,9 @@ alias box='blindspot'
 alias pack='unset GOPATH; unset GOBIN && paru'
 alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
 alias branch='doas pacman-mirrors --api -S'
+
+##shell
+alias aly='nostromo'
 
 ##SYSTEM
 alias path='echo "${PATH//:/\n}"'

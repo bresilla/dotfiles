@@ -40,11 +40,13 @@ ipinfo                      + info about public IP                              
 torrent                     + torrent client package and utilities                            + https://github.com/anacrolix/torrent                  + go
 imdl                        + torrent metadata and utilities                                  + https://github.com/casey/intermodal                   + rust
 mole                        + cli app to create ssh tunnels                                   + https://github.com/davrodpin/mole                     + go
+manssh                      + manage ssh configurations                                       + https://github.com/xwjdsh/manssh                      + go
 rclone                      + rsync for cloud storage                                         + https://github.com/rclone/rclone                      + go
 gotty                       + share CLI as a web application                                  + https://github.com/yudai/gotty                        + go
 tunnelto                    + expose local web-server to internet                             + https://github.com/agrinman/tunnelto                  + go
 mtr                         + 'traceroute' and 'ping' combines                                + https://github.com/traviscross/mtr                    + cpp
-innernet                    + private network system                                          + https://github.com/tonarino/innernet                  + rust
+innernet                    + private network system based on WireGuard                       + https://github.com/tonarino/innernet                  + rust
+netmaker                    + make private networks with WireGuard                            + https://github.com/gravitl/netmaker                   + go
 hostapd
 dnsmasq
 traceroute
@@ -59,10 +61,11 @@ bookmark                    + terminal bookmark manager                         
 -------------------------------------------------------                 SHELL                     -----------------------------------------------------------
 atuin                       + Magical shell history                                           + https://github.com/ellie/atuin                        + rust
 pet                         + CLI Snippet Manager                                             + https://github.com/knqyf263/pet                       + go
-mn      - tealdeer          + faster TLDR/MAN                                                 + https://github.com/dbrgn/tealdeer                     + rust
+mn       - tealdeer         + faster TLDR/MAN                                                 + https://github.com/dbrgn/tealdeer                     + rust
 cod                         + a completion daemon for bash/zsh                                + https://github.com/dim-an/cod                         + go
+nostromo - aly              + CLI for building powerful aliases                               + https://github.com/pokanop/nostromo                   + go
 navi                        + interactive cheatsheet tool                                     + https://github.com/denisidoro/navi                    + rust
-z       - zoxide            + faster way to navigate filesystem                               + https://github.com/ajeetdsouza/zoxide                 + rust
+z        - zoxide           + faster way to navigate filesystem                               + https://github.com/ajeetdsouza/zoxide                 + rust
 rng                         + stream range of input to stdout                                 + https://github.com/nickolasburr/rng                   + cpp
 -------------------------------------------------------                 COLOR                     -----------------------------------------------------------
 pastel                      + convert and manipulate colors                                   + https://github.com/sharkdp/pastel                     + rust
@@ -169,6 +172,7 @@ todo    - taskwarrior-tui   + TUI for taskwarrior                               
 dijo                        + scriptable digital habit tracker                                + https://github.com/NerdyPepper/dijo                   + rust
 -------------------------------------------------------                  MAIL                     ----------------------------------------------------------
 meli                        + experimental tui mail client                                    + https://github.com/meli/meli                          + rust
+himalaya                    + command-line interface for email management                     + https://github.com/soywod/himalaya                    + rust
 -------------------------------------------------------                 IMAGE                     -----------------------------------------------------------
 imagemagick                 + swissarmy knife of image editor                                 + https://github.com/ImageMagick/ImageMagick            + cpp
 gmic                        + imag processng and manipulation                                 + https://github.com/dtschump/gmic                      + cpp
@@ -238,18 +242,6 @@ debootstrap
 debtap
 -------------------------------------------------------                  OTHER                    -----------------------------------------------------------
 eva                         + a calculator REPL, similar to bc                                + https://github.com/NerdyPepper/eva                    + rust
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------                NETWORK                    -----------------------------------------------------------
-hostapd
-dnsmasq
-traceroute
-ufw
-tor
 -------------------------------------------------------                  USB                      -----------------------------------------------------------
 usbip
 usbredir
@@ -293,3 +285,6 @@ udevil
 -------------------------------------------------------                 EMULATION                 -----------------------------------------------------------
 qemu
 kvm
+-------------------------------------------------------                   CAN                     -----------------------------------------------------------
+cannellon                   + a SocketCAN over Ethernet tunnel                                + https://github.com/mguentner/cannelloni               + cpp
+can-utils                   + Linux userspace SocketCAN                                       + https://github.com/linux-can/can-utils                + cpp
