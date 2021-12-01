@@ -28,3 +28,15 @@ commands:
       language: ""
       snippet: ""
     mode: 0
+  wolf:
+    keypath: wolf
+    name: lxc exec wolf -- sudo --user ubuntu --login
+    alias: wolf
+    aliasonly: false
+    description: ""
+    commands: {}
+    subs: {}
+    code:
+      language: ""
+      snippet: ""
+    mode: 0

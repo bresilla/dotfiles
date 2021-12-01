@@ -20,6 +20,7 @@ hck     - tuc               + a sharp cut clone                                 
 yay                         + yet another AUR helper                                          + https://github.com/Jguer/yay                          + go
 pack    - paru              + featured packed AUR helper                                      + https://github.com/morganamilo/paru                   + rust
 box     - blindspot         + binary app manager                                              + https://github.com/xermicus/blindspot                 + rust
+debtap
 -------------------------------------------------------                SYSTEM                     -----------------------------------------------------------
 alt                         + binary version/path manager                                     + https://github.com/dotboris/alt                       + rust
 handlr                      + better xdg-utils                                                + https://github.com/chmln/handlr                       + rust
@@ -37,6 +38,7 @@ watcher                     + watch files or directory changes                  
 ari     - aria2             + swissarmy knife of downloaders                                  + https://github.com/aria2/aria2                        + cpp
 band    - bandwhitch        + bandwidth utilization                                           + https://github.com/imsnif/bandwhich                   + rust
 ipinfo                      + info about public IP                                            + https://github.com/Surendrajat/IPinfo                 + go
+subnetcalc                  + ip adress calculator                                            + https://github.com/dreibh/subnetcalc                  + cpp
 torrent                     + torrent client package and utilities                            + https://github.com/anacrolix/torrent                  + go
 imdl                        + torrent metadata and utilities                                  + https://github.com/casey/intermodal                   + rust
 mole                        + cli app to create ssh tunnels                                   + https://github.com/davrodpin/mole                     + go
@@ -55,7 +57,6 @@ tor
 ------------------------------------------------------                  ADBLOCK               --------------------------------------------------------------
 maza                        + local ad blocker, like Pi-hole                                  + https://github.com/tanrax/maza-ad-blocking            + bash
 hblock                      + hosts adblocker                                                 + https://github.com/hectorm/hblock                     + bash
-
 -------------------------------------------------------                BROWSER                    -----------------------------------------------------------
 bookmark                    + terminal bookmark manager                                       + https://github.com/Szymongib/bookmark                 + rust
 -------------------------------------------------------                 SHELL                     -----------------------------------------------------------
@@ -77,7 +78,6 @@ zenith                      + htop but with zoom-able charts                    
 ps      - procs             + a replacement for ps                                            + https://github.com/dalance/procs                      + rust
 pd                          + view process details                                            + https://github.com/wyhaya/pd                          + rust
 inxi                        + all-n-one system info                                           + https://github.com/smxi/inxi                          + perl
-battop                      + Interactive batteriy monitor                                    + https://github.com/svartalf/rust-battop               + rust
 nvtop                       + nvidia gpu terminal monitor                                     + https://github.com/Syllo/nvtop                        + cpp
 -------------------------------------------------------                 UTILS                     -----------------------------------------------------------
 grex                        + generae regex from user cases                                   + https://github.com/pemistahl/grex                     + rust
@@ -203,7 +203,8 @@ stego                       + stegonographic swiss army knife                   
 alacritty                   + GPU-accelerated terminal emulator                               + https://github.com/alacritty/alacritty                + rust
 kitty                       + GPU based terminal emulator                                     + https://github.com/kovidgoyal/kitty                   + cpp
 tab                         + terminal multiplexer                                            + https://github.com/austinjones/tab-rs                 + rust
-rargs                       + xargs terminal laternative                                      + https://github.com/lotabout/rargs                     + rust
+rargs                       + xargs + awk with pattern matching                               + https://github.com/lotabout/rargs                     + rust
+gargs                       + better(?) alternative to xargs                                  + https://github.com/brentp/gargs                       + go
 tmux                        + THE terminal multiplexer                                        + https://github.com/tmux/tmux                          + cpp
 textimg                     + command colors to image                                         + https://github.com/jiro4989/textimg                   + go
 menyoki                     + ImageOps on the command line                                    + https://github.com/orhun/menyoki                      + rust
@@ -238,15 +239,12 @@ firejail
 fakeroot
 fakechroot
 schroot
-debootstrap
-debtap
--------------------------------------------------------                  OTHER                    -----------------------------------------------------------
-eva                         + a calculator REPL, similar to bc                                + https://github.com/NerdyPepper/eva                    + rust
 -------------------------------------------------------                  USB                      -----------------------------------------------------------
 usbip
 usbredir
 -------------------------------------------------------                CONTAINER                  -----------------------------------------------------------
 docker
+podman
 lxd
 wine
 -------------------------------------------------------                 EDITORS                   -----------------------------------------------------------
@@ -277,14 +275,19 @@ feh
 sxiv
 -------------------------------------------------------                   DISKS                   -----------------------------------------------------------
 dfc
-dtrx
-clonezilla
+partclone                   + backup and restore partitions                                   + https://github.com/Thomas-Tsai/partclone              + cpp
 smartctl
-udisk2          - udiskctl
-udevil
+nvme-ctl
+btrfs-progs
 -------------------------------------------------------                 EMULATION                 -----------------------------------------------------------
 qemu
 kvm
 -------------------------------------------------------                   CAN                     -----------------------------------------------------------
 cannellon                   + a SocketCAN over Ethernet tunnel                                + https://github.com/mguentner/cannelloni               + cpp
 can-utils                   + Linux userspace SocketCAN                                       + https://github.com/linux-can/can-utils                + cpp
+-------------------------------------------------------                   POWER                   -----------------------------------------------------------
+tlp                         + battery optimisation                                            + https://github.com/linrunner/TLP                      + bash
+powertop                    + power consumotion diagnosis                                     + https://github.com/fenrus75/powertop                  + cpp
+battop                      + Interactive batteriy monitor                                    + https://github.com/svartalf/rust-battop               + rust
+-------------------------------------------------------                  OTHER                    -----------------------------------------------------------
+eva                         + a calculator REPL, similar to bc                                + https://github.com/NerdyPepper/eva                    + rust

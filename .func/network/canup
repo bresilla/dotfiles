@@ -8,3 +8,6 @@ ip link add name vcan0 type vcan
 ip link set vcan0 mtu 72
 # Bring the virutal CAN interface online
 ip link set dev vcan0 up
+
+# CAN over ETHERNET
+#cannelloni -I vcan0 -R 10.60.0.1 -r 20000 -l 20000

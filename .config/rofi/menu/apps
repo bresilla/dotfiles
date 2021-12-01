@@ -10,7 +10,6 @@ manp=manpage
 sysd=systemd
 path=syspath
 font=sysfonts
-usem=appsyst
 conf=configs
 
 another=$(echo "$apps
@@ -20,8 +19,7 @@ $sysd
 $manp
 $path
 $font
-$conf
-$usem" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
+$conf" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
 if [ "$another" == "$apps" ] ; then
 	rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4
@@ -45,13 +43,6 @@ elif [ "$another" == "$sysd" ] ; then
 
 elif [ "$another" == "$sodo" ] ; then
 	SUDO_ASKPASS=/home/bresilla/dots/.func/wm/askpass rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4 -theme-str "*{accent: #e53714;}" -run-command 'sudo -A {cmd}'
-
-elif [ "$another" == "$usem" ] ; then
-    appname=$(cat /home/bresilla/.config/appsyst |  grep "\S" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'apps:')
-    thelink=$(echo $appname | cut -d'+' -f3 | tr -d ' ')
-    [[ ! -n $appname ]] && exit
-    regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
-    [[ $thelink =~ $regex ]]&& $BROWSER $thelink || $edit_with -e nvim ~/.config/appsyst
 
 elif [ "$another" == "$exce" ] ; then
 	exec urxvt -hold -e sh -c $(rofi -theme $HOME/.config/rofi/rofi_bar -m 0 -width 1500 -fuzzy  -lines 0 -show run -theme-str "*{accent: $FOREGROUND;}")

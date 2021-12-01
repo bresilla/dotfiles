@@ -98,6 +98,21 @@ in {
         WantedBy = ["default.target"];
       };
     };
+    services.cannelloni = {
+      Unit = {
+        Description = "Send VCAN thorugh VPN";
+        After = ["network.target"];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "/usr/bin/cannelloni -I vcan0 -R 10.60.0.1 -r 20000 -l 20000";
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+    };
+
+
 
     # services.hotspot = {
     #   Unit = {
