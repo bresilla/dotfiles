@@ -1,18 +1,18 @@
-super + alt + d
+super + mod1 + d
     /home/bresilla/.config/rofi/menu/data
-super + alt + a
+super + mod1 + a
     /home/bresilla/.config/rofi/menu/apps
-super + alt + b
+super + mod1 + b
     /home/bresilla/.config/rofi/menu/BROWSE
-super + alt + p
+super + mod1 + p
     /home/bresilla/.config/rofi/menu/power
-super + alt + c
+super + mod1 + c
     /home/bresilla/.config/rofi/menu/CONFIG
-super + alt + s
+super + mod1 + s
     /home/bresilla/.config/rofi/menu/screens
 
-super + alt + space; {space, Return}
-    {kitty --class=kittyled, alacritty -e tmux}
+super + mod1 + space; {space, Return}
+{kitty --class=kittyled, alacritty -e tmux}
 
 {Insert, @Insert}
     /home/bresilla/.config/sxhkd/scripts/eww {--open, --close}
@@ -20,61 +20,54 @@ super + Insert
     /home/bresilla/.config/sxhkd/scripts/eww --open
 
 Print; {Print,Insert}
-    /home/bresilla/dots/.func/wm/sshoot {--flame, --maim}
+    /env/fun/wm/sshoot {--flame, --maim}
 XF86Search; {XF86Search, c}
     {pkill slop; slop -r boxzoom, /home/bresilla/dots/.func/wm/colorpicker}
 
 
-{super,alt} + Escape
+{super,mod1} + Escape
     bspc node -{c,k}
-{super, alt, mode_switch} + Delete
+{super, mod1, mode_switch} + Delete
     {lule create -- set, lule create -- set, /home/bresilla/.startup}
 
-alt + space
-    /home/bresilla/dots/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1050 -m -n
-mode_switch + space
-    /home/bresilla/dots/.func/wm/scratch --term=kitty --class=NOTE --width=3500 --height=1900 -m -n
+mod1 + space
+    /env/dot/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1050 -m -n
+mod2 + space
+    /env/dot/.func/wm/scratch --term=kitty --class=NOTE --width=3500 --height=1900 -m -n
 
 
-super + alt + {Left,Right}
+super + mod1 + {Left,Right}
     bspc desktop -f {prev,next}.local
-super + alt + {Down,Up}
+super + mod1 + {Down,Up}
     bspc monitor -f {prev,next}
-{super,alt} + {Left,Down,Up,Right}
+{super,mod1} + {Left,Down,Up,Right}
     /home/bresilla/.config/bspwm/scripts/{focus,move} {west,south,north,east}
-{super,alt} + @button{6,5,4,7}
+{super,mod1} + @button{6,5,4,7}
     /home/bresilla/.config/bspwm/scripts/{focus,move} {west,south,north,east}
-{_, ctrl, shift} + {super+alt} + @button{6,5,4,7}
+{_, ctrl, shift} + {super+mod1} + @button{6,5,4,7}
     /home/bresilla/.config/bspwm/scripts/resize {b,s,s} {Left,Down,Up,Right}
-{super+alt} + shift + {Left,Right}
+{super+mod1} + shift + {Left,Right}
     bspc node -d {prev,next} --follow
-{super+alt} + shift + {Down,Up}
+{super+mod1} + shift + {Down,Up}
     bspc node -m {prev,next} --follow
 
-super + alt + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
+super + mod1 + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
     bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
 
 super + {w,f,t,s}
     bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
 
-super + @p
-    /home/bresilla/dots/.func/wm/youtube_play
-
-XF86Audio{Prev,Next,Play}
-    playerctl {previous,next,play-pause}
-XF86Audio{Raise,Lower}Volume
-    pulsemixer --change-volume {+,-}2; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
-XF86AudioMute
-    pulsemixer --toggle-mute; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
-XF86MonBrightness{Up,Down}
-    light -{A,U} 2; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
-super + XF86MonBrightness{Up,Down}
-    pulsemixer --change-volume {+,-}2; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
+super + {F4, mod1 + F4}
+    playerctl {next,pause}
+super + {F3, F2, F1}
+    pamixer -{i,d,t} 2 #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
+super + {F7, F6}
+    light -{A,U} 2 #; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
 
 
-ctrl + super + alt + {space,Left,Right,Return}
+ctrl + super + mod1 + {space,Left,Right,Return}
     /home/bresilla/.config/sxhkd/scripts/mpv {cycle,backwards,forewards,hide}
-alt+super + XF86AudioPlay
+mod1+super + XF86AudioPlay
     play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
-alt+super + XF86AudioMute
+mod1+super + XF86AudioMute
     pactl set-sink-port 0 analog-output-headphones

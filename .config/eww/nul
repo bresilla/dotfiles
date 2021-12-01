@@ -1,3 +1,1 @@
-TASKRC override: /home/bresilla/.config/task/taskrc
-TASKDATA override: /home/bresilla/.local/share/task
-No matches.
+/bin/sh: line 1: task: command not found

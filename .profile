@@ -13,7 +13,7 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 #USER_BIN
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
-[[ -d $DOTS/.func ]] && for file in $DOTS/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
+[[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
 #NVIDIA
 [[ -d "/usr/local/cuda" ]] && PATH="/usr/local/cuda/bin:$PATH" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
@@ -41,7 +41,7 @@ export NIXPKGS_ALLOW_UNFREE=1
 FLATPAK_ENABLE_SDK_EXT=rust-nightly
 
 #SECRETS
-[[ -e "/home/bresilla/sets/variables" ]] && source /home/bresilla/sets/variables
+[[ -e "/env/set/variables" ]] && source /env/set/variables
 
 #ALT
 export PATH="$HOME/.local/alt/shims:$PATH"
@@ -57,8 +57,7 @@ export LC_ALL="en_US.UTF-8"
 export SSH_AGENT_PID=""
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export GPG_TTY=$(tty)
-export MONITOR1=eDP-1
-export MONITOR2=DP-1
+export MONITOR1=eDP1
 
 export CONDA_HOME="/env/conda"
 export CARGO_HOME="/env/cargo"
@@ -76,8 +75,8 @@ export VIM="/usr/share/nvim/"
 export PASTEL_COLOR_MODE=24bit
 export COLORTERM=truecolor
 export BAT_THEME="TwoDark"
-export LULE_W="/home/bresilla/sets/.wallpaper"
-export LULE_S="/home/bresilla/dots/.func/wm/lule_colors"
+export LULE_W="/env/set/.wallpaper"
+export LULE_S="/env/fun/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
 
 export SCREENSHOT_FILE="/tmp/screenshot_file"

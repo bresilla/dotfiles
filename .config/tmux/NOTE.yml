@@ -20,7 +20,7 @@ windows:
   layout: 32d0,310x66,0,0{183x66,0,0,4,126x66,184,0[126x29,184,0,6,126x36,184,30,5]}
   panes:
   - commands:
-    - ytop
+    - btm
     focus: true
     root: /home/bresilla
   - commands:

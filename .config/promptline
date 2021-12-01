@@ -15,7 +15,7 @@ fi
 space=" "
 
 function __cpustats() {
-    cpu=$(/env/cpp/bin/cpu-stat)
+    cpu=$(/env/bin/cpu-stat)
     cpu=${cpu%.*}
     printf $cpu
 }
@@ -299,7 +299,7 @@ function __tmuxline_right_prompt {
     gitroot=$(git -C $1 rev-parse --show-toplevel)
     if git ls-remote $gitroot -q ; then
         prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}";
-        printf "%s" "$prefix" "$(/env/go/bin/gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
+        printf "%s" "$prefix" "$(/env/bin/gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
     else
         prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; 
         printf "%s" "$prefix" "$(__promptline_cwd 2 right $1)" "$suffix"

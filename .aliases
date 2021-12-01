@@ -1,4 +1,4 @@
-##SUDO
+    ##SUDO
 alias virsh="doas virsh"
 alias virt-viewer="doas virt-viewer"
 # alias chroot="doas schroot"
@@ -38,7 +38,7 @@ alias key='xev -event keyboard'
 
 ##PACKAGE_MANAGER
 alias box='blindspot'
-alias pack='unset GOPATH; unset GOBIN && paru'
+alias pack='unset GOPATH; unset GOBIN && yay'
 alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
 alias branch='doas pacman-mirrors --api -S'
 

@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 #--------------------------------------------------------------------------------------------------------------------
-###WAL COLORS
-(cat ~/.cache/wal/sequences &)
-source ~/.cache/wal/colors.sh
-
-#--------------------------------------------------------------------------------------------------------------------
 ###ALIASES
 [ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done
 ###PROFILE
@@ -16,7 +11,3 @@ HISTFILE=~/.config/bash_history
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
 # source ~/.config/promptline
-
-# nostromo [section begin]
-eval "$(nostromo completion)"
-# nostromo [section end]
