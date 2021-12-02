@@ -130,6 +130,12 @@ bindkey -M vicmd '^k' run_killer
 bindkey -M viins '^k' run_killer
 bindkey '^k' run_killer
 
+###SYSZ
+function run_sysz(){ sysz; zle reset-prompt; zle redisplay; }
+zle -N run_sysz
+bindkey -M vicmd '^p' run_sysz
+bindkey -M viins '^p' run_sysz
+bindkey '^p' run_sysz
 
 #--------------------------------------------------------------------------------------------------------------------
 # CTRL-Z starts previously suspended process.
@@ -243,22 +249,3 @@ done
 #TAB-RS (shotrcut: Ctrl + e)
 [[ -n $TAB ]] && [ -f ~/data/docs/BRAND/logo/ascii ] && ~/dots/.func/system/bresilla
 bindkey -s '^A' ' tab\n'
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-
-
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/env/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/env/conda/etc/profile.d/conda.sh" ]; then
-        . "/env/conda/etc/profile.d/conda.sh"
-    else
-        export PATH="/env/conda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<

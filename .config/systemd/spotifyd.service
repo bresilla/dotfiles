@@ -1,0 +1,12 @@
+[Unit]
+Description="A spotify playing daemon"
+Documentation="https://github.com/Spotifyd/spotifyd"
+Wants=sound.target
+After=network-online.target
+
+[Service]
+ExecStart=/env/bin/spotifyd --no-daemon --config-path /home/bresilla/.config/spotifyd/spotifyd.conf --onevent /home/bresilla/.config/spotifyd/onevent.sh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

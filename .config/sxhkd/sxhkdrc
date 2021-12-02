@@ -12,7 +12,7 @@ super + mod1 + s
     /home/bresilla/.config/rofi/menu/screens
 
 super + mod1 + space; {space, Return}
-{kitty --class=kittyled, alacritty -e tmux}
+    {kitty --class=kittyled, alacritty -e tmux}
 
 {Insert, @Insert}
     /home/bresilla/.config/sxhkd/scripts/eww {--open, --close}
@@ -27,7 +27,7 @@ XF86Search; {XF86Search, c}
 
 {super,mod1} + Escape
     bspc node -{c,k}
-{super, mod1, mode_switch} + Delete
+{super, mod1, mod2} + Delete
     {lule create -- set, lule create -- set, /home/bresilla/.startup}
 
 mod1 + space
@@ -55,7 +55,7 @@ super + mod1 + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
     bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
 
 super + {w,f,t,s}
-    bspc node {-t floating,-t fullscreen,-t tiled,-g sticky}
+    bspc node {-t '~floating',-t '~fullscreen',-t '~tiled',-g sticky}
 
 super + {F4, mod1 + F4}
     playerctl {next,pause}

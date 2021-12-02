@@ -135,7 +135,7 @@ echo $_arg_height
 term=${_arg_term:-kitty}
 name=${_arg_class:-MAIN}
 
-[[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP-1
+[[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP1
 
 mon=$(bspc query --names --monitors --monitor)
 des=$(bspc query --names --desktops --desktop)
@@ -152,7 +152,7 @@ yoffset=${_arg_yoffset:-$(($m_heigh / 2 - $heigh / 2 ))}
 
 
 if [[ -z $win ]]; then
-    /env/cpp/bin/tmass -l /home/bresilla/.config/tmux load $name 2> /dev/null
+    /env/bin/tmass -l /home/bresilla/.config/tmux load $name 2> /dev/null
     # [[ $name == "MAIN" ]] && width=3000 heigh=1050
     # [[ $name == "NOTE" ]] && width=3500 heigh=1900
     $term --name=$name sh -c "tmux attach -t $name" &

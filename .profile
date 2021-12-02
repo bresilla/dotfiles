@@ -7,35 +7,26 @@ export DOWN=$HOME/down
 export SYNC=$HOME/sync
 export TEMP=/tmp
 
-#PKGCONFIGS
-export PKG_CONFIG_PATH=/usr/lib/pkgconfig
-
-#USER_BIN
+#USER BINARIES AND SCRIPTS
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
+[[ -d "/env/bin" ]] && PATH="/env/bin:$PATH"
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
+
+#NIX
+export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
+[[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
+export NIXPKGS_ALLOW_UNFREE=1
+
+#MAMBA and/or CONDA
+export CONDA_HOME="/con"
+# [[ -f "/con/etc/profile.d/conda.sh" ]]  && . "/con/etc/profile.d/conda.sh"
+[[ -f "/con/etc/profile.d/mamba.sh" ]]  && . "/con/etc/profile.d/mamba.sh"
 
 #NVIDIA
 [[ -d "/usr/local/cuda" ]] && PATH="/usr/local/cuda/bin:$PATH" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 [[ -d "/opt/cuda" ]] && PATH="/opt/cuda/bin:$PATH" LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
 
-#CPP
-[[ -d "/env/cpp/bin" ]] && PATH="/env/cpp/bin:$PATH"
-#GO
-[[ -d "/env/go/bin" ]] && PATH="/env/go/bin:$PATH"
-#RUST
-[[ -d "/env/cargo/bin" ]] && PATH="/env/cargo/bin:$PATH"
-#NIM
-[[ -d "/env/nimble/bin" ]] && PATH="/env/nimble/bin:$PATH"
-
-#BLINDSPOT
-[[ -d "/env/bin" ]] && PATH="/env/bin:$PATH"
-
-#NIX
-# if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
-[[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
-export NIXPKGS_ALLOW_UNFREE=1
 
 #FLATPAK
 FLATPAK_ENABLE_SDK_EXT=rust-nightly
@@ -46,6 +37,9 @@ FLATPAK_ENABLE_SDK_EXT=rust-nightly
 #ALT
 export PATH="$HOME/.local/alt/shims:$PATH"
 
+
+#PKGCONFIGS
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 
 export BROWSER=firefox
 export EDITOR=nvim
@@ -59,11 +53,10 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export GPG_TTY=$(tty)
 export MONITOR1=eDP1
 
-export CONDA_HOME="/env/conda"
-export CARGO_HOME="/env/cargo"
-export RUSTUP_HOME="/opt/rustup"
-export NIMBLE_DIR="/env/nimble"
-export GOPATH="/env/go"
+export CARGO_HOME="/var/cargo"
+export RUSTUP_HOME="/var/rust"
+export NIMBLE_DIR="/var/nimble"
+export GOPATH="/var/go"
 export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
 export DIRENV_WARN_TIMEOUT=1h
@@ -88,6 +81,7 @@ export WORDLIST="$HOME/.config/dict/wordlist.txt"
 export ADJECTIVELIST="$HOME/.config/dict/adjective.txt"
 export NOUNLIST="$HOME/.config/dict/noun.txt"
 export FANCY=$(printf "%s" $(shuf -n1 $ADJECTIVELIST) "_" $(shuf -n1 $NOUNLIST))
+export RANDOM_NAME=$FANCY
 
 export WINEPREFIX=/var/lib/wine
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
@@ -112,6 +106,6 @@ export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
-export NOSTROMO_HOME=/home/bresilla/.config/nostromo
+export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
