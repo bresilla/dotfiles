@@ -249,3 +249,5 @@ done
 #TAB-RS (shotrcut: Ctrl + e)
 [[ -n $TAB ]] && [ -f ~/data/docs/BRAND/logo/ascii ] && ~/dots/.func/system/bresilla
 bindkey -s '^A' ' tab\n'
+
+#--------------------------------------------------------------------------------------------------------------------

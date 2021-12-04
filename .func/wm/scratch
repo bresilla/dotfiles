@@ -129,11 +129,9 @@ else
     parse_command $@
 fi
 
-echo $_arg_width
-echo $_arg_height
-
 term=${_arg_term:-kitty}
 name=${_arg_class:-MAIN}
+iter=0
 
 [[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP1
 
@@ -153,9 +151,9 @@ yoffset=${_arg_yoffset:-$(($m_heigh / 2 - $heigh / 2 ))}
 
 if [[ -z $win ]]; then
     /env/bin/tmass -l /home/bresilla/.config/tmux load $name 2> /dev/null
-    # [[ $name == "MAIN" ]] && width=3000 heigh=1050
-    # [[ $name == "NOTE" ]] && width=3500 heigh=1900
     $term --name=$name sh -c "tmux attach -t $name" &
+    sleep 0.2
+    win=$(xdotool search -classname $name)
     xdotool windowmap "$win" windowmove "$win" "$(( $xoffset + $x_pos))" "$(( $yoffset + $y_pos ))" windowsize "$win" "$width" "$heigh" 2> /dev/null
 fi
 

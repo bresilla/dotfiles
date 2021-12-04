@@ -2,13 +2,13 @@
 source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
-NOTE=$(/env/go/bin/dnote view | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'notes: ' | awk '{print $2}');
+NOTE=$(/env/bin/dnote view | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'notes: ' | awk '{print $2}');
 [[ -z $NOTE ]] && exit 1
-PAGE=$(/env/go/bin/dnote view $NOTE | tail -n+2 | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'pages: ' | awk '{print $1}' | cut -d "(" -f2 | cut -d ")" -f1);
+PAGE=$(/env/bin/dnote view $NOTE | tail -n+2 | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'pages: ' | awk '{print $1}' | cut -d "(" -f2 | cut -d ")" -f1);
 if [[ -z $PAGE ]]; then
     exit 1
 elif (( $PAGE > 0 )); then
-    kitty -e /env/go/bin/dnote edit $NOTE $PAGE
+    kitty -e /env/bin/dnote edit $NOTE $PAGE
 else
-    kitty -e /env/go/bin/dnote add $NOTE
+    kitty -e /env/bin/dnote add $NOTE
 fi

@@ -32,7 +32,6 @@ alias vim='nvim'
 alias mut='neomutt'
 
 ##WINDOW_MANAGER
-alias win='xprop'
 alias key='xev -event keyboard'
 
 

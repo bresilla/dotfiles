@@ -69,7 +69,7 @@ export PASTEL_COLOR_MODE=24bit
 export COLORTERM=truecolor
 export BAT_THEME="TwoDark"
 export LULE_W="/env/set/.wallpaper"
-export LULE_S="/env/fun/wm/lule_colors"
+export LULE_S="/env/dot/.func/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
 
 export SCREENSHOT_FILE="/tmp/screenshot_file"

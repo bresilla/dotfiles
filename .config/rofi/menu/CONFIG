@@ -9,48 +9,48 @@ ROFMENU
 PROFILE" | awk '{print $(NF-1)}' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "CONFIGS: ")
 
 browse(){
-	if [[ "$2" == "$1" ]]; then
-	    selected=$(ls -A --group-directories-first "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
+    if [[ "$2" == "$1" ]]; then
+        selected=$(ls -A --group-directories-first "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
     else
-	    selected=$({ ls -A --group-directories-first "$1/" & echo ".."; } | cat | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
+        selected=$({ ls -A --group-directories-first "$1/" & echo ".."; } | cat | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$1: ")
     fi
 
-	[[ -z $selected ]] && exit
-	if [[ "$selected" == ".." ]]; then
+    [[ -z $selected ]] && exit
+    if [[ "$selected" == ".." ]]; then
         browse "$(dirname $1)" $2
-	elif [[ -f $1/$selected ]]; then
-		$edit_with -e nvim $1/$selected
-	elif [[ -d $1/$selected ]]; then
-		browse $1/$selected $2
-	else
-		touch $1/$selected
-		chmod +x $1/$selected
-		$edit_with -e nvim $1/$selected
-	fi
+    elif [[ -f $1/$selected ]]; then
+        $edit_with -e nvim $1/$selected
+    elif [[ -d $1/$selected ]]; then
+        browse $1/$selected $2
+    else
+        touch $1/$selected
+        chmod +x $1/$selected
+        $edit_with -e nvim $1/$selected
+    fi
 }
 
 if [ "$another" == "PROFILE" ] ; then
-	selected=$(echo "$HOME/dots/.zshrc
-$HOME/dots/.bashrc
-$HOME/dots/.profile
-$HOME/dots/.startup
-$HOME/dots/.aliases
-$HOME/dots/.other/variables
-$HOME/dots/.config/promptline
-$HOME/dots/.config/git/config
-$HOME/dots/.config/tmux/tmux.conf
-$HOME/dots/.config/nixpkgs/home.nix" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "shell: ")
+    selected=$(echo "/env/dot/.zshrc
+/env/dot/.bashrc
+/env/dot/.profile
+/env/dot/.startup
+/env/dot/.aliases
+/env/dot/.other/variables
+/env/dot/.config/promptline
+/env/dot/.config/git/config
+/env/dot/.config/tmux/tmux.conf
+/env/dot/.config/nixpkgs/home.nix" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "shell: ")
 [[ -z $selected ]] && exit
-	$edit_with -e nvim $selected
+    $edit_with -e nvim $selected
 
 elif [ "$another" == "CONFIGS" ] ; then
-	browse /home/bresilla/dots/.config /home/bresilla/dots/.config;
+    browse /env/dot/.config /env/dot/.config;
 
 elif [ "$another" == "SCRIPTS" ] ; then
-    browse /home/bresilla/dots/.func /home/bresilla/dots/.func;
+    browse /env/dot/.func /env/dot/.func;
 
 elif [ "$another" == "ROFMENU" ] ; then
-	browse /home/bresilla/dots/.config/rofi/menu /home/bresilla/dots/.config/rofi/menu;
+    browse /env/dot/.config/rofi/menu /env/dot/.config/rofi/menu;
 
 else
     echo $another

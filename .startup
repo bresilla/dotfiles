@@ -49,3 +49,7 @@ xset -r 49 &  #^
 #TMUX
 /env/bin/tmass -l /home/bresilla/.config/tmux load NOTE
 /env/bin/tmass -l /home/bresilla/.config/tmux load MAIN
+
+
+#SOUND
+#pactl set-card-profile alsa_card.pci-0000_00_1f.3 off && pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo

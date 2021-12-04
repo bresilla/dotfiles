@@ -42,7 +42,7 @@ elif [ "$another" == "$sysd" ] ; then
     exec /home/bresilla/.config/rofi/menu/systemd
 
 elif [ "$another" == "$sodo" ] ; then
-	SUDO_ASKPASS=/home/bresilla/dots/.func/wm/askpass rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4 -theme-str "*{accent: #e53714;}" -run-command 'sudo -A {cmd}'
+	SUDO_ASKPASS=/env/dot/.func/wm/askpass rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4 -theme-str "*{accent: #e53714;}" -run-command 'sudo -A {cmd}'
 
 elif [ "$another" == "$exce" ] ; then
 	exec urxvt -hold -e sh -c $(rofi -theme $HOME/.config/rofi/rofi_bar -m 0 -width 1500 -fuzzy  -lines 0 -show run -theme-str "*{accent: $FOREGROUND;}")

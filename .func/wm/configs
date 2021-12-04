@@ -1,5 +1,5 @@
 #!/bin/sh
 
-confile=$(find /env/dot/ -type f | fzf)
+confile=$(fd . /env/dot/ --hidden | fzf)
 
 nvim $confile

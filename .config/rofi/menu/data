@@ -11,7 +11,7 @@ pass=password
 clip=clipboard
 note=notes
 task=tasks
-usem=applist
+apps=applist
 book=books
 word=word
 
@@ -24,7 +24,7 @@ $cont
 $clip
 $task
 $proj
-$usem" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
+$apps" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
 if [ "$another" == "$file" ] ; then
     /home/bresilla/.config/rofi/menu/locate
@@ -47,20 +47,20 @@ elif [ "$another" == "$locl" ] ; then
 elif [ "$another" == "$clip" ] ; then
     rofi "${ROFI_OPTIONS[@]}" -modi "clipboard:greenclip print" -show clipboard
 
-elif [ "$another" == "$usem" ] ; then
+elif [ "$another" == "$apps" ] ; then
     appname=$(cat /home/bresilla/.config/applist |  grep "\S" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'apps:')
     thelink=$(echo $appname | cut -d'+' -f3 | tr -d ' ')
     [[ ! -n $appname ]] && exit
     regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
-    [[ $thelink =~ $regex ]]&& firefox $thelink || $edit_with -e nvim ~/.config/applist
+    [[ $thelink =~ $regex ]]&& org.mozilla.firefox $thelink || $edit_with -e nvim ~/.config/applist
 
 elif [ "$another" == "$cont" ] ; then
     exec /home/bresilla/.config/rofi/menu/contacts
 
 elif [ "$another" == "$proj" ] ; then
-    pather=$(/env/go/bin/proji ls | head -n-1 | tail -n+4 | cut -d "|" -f3-5 | tr "|" "\t" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'projects:' | cut -f2)
+    pather=$(/env/bin/proji ls | head -n-1 | tail -n+4 | cut -d "|" -f3-5 | tr "|" "\t" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'projects:' | cut -f2)
     nameer=$(basename $pather)
-    [[ $pather ]] && sed -e "s|.*root.*|    root: $pather|" -e "1cname: \"$nameer\"" /home/bresilla/.config/tmux/PRO.yml > /home/bresilla/.config/tmux/prot.yml && /env/cpp/bin/tmass -l /home/bresilla/.config/tmux load prot && kitty --class=til tmux attach -t $nameer
+    [[ $pather ]] && sed -e "s|.*root.*|    root: $pather|" -e "1cname: \"$nameer\"" /home/bresilla/.config/tmux/PRO.yml > /home/bresilla/.config/tmux/prot.yml && /env/bin/tmass -l /home/bresilla/.config/tmux load prot && kitty --class=til tmux attach -t $nameer
     # kitty --class=til tmux attach -t $nameer
 
 elif [ "$another" == "$pass" ] ; then

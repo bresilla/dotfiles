@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+
+mon=$(bspc query --names --monitors --monitor)
+des=$(bspc query --names --desktops --desktop)
+win=$(xdotool search --classname MAIN)
+[[ -z $win ]] && exit
+
+print $win
+
+# if [ "$1" == "cycle" ] ; then
+#     echo '{ "command": ["cycle", "pause"] }' | socat - /home/bresilla/.config/mpv/control
+# elif [ "$1" == "forewards" ] ; then
+#     echo '{ "command": ["seek", "10"] }' | socat - /home/bresilla/.config/mpv/control
+# elif [ "$1" == "backwards" ] ; then
+#     echo '{ "command": ["seek", "-10"] }' | socat - /home/bresilla/.config/mpv/control
+# elif [ "$1" == "hide" ] ; then
+#     if [[ -z "$(bspc query --desktop focused -T | grep mpv)" ]]; then
+#         bspc node $win --flag hidden=off
+#         bspc node $win --to-monitor $mon
+#         bspc node $wid --to-desktop $des
+#         echo '{ "command": ["set", "pause", "no"] }' | socat - /home/bresilla/.config/mpv/control
+#     else
+#         bspc node $win --flag hidden -f
+#         if [[ "$(bspc query --node $win --tree | jq -e '.hidden')" == "true" ]]; then
+#             echo '{ "command": ["set", "pause", "yes"] }' | socat - /home/bresilla/.config/mpv/control
+#         else
+#             echo '{ "command": ["set", "pause", "no"] }' | socat - /home/bresilla/.config/mpv/control
+#         fi
+#     fi
+# else
+#     echo "WROONG"
+# fi

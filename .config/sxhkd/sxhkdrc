@@ -20,7 +20,7 @@ super + Insert
     /home/bresilla/.config/sxhkd/scripts/eww --open
 
 Print; {Print,Insert}
-    /env/fun/wm/sshoot {--flame, --maim}
+    /env/dot/.func/wm/sshoot {--flame, --maim}
 XF86Search; {XF86Search, c}
     {pkill slop; slop -r boxzoom, /home/bresilla/dots/.func/wm/colorpicker}
 
@@ -31,9 +31,9 @@ XF86Search; {XF86Search, c}
     {lule create -- set, lule create -- set, /home/bresilla/.startup}
 
 mod1 + space
-    /env/dot/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1050 -m -n
+    /env/dot/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1250 -m -n
 mod2 + space
-    /env/dot/.func/wm/scratch --term=kitty --class=NOTE --width=3500 --height=1900 -m -n
+    /env/dot/.func/wm/scratch --term=kitty --class=NOTE --width=3300 --height=1900 -m -n
 
 
 super + mod1 + {Left,Right}
@@ -57,6 +57,8 @@ super + mod1 + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
 super + {w,f,t,s}
     bspc node {-t '~floating',-t '~fullscreen',-t '~tiled',-g sticky}
 
+F9
+    play
 super + {F4, mod1 + F4}
     playerctl {next,pause}
 super + {F3, F2, F1}
@@ -65,8 +67,8 @@ super + {F7, F6}
     light -{A,U} 2 #; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
 
 
-ctrl + super + mod1 + {space,Left,Right,Return}
-    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,backwards,forewards,hide}
+mod3 + {space, Left,Right, space + mod2}
+    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,backwards 10,forewards 10,hide}
 mod1+super + XF86AudioPlay
     play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
 mod1+super + XF86AudioMute

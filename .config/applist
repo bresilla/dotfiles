@@ -151,6 +151,7 @@ xplr                        + hackable, minimal, fast TUI file explorer         
 vifm                        + vim-like file manager for terminal                              + https://github.com/vifm/vifm                          + cpp
 -------------------------------------------------------                BACKUP                     -----------------------------------------------------------
 borg                        + backup & deduplicating archiver                                 + https://github.com/borgbackup/borg                    + cpp
+snapper                     + filesystem snapshots (btrfs+lvm)                                + https://github.com/openSUSE/snapper                     + cpp
 -------------------------------------------------------               HTML & MD                   -----------------------------------------------------------
 gomd                        + Serve markdown to localhost                                     + https://github.com/wojciechkepka/gomd                 + go
 mdp                         + markdown presentation tool                                      + https://github.com/visit1985/mdp                      + cpp
