@@ -1,0 +1,15 @@
+[Unit]
+Description="Clipboard manager for ROFI"
+Documentation="https://github.com/erebe/greenclip"
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/env/bin/greenclip daemon
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+

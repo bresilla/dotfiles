@@ -1,4 +1,4 @@
-vimp.bind({'silent'},           'ss',                   [[<cmd>SessionSave<CR>]])
+vim.keymap.set("n",           'ss',                   [[<cmd>SessionSave<CR>]])
 
 vim.g.dashboard_default_executive ='telescope'
 vim.g.dashboard_default_header = "cres"

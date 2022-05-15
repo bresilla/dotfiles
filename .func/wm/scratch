@@ -133,7 +133,9 @@ term=${_arg_term:-kitty}
 name=${_arg_class:-MAIN}
 iter=0
 
-[[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP1
+main_mon=eDP1
+
+[[ "$_arg_m" == "true" ]] && bspc monitor --focus $main_mon
 
 mon=$(bspc query --names --monitors --monitor)
 des=$(bspc query --names --desktops --desktop)
@@ -169,7 +171,7 @@ if [[ -z "$(bspc query --desktop focused -T | grep $name)" ]]; then
 else
     [[ -z $win ]] && exit
     if [[ "$_arg_r" == "true" ]]; then
-        [[ "$_arg_m" == "true" ]] && bspc monitor --focus eDP-1
+        [[ "$_arg_m" == "true" ]] && bspc monitor --focus $main_mon
         if [[ "$(echo $xoffset,$yoffset | xargs)" != "$(echo $(xdotool getwindowgeometry $win | grep 'Position' | cut -d':' -f2 | cut -d'(' -f1) | xargs)" ]] ||
             [[ "$(echo $width,$heigh | tr "," "x" | xargs)" != "$(echo $(xdotool getwindowgeometry $win | grep 'Geometry' | cut -d':' -f2) | xargs)" ]]; then
             xdotool windowmap "$win" windowmove "$win" "$(( $xoffset + $x_pos))" "$(( $yoffset + $y_pos ))" windowsize "$win" "$width" "$heigh" 2> /dev/null

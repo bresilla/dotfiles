@@ -5,22 +5,22 @@ windows:
   panes:
   - commands:
     - spt
-    focus: true
     root: /home/bresilla
   - commands:
     - taskwarrior-tui
     root: /home/bresilla
   - commands:
     - rsmixer
+    focus: true
     root: /home/bresilla
   - commands:
     - tock -c
     root: /home/bresilla
 - name: top
-  layout: 32d0,310x66,0,0{183x66,0,0,4,126x66,184,0[126x29,184,0,6,126x36,184,30,5]}
+  layout: a4ab,279x66,0,0{153x66,0,0,5,125x66,154,0[125x33,154,0,7,125x32,154,34,6]}
   panes:
   - commands:
-    - btm
+    - btop
     focus: true
     root: /home/bresilla
   - commands:

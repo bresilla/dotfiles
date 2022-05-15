@@ -232,15 +232,28 @@ function __get_host() {
       [[ -n $host ]] && printf $host || printf $(uname -n)
 }
 
+function __distro() {
+    distro_name=$(lsb_release -i | cut -d':' -f2 | xargs)
+    if [[ $distro_name == "Arch" ]]; then
+        printf 
+        echo
+    elif [[ $distro_name == "Ubuntu" ]]; then
+        printf 
+        echo
+    else
+        echo
+    fi
+}
+
 function __promptline_left_prompt {
     #HOST
     prefix="${light_TX}${dark_BG}${space}" suffix="${space}${blackBG}${dark_TX}${arrFL}${blackTX}${accentBG}"; printf "%s" "$prefix" "$(__promptline_host)" "$suffix"
     #USER
-    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$USER" "$suffix"
+    prefix="${accentBG}${arrFL}${blackTX}${dark_TX}${space}" suffix="${space}${accentTX}"; printf "%s" "$prefix" "$(__distro) $USER" "$suffix"
     #CONTAINER
     prefix="${dark_BG}${arrFL}${light_TX}${dark_BG}" suffix="${dark_TX}"; [[ -n $(__is_in_container) ]] && printf "%s" "$prefix" "$(__is_in_container)" "$suffix"
     #SUDO WARN
-    prefix="${redBG}${arrFL}${blackTX}${redBG}${space}" suffix="${space}${redTX}"; [[ -n $(__sudo_warning) ]] && printf "%s" "$prefix" "$(__sudo_warning)" "$suffix"
+    # prefix="${redBG}${arrFL}${blackTX}${redBG}${space}" suffix="${space}${redTX}"; [[ -n $(__sudo_warning) ]] && printf "%s" "$prefix" "$(__sudo_warning)" "$suffix"
     #PATH
     [[ $(__promptline_vcs_branch) = "master" ]] && conTX=$accentTX
     prefix="${defaultBG}${arrFL}${conTX}${space}" suffix="${space}"; [[ -n $(__promptline_cwd) ]] && printf "%s" "$prefix" "$(__promptline_cwd 3 left)" "$suffix"

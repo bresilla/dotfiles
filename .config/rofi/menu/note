@@ -1,14 +1,45 @@
 #!/usr/bin/env bash
 source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+edit_with="kitty --class=til"
 
-NOTE=$(/env/bin/dnote view | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'notes: ' | awk '{print $2}');
-[[ -z $NOTE ]] && exit 1
-PAGE=$(/env/bin/dnote view $NOTE | tail -n+2 | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'pages: ' | awk '{print $1}' | cut -d "(" -f2 | cut -d ")" -f1);
-if [[ -z $PAGE ]]; then
-    exit 1
-elif (( $PAGE > 0 )); then
-    kitty -e /env/bin/dnote edit $NOTE $PAGE
+browse(){
+    if [[ "$2" == "$1" ]]; then
+        selected=$(ls -A --group-directories-first "$1/" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$3: ")
+    else
+        selected=$({ ls -A --group-directories-first "$1/" & echo ".."; } | cat | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "$3: ")
+    fi
+
+    [[ -z $selected ]] && exit
+    if [[ "$selected" == ".." ]]; then
+        browse "$(dirname $1)" $2 $3
+    elif [[ -f $1/$selected ]]; then
+        $edit_with -e nvim $1/$selected
+    elif [[ -d $1/$selected ]]; then
+        browse $1/$selected $2 $3
+    else
+        touch $1/$selected
+        chmod +x $1/$selected
+        $edit_with -e nvim $1/$selected
+    fi
+}
+
+another=$(echo "DNOTE
+FOLDER" | awk '{print $(NF-1)}' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "CONFIGS: ")
+
+
+if [ "$another" == "DNOTE" ] ; then
+
+    NOTE=$(/env/bin/dnote view | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'notes: ' | awk '{print $2}');
+    [[ -z $NOTE ]] && exit 1
+    PAGE=$(/env/bin/dnote view $NOTE | tail -n+2 | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'pages: ' | awk '{print $1}' | cut -d "(" -f2 | cut -d ")" -f1);
+    if [[ -z $PAGE ]]; then
+        exit 1
+    elif (( $PAGE > 0 )); then
+        kitty -e /env/bin/dnote edit $NOTE $PAGE
+    else
+        kitty -e /env/bin/dnote add $NOTE
+    fi
 else
-    kitty -e /env/bin/dnote add $NOTE
+    browse /home/bresilla/.local/share/notes /home/bresilla/.local/share/notes "NOTES";
 fi

@@ -4,7 +4,7 @@ ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:
 bookmarks=$1
 
 if [ -z "$3" ];
-	then BROWSER="firefox"
+	then BROWSER="org.mozilla.firefox"
 else
 	BROWSER=$3
 fi

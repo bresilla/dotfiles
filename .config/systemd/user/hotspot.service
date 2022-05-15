@@ -1,0 +1,13 @@
+[Unit]
+Description="Hotspot daemon"
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sleep 2
+ExecStart=/usr/bin/doas /env/dot/.func/network/hotspot wlan0 wlan0 algorithm dyhere024
+ExecStop=/usr/bin/doas rm /tmp/hotspot.all.lock
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

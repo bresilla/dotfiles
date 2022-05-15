@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if  [[ -d $(git rev-parse --show-toplevel) ]] ; then
+    nvim $(git rev-parse --show-toplevel)/Cargo.toml
+fi

@@ -1,0 +1,11 @@
+[Unit]
+Description="XFCE Polkit Agent"
+Documentation="https://github.com/ncopa/xfce-polkit"
+After=graphical.target
+
+[Service]
+ExecStart=/usr/lib/xfce-polkit/xfce-polkit
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

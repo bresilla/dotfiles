@@ -1,14 +1,14 @@
 --------------------------------- TELESCOPE  -----------------------------------------
-vimp.nnoremap('<leader><leader>',       [[<cmd>lua require('telescope.builtin').git_files()<cr>]])
-vimp.nnoremap('<C-Space>',                  [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
-vimp.nnoremap('<C-p>',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
-vimp.nnoremap('<C-b>',                  [[<cmd>lua require('telescope.builtin').buffers(center_list)<cr>]])
+vim.keymap.set("n", "<leader><leader>", "<cmd>lua require('telescope.builtin').git_files()<cr>", {silent = true})
+vim.keymap.set("n", "<C-Space", [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], {silent = true})
+vim.keymap.set("n", "<C-p>", [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {silent = true})
+vim.keymap.set("n", "<C-b>", [[<cmd>lua require('telescope.builtin').buffers(center_list<cr>)]], {silent = true})
 
-vimp.nnoremap('<leader>lf',                  [[<cmd>lua require('telescope.builtin').lsp_code_actions(center_list)<cr>]])
-vimp.nnoremap('<leader>lr',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
-vimp.nnoremap('<leader>ll',                  [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]])
-vimp.nnoremap('<leader>li',                  [[<cmd>lua require('telescope.builtin').lsp_implementations()<cr>]])
-vimp.nnoremap('<leader>ld',                  [[<cmd>lua require('telescope.builtin').lsp_definitions()<cr>]])
+vim.keymap.set("n", "<leader>lf", [[<cmd>lua require('telescope.builtin').lsp_code_actions(center_list)<cr>]], {silent = true})
+vim.keymap.set("n", "<leader>lr", [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {silent = true})
+vim.keymap.set("n", "<leader>ll", [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], {silent = true})
+vim.keymap.set("n", "<leader>li", [[<cmd>lua require('telescope.builtin').lsp_implementations()<cr>]], {silent = true})
+vim.keymap.set("n", "<leader>ld", [[<cmd>lua require('telescope.builtin').lsp_definitions()<cr>]], {silent = true})
 
 
 local actions = require('telescope.actions')

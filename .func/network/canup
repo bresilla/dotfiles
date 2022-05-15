@@ -1,13 +1,19 @@
 #!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "No arguments provided"
+    exit 1
+fi
+
 # Load the kernel module.
 modprobe vcan
 
 # Create the virtual CAN interface.
-ip link add name vcan0 type vcan
+ip link add name ${1} type ${2:-vcan}
 # For CAN-FD
-ip link set vcan0 mtu 72
+ip link set ${1} mtu 72
 # Bring the virutal CAN interface online
-ip link set dev vcan0 up
+ip link set dev ${1} up
 
 # CAN over ETHERNET
 #cannelloni -I vcan0 -R 10.60.0.1 -r 20000 -l 20000

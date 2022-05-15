@@ -2,9 +2,9 @@
 
 case "$1" in
 --open)
-    /env/cargo/bin/eww open-many volume light player profile face date systemd wifi todo
+    /env/bin/eww open-many volume light player profile face date systemd wifi todo
     ;;
 --close)
-    /env/cargo/bin/eww close-all
+    /env/bin/eww close-all
     ;;
 esac

@@ -1,27 +1,11 @@
 vim.cmd([[au FileType NvimTree set nocursorcolumn]])
 vim.cmd([[au WinEnter NvimTree set nocursorcolumn cursorline]])
-vim.cmd([[au FileType * lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':lua tree_open()<CR>', {})]])
+vim.cmd([[au FileType * lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':NvimTreeToggle<CR>', {})]])
 
-local function get_lua_cb(cb_name)
-    return string.format(":lua require'nvim-tree'.on_keypress('%s')<CR>", cb_name)
-end
-
-function tree_open()
-    require'bufferline.state'.set_offset(31)
-    require'nvim-tree'.find_file(true)
-end
-
-function tree_comm(passable)
-    require'nvim-tree'.on_keypress(passable)
-    if vim.api.nvim_buf_get_option(0, 'filetype') ~= "NvimTree" then
-        require'bufferline.state'.set_offset(0)
-    end
-end
+vim.keymap.set({"n"}, '<tab>', [[ :NvimTreeToggle<CR> ]], {remap = true})
 
 vim.g.nvim_tree_root_folder_modifier = ":t"
-vim.g.nvim_tree_disable_window_picker = 1
 vim.g.nvim_tree_indent_markers = 1
-vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1 }
 vim.g.nvim_tree_icons = {
     default = "",
@@ -49,6 +33,14 @@ require'nvim-tree'.setup {
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
+  actions = {
+    open_file = {
+        quit_on_open  = true,
+        window_picker = {
+            enable = false,
+        },
+    }
+  },
   diagnostics     = {
     enable      = false,
   },
@@ -72,12 +64,13 @@ require'nvim-tree'.setup {
     mappings = {
       custom_only = true,
       list = {
-        { key =  "<CR>",     cb = [[ :lua tree_comm('edit')<CR> ]] },
-        { key = "<M-n>",     cb = [[ :lua tree_comm('create')<CR> ]] },
-        { key = "<M-v>",     cb = [[ :lua tree_comm('vsplit')<CR> ]] },
-        { key = "<M-x>",     cb = [[ :lua tree_comm('split')<CR> ]] },
-        { key = "<M-t>",     cb = [[ :lua tree_comm('tabnew')<CR> ]] },
-        { key = "<Tab>",     cb = [[ :lua tree_comm('close')<CR> ]] },
+        { key =  "<CR>",     action = "edit"   },
+        { key = "<M-n>",     action = "create" },
+        { key = "<M-v>",     action = "vsplit" },
+        { key = "<M-x>",     action = "split"  },
+        { key = "<M-t>",     action = "tabnew" },
+        { key = "<Tab>",     action = "close"  },
+        { key = "<M-r>",     action = "refresh"  },
       }
     }
   }

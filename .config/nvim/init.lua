@@ -43,7 +43,7 @@ vim.o.ignorecase = true                                                 -- case 
 vim.o.re = 0                                                            -- set regexp engine to auto
 vim.o.inccommand = "split"                                              -- incrementally show result of command
 
-vim.o.laststatus = 2                                                    -- always enable statusline
+vim.o.laststatus = 3                                                    -- always enable statusline
 -- vim.o.cursorline = true                                                 -- enable cursorline
 -- vim.o.cursorcolumn = true
 vim.o.splitbelow = true                                                 -- split below instead of above
@@ -84,15 +84,27 @@ vim.o.listchars = "extends:›,precedes:‹,nbsp:␣,trail:·,tab:→\\ ,eol:¬"
 
 ---------------------------------------------- === PLUGINS === ----------------------------------------------
 
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local os_name = vim.loop.os_getenv 'OS' or 'Unknown'
+local install_path = vim.fn.stdpath('data') .. os_name .. '/site/pack/packer/opt/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
 end
 vim.cmd('packadd packer.nvim')
+
+local function join_paths(...)
+  local path_sep = on_windows and '\\' or '/'
+  local result = table.concat({ ... }, path_sep)
+  return result
+end
+
+require('packer').init({
+    auto_clean = true,
+    package_root = join_paths(vim.fn.stdpath('data'),  os_name, 'site', 'pack'),
+    compile_path = join_paths(vim.fn.stdpath('config'),  os_name, 'plugin', 'packer_compiled.lua'),
+})
 require('packer').startup(
-    function(use)
+    function()
         use { 'wbthomason/packer.nvim', opt = true }
-        use { 'svermeulen/vimpeccable' }
         use { 'nvim-lua/plenary.nvim' }
         use { 'nvim-lua/popup.nvim' }
         use { 'neovim/nvim-lspconfig',
@@ -207,6 +219,17 @@ require('packer').startup(
                 require('plug_comfscroll')
             end
         }
+        use {
+            'VonHeikemen/searchbox.nvim',
+            'VonHeikemen/fine-cmdline.nvim',
+            requires = {
+                {'MunifTanjim/nui.nvim'}
+            },
+            config = function()
+                vim.api.nvim_set_keymap('n', '<leader>c', '<cmd>FineCmdline<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>s', ':SearchBoxIncSearch<CR>', {noremap = true})
+            end
+        }
         use { 'sindrets/diffview.nvim',
             config = function()
                 require('plug_diffview')
@@ -309,8 +332,8 @@ require('packer').startup(
         }
         use { 'mbbill/undotree',
             config = function()
-                require('vimp').bind({'silent'},  'U',     [[:redo<CR>]])
-                require('vimp').bind({'silent'},  '<C-U>', [[:UndotreeToggle<CR> :UndotreeFocus<CR>]])
+                vim.api.nvim_set_keymap("n", "U", "", {noremap = true, callback = function() print(":redo<CR>") end})
+                vim.api.nvim_set_keymap("n", "C-U", "", {noremap = true, callback = function() print(":UndotreeToggle<CR> :UndotreeFocus<CR>") end})
             end
         }
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
@@ -335,19 +358,20 @@ vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank()]])
 vim.highlight.on_yank { on_visual = true }
 
 ---------------------------------------------- === BINDINGS === ----------------------------------------------
-vimp = require('vimp')
 vim.g.mapleader = " "
 
+-- === SWITCH TO LAST TABS === "
+vim.keymap.set('n', '-', "<cmd>:b#<CR>", { noremap = true, silent = true })
+
+
 -- === REMOVE HABITS === "
-vimp.nnoremap('d',              [["_d]])
-vimp.vnoremap('d',              [["_d]])
-vimp.nnoremap('c',              [["_c]])
-vimp.vnoremap('c',              [["_c]])
-vimp.nnoremap('<S-Up>',         [[<Nop>]])
-vimp.nnoremap('<S-Down>',       [[<Nop>]])
+vim.keymap.set({'n', 'v'}, 'd',              [["_d]])
+vim.keymap.set({'n', 'v'}, 'c',              [["_c]])
+vim.keymap.set('n', '<S-Up>',         [[<Nop>]])
+vim.keymap.set('n', '<S-Down>',       [[<Nop>]])
 
 -- === CHANGE CASE === "
-vimp.nnoremap('~',          [[g~aw]])
+vim.keymap.set('n', '~',          [[g~aw]])
 -------------------------------------------- === LAST MAP === ---------------------------------------------
 function closer()
     for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -358,11 +382,7 @@ function closer()
         end
 end
 
-vimp.nnoremap({'silent', 'expr'}, '<ESC>', function()
-    -- vim.cmd(':lua require("goto-preview").close_all_win()')
+vim.keymap.set('n', '<ESC>', function() 
     vim.cmd(':noh')
-    -- vim.lsp.diagnostic.clear(0, 0, 0)
-    -- vim.api.nvim_buf_clear_namespace(0, -1, 0, -1)
-    -- vim.cmd('lua closer()')
     return [[<ESC>]]
 end)

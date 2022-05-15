@@ -1,0 +1,15 @@
+[Unit]
+Description="Bar overlay daemon"
+Documentation="https://github.com/florentc/xob"
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c 'tail -f /home/bresilla/.local/share/fifo/xob | /env/bin/xob'
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+

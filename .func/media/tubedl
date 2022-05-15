@@ -1,4 +1,4 @@
 #!/bin/sh
 
 clipp=$(xsel --clipboard)
-youtube-dl -i -f best --yes-playlist --restrict-filenames -o "%(autonumber)s-%(title)s.%(ext)s" --no-part --skip-unavailable-fragments --no-overwrites ${1:-$clipp}
+yt-dlp -i --yes-playlist --restrict-filenames -o "%(autonumber)s-%(title)s.%(ext)s" --no-part --skip-unavailable-fragments --no-overwrites ${1:-$clipp}

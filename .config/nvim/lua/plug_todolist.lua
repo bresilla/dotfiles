@@ -8,11 +8,14 @@ require("todo-comments").setup {
         alt = { "FIXME", "BUG", "FIXIT", "FIX", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
         -- signs = false, -- configure signs for some keywords individually
         },
+        ADD = { icon = " ", color = "hint" },
         TODO = { icon = " ", color = "info" },
+        DONE = { icon = " ", color = "hint" },
         HACK = { icon = " ", color = "warning" },
         WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
         PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        NOTE = { icon = " ", color = "default", alt = { "INFO" } },
+        TASK = { icon = " ", color = "error" },
     },
     -- highlighting of the line containing the todo comment
     -- * before: highlights before the keyword (typically comment characters)

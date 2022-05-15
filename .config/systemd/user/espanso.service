@@ -1,0 +1,15 @@
+[Unit]
+Description="Text Expander Daemon"
+Documentation="https://github.com/federico-terzi/espanso"
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/env/bin/espanso daemon
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+

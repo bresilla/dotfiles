@@ -1,0 +1,43 @@
+#! /bin/bash
+
+BAUD=8
+
+# Name of slcan device to attach
+if [ $# -eq 0 ]; then
+    echo "No arguments, defaulting to: <can0>"
+    DEV=can0
+else
+    echo "Interface will be named as: <$1>"
+    DEV=${1:-can0}
+fi
+
+# Detect correct port for device interfaces
+TERM_PORT=$(ls -l /dev/serial/by-id/ | grep 1fc9_00a3 | sed 's/.*\///g' | awk '{if(NR==2) print $0}')
+CANB_PORT=$(ls -l /dev/serial/by-id/ | grep 1fc9_00a3 | sed 's/.*\///g' | awk '{if(NR==1) print $0}')
+
+
+echo "Terminal interface on: $TERM_PORT"
+echo "CAN Bus  interface on: $CANB_PORT"
+
+# Set the mode to slcan
+doas chmod a+rw /dev/$TERM_POR
+doas echo -ne "set can-mode slcan" > /dev/$TERM_PORT
+
+echo "Attaching slcan device..."
+
+# Attach to the port with slcand
+doas slcand -s$BAUD -o /dev/"$CANB_PORT" $DEV
+
+# Give interface time to come up
+sleep .25
+
+# Enable the inteface
+doas ifconfig $DEV up
+doas ifconfig $DEV txqueuelen 1000
+
+echo "Interface is enabled."
+
+# Turn up the inteface
+doas ip link set dev $DEV up
+
+echo "Interface is UP."

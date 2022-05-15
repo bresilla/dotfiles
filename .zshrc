@@ -5,9 +5,10 @@
 
 #--------------------------------------------------------------------------------------------------------------------
 ###WAL COLORS
-(cat ~/.cache/wal/sequences &)
-source ~/.cache/wal/colors.sh
+[ -f ~/.cache/wal/sequences ] && (cat ~/.cache/wal/sequences &)
+[ -f ~/.cache/wal/colors.sh ] && source ~/.cache/wal/colors.sh
 
+export SHELL=/bin/zsh
 
 #--------------------------------------------------------------------------------------------------------------------
 ###CASE INSENSITIVE
@@ -35,6 +36,7 @@ setopt rmstarsilent
 #ignore commands that start with space
 setopt histignorespace
 
+unsetopt no_match
 
 #--------------------------------------------------------------------------------------------------------------------
 ###ZSTYLE
@@ -59,7 +61,7 @@ export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 HISTFILE=~/.config/zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
-HISTORY_IGNORE='(reboot|restart|poweroff|suspend|_shko)'
+# HISTORY_IGNORE='(reboot|restart|poweroff|suspend|_shko)'
 setopt append_history
 setopt sharehistory
 setopt incappendhistory
@@ -130,6 +132,13 @@ bindkey -M vicmd '^k' run_killer
 bindkey -M viins '^k' run_killer
 bindkey '^k' run_killer
 
+###FLATPAK KILLER
+# function run_fkiller(){ fkill; zle reset-prompt; zle redisplay; }
+# zle -N run_fkiller
+# bindkey -M vicmd '^k' run_fkiller
+# bindkey -M viins '^k' run_fkiller
+# bindkey '^f' run_fkiller
+
 ###SYSZ
 function run_sysz(){ sysz; zle reset-prompt; zle redisplay; }
 zle -N run_sysz
@@ -167,17 +176,17 @@ alias \$=''
 [[ -x "$(command -v tmux)" ]] && tmux setenv FANCY $FANCY
 
 ###DIRENV
-eval "$(direnv hook zsh)"
+[[ -x "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
 ###AUTIN
-eval "$(atuin init zsh)"
+[[ -x "$(command -v atuin)" ]] && eval "$(atuin init zsh)"
 
 ###COD
-source <(cod init $$ zsh)
+[[ -x "$(command -v cod)" ]] && source <(cod init $$ zsh)
 
 
 ###NOSTROMO
-eval "$(nostromo completion)"
+[[ -x "$(command -v nostromo)" ]] && eval "$(nostromo completion)"
 
 ###SSH&GPG
 export GPG_TTY=$(tty)
@@ -214,16 +223,18 @@ bindkey '^M' runner
 
 #--------------------------------------------------------------------------------------------------------------------
 ###TMUX && CD && ZOXIDE
-eval "$(zoxide init zsh)"
+[[ -x "$(command -v zoxide)" ]] && eval "$(zoxide init zsh)"
 cd() {
-    if [[ -z $1 ]]; then
+    if [[ -z $1 ]] && [[ -x "$(command -v proji)" ]]; then
         cd $(proji ls | head -n-1 | tail -n+4 | fzy -l 20 | cut -d "|" -f4)
-    elif [[ -d $1 ]] ; then
+    elif [[ -d $1 ]] || [[ $date =~ ^[-]{1,2}+[a-z]* ]] ; then
         builtin cd $1
     elif [[ $1 == root ]] && [[ -d $(git rev-parse --show-toplevel) ]] ; then
         cd $(git rev-parse --show-toplevel)
-    else 
-        z $1;
+    elif [[ -x "$(command -v zoxide)" ]] ; then
+        z $1
+    else
+        builtin cd $1;
     fi
 }
 
@@ -251,3 +262,7 @@ done
 bindkey -s '^A' ' tab\n'
 
 #--------------------------------------------------------------------------------------------------------------------
+
+if [[ $(lsb_release -i | cut -d':' -f2 | xargs) == "Ubuntu" ]]; then
+    cd $(cat /tmp/debi_pwd)
+fi

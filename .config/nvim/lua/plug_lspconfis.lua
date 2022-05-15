@@ -4,12 +4,17 @@ vim.cmd([[sign define LspDiagnosticsSignInformation text=+ texthl=LspDiagnostics
 vim.cmd([[sign define LspDiagnosticsSignHint text=➜ texthl=LspDiagnosticsSignHint linehl= numhl=]])
 
 --------------------------------- LSP LANGUAGES  -----------------------------------------
+require'lspconfig'.ccls.setup{
+    cmd = { "ccls", "--log-file=/tmp/ccls.log", "-v=1" };
+    filetypes = { "cpp" };
+    -- on_attach = function() signature_setup() end;
+}
+
 require'lspconfig'.clangd.setup{
     cmd = { "clangd", "--background-index" };
     filetypes = { "cpp" };
     -- on_attach = function() signature_setup() end;
 }
-
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -40,7 +45,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     }
 )
 
-vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)
+vim.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)
     local win_width = vim.api.nvim_win_get_width(0)
     if #line_diagnostics == 0 or win_width < 50 then return nil end
 

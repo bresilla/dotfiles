@@ -1,0 +1,10 @@
+[Unit]
+Description="Bring VCAN up"
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/doas /env/dot/.func/network/canup %I
+Type=oneshot
+
+[Install]
+WantedBy=default.target

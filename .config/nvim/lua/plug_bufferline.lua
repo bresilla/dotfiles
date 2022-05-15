@@ -1,10 +1,25 @@
--- vimp = require('vimp')
-vimp.bind('n',            '<C-Pagedown>',             [[:BufferNext<CR>]])
-vimp.bind('n',            '<C-Pageup>',               [[:BufferPrevious<CR>]])
-vimp.bind('n',            '<C-M-Pagedown>',           [[:BufferMoveNext<CR>]])
-vimp.bind('n',            '<C-M-Pageup>',             [[:BufferMovePrevious<CR>]])
+vim.keymap.set('n',            '<C-Pagedown>',             [[:BufferNext<CR>]])
+vim.keymap.set('n',            '<C-Pageup>',               [[:BufferPrevious<CR>]])
+vim.keymap.set('n',            '<C-M-Pagedown>',           [[:BufferMoveNext<CR>]])
+vim.keymap.set('n',            '<C-M-Pageup>',             [[:BufferMovePrevious<CR>]])
 
--- vimp.bind('c',            'q',             [[:BufferClose<CR>]])
+vim.api.nvim_create_autocmd('BufWinEnter', {
+    pattern = '*',
+    callback = function()
+        if vim.bo.filetype == 'NvimTree' then
+            require'bufferline.state'.set_offset(30, 'FileTree')
+        end
+    end
+})
+
+vim.api.nvim_create_autocmd('BufWinLeave', {
+    pattern = '*',
+    callback = function()
+        if vim.fn.expand('<afile>'):match('NvimTree') then
+            require'bufferline.state'.set_offset(0)
+        end
+    end
+})
 
 vim.api.nvim_exec([[
 function! NumBuffers()

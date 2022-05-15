@@ -1,8 +1,8 @@
 #!/bin/bash
 
 BLUE='\033[0;34m';GREEN='\033[0;32m';RED='\033[0;31m';NC='\033[0m'
-CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && PATH="$CONDAPATH:$PATH" || exit 1
-CONDALENV="$PWD/.direnv/venv/$(uname -m)";
+export CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && export PATH="$CONDAPATH:$PATH" || exit 1
+export CONDALENV="$PWD/.direnv/venv/$(uname -m)";
 
 if [[ $(git rev-parse --show-toplevel) == "/env" ]]; then
     source activate $CONDA_HOME

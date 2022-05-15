@@ -6,11 +6,13 @@ BROWSER=org.mozilla.firefox
 srch=search
 mark=bookmarks
 hist=history
+list=playlist
 
 another=$(echo "\
 $hist
 $mark
-$srch\
+$srch
+$list\
 " | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
 
@@ -21,9 +23,14 @@ elif [ "$another" == "$hist" ] ; then
     exec /home/bresilla/.config/rofi/menu/fox
 
 elif [ "$another" == "$mark" ] ; then
-    LINK=$(buku --nc -p -f 4 | awk -F'\t' '{print $1 "\t\t\t\t" $3 "\t\t" $4 "\t\t" $2}' | tail -n +2 | column -t -s $'\t' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'buku: ' | sed 's/ .*//;s/[^0-9]//g') 
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/webmarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
     [[ -z $LINK ]] && exit 1
-    buku -o $LINK
+    $BROWSER $LINK
+
+elif [ "$another" == "$list" ] ; then
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/playmarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
+    [[ -z $LINK ]] && exit 1
+    /env/dot/.func/media/play $LINK
 
 elif [ -z "$another" ] ; then
     #https://github.com/BelkaDev/RofiFtw

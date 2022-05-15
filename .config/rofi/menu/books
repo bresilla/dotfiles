@@ -3,22 +3,22 @@ source /home/bresilla/.cache/wal/colors.sh
 ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
 
 browse(){
-	if [[ "$2" == "$1" ]]; then
+    if [[ "$2" == "$1" ]]; then
         selected=$(ls "$1/" | cat | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "books: ")
     else
         selected=$({ ls "$1/" & echo ".."; } | cat | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "books: ")
-	fi
+    fi
 
-	[[ -z "$selected" ]] && exit
-	if [[ "$selected" == ".." ]]; then
+    [[ -z "$selected" ]] && exit
+    if [[ "$selected" == ".." ]]; then
         browse "$(dirname $1)" $2
-	elif [[ -f "$1/$selected" ]]; then
-		zathura $1/$selected
+    elif [[ -f "$1/$selected" ]]; then
+        zathura $1/$selected
     else [[ -d "$1/$selected" ]];
-		browse "$1/$selected" $2
-	fi
+        browse "$1/$selected" $2
+    fi
 }
 
 
 
-browse /home/bresilla/data/mind/BOOKS /home/bresilla/data/mind/BOOKS &
+browse /doc/data/books /doc/data/books &

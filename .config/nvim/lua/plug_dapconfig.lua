@@ -1,8 +1,8 @@
 local dap = require 'dap'
 
-vimp.nnoremap('<M-r>',      [[<cmd>lua rebugger({"target/debug/fol"})<CR>]])
-vimp.nnoremap('<M-c>',      [[<cmd>lua require'dap'.continue()<CR>]])
-vimp.nnoremap('<M-b>',      [[<cmd>lua require'dap'.toggle_breakpoint()<CR>]])
+vim.keymap.set("n", '<M-r>',      [[<cmd>lua rebugger({"target/debug/fol"})<CR>]])
+vim.keymap.set("n", '<M-c>',      [[<cmd>lua require'dap'.continue()<CR>]])
+vim.keymap.set("n", '<M-b>',      [[<cmd>lua require'dap'.toggle_breakpoint()<CR>]])
 vim.fn.sign_define('DapBreakpoint', {text='', texthl='DapBreakpointSign', linehl='', numhl=''})
 vim.fn.sign_define('DapStopped', {text='', texthl='DapStopSign', linehl='', numhl=''})
 

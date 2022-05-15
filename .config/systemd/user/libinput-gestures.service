@@ -1,0 +1,13 @@
+[Unit]
+Description=Actions gestures on your touchpad using libinput
+Documentation=https://github.com/bulletmark/libinput-gestures
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/libinput-gestures
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=default.target

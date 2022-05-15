@@ -1,4 +1,5 @@
 export HOSTNAME=$(uname -n)
+export OS=$(lsb_release -i | cut -d':' -f2 | xargs)
 
 export DOTS=$HOME/dots
 export SETS=$HOME/sets
@@ -6,6 +7,8 @@ export DATA=$HOME/data
 export DOWN=$HOME/down
 export SYNC=$HOME/sync
 export TEMP=/tmp
+
+export PATH=$PATH:/usr/local/go/bin
 
 #USER BINARIES AND SCRIPTS
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
@@ -20,12 +23,20 @@ export NIXPKGS_ALLOW_UNFREE=1
 
 #MAMBA and/or CONDA
 export CONDA_HOME="/con"
-# [[ -f "/con/etc/profile.d/conda.sh" ]]  && . "/con/etc/profile.d/conda.sh"
+[[ -f "/con/etc/profile.d/conda.sh" ]]  && . "/con/etc/profile.d/conda.sh"
 [[ -f "/con/etc/profile.d/mamba.sh" ]]  && . "/con/etc/profile.d/mamba.sh"
+
+#PLATFORMIO
+# export PLATFORMIO_CORE_DIR=/opt/pio
+# [[ -d "/opt/pio" ]]  && PATH="$PATH:/opt/pio/penv/bin"
 
 #NVIDIA
 [[ -d "/usr/local/cuda" ]] && PATH="/usr/local/cuda/bin:$PATH" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 [[ -d "/opt/cuda" ]] && PATH="/opt/cuda/bin:$PATH" LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
+
+export LD_LIBRARY_PATH="/usr/local/lib/:$LD_LIBRARY_PATH"
+#export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
+export CUDA_TOOLKIT_ROOT_DIR="/opt/cuda"
 
 
 #FLATPAK
@@ -38,10 +49,13 @@ FLATPAK_ENABLE_SDK_EXT=rust-nightly
 export PATH="$HOME/.local/alt/shims:$PATH"
 
 
+#DISPLAY
+[[ -z "${DISPLAY}" ]] && export DISPLAY=:0
+
 #PKGCONFIGS
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 
-export BROWSER=firefox
+export BROWSER=org.mozilla.firefox
 export EDITOR=nvim
 export TERMINAL=kitty
 export CONSOLE=kitty
@@ -84,6 +98,7 @@ export FANCY=$(printf "%s" $(shuf -n1 $ADJECTIVELIST) "_" $(shuf -n1 $NOUNLIST))
 export RANDOM_NAME=$FANCY
 
 export WINEPREFIX=/var/lib/wine
+export LIBVA_DRIVER_NAME=iHD
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 export XDG_CONFIG_HOME=/home/$USER/.config
 export XDG_CONFIG_PATH=/home/$USER/.config
@@ -108,4 +123,10 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+#export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+#export TURTLEBOT3_MODEL=burger
+
+
+
+#----------------------------------------------------------------------------
+

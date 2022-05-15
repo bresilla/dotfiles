@@ -1,7 +1,7 @@
 #!/bin/bash
 
 xdotool click 3
-sleep 0.5
+sleep 0.1
 xdotool key Shift L
-sleep 0.5
+sleep 0.1
 play

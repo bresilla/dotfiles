@@ -10,5 +10,5 @@ vim.g.indent_blankline_context_patterns = {'class', 'function', 'method', 'if', 
 -- vim.g.indent_blankline_space_char_highlight_list = {"IndentOdd", "IndentEven"}
 
 -- === CHANGE INDENT === "
-vimp.vnoremap('>', [[>gv]])
-vimp.vnoremap('<', [[<gv]])
+vim.keymap.set("v", '>', [[>gv]])
+vim.keymap.set("v", '<', [[<gv]])

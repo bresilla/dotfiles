@@ -1,0 +1,3 @@
+#!/bin/bash
+
+flatpak kill $(flatpak ps | fzy | choose 2)

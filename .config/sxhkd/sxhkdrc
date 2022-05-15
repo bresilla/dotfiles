@@ -19,10 +19,10 @@ super + mod1 + space; {space, Return}
 super + Insert
     /home/bresilla/.config/sxhkd/scripts/eww --open
 
-Print; {Print,Insert}
-    /env/dot/.func/wm/sshoot {--flame, --maim}
-XF86Search; {XF86Search, c}
-    {pkill slop; slop -r boxzoom, /home/bresilla/dots/.func/wm/colorpicker}
+F10; {F10,F11,F9}
+    /env/dot/.func/wm/sshoot {--flame, --maim, --ocr}
+F11; {F11, F10}
+    {pkill slop; slop -r boxzoom, /env/dot/.func/wm/colorpicker}
 
 
 {super,mod1} + Escape
@@ -33,7 +33,7 @@ XF86Search; {XF86Search, c}
 mod1 + space
     /env/dot/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1250 -m -n
 mod2 + space
-    /env/dot/.func/wm/scratch --term=kitty --class=NOTE --width=3300 --height=1900 -m -n
+    /env/dot/.func/wm/scratch --term=kitty --class=NOTE --width=3300 --height=2000 -m -n
 
 
 super + mod1 + {Left,Right}
@@ -57,19 +57,29 @@ super + mod1 + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
 super + {w,f,t,s}
     bspc node {-t '~floating',-t '~fullscreen',-t '~tiled',-g sticky}
 
-F9
+# mod3 + space
+mod3 + l
+    youtube_play
+mod3 + p
     play
-super + {F4, mod1 + F4}
-    playerctl {next,pause}
-super + {F3, F2, F1}
-    pamixer -{i,d,t} 2 #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
+mod3 + {Left,Right, space + mod2}
+    /home/bresilla/.config/sxhkd/scripts/mpv {backwards 10,forewards 10,hide}
+mod3 + space
+    /home/bresilla/.config/sxhkd/scripts/mpv cycle
+super + {F3, F2}
+    pamixer -{i,d} 2 && [[ $(pamixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
+    #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
+{super,mod1} + F4 
+    playerctl {next,previous}
+super + F1 
+    pamixer -t && [[ $(pamixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
+    #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
 super + {F7, F6}
-    light -{A,U} 2 #; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
+    light -{A,U} 2 && light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
+    #; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
 
 
-mod3 + {space, Left,Right, space + mod2}
-    /home/bresilla/.config/sxhkd/scripts/mpv {cycle,backwards 10,forewards 10,hide}
-mod1+super + XF86AudioPlay
+super + mod1 + F4
     play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
-mod1+super + XF86AudioMute
-    pactl set-sink-port 0 analog-output-headphones
+super + mod1 + F1
+    pactl set-card-profile alsa_card.pci-0000_00_1f.3 off && sleep 5 && pactl set-ca; play ~/.config/dunst/scripts/bleep.wav

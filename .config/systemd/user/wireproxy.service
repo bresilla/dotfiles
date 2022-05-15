@@ -1,0 +1,15 @@
+[Unit]
+Description="Wireguard SOCS5 Proxy"
+Documentation="https://github.com/octeep/wireproxy"
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/env/bin/wireproxy -c /home/bresilla/.local/share/mlvd-it5.conf
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+

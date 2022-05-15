@@ -6,12 +6,34 @@
 
 # Matches are the substitution rules, when you type the "trigger" string
 # it gets replaced by the "replace" string.
+keyboard_layout:
+  layout: "us"
+
+# evdev_modifier_delay: 20
+backend: Clipboard
+
 matches:
   # Simple text replacement
+  - trigger: ":euro"
+    replace: "€"
+
   - trigger: ":espanso"
     replace: "Hi there!"
 
+  - trigger: ":phone"
+    replace: "0031628022776"
+
+  - trigger: ":hr"
+    replace: "----------------------------------------------------------------------------"
+
   # Dates
+  - trigger: ":udate"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: shell
+        params:
+          cmd: "date"
   - trigger: ":date"
     replace: "{{mydate}}"
     vars:
@@ -21,6 +43,8 @@ matches:
           format: "%m/%d/%Y"
 
   # Shell commands
+  - trigger: ":bang"
+    replace: "#!/bin/bash"
   - trigger: ":shell"
     replace: "{{output}}"
     vars:

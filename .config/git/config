@@ -1,10 +1,10 @@
 [core]
-    pager = delta --dark --plus-color="#012800" --minus-color="#340001" --theme="OneHalfDark"
+    pager = delta --dark --theme="OneHalfDark"
     quotepath = false
     commitGraph = true
 
 [credential]
-	helper = cache
+    helper = cache
 
 [color]
     ui = true
@@ -50,7 +50,8 @@
     module = submodule
     check = checkout
     clone = clone --recursive
-    pub = "!f(){ git push ${1:-origin} --follow-tags; }; f"
+    pubone = "!f(){ git push ${1:-origin} --follow-tags; }; f"
+    pub = "!f(){ for line in $(git remote -v | cut -f1 | sort -u); do git push $line --all --follow-tags; done; }; f"
     fuse = "!f(){ current=$(git branch --show-current); git checkout $1 && git merge $current && git checkout $current; }; f"
     sshify = "!f(){ [[ $(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '/com/ {print $1}') == "https:" ]] && gitname=$(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '{print $4,$5}' | sed 's! !/!g') && git remote set-url origin git@github.com:$gitname.git; }; f"
     get = "!f(){ INPUT=${1:-$(xsel --clipboard)}; NAMEEE=$(echo $INPUT | cut -d/ -f1-5); git clone --recursive $NAMEEE; }; f"
@@ -70,20 +71,20 @@
 [gc]
     writeCommitGraph = true
 [commit]
-	gpgsign = true
+    gpgsign = true
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 [user]
     name = Trim Bresilla
     email = trim.bresilla@gmail.com
-	signingkey = F337B1747050659CABAAE714177223966B794B54
+    signingkey = F337B1747050659CABAAE714177223966B794B54
 
 [includeIf "gitdir:~/data/code/WUR"]
     path = ~/.config/git/wur
 
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
