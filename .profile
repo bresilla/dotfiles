@@ -13,6 +13,7 @@ export PATH=$PATH:/usr/local/go/bin
 #USER BINARIES AND SCRIPTS
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
+[[ -d /opt/TurboVNC/bin/vncserver ]] && PATH="/opt/TurboVNC/bin/vncserver:$PATH"
 [[ -d "/env/bin" ]] && PATH="/env/bin:$PATH"
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
