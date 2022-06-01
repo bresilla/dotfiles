@@ -581,6 +581,27 @@ function define_groups()
     Group.new('DashboardCenter',            colors.ac_l,     nil)
     Group.new('DashboardFooter',            colors.r1,       nil)
 
+    -- === COMPLETION ===
+    Group.new('CmpItemKindText',            colors.r0,             colors.orange)
+    Group.new('CmpItemKindMethod',          colors.r0,             colors.blue)
+    Group.new('CmpItemKindFunction',        colors.r0,             colors.blue)
+    Group.new('CmpItemKindConstructor',     colors.r0,             colors.yellow)
+    Group.new('CmpItemKindField',           colors.r0,             colors.blue)
+    Group.new('CmpItemKindClass',           colors.r0,             colors.yellow)
+    Group.new('CmpItemKindInterface',       colors.r0,             colors.yellow)
+    Group.new('CmpItemKindModule',          colors.r0,             colors.blue)
+    Group.new('CmpItemKindProperty',        colors.r0,             colors.blue)
+    Group.new('CmpItemKindValue',           colors.r0,             colors.orange)
+    Group.new('CmpItemKindVariable',        colors.r0,             colors.orange)
+    Group.new('CmpItemKindEnum',            colors.r0,             colors.yellow)
+    Group.new('CmpItemKindKeyword',         colors.r0,             colors.purple)
+    Group.new('CmpItemKindSnippet',         colors.r0,             colors.green)
+    Group.new('CmpItemKindFile',            colors.r0,             colors.blue)
+    Group.new('CmpItemKindEnumMember',      colors.r0,             colors.cyan)
+    Group.new('CmpItemKindConstant',        colors.r0,             colors.orange)
+    Group.new('CmpItemKindStruct',          colors.r0,             colors.yellow)
+    Group.new('CmpItemKindTypeParameter',   colors.r0,             colors.yellow)
+
 
     -- === SYNTAX ===
     Group.new('Function'       , colors.magenta_faint           , colors.none)

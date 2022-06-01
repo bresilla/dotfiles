@@ -263,6 +263,6 @@ bindkey -s '^A' ' tab\n'
 
 #--------------------------------------------------------------------------------------------------------------------
 
-if [[ $(lsb_release -i | cut -d':' -f2 | xargs) == "Ubuntu" ]]; then
-    cd $(cat /tmp/debi_pwd)
-fi
+# if [[ $(lsb_release -i | cut -d':' -f2 | xargs) == "Ubuntu" ]]; then
+#     cd $(\cat /tmp/debi_pwd)
+# fi

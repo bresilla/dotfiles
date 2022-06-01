@@ -1,3 +1,4 @@
+
 ----------------------------------- CMP  -----------------------------------------
 local cmp = require'cmp'
 cmp.setup({
@@ -20,45 +21,59 @@ cmp.setup({
             require 'snippy'.expand_snippet(args.body)
         end
     },
+    experimental = {
+        native_menu = false,
+        ghost_text = false,
+    },
+    confirmation = {
+        get_commit_characters = function()
+            return {}
+        end,
+    },
+    completion = {
+        completeopt = "menu,menuone,noinsert",
+        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
+        keyword_length = 1,
+    },
+    snippet = {
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+        end,
+    },
     formatting = {
+        fields = { "kind", "abbr" },
         format = function(entry, vim_item)
-            vim_item.menu = ({
-                buffer = "[Buffer]",
-                nvim_lsp = "[LSP]",
-                luasnip = "[Snip]",
-                nvim_lua = "[Lua]",
-                latex_symbols = "[TEX]",
-            })[entry.source.name]
-
+            vim_item.menu = vim_item.kind
             vim_item.kind = ({
-                Text = '  ',
-                Function = '  ',
-                Method = ' ',
-                Constructor = ' ',
-                Field = ' ',
-                Variable = '  ',
-                Class = ' ',
-                Interface = ' ',
-                Module = ' ',
-                Property = '  ',
-                Unit = '  ',
-                Value = ' ',
-                Enum = '  ',
-                Keyword = ' ',
-                Snippet = ' ',
-                Color = ' ',
-                File = '  ',
-                Reference = ' ',
-                Folder = ' ',
-                EnumMember = ' ',
-                Constant = '  ',
-                Struct = ' ',
-                Event = ' ',
-                Operator = '  ',
-                TypeParameter = ' ',
+                Text = "  ",
+                Method = "  ",
+                Function = "  ",
+                Constructor = "  ",
+                Field = "  ",
+                Variable = "  ",
+                Class = " ﴯ ",
+                Interface = "  ",
+                Module = "  ",
+                Property = " ﰠ ",
+                Unit = "  ",
+                Value = "  ",
+                Enum = "  ",
+                Keyword = "  ",
+                Snippet = "  ",
+                Color = "  ",
+                File = "  ",
+                Reference = "  ",
+                Folder = "  ",
+                EnumMember = "  ",
+                Constant = "  ",
+                Struct = "  ",
+                Event = "  ",
+                Operator = "  ",
+                TypeParameter = "  "
             })[vim_item.kind]
 
             return vim_item
         end,
     },
+    preselect = cmp.PreselectMode.None,
 })

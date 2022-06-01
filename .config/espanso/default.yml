@@ -53,6 +53,8 @@ matches:
         params:
           cmd: "echo Hello from your shell"
 
+  - trigger: ":wur"
+    replace: "trim.bresilla@wur.nl"
   - trigger: ":hotmail"
     replace: "kushtrim.bresilla@hotmail.com"
   - trigger: ":gmail"

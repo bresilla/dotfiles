@@ -123,8 +123,8 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
-#export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-#export TURTLEBOT3_MODEL=burger
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export TURTLEBOT3_MODEL=burger
 
 
 
