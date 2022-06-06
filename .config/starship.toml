@@ -28,7 +28,7 @@ $directory\
 [hostname]
 style = "bg:237 bold italic fg:15"
 ssh_only = false
-format = "[$ssh_symbol ]($style)[ $hostname ]($style)"
+format = "[ $ssh_symbol]($style)[ $hostname ]($style)"
 
 [username]
 show_always = true
