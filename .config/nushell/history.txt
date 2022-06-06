@@ -101,3 +101,12 @@ ll | where type=Dir
 ll | where type==Dir
 ll | where type == Dir
 eval "$(zoxide init posix --hook prompt)"
+nvim /home/bresilla/.config/nushell/env.nu
+cd
+cd  /doc/docs/WUR/data/HUMAN_ANIMAL/deeplab
+ll
+lsblk
+ll
+alias ll = ls -l
+ll
+lsblk

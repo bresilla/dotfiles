@@ -1,0 +1,10 @@
+#!/bin/bash
+
+distro_name=$(lsb_release -i | cut -d':' -f2 | xargs)
+if [[ $distro_name == "Arch" ]]; then
+    printf 
+elif [[ $distro_name == "Ubuntu" ]]; then
+    printf 
+else
+    exit 1
+fi

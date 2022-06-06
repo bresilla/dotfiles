@@ -1,13 +1,16 @@
 format = """
 $hostname\
+${custom.distro}\
 $username\
+${custom.direnv}\
 $sudo\
 ${custom.tab}\
+${custom.tab2}\
 $status\
 [| ](bg:0 fg:7)
 """
 
-continuation_prompt = "▶▶"
+continuation_prompt = " > "
 
 right_format = """
 $c\
@@ -28,7 +31,7 @@ $directory\
 [hostname]
 style = "bg:237 bold italic fg:15"
 ssh_only = false
-format = "[ $ssh_symbol]($style)[ $hostname ]($style)"
+format = "[ $ssh_symbol]($style)[$hostname ]($style)"
 
 [username]
 show_always = true
@@ -40,7 +43,6 @@ format = '[ $user ]($style)'
 style = "bg:237 fg:15"
 format = "[ $path ]($style)"
 truncation_length = 3
-truncate_to_repo = false
 
 [directory.substitutions]
 "Documents" = " "
@@ -57,17 +59,41 @@ format = '[[ $symbol $branch ]($style)]($style)'
 style = "bg:1 fg:0"
 format = '[[($all_status$ahead_behind )]($style)]($style)'
 
-[custom.tab]
+[custom.env]
 style="fg:4"
+command = "echo $ENVNAME"
+when = """ [[ -n $ENVNAME ]] """
+format = "[|](bg:0 fg:7)[ $output ]($style)[|](bg:0 fg:7)"
+
+[custom.tab]
+style="bg:6 bold italic fg:0"
 command = "echo $TAB | tr -d '/'"
 when = """ [[ -n $TAB ]] """
-format = "[|](bg:0 fg:7)[ $output ]($style)[|](bg:0 fg:7)"
+format = "[|](bg:0 fg:7)[ t: $output ]($style)"
+
+[custom.tab2]
+style="bg:237 italic fg:15"
+command = "echo $(( $(tab -l 2> /dev/null | wc -l) - 1 ))"
+when = """ [[ ! -n $TAB ]] && [[ $(( $(tab -l 2> /dev/null | wc -l) - 1 )) -gt 0  ]] """
+format = "[|](bg:0 fg:7)[ $output ]($style)"
 
 [custom.snitch]
 style="fg:7"
 command = "snitch list 2>/dev/null | wc -l"
 when = """ [[ -n $ENVNAME ]] """
-format = "[|](bg:0 fg:7)[ TODO: $output ]($style)[|](bg:0 fg:7)"
+format = "[|](bg:0 fg:7)[ TODO: $output ]($style)"
+
+[custom.direnv]
+style="bg:1 fg:0"
+command = "echo ▓"
+when = """ [[ -n $DIRENV_DIR ]] """
+format = "[$output]($style)"
+
+[custom.distro]
+style = "bg:1 fg:0"
+command = "echo $(/env/dot/.func/shell/distrologo)"
+when = true
+format = "[ $output]($style)"
 
 [status]
 style = "bg:0 fg:9"
@@ -116,12 +142,6 @@ style = "bg:6 fg:0"
 format = '[[ $symbol ($version) ]($style)]($style)'
 
 [conda]
-symbol = "⬢"
+symbol = "🅒"
 style = "bg:6 fg:0"
 format = "[ via [$symbol $environment ]($style)]($style)"
-
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#33658A"
-format = '[[ ♥ $time ](bg:#33658A)]($style)'
