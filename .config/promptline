@@ -307,16 +307,9 @@ function __promptline_right_prompt {
 }
 
 function __tmuxline_right_prompt {
-    #WORKING DIR or GIT
-    # local w=$(tmux showenv -g TMUX_PWD_$(tmux display -p "$3" | tr -d %)  | sed 's/^.*=//')
-    gitroot=$(git -C $1 rev-parse --show-toplevel)
-    if git ls-remote $gitroot -q ; then
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${accentTX}${arrER}";
-        printf "%s" "$prefix" "$(/env/bin/gitmux -cfg $HOME/.config/gitmux/gitmux.conf $gitroot)" "$suffix"
-    else
-        prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; 
-        printf "%s" "$prefix" "$(__promptline_cwd 2 right $1)" "$suffix"
-    fi
+    #WORKING DIR
+    prefix="${conTX}${arrER}${space}${defaultFG}" suffix="${space}${greyTX}"; 
+    printf "%s" "$prefix" "$(__promptline_cwd 2 right $1)" "$suffix"
     #CMD TIME
     prefix="${accentTX}${arrFR}${dark_TX}${accentBG}${space}" suffix="${space}${blackTX}${arrER}"; printf "%s" "$prefix" "$(__cpustats)" "$suffix"
     #LOAD AVERAGE

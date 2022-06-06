@@ -5,7 +5,7 @@ After=graphical.target
 [Service]
 Type=simple
 ExecStartPre=/bin/sleep 2
-ExecStart=/usr/bin/doas /env/dot/.func/network/hotspot wlan0 wlan0 algorithm "Dyhere::024??"
+ExecStart=/usr/bin/doas /env/dot/.func/network/hotspot --hidden wlan0 wlan0 algorithm "Dyhere::024??"
 ExecStop=/usr/bin/doas rm /tmp/hotspot.all.lock
 Restart=on-failure
 

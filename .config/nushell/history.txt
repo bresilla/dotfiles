@@ -1,0 +1,103 @@
+nvim /home/bresilla/.config/nushell/env.nu
+cargo install nu --all-features
+cd ~
+cargo install nu --all-features
+config set prompt "starship prompt"
+config
+config nu
+ll
+ls
+config set prompt "starship prompt"
+config --set [use_starship $true]
+ll
+clear
+ls
+ll
+ls -la
+ll
+lsblk
+bash
+ll
+ls
+ll
+ls
+ll
+bash
+ll
+bash -c "[[ ! -n $TAB ]]"
+echo $TAB
+cd
+cd deeplab
+cd -
+ll
+export TAB=new2
+export 
+tab
+tab
+let-env TAB=new2
+let-env TAB = "new2"
+echo $TAB
+bash -c "echo $TAB"
+let-env TAB = "new3"
+bash -c "echo $TAB"
+ll
+ls
+fish
+ll
+ls -la
+ls -ll
+\ll
+\ll\s
+\ls
+\exaexa
+exa
+exa -la
+exa ll
+exa la
+ll
+direnv export json | from json | to toml | echo "[env]" $(char newline) $it | save .nu-env
+direnv export json | from json | to toml | each { echo "[env]" $(char newline) $it } | save .nu-env
+  direnv export elvish | from json | load-env
+direnv export elvish | from json
+direnv export elvish 
+ll
+alias 
+alias --help
+alias ll = ls -l
+ll
+la
+ls --help
+alias la = ls -la
+ll
+la
+ll
+la
+cd  /doc/docs/WUR/data/HUMAN_ANIMAL/deeplab
+direnv
+direnv load
+direnv reload
+direnv export elvish 
+echo $ENVNAME
+direnv export elvish | from json | load-env
+echo $ENVNAME
+echo .envrc
+cat .envrc
+direnv export elvish 
+cd  /doc/docs/WUR/data/HUMAN_ANIMAL/deeplab
+direnv export elvish 
+cat .envrc
+run
+ls 
+ls | where type = "Dir"
+ls | where type == "Dir"
+ls | where type == "Dir" | autoview
+ls | where type == "Dir" | echo
+ls | where type == Dir
+ll
+alias la = ls -la
+alias ll = ls -l
+ll
+ll | where type=Dir
+ll | where type==Dir
+ll | where type == Dir
+eval "$(zoxide init posix --hook prompt)"

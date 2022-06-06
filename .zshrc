@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #--------------------------------------------------------------------------------------------------------------------
 ###THEME
-[ -f ~/.config/promptline ] && source ~/.config/promptline
+#[ -f ~/.config/promptline ] && source ~/.config/promptline
 
 #--------------------------------------------------------------------------------------------------------------------
 ###WAL COLORS
@@ -108,19 +108,8 @@ autoload compinit && compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 # TMOUT=1
 TRAPALRM() { [[ "$WIDGET" != "complete-word" ]] && zle reset-prompt }
 
-[ -d ~/.config/zsh/insult ] && . ~/.config/zsh/insult
-[ -f ~/.config/zsh/async ] && autoload -U async
-[ -d ~/.config/zsh/cmdtime ] && source ~/.config/zsh/cmdtime/zsh-command-time.zsh
-[ -d ~/.config/zsh/visualvi ] && source ~/.config/zsh/visualvi/zsh-vimode-visual.zsh
 [ -d ~/.config/zsh/autosuggestions ] && source ~/.config/zsh/autosuggestions/zsh-autosuggestions.zsh
 [ -d ~/.config/zsh/syntax ] && source ~/.config/zsh/syntax/zsh-syntax-highlighting.zsh
-#[ -d ~/.config/zsh/almostontop ] && source ~/.config/zsh/almostontop/almostontop.plugin.zsh
-[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-history-substring-search.zsh
-[ -d ~/.config/zsh/upsearch ] && source ~/.config/zsh/upsearch/zsh-miscellaneous.zsh
-[ -d ~/.config/zsh/autopair ] && source ~/.config//zsh/autopair/autopair.zh
-[ -d ~/.config/zsh/completions ] && source ~/.config/zsh/completions/zsh-completions.zsh
-
-[ -d ~/.config/zsh/cmp ] && source ~/.config/zsh/cmp/cmp.plugin.zsh
 
 fpath+="/home/bresilla/.config/zsh/completions/src"
 
@@ -184,9 +173,11 @@ alias \$=''
 ###COD
 [[ -x "$(command -v cod)" ]] && source <(cod init $$ zsh)
 
-
 ###NOSTROMO
 [[ -x "$(command -v nostromo)" ]] && eval "$(nostromo completion)"
+
+###STARSHIP
+[[ -x "$(command -v starship)" ]] && eval "$(starship init zsh)"
 
 ###SSH&GPG
 export GPG_TTY=$(tty)
@@ -258,7 +249,6 @@ done
 
 #--------------------------------------------------------------------------------------------------------------------
 #TAB-RS (shotrcut: Ctrl + e)
-[[ -n $TAB ]] && [ -f ~/data/docs/BRAND/logo/ascii ] && ~/dots/.func/system/bresilla
 bindkey -s '^A' ' tab\n'
 
 #--------------------------------------------------------------------------------------------------------------------

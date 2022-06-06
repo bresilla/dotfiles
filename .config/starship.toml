@@ -1,0 +1,127 @@
+format = """
+$hostname\
+$username\
+$sudo\
+${custom.tab}\
+$status\
+[| ](bg:0 fg:7)
+"""
+
+continuation_prompt = "▶▶"
+
+right_format = """
+$c\
+$rust\
+$golang\
+$haskell\
+$julia\
+$nodejs\
+$nim\
+$conda\
+${custom.snitch}\
+[|](bg:0 fg:7)
+$git_branch\
+$git_status\
+$directory\
+"""
+
+[hostname]
+style = "bg:237 bold italic fg:15"
+ssh_only = false
+format = "[$ssh_symbol ]($style)[ $hostname ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:1 fg:0"
+style_root = "bg:#9A348E"
+format = '[ $user ]($style)'
+
+[directory]
+style = "bg:237 fg:15"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncate_to_repo = false
+
+[directory.substitutions]
+"Documents" = " "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:1 fg:0"
+format = '[[ $symbol $branch ]($style)]($style)'
+
+[git_status]
+style = "bg:1 fg:0"
+format = '[[($all_status$ahead_behind )]($style)]($style)'
+
+[custom.tab]
+style="fg:4"
+command = "echo $TAB | tr -d '/'"
+when = """ [[ -n $TAB ]] """
+format = "[|](bg:0 fg:7)[ $output ]($style)[|](bg:0 fg:7)"
+
+[custom.snitch]
+style="fg:7"
+command = "snitch list 2>/dev/null | wc -l"
+when = """ [[ -n $ENVNAME ]] """
+format = "[|](bg:0 fg:7)[ TODO: $output ]($style)[|](bg:0 fg:7)"
+
+[status]
+style = "bg:0 fg:9"
+format = '[ $hex_status ]($style)'
+map_symbol = true
+disabled = false
+
+[sudo]
+style = "bg:6 bold fg:0"
+format = "[ as SUDO ]($style)"
+disabled = false
+
+[c]
+symbol = " "
+style = "bg:6 fg:0"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[golang]
+symbol = " "
+style = "bg:6 fg:0"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:6 fg:0"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[julia]
+symbol = " "
+style = "bg:6 fg:0"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:6 fg:0"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[nim]
+symbol = " "
+style = "bg:6 fg:0"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:6 fg:0"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[conda]
+symbol = "⬢"
+style = "bg:6 fg:0"
+format = "[ via [$symbol $environment ]($style)]($style)"
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#33658A"
+format = '[[ ♥ $time ](bg:#33658A)]($style)'
