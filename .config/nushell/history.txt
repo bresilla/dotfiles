@@ -110,3 +110,15 @@ ll
 alias ll = ls -l
 ll
 lsblk
+ll
+alias ll = ls -l
+ll
+alias --help
+lsblk
+d
+dfc
+df
+dfc
+ll
+df
+lsblk

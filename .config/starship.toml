@@ -21,7 +21,6 @@ $julia\
 $nodejs\
 $nim\
 $conda\
-${custom.snitch}\
 [|](bg:0 fg:7)
 $git_branch\
 $git_status\
