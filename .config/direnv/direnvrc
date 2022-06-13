@@ -1,6 +1,10 @@
 #!/bin/sh
 
 export INDIRENV=true;
+local BLUE='\033[0;34m';
+local GREEN='\033[0;32m';
+local RED='\033[0;31m';
+local NC='\033[0m'
 
 use_nix() {
     [ -x "$(command -v nix)" ] || exit 0
@@ -72,6 +76,7 @@ layout_mamba() {
     else
         micromamba create -n `basename $PWD` mamba libmambapy -c conda-forge
         micromamba activate $MAMBA_ROOT_PREFIX
+        micromamba info
     fi
 }
 
