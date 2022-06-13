@@ -64,7 +64,7 @@ layout_conda() {
 
 layout_mamba() {
     export MAMBA_ROOT_PREFIX="$PWD/.direnv/mamba";
-    export VENV=$MAMBA_ROOT_PREFIX/.direnv/mamba/envs/`basename $PWD`
+    export VENV=$MAMBA_ROOT_PREFIX/envs/`basename $PWD`
     eval "$(micromamba shell hook --shell=bash)"
 
     if [[ -d $VENV/conda-meta ]]; then
