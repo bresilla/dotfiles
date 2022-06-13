@@ -62,6 +62,18 @@ layout_conda() {
     printf "\nenvironment path: \t${BLUE}${conda_env}${NC}\n\n";
 }
 
+layout_mamba() {
+    export MAMBA_ROOT_PREFIX="$PWD/.direnv/mamba";
+    eval "$(micromamba shell hook --shell=bash)"
+
+    if [[ -d $PWD/.direnv/mamba/envs/`basename $PWD`/conda-meta ]]; then
+        micromamba activate $PWD/.direnv/mamba/envs/`basename $PWD`
+    else
+        micromamba create -n `basename $PWD` mamba libmambapy -c conda-forge
+        micromamba activate $PWD/.direnv/mamba/envs/`basename $PWD`
+    fi
+}
+
 
 layout_go() {
   export GOPATH="$PWD/vendor/"
