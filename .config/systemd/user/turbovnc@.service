@@ -3,7 +3,8 @@ Description=Remote desktop service (TurboVNC)
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
+PIDFile=/home/%u/.vnc/%H%i.pid
 ExecStartPre=/opt/TurboVNC/bin/vncserver -kill :%i > /dev/null 2>&1
 ExecStart=/opt/TurboVNC/bin/vncserver :%i
 ExecStop=/opt/TurboVNC/bin/vncserver -kill :%i
