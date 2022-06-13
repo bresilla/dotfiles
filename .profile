@@ -25,7 +25,6 @@ export NIXPKGS_ALLOW_UNFREE=1
 #MAMBA and/or CONDA
 export CONDA_HOME="/con"
 [[ -f "/con/etc/profile.d/conda.sh" ]]  && . "/con/etc/profile.d/conda.sh"
-[[ -f "/con/etc/profile.d/mamba.sh" ]]  && . "/con/etc/profile.d/mamba.sh"
 
 #PLATFORMIO
 # export PLATFORMIO_CORE_DIR=/opt/pio
