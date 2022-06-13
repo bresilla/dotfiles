@@ -4,7 +4,7 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-ExecStartPre=/bin/sleep 2
+ExecStartPre=/bin/sleep 10
 ExecStart=/usr/share/novnc/utils/launch.sh --vnc localhost:5901 --listen 8080
 
 [Install]

@@ -1,5 +1,5 @@
 [Unit]
-Description=Remote desktop service (VNC)
+Description=Remote desktop service (TigerVNC)
 After=network.target
 
 [Service]
