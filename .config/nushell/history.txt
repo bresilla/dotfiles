@@ -122,3 +122,12 @@ dfc
 ll
 df
 lsblk
+ll
+ls
+df
+ls
+bash -c "echo $TAB"
+load-env $TAG
+load-env $TAB
+env
+load-env TAB

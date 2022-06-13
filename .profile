@@ -51,7 +51,7 @@ export PATH="$HOME/.local/alt/shims:$PATH"
 
 
 #DISPLAY
-[[ -z "${DISPLAY}" ]] && export DISPLAY=:0
+# [[ -z "${DISPLAY}" ]] && export DISPLAY=:0
 
 #PKGCONFIGS
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig

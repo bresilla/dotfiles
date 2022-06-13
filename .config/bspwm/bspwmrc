@@ -36,6 +36,7 @@ bspc rule -a scrcpy state=floating
 bspc rule -a MPlayer state=floating
 bspc rule -a matplotlib state=floating
 bspc rule -a URxvt state=floating
+bspc rule -a FLTK state=floating
 bspc rule -a Oblogout state=fullscreen
 bspc rule -a Zathura state=tiled
 bspc rule -a URxvt:launcher state=floating center sticky

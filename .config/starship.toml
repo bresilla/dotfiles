@@ -1,7 +1,7 @@
 format = """
 $hostname\
-${custom.distro}\
 $username\
+${custom.distro}\
 ${custom.direnv}\
 $sudo\
 ${custom.tab}\
@@ -92,7 +92,7 @@ format = "[$output]($style)"
 style = "bg:1 fg:0"
 command = "echo $(/env/dot/.func/shell/distrologo)"
 when = true
-format = "[ $output]($style)"
+format = "[$output ]($style)"
 
 [status]
 style = "bg:0 fg:9"
