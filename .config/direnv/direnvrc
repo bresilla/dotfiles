@@ -73,8 +73,9 @@ layout_mamba() {
 
     if [[ -d $VENV/conda-meta ]]; then
         micromamba activate $VENV
+        micromamba info
     else
-        micromamba create -n `basename $PWD` mamba libmambapy -c conda-forge
+        micromamba create -n `basename $PWD` mamba libmambapy python=${1:-3.9} -c conda-forge
         micromamba activate $MAMBA_ROOT_PREFIX
         micromamba info
     fi
