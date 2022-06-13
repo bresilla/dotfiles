@@ -161,8 +161,8 @@ alias \$=''
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 ##NAME
-[[ -x "$(command -v tmux)" ]] && tmux setenv -g TMUX_FANCY_$(tmux display -p "#D" | tr -d %) $FANCY
-[[ -x "$(command -v tmux)" ]] && tmux setenv FANCY $FANCY
+# [[ -x "$(command -v tmux)" ]] && tmux setenv -g TMUX_FANCY_$(tmux display -p "#D" | tr -d %) $FANCY
+# [[ -x "$(command -v tmux)" ]] && tmux setenv FANCY $FANCY
 
 ###DIRENV
 [[ -x "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
@@ -178,6 +178,9 @@ alias \$=''
 
 ###STARSHIP
 [[ -x "$(command -v starship)" ]] && eval "$(starship init zsh)"
+
+###STARSHIP
+[[ -x "$(command -v micromamba)" ]] && eval "$(micromamba shell hook --shell=zsh)"
 
 ###SSH&GPG
 export GPG_TTY=$(tty)
@@ -250,9 +253,3 @@ done
 #--------------------------------------------------------------------------------------------------------------------
 #TAB-RS (shotrcut: Ctrl + e)
 bindkey -s '^A' ' tab\n'
-
-#--------------------------------------------------------------------------------------------------------------------
-
-# if [[ $(lsb_release -i | cut -d':' -f2 | xargs) == "Ubuntu" ]]; then
-#     cd $(\cat /tmp/debi_pwd)
-# fi
