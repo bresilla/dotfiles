@@ -1,0 +1,131 @@
+{
+    "default_path": "/env/bin",
+    "bins": {
+        "/env/bin/argc": {
+            "path": "/env/bin/argc",
+            "remote_name": "argc",
+            "version": "v0.8.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/sigoden/argc/releases/tag/v0.8.1",
+            "provider": "",
+            "package_path": "argc"
+        },
+        "/env/bin/atuin": {
+            "path": "/env/bin/atuin",
+            "remote_name": "atuin",
+            "version": "v0.10.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/ellie/atuin",
+            "provider": "github",
+            "package_path": "atuin-v0.10.0-x86_64-unknown-linux-gnu/atuin"
+        },
+        "/env/bin/doctl": {
+            "path": "/env/bin/doctl",
+            "remote_name": "doctl",
+            "version": "v1.76.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/digitalocean/doctl/releases/tag/v1.76.2",
+            "provider": "",
+            "package_path": "doctl"
+        },
+        "/env/bin/fx": {
+            "path": "/env/bin/fx",
+            "remote_name": "fx",
+            "version": "24.0.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/antonmedv/fx",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/gotz": {
+            "path": "/env/bin/gotz",
+            "remote_name": "gotz",
+            "version": "v0.1.4",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/merschformann/gotz/releases/tag/v0.1.4",
+            "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/ha": {
+            "path": "/env/bin/ha",
+            "remote_name": "ha",
+            "version": "4.18.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/home-assistant/cli/releases/tag/4.18.0",
+            "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/jq": {
+            "path": "/env/bin/jq",
+            "remote_name": "jq",
+            "version": "jq-1.6",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/stedolan/jq",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/posh": {
+            "path": "/env/bin/posh",
+            "remote_name": "posh",
+            "version": "v8.5.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/tag/v8.5.0",
+            "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/restish": {
+            "path": "/env/bin/restish",
+            "remote_name": "restish",
+            "version": "v0.14.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/danielgtaylor/restish",
+            "provider": "github",
+            "package_path": "restish"
+        },
+        "/env/bin/smug": {
+            "path": "/env/bin/smug",
+            "remote_name": "smug",
+            "version": "v0.2.9",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/ivaaaan/smug/releases/tag/v0.2.9",
+            "provider": "",
+            "package_path": "smug"
+        },
+        "/env/bin/starship": {
+            "path": "/env/bin/starship",
+            "remote_name": "starship",
+            "version": "v1.7.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/starship/starship",
+            "provider": "github",
+            "package_path": "starship"
+        },
+        "/env/bin/stew": {
+            "path": "/env/bin/stew",
+            "remote_name": "stew",
+            "version": "v0.3.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/marwanhawari/stew",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/weylus": {
+            "path": "/env/bin/weylus",
+            "remote_name": "weylus",
+            "version": "v0.11.4",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/H-M-H/Weylus",
+            "provider": "github",
+            "package_path": "weylus"
+        },
+        "/env/bin/wireproxy": {
+            "path": "/env/bin/wireproxy",
+            "remote_name": "wireproxy",
+            "version": "v1.0.3",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/octeep/wireproxy",
+            "provider": "github",
+            "package_path": "wireproxy"
+        }
+    }
+}
