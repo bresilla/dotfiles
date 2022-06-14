@@ -82,6 +82,15 @@
             "provider": "",
             "package_path": ""
         },
+        "/env/bin/hub": {
+            "path": "/env/bin/hub",
+            "remote_name": "hub",
+            "version": "v2.14.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/github/hub",
+            "provider": "github",
+            "package_path": "hub-linux-amd64-2.14.2/bin/hub"
+        },
         "/env/bin/jq": {
             "path": "/env/bin/jq",
             "remote_name": "jq",
