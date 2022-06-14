@@ -8,6 +8,8 @@ cmp.setup({
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
         ['<PageUp>'] = cmp.mapping.scroll_docs(1),
         ['<PageDown>'] = cmp.mapping.scroll_docs(-1),
+        ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+        ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
     },
     sources = {
         -- { name = 'cmp_tabnine' },

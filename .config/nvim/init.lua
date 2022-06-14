@@ -20,6 +20,7 @@ vim.o.compatible = false
 vim.o.ruler = true
 vim.o.shiftround = true
 vim.o.hlsearch = true
+vim.o.cmdheight = 0
 
 vim.o.autoread = true
 vim.o.history = 5000
