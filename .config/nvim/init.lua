@@ -85,28 +85,10 @@ vim.o.listchars = "extends:›,precedes:‹,nbsp:␣,trail:·,tab:→\\ ,eol:¬"
 
 ---------------------------------------------- === PLUGINS === ----------------------------------------------
 
-local os_name = vim.loop.os_getenv 'OS' or 'Unknown'
-local install_path = vim.fn.stdpath('data') .. os_name .. '/site/pack/packer/opt/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.cmd('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-end
-vim.cmd('packadd packer.nvim')
-
-local function join_paths(...)
-  local path_sep = on_windows and '\\' or '/'
-  local result = table.concat({ ... }, path_sep)
-  return result
-end
-
-require('packer').init({
-    auto_clean = true,
-    package_root = join_paths(vim.fn.stdpath('data'),  os_name, 'site', 'pack'),
-    compile_path = join_paths(vim.fn.stdpath('config'),  os_name, 'plugin', 'packer_compiled.lua'),
-})
-
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.cmd('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 require('packer').startup(
