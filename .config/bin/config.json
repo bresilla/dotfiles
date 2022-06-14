@@ -19,6 +19,24 @@
             "provider": "github",
             "package_path": "atuin-v0.10.0-x86_64-unknown-linux-gnu/atuin"
         },
+        "/env/bin/bat": {
+            "path": "/env/bin/bat",
+            "remote_name": "bat",
+            "version": "v0.21.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/sharkdp/bat",
+            "provider": "github",
+            "package_path": "bat-v0.21.0-x86_64-unknown-linux-musl/bat"
+        },
+        "/env/bin/bin": {
+            "path": "/env/bin/bin",
+            "remote_name": "bin",
+            "version": "v0.15.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/marcosnils/bin",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/doctl": {
             "path": "/env/bin/doctl",
             "remote_name": "doctl",
@@ -27,6 +45,15 @@
             "url": "https://github.com/digitalocean/doctl/releases/tag/v1.76.2",
             "provider": "",
             "package_path": "doctl"
+        },
+        "/env/bin/exa": {
+            "path": "/env/bin/exa",
+            "remote_name": "exa",
+            "version": "v0.10.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/ogham/exa",
+            "provider": "github",
+            "package_path": "bin/exa"
         },
         "/env/bin/fx": {
             "path": "/env/bin/fx",
