@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+pactl set-card-profile alsa_card.pci-0000_00_1f.3 off
+
+sleep 5
+
+pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo

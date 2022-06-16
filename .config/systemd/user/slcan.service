@@ -1,0 +1,10 @@
+[Unit]
+Description="Bring SL_CAN up"
+After=network.target
+
+[Service]
+ExecStart=/env/dot/.func/network/candev
+Type=oneshot
+
+[Install]
+WantedBy=default.target

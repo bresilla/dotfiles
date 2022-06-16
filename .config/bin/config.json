@@ -1,15 +1,6 @@
 {
     "default_path": "/env/bin",
     "bins": {
-        "/env/bin/argc": {
-            "path": "/env/bin/argc",
-            "remote_name": "argc",
-            "version": "v0.8.1",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/sigoden/argc/releases/tag/v0.8.1",
-            "provider": "",
-            "package_path": "argc"
-        },
         "/env/bin/atuin": {
             "path": "/env/bin/atuin",
             "remote_name": "atuin",
@@ -37,14 +28,23 @@
             "provider": "github",
             "package_path": ""
         },
-        "/env/bin/doctl": {
-            "path": "/env/bin/doctl",
-            "remote_name": "doctl",
-            "version": "v1.76.2",
+        "/env/bin/bore": {
+            "path": "/env/bin/bore",
+            "remote_name": "bore",
+            "version": "v0.4.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/digitalocean/doctl/releases/tag/v1.76.2",
-            "provider": "",
-            "package_path": "doctl"
+            "url": "github.com/ekzhang/bore",
+            "provider": "github",
+            "package_path": "bore"
+        },
+        "/env/bin/direnv": {
+            "path": "/env/bin/direnv",
+            "remote_name": "direnv",
+            "version": "v2.32.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/direnv/direnv",
+            "provider": "github",
+            "package_path": ""
         },
         "/env/bin/exa": {
             "path": "/env/bin/exa",
@@ -62,24 +62,6 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/antonmedv/fx",
             "provider": "github",
-            "package_path": ""
-        },
-        "/env/bin/gotz": {
-            "path": "/env/bin/gotz",
-            "remote_name": "gotz",
-            "version": "v0.1.4",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/merschformann/gotz/releases/tag/v0.1.4",
-            "provider": "",
-            "package_path": ""
-        },
-        "/env/bin/ha": {
-            "path": "/env/bin/ha",
-            "remote_name": "ha",
-            "version": "4.18.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/home-assistant/cli/releases/tag/4.18.0",
-            "provider": "",
             "package_path": ""
         },
         "/env/bin/hub": {
@@ -105,27 +87,18 @@
             "remote_name": "posh",
             "version": "v8.5.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/tag/v8.5.0",
-            "provider": "",
+            "url": "github.com/JanDeDobbeleer/oh-my-posh",
+            "provider": "github",
             "package_path": ""
         },
-        "/env/bin/restish": {
-            "path": "/env/bin/restish",
-            "remote_name": "restish",
-            "version": "v0.14.0",
+        "/env/bin/proji": {
+            "path": "/env/bin/proji",
+            "remote_name": "proji",
+            "version": "v0.20.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/danielgtaylor/restish",
+            "url": "github.com/nikoksr/proji",
             "provider": "github",
-            "package_path": "restish"
-        },
-        "/env/bin/smug": {
-            "path": "/env/bin/smug",
-            "remote_name": "smug",
-            "version": "v0.2.9",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/ivaaaan/smug/releases/tag/v0.2.9",
-            "provider": "",
-            "package_path": "smug"
+            "package_path": "proji"
         },
         "/env/bin/starship": {
             "path": "/env/bin/starship",
@@ -145,14 +118,23 @@
             "provider": "github",
             "package_path": ""
         },
-        "/env/bin/weylus": {
-            "path": "/env/bin/weylus",
-            "remote_name": "weylus",
-            "version": "v0.11.4",
+        "/env/bin/tab": {
+            "path": "/env/bin/tab",
+            "remote_name": "tab",
+            "version": "v0.5.7",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/H-M-H/Weylus",
+            "url": "github.com/austinjones/tab-rs",
             "provider": "github",
-            "package_path": "weylus"
+            "package_path": "tab"
+        },
+        "/env/bin/termshark": {
+            "path": "/env/bin/termshark",
+            "remote_name": "termshark",
+            "version": "v2.3.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/gcla/termshark",
+            "provider": "github",
+            "package_path": "termshark_2.3.0_linux_x64/termshark"
         },
         "/env/bin/wireproxy": {
             "path": "/env/bin/wireproxy",
@@ -162,6 +144,15 @@
             "url": "https://github.com/octeep/wireproxy",
             "provider": "github",
             "package_path": "wireproxy"
+        },
+        "/env/bin/zoxide": {
+            "path": "/env/bin/zoxide",
+            "remote_name": "zoxide",
+            "version": "v0.8.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/ajeetdsouza/zoxide",
+            "provider": "github",
+            "package_path": "zoxide"
         }
     }
 }
