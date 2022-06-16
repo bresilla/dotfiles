@@ -1,7 +1,8 @@
 #! /bin/bash
 
-BAUD=8
-DEV=can0
+BAUD=5
+#  0 ---  1 ---  2 ---  3 ---  4 ---  5 ---  6 ---  7 ---  8    BAUD
+# 10     20     50     100    125    250    500    800    1000  Kbits/s
 
 # Detect correct port for device interfaces
 TERM_PORT=$(ls -l /dev/serial/by-id/ | grep 1fc9_00a3 | sed 's/.*\///g' | awk '{if(NR==2) print $0}')
@@ -18,6 +19,7 @@ echo -ne "set can-mode slcan" > /dev/$TERM_PORT
 echo "Attaching slcan device..."
 
 # Attach to the port with slcand
+DEV=can0
 slcand -s$BAUD -o /dev/"$CANB_PORT" $DEV
 
 # Give interface time to come up
