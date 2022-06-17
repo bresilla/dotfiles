@@ -226,12 +226,12 @@ require('packer').startup(
                 require('plug_visualmulti')
             end
         }
-        -- use { 'mbbill/undotree',
-        --     config = function()
-        --         vim.api.nvim_set_keymap("n", "U", "", {noremap = true, callback = function() print(":redo<CR>") end})
-        --         vim.api.nvim_set_keymap("n", "C-U", "", {noremap = true, callback = function() print(":UndotreeToggle<CR> :UndotreeFocus<CR>") end})
-        --     end
-        -- }
+        use { 'mbbill/undotree',
+            config = function()
+                vim.api.nvim_set_keymap("n", "U", "", {noremap = true, callback = function() print(":redo<CR>") end})
+                vim.api.nvim_set_keymap("n", "C-U", "", {noremap = true, callback = function() print(":UndotreeToggle<CR> :UndotreeFocus<CR>") end})
+            end
+        }
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
     end
 )

@@ -13,25 +13,23 @@ echo "Terminal interface on: $TERM_PORT"
 echo "CAN Bus  interface on: $CANB_PORT"
 
 # Set the mode to slcan
-chmod a+rw /dev/$TERM_POR
-echo -ne "set can-mode slcan" > /dev/$TERM_PORT
-
-echo "Attaching slcan device..."
+#chmod a+rw /dev/$TERM_POR
+#echo -ne "set can-mode slcan" > /dev/$TERM_PORT
 
 # Attach to the port with slcand
 DEV=can0
-slcand -s$BAUD -o /dev/"$CANB_PORT" $DEV
+doas slcand -s$BAUD -o /dev/"$CANB_PORT" $DEV
 
 # Give interface time to come up
 sleep .25
 
 # Enable the inteface
-ifconfig $DEV up
-ifconfig $DEV txqueuelen 1000
+doas ifconfig $DEV up
+doas ifconfig $DEV txqueuelen 1000
 
 echo "Interface is enabled."
 
 # Turn up the inteface
-ip link set dev $DEV up
+doas ip link set dev $DEV up
 
 echo "Interface is UP."
