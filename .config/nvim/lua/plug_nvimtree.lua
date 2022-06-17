@@ -4,26 +4,6 @@ vim.cmd([[au FileType * lua vim.api.nvim_buf_set_keymap(0, 'n', '<tab>', ':NvimT
 
 vim.keymap.set({"n"}, '<tab>', [[ :NvimTreeToggle<CR> ]], {remap = true})
 
-vim.g.nvim_tree_root_folder_modifier = ":t"
-vim.g.nvim_tree_indent_markers = 1
-vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1 }
-vim.g.nvim_tree_icons = {
-    default = "",
-    symlink = "",
-    git_icons = {
-        unstaged = "×",
-        staged = "✓",
-        unmerged = "═",
-        renamed = "➜",
-        untracked = "★",
-        deleted = "-"
-    },
-    folder_icons = {
-        default = "",
-        open = ""
-    }
-}
-
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
@@ -73,6 +53,59 @@ require'nvim-tree'.setup {
         { key = "<M-r>",     action = "refresh"  },
       }
     }
-  }
+  },
+  renderer = {
+    add_trailing = false,
+    group_empty = false,
+    highlight_git = false,
+    full_name = false,
+    highlight_opened_files = "none",
+    root_folder_modifier = ":~",
+    indent_markers = {
+      enable = false,
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        item = "│ ",
+        none = "  ",
+      },
+    },
+    icons = {
+      webdev_colors = true,
+      git_placement = "before",
+      padding = " ",
+      symlink_arrow = " ➛ ",
+      show = {
+        file = true,
+        folder = true,
+        folder_arrow = true,
+        git = false,
+      },
+      glyphs = {
+        default = "",
+        symlink = "",
+        folder = {
+          arrow_closed = "",
+          arrow_open = "",
+          default = "",
+          open = "",
+          empty = "",
+          empty_open = "",
+          symlink = "",
+          symlink_open = "",
+        },
+        git = {
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "",
+          renamed = "➜",
+          untracked = "★",
+          deleted = "",
+          ignored = "◌",
+        },
+      },
+    },
+    special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+  },
 }
 

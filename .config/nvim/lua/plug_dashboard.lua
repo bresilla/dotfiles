@@ -1,8 +1,7 @@
 vim.keymap.set("n",           'ss',                   [[<cmd>SessionSave<CR>]])
 
-vim.g.dashboard_default_executive ='telescope'
-vim.g.dashboard_default_header = "cres"
-vim.g.dashboard_custom_header = {
+local db = require('dashboard')
+db.custom_header = {
     '                            ▄▄▄▄▄▄▄▄                             ' ,
     '                       ▄▄██████████████▄▄                        ' ,
     '                    ▄██████████████████████▄                     ' ,
@@ -33,11 +32,10 @@ vim.g.dashboard_custom_header = {
     '█         █ █           █▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀█ █ █ █ █▀▀▀▀▀▀▀▀▀█' ,
     '▀▀▀▀▀▀▀▀▀▀▀ ▀           ▀▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀ ▀ ▀▀▀▀▀▀▀▀▀▀▀' ,
 }
--- vim.g.dashboard_custom_section = {
-    -- last_session = {
-    --     description = {'... press [ENTER] to load session ...'},
-    --     command: = {':SessionLoad' }
-    -- },
--- }
-vim.cmd([[let g:dashboard_custom_section={ 'last_session': { 'description': ['... press [ENTER] to load session ...'], 'command': ':SessionLoad' }}]])
-vim.g.dashboard_custom_footer = { [[LESS IS SIGNIFICANTLY MORE]] }
+db.custom_center = {
+    {
+        desc = '... press [ENTER] to load session ...',
+        action ='SessionLoad'
+    },
+}
+db.custom_footer = { [[LESS IS SIGNIFICANTLY MORE]] }

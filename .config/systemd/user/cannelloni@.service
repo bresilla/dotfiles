@@ -1,10 +1,10 @@
 [Unit]
 Description=Configure Cannelloni at %I
-After=network.target candev@%I.service
+After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/doas /usr/local/bin/cannelloni -I %I -R 10.60.0.1 -r 20000 -l 20000
+ExecStart=/usr/local/bin/cannelloni -I %I -R 10.147.20.209 -r 20000 -l 20000
 ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
 Restart=always
 RestartSec=5

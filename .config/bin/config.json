@@ -82,6 +82,15 @@
             "provider": "github",
             "package_path": ""
         },
+        "/env/bin/just": {
+            "path": "/env/bin/just",
+            "remote_name": "just",
+            "version": "1.2.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/casey/just",
+            "provider": "github",
+            "package_path": "just"
+        },
         "/env/bin/posh": {
             "path": "/env/bin/posh",
             "remote_name": "posh",
