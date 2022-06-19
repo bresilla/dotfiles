@@ -24,7 +24,7 @@ xrandr --output $MONITOR1 --primary --mode 3456x2160 --pos 186x1080 --rotate nor
 #LULE
 pkill lule
 while pgrep -x lule >/dev/null; do sleep 1; done
-lule daemon -- start &
+lule daemon --loop=1000 -- start &
 
 
 #SHORTCUTS

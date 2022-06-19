@@ -37,6 +37,15 @@
             "provider": "github",
             "package_path": "bore"
         },
+        "/env/bin/cod": {
+            "path": "/env/bin/cod",
+            "remote_name": "cod",
+            "version": "v0.1.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/dim-an/cod",
+            "provider": "github",
+            "package_path": "cod"
+        },
         "/env/bin/direnv": {
             "path": "/env/bin/direnv",
             "remote_name": "direnv",
@@ -61,6 +70,15 @@
             "version": "24.0.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/antonmedv/fx",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/hck": {
+            "path": "/env/bin/hck",
+            "remote_name": "hck",
+            "version": "v0.7.5",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/sstadick/hck",
             "provider": "github",
             "package_path": ""
         },
@@ -91,13 +109,22 @@
             "provider": "github",
             "package_path": "just"
         },
+        "/env/bin/nostromo": {
+            "path": "/env/bin/nostromo",
+            "remote_name": "nostromo",
+            "version": "v0.11.4",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/pokanop/nostromo",
+            "provider": "github",
+            "package_path": "nostromo"
+        },
         "/env/bin/posh": {
             "path": "/env/bin/posh",
             "remote_name": "posh",
-            "version": "v8.5.0",
+            "version": "v8.5.2",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/JanDeDobbeleer/oh-my-posh",
-            "provider": "github",
+            "url": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/tag/v8.5.2",
+            "provider": "",
             "package_path": ""
         },
         "/env/bin/proji": {
@@ -112,10 +139,10 @@
         "/env/bin/starship": {
             "path": "/env/bin/starship",
             "remote_name": "starship",
-            "version": "v1.7.1",
+            "version": "v1.8.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/starship/starship",
-            "provider": "github",
+            "url": "https://github.com/starship/starship/releases/tag/v1.8.0",
+            "provider": "",
             "package_path": "starship"
         },
         "/env/bin/stew": {
@@ -145,6 +172,15 @@
             "provider": "github",
             "package_path": "termshark_2.3.0_linux_x64/termshark"
         },
+        "/env/bin/tuc": {
+            "path": "/env/bin/tuc",
+            "remote_name": "tuc",
+            "version": "v0.10.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/riquito/tuc",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/wireproxy": {
             "path": "/env/bin/wireproxy",
             "remote_name": "wireproxy",
@@ -153,6 +189,15 @@
             "url": "https://github.com/octeep/wireproxy",
             "provider": "github",
             "package_path": "wireproxy"
+        },
+        "/env/bin/xshe": {
+            "path": "/env/bin/xshe",
+            "remote_name": "xshe",
+            "version": "v0.4.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/superatomic/xshe",
+            "provider": "github",
+            "package_path": "xshe"
         },
         "/env/bin/zoxide": {
             "path": "/env/bin/zoxide",

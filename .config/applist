@@ -15,7 +15,8 @@ tk      - tokei             + code statistics                                   
 aa      - alertafter        + notify after command                                              + https://github.com/frewsxcv/alert-after               + rust
 rp      - ruplacer          + find and replace text in source files                             + https://github.com/TankerHQ/ruplacer                  + rust
 choose                      + alternative to cut + awk together                                 + https://github.com/theryangeary/choose                + rust
-hck     - tuc               + a sharp cut clone                                                 + https://github.com/sstadick/hck                       + rust
+hck                         + a sharp cut clone                                                 + https://github.com/sstadick/hck                       + rust
+tuc                         + when cut doesn't cut it                                           + https://github.com/riquito/tuc                        + rust
 grex                        + generae regex from user cases                                     + https://github.com/pemistahl/grex                     + rust
 -------------------------------------------------------               PACKAGES                  -----------------------------------------------------------------
 yay                         + yet another AUR helper                                            + https://github.com/Jguer/yay                          + go
@@ -56,6 +57,7 @@ mtr                         + 'traceroute' and 'ping' combines                  
 ipinfo                      + info about public IP                                              + https://github.com/Surendrajat/IPinfo                 + go
 subnetcalc                  + ip adress calculator                                              + https://github.com/dreibh/subnetcalc                  + c
 sipcalc                     + advanced subnet calculator                                        + https://github.com/sii/sipcalc                        + c
+wole                        + wake-on-lan packet generator                                      + https://github.com/ahmtcn123/wole                     + rust
 ------------------------------------------------------                  ADBLOCK                 --------------------------------------------------------------------
 maza                        + local ad blocker, like Pi-hole                                    + https://github.com/tanrax/maza-ad-blocking            + bash
 hblock                      + hosts adblocker                                                   + https://github.com/hectorm/hblock                     + bash
@@ -82,6 +84,7 @@ pueue                       + manage multiple running shell commands            
 argc                        + handy way to handle sh/bash cli parameters                        + https://github.com/sigoden/argc                       + rust
 -------------------------------------------------------                  ENV                    -----------------------------------------------------------------
 direnv                      + OTF local load and unload variables                               + https://github.com/direnv/direnv                      + go
+xshe                        + shell-independent tool for setting Environment Variables          + https://github.com/superatomic/xshe                   + rust
 env-modules                 + Dynamic modification of a user's environment                      + https://github.com/cea-hpc/modules                    + tcl
 lmod                        + Environment Module System based on Lua (suports TLC)              + https://github.com/TACC/Lmod                          + lua
 envy                        + OTF global load and unload variables                              + https://github.com/mre/envy                           + rust
@@ -111,7 +114,8 @@ procenv                     + Command-line utility to show process environment  
 dtool                       + command-line tool collection for devs                             + https://github.com/guoxbin/dtool                      + rust
 onefetch                    + repository summary on your terminal                               + https://github.com/o2sh/onefetch                      + rust
 restish                     + REST-sh HTTP API interaction tool                                 + https://github.com/danielgtaylor/restish              + go
-xh                          + friendly and fast tool for sending HTTP requests                  + https://github.com/ducaale/xh                         + rust
+xh                          + friendly and fast tool for REST HTTP requests                     + https://github.com/ducaale/xh                         + rust
+names                       + random name generator                                             + https://github.com/fnichol/names                      + rust
 -------------------------------------------------------                 BUILD                   -----------------------------------------------------------------
 xmake                       + cross-platform build utility based on Lua                         + https://github.com/xmake-io/xmake                     + c
 -------------------------------------------------------                 DEBUG                   -----------------------------------------------------------------
@@ -140,6 +144,7 @@ emplace                     + syncronise packages multiple PC                   
 hoard                       + dotfile manager                                                   + https://github.com/Shadow53/hoard                     + rust
 -------------------------------------------------------                MANAGER                  -----------------------------------------------------------------
 adv[cp,mv]                  + cp & mv with progressbar                                          + https://github.com/jarun/advcpmv                      + cpp
+xcp                         + extended 'cp'                                                     + https://github.com/tarka/xcp                          + rust
 scd                         + side/tab file manager                                             + https://github.com/cshuaimin/scd                      + rust
 ls      - exa               + modern version of ‘ls’                                            + https://github.com/ogham/exa                          + rust
 lsd                         + next-gen version of 'ls'                                          + https://github.com/Peltoche/lsd                       + rust
@@ -200,6 +205,7 @@ pastel                      + convert and manipulate colors                     
 pigments                    + color palete from image                                           + https://github.com/blenderskool/pigmnts               + rust
 xcolor                      + color picker                                                      + https://github.com/Soft/xcolor                        + rust
 artem                       + convert images to ASCII                                           + https://github.com/FineFindus/artem                   + rust
+tai                         + terminal ascii from images                                        + https://github.com/mustafasalih1993/tai               + rust
 -------------------------------------------------------                 IMAGE                   -----------------------------------------------------------------
 imagemagick                 + swissarmy knife of image editor                                   + https://github.com/ImageMagick/ImageMagick            + cpp
 gmic                        + imag processng and manipulation                                   + https://github.com/dtschump/gmic                      + cpp

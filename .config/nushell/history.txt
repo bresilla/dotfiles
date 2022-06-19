@@ -131,3 +131,7 @@ load-env $TAG
 load-env $TAB
 env
 load-env TAB
+ll
+lsblk
+ls
+ls -la

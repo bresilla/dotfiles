@@ -174,12 +174,15 @@ alias \$=''
 [[ -x "$(command -v cod)" ]] && source <(cod init $$ zsh)
 
 ###NOSTROMO
-[[ -x "$(command -v nostromo)" ]] && eval "$(nostromo completion)"
+[[ -x "$(command -v nostromo)" ]] && source <(nostromo completion zsh)
 
 ###STARSHIP
 [[ -x "$(command -v starship)" ]] && eval "$(starship init zsh)"
 
-###STARSHIP
+###XSHE
+[[ -x "$(command -v xshe)" ]] && eval "$(xshe zsh)"
+
+###MICROMAMBA
 [[ -x "$(command -v micromamba)" ]] && eval "$(micromamba shell hook --shell=zsh)"
 
 ###SSH&GPG

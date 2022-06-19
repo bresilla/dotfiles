@@ -1,13 +1,6 @@
 function fish_mode_prompt; end
 function fish_greeting; end
 
-function fish_prompt
-    env FISH_VERSION=$FISH_VERSION PROMPTLINE_LAST_EXIT_CODE=$status bash ~/.config/promptline left $fish_bind_modea (__fish_git_prompt)
-end
-function fish_right_prompt
-    env FISH_VERSION=$FISH_VERSION PROMPTLINE_LAST_EXIT_CODE=$status bash ~/.config/promptline right $fish_bind_mode (__fish_git_prompt)
-end
-
 function _shko
     shko -c --short 19 && cd (cat ~/.config/shko/settings/chdir)
 end
@@ -49,3 +42,6 @@ end
 
 ###DIRENV
 direnv hook fish | source
+
+###STARSHIP
+starship init fish | source
