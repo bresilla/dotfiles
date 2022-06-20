@@ -68,6 +68,8 @@ nix-profile(){
 
 layout_ros() {
     source "/opt/ros/${1:-humble}/setup.sh"
+    if [[ -f "$PWD/devel/setup.sh" ]]; then source "$PWD/devel/setup.sh"; fi
+    if [[ -f "$PWD/install/setup.sh" ]]; then source "$PWD/install/setup.sh"; fi
 }
 
 layout_mamba() {
