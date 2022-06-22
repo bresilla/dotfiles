@@ -1,9 +1,5 @@
 #!/usr/bin/env zsh
 #--------------------------------------------------------------------------------------------------------------------
-###THEME
-#[ -f ~/.config/promptline ] && source ~/.config/promptline
-
-#--------------------------------------------------------------------------------------------------------------------
 ###WAL COLORS
 [ -f ~/.cache/wal/sequences ] && (cat ~/.cache/wal/sequences &)
 [ -f ~/.cache/wal/colors.sh ] && source ~/.cache/wal/colors.sh
@@ -177,7 +173,7 @@ alias \$=''
 [[ -x "$(command -v nostromo)" ]] && source <(nostromo completion zsh)
 
 ###STARSHIP
-[[ -x "$(command -v starship)" ]] && eval "$(starship init zsh)"
+[[ -x "$(command -v starship)" ]] && eval "$(starship init zsh)" || source ~/.config/promptline
 
 ###XSHE
 [[ -x "$(command -v xshe)" ]] && eval "$(xshe zsh)"
