@@ -23,8 +23,7 @@ export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/cha
 export NIXPKGS_ALLOW_UNFREE=1
 
 #MAMBA and/or CONDA
-# export CONDA_HOME="/con"
-# [[ -f "/con/etc/profile.d/conda.sh" ]]  && . "/con/etc/profile.d/conda.sh"
+[[ -f "/con/etc/profile.d/conda.sh" ]]  && export CONDA_HOME="/con" && . "/con/etc/profile.d/conda.sh"
 
 #PLATFORMIO
 # export PLATFORMIO_CORE_DIR=/opt/pio
