@@ -41,30 +41,30 @@ nix-profile(){
     load_prefix "$profile"
 }
 
-# layout_conda() {
-#     local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
-#     export CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && export PATH="$CONDAPATH:$PATH" || exit 1
-#     export CONDALENV="$PWD/.direnv/venv/$(uname -m)";
+layout_conda() {
+    local BLUE='\033[0;34m';local GREEN='\033[0;32m';local RED='\033[0;31m';local NC='\033[0m'
+    export CONDAPATH="$CONDA_HOME/bin" && [[ -d "$CONDAPATH" ]] && export PATH="$CONDAPATH:$PATH" || exit 1
+    export CONDALENV="$PWD/.direnv/venv/$(uname -m)";
 
-#     if [[ $(git rev-parse --show-toplevel) == "/env" ]]; then
-#         source activate $CONDA_HOME
-#     elif [[ -d $CONDALENV/conda-meta ]]; then
-#         source activate $CONDALENV
-#     else
-#         # conda create --prefix=$PWD/.venv python=3 -y
-#         printf "\n crating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
-#         conda create -p $CONDALENV python=${1:-3.9};
-#         conda install --yes pip;
-#         conda config --set pip_interop_enabled True;
-#         printf "\n activating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
-#         source activate $CONDALENV;
-#     fi
-#     conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
-#     python_v=$(python --version)
-#     conda_v=$(conda --version)
-#     printf "\nenvironment ver.: \t ${BLUE}${python_v}${NC} and ${BLUE}${conda_v}${NC}";
-#     printf "\nenvironment path: \t${BLUE}${conda_env}${NC}\n\n";
-# }
+    if [[ $(git rev-parse --show-toplevel) == "/env" ]]; then
+        source activate $CONDA_HOME
+    elif [[ -d $CONDALENV/conda-meta ]]; then
+        source activate $CONDALENV
+    else
+        # conda create --prefix=$PWD/.venv python=3 -y
+        printf "\n crating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
+        conda create -p $CONDALENV python=${1:-3.9};
+        conda install --yes pip;
+        conda config --set pip_interop_enabled True;
+        printf "\n activating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
+        source activate $CONDALENV;
+    fi
+    conda_env=$(conda info | sed -n '3p' | cut -d: -f2)
+    python_v=$(python --version)
+    conda_v=$(conda --version)
+    printf "\nenvironment ver.: \t ${BLUE}${python_v}${NC} and ${BLUE}${conda_v}${NC}";
+    printf "\nenvironment path: \t${BLUE}${conda_env}${NC}\n\n";
+}
 
 layout_ros() {
     source "/opt/ros/${1:-humble}/setup.sh"

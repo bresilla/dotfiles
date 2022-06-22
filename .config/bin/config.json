@@ -46,6 +46,15 @@
             "provider": "github",
             "package_path": "cod"
         },
+        "/env/bin/cpufetch_arm64": {
+            "path": "/env/bin/cpufetch_arm64",
+            "remote_name": "cpufetch_arm64",
+            "version": "v1.02",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/Dr-Noob/cpufetch",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/direnv": {
             "path": "/env/bin/direnv",
             "remote_name": "direnv",
