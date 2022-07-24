@@ -28,6 +28,15 @@
             "provider": "github",
             "package_path": ""
         },
+        "/env/bin/blocky": {
+            "path": "/env/bin/blocky",
+            "remote_name": "blocky",
+            "version": "v0.19",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/0xERR0R/blocky",
+            "provider": "github",
+            "package_path": "blocky"
+        },
         "/env/bin/bore": {
             "path": "/env/bin/bore",
             "remote_name": "bore",
@@ -36,6 +45,15 @@
             "url": "github.com/ekzhang/bore",
             "provider": "github",
             "package_path": "bore"
+        },
+        "/env/bin/bun": {
+            "path": "/env/bin/bun",
+            "remote_name": "bun",
+            "version": "bun-v0.1.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/oven-sh/bun",
+            "provider": "github",
+            "package_path": "bun-linux-x64/bun"
         },
         "/env/bin/cod": {
             "path": "/env/bin/cod",
@@ -55,14 +73,32 @@
             "provider": "github",
             "package_path": ""
         },
+        "/env/bin/dasel": {
+            "path": "/env/bin/dasel",
+            "remote_name": "dasel",
+            "version": "v1.25.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/TomWright/dasel",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/direnv": {
             "path": "/env/bin/direnv",
             "remote_name": "direnv",
-            "version": "v2.32.0",
+            "version": "v2.32.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/direnv/direnv",
-            "provider": "github",
+            "url": "https://github.com/direnv/direnv/releases/tag/v2.32.1",
+            "provider": "",
             "package_path": ""
+        },
+        "/env/bin/dufs": {
+            "path": "/env/bin/dufs",
+            "remote_name": "dufs",
+            "version": "v0.23.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/sigoden/dufs",
+            "provider": "github",
+            "package_path": "dufs"
         },
         "/env/bin/exa": {
             "path": "/env/bin/exa",
@@ -130,9 +166,9 @@
         "/env/bin/posh": {
             "path": "/env/bin/posh",
             "remote_name": "posh",
-            "version": "v8.5.2",
+            "version": "v8.7.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/tag/v8.5.2",
+            "url": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/tag/v8.7.1",
             "provider": "",
             "package_path": ""
         },
@@ -148,9 +184,9 @@
         "/env/bin/starship": {
             "path": "/env/bin/starship",
             "remote_name": "starship",
-            "version": "v1.8.0",
+            "version": "v1.9.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/starship/starship/releases/tag/v1.8.0",
+            "url": "https://github.com/starship/starship/releases/tag/v1.9.1",
             "provider": "",
             "package_path": "starship"
         },
@@ -172,6 +208,15 @@
             "provider": "github",
             "package_path": "tab"
         },
+        "/env/bin/tealdeer-musl": {
+            "path": "/env/bin/tealdeer-musl",
+            "remote_name": "tealdeer-musl",
+            "version": "v1.5.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/dbrgn/tealdeer",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/termshark": {
             "path": "/env/bin/termshark",
             "remote_name": "termshark",
@@ -183,11 +228,11 @@
         },
         "/env/bin/tuc": {
             "path": "/env/bin/tuc",
-            "remote_name": "tuc",
-            "version": "v0.10.0",
+            "remote_name": "tuc-regex",
+            "version": "v0.11.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/riquito/tuc",
-            "provider": "github",
+            "url": "https://github.com/riquito/tuc/releases/tag/v0.11.0",
+            "provider": "",
             "package_path": ""
         },
         "/env/bin/wireproxy": {
@@ -199,22 +244,31 @@
             "provider": "github",
             "package_path": "wireproxy"
         },
+        "/env/bin/xh": {
+            "path": "/env/bin/xh",
+            "remote_name": "xh",
+            "version": "v0.16.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/ducaale/xh",
+            "provider": "github",
+            "package_path": "xh-v0.16.1-x86_64-unknown-linux-musl/xh"
+        },
         "/env/bin/xshe": {
             "path": "/env/bin/xshe",
             "remote_name": "xshe",
-            "version": "v0.4.2",
+            "version": "v0.5.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/superatomic/xshe",
-            "provider": "github",
+            "url": "https://github.com/superatomic/xshe/releases/tag/v0.5.0",
+            "provider": "",
             "package_path": "xshe"
         },
         "/env/bin/zoxide": {
             "path": "/env/bin/zoxide",
             "remote_name": "zoxide",
-            "version": "v0.8.1",
+            "version": "v0.8.2",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/ajeetdsouza/zoxide",
-            "provider": "github",
+            "url": "https://github.com/ajeetdsouza/zoxide/releases/tag/v0.8.2",
+            "provider": "",
             "package_path": "zoxide"
         }
     }

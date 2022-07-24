@@ -1,0 +1,17 @@
+upstream:
+  default:
+    - 1.1.1.1
+    - 8.8.8.8
+blocking:
+  blackLists:
+    ads:
+      - https://raw.githubusercontent.com/kaabir/AdBlock_Hosts/master/hosts
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      - https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
+      - https://easylist.to/easylist/easylist.txt
+  clientGroupsBlock:
+    default:
+      - ads
+port: 53
+httpPort: 4000
+httpsPort: 443

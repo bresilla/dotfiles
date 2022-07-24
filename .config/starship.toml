@@ -1,18 +1,20 @@
 format = """
 $hostname\
-$username\
 ${custom.distro}\
+$username\
 ${custom.direnv}\
 $sudo\
 ${custom.tab}\
 ${custom.tab2}\
 $status\
+${custom.container2}\
 [| ](bg:0 fg:7)
 """
 
 continuation_prompt = " > "
 
 right_format = """
+${custom.container}\
 $c\
 $rust\
 $golang\
@@ -36,7 +38,7 @@ format = "[ $ssh_symbol]($style)[$hostname ]($style)"
 show_always = true
 style_user = "bg:1 fg:0"
 style_root = "bg:#9A348E"
-format = '[ $user ]($style)'
+format = '[$user ]($style)'
 
 [directory]
 style = "bg:237 fg:15"
@@ -92,7 +94,20 @@ format = "[$output]($style)"
 style = "bg:1 fg:0"
 command = "echo $(/env/dot/.func/shell/distrologo)"
 when = true
-format = "[$output ]($style)"
+format = "[ $output ]($style)"
+
+[custom.container]
+style = "bg:5 bold fg:0"
+command = "echo $(/env/dot/.func/shell/incontainer2)"
+when = """ [[ $(systemd-detect-virt) != "none" ]] """
+format = "[|](bg:0 fg:7)[ $output ]($style)[||](bg:0 fg:7)"
+
+[custom.container2]
+style = "bg:5 bold fg:0"
+command = "echo $(/env/dot/.func/shell/incontainer)"
+when = """ [[ $(systemd-detect-virt) != "none" ]] """
+format = " [ $output ]($style)"
+
 
 [status]
 style = "bg:0 fg:9"

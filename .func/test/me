@@ -1,0 +1,10 @@
+#!/bin/bash
+
+printf "NAME:\t\tTrim Bresilla"
+echo
+printf "HOME:\t\tDubceksingel 6, 6716RG Ede"
+# echo
+# printf "WORK:\t\tDubceksingel 6, 6716RG Ede"
+echo
+printf "PHONE:\t\t(+31) 6 280 22776"
+echo

@@ -7,17 +7,19 @@ srch=search
 mark=bookmarks
 hist=history
 list=playlist
+pkgs=packages
 
 another=$(echo "\
 $hist
 $mark
 $srch
-$list\
+$list
+$pkgs\
 " | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
 
 if [ "$another" == "$srch" ] ; then
-	surfraw -browser=$BROWSER $(sr -elvi | awk -F'-' '{print $1}' | sed '/:/d' | awk '{$1=$1};1' | rofi "${ROFI_OPTIONS[@]}" -kb-row-select 'Tab' -kb-row-tab 'Control+space' -dmenu -i -p 'bangs: ')
+    surfraw -browser=$BROWSER $(sr -elvi | awk -F'-' '{print $1}' | sed '/:/d' | awk '{$1=$1};1' | rofi "${ROFI_OPTIONS[@]}" -kb-row-select 'Tab' -kb-row-tab 'Control+space' -dmenu -i -p 'bangs: ')
 
 elif [ "$another" == "$hist" ] ; then
     exec /home/bresilla/.config/rofi/menu/fox
@@ -32,6 +34,10 @@ elif [ "$another" == "$list" ] ; then
     [[ -z $LINK ]] && exit 1
     /env/dot/.func/media/play $LINK
 
+elif [ "$another" == "$pkgs" ] ; then
+    LINK=$(rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "package: ")
+    $BROWSER "https://pkgs.org/search/?q=$LINK"
+
 elif [ -z "$another" ] ; then
     #https://github.com/BelkaDev/RofiFtw
     handler=$(dirname $0)/duckduck
@@ -39,6 +45,6 @@ elif [ -z "$another" ] ; then
     [ -f "/tmp/ddgrofi.tmp" ] && $BROWSER "https://duckduckgo.com/?q=$(cat "/tmp/ddgrofi.tmp")" || exit 0
 
 else
-	$BROWSER "https://duckduckgo.com/?q=$another"
+    $BROWSER "https://duckduckgo.com/?q=$another"
     #exec nohup $another > /dev/null 2>&1 &
 fi

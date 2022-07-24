@@ -1,0 +1,341 @@
+#!/bin/bash
+#
+
+# Preparing formatted outputs
+_RED=$(tput setaf 1)
+_GREEN=$(tput setaf 2)
+_YELLOW=$(tput setaf 3)
+_BLUE=$(tput setaf 4)
+_MAGENTA=$(tput setaf 5)
+_CYAN=$(tput setaf 6)
+_WHITE=$(tput setaf 7)
+_RESET=$(tput sgr0)
+_BOLD=$(tput bold)
+
+# Check flags
+args=("$@")
+ELEMENTS=${#args[@]} # arguments number
+for (( i=0;i<$ELEMENTS;i++)); do
+	[[ -v pass_arg ]] && unset pass_arg && continue
+	[[ $(echo ${args[${i}]}) == "-l" || \
+		$(echo ${args[${i}]}) == "--list" ]] && \
+			pass_arg=true && \
+			index_bibliography_file=$(( i + 1 )) && \
+			bibliography_file="${args[${index_bibliography_file}]}" && \
+			listing=true && \
+			continue
+	[[ $(echo ${args[${i}]}) == "-D" || \
+		$(echo ${args[${i}]}) == "--download-dir" ]] && \
+			pass_arg=true && \
+			index_destination=$(( i + 1 )) && \
+			destination="${args[${index_destination}]}" && \
+			continue
+	[[ $(echo ${args[${i}]}) == "-u" || \
+		$(echo ${args[${i}]}) == "--url" ]] && \
+			pass_arg=true && \
+			index_user_url=$(( i + 1 )) && \
+			user_url="${args[${index_user_url}]}" && \
+			continue
+	[[ $(echo ${args[${i}]}) == "-p" || \
+		$(echo ${args[${i}]}) == "--no-auto-open" ]] && \
+			automatically_open=false && \
+			continue
+	[[ $(echo ${args[${i}]}) == "-q" || \
+		$(echo ${args[${i}]}) == "--quiet" ]] && \
+			quiet=true && \
+			continue
+	[[ $(echo ${args[${i}]}) == "-h" || \
+		$(echo ${args[${i}]}) == "--help" ]] && \
+			echo -e "Help menu : \
+			\n -l : Download references line by line from a bibliography file \
+			\n -D : Store papers in a specified directory (absolute path) \
+			\n -u : Manually set Sci-Hub address \
+			\n -p : Pass on auto-opening \
+			\n -q : Quiet mode, no echo except for errors \
+			\n -h : Print this help menu \
+			\n man scitopdf : Check the manual for more tweaks \
+			\n \
+			\n Example : scitopdf \"protein measurement with the folin\" -p -q -D \"$HOME/science\"" && exit 1
+	concatenate=$(echo $concatenate" ")$(echo -n ${args[${i}]}"\ ")
+	[ -z "$automatically_open" ] && automatically_open=true
+done
+
+[[ ! $quiet = true ]] && echo "${_GREEN}  ▄▀▀░▄▀▀░█░▀█▀░▄▀▄▒█▀▄░█▀▄▒█▀ "
+[[ ! $quiet = true ]] && echo          "  ▄██░▀▄▄░█░▒█▒░▀▄▀░█▀▒▒█▄▀░█▀ ${_RESET}"
+
+# Declaring temporary files
+headers_file="/tmp/scitopdf_headers" 	# use different headers avoid(ish)ing blocation
+sci_address="/tmp/sci_address" 		# store SH address here
+scitopdf_curl="/tmp/scitopdf_curl" 	# store curl -L results here
+
+# Timeout for Crossref : seems useless right now (03/2022)
+# requests_timeout=6
+
+#############
+# Functions #
+#############
+set_download_folder() {
+	# Check system default download folder
+	XDG_DOWNLOAD_DIR="${XDG_DOWNLOAD_DIR:-$(xdg-user-dir DOWNLOAD 2>/dev/null)}"
+	[ ! -v destination ] && \
+		if [ -n "$XDG_DOWNLOAD_DIR" ]; then
+			destination="$XDG_DOWNLOAD_DIR/scitopdf"
+		else
+			destination="$HOME/Downloads/scitopdf"
+		fi
+	# Check download folder permissions
+	[ -d $destination ] || \
+		mkdir -p "$destination" &> /dev/null || \
+			( echo -e "${_BLUE}Can't access $destination. Please be sure you have permissions.\nPapers will be temporary saved to /tmp.${_RESET}" && \
+			destination="/tmp" )
+}
+	#------------------#
+	# Check PDF reader #
+	#------------------#
+set_pdf_reader() {
+	# Find default PDF reader, else use zathura or give instructions
+	[ -v READER ] && return
+	# If xdg-open available, use it to call PDF reader.
+	[[ $(command -v xdg-open) ]] && READER=xdg-open && return
+	# If xdg-mime fails or doesn't exist, use or propose zathura
+	[[ $(command -v zathura) ]] && READER=zathura && return
+	echo -e "Default PDF reader not found.\nInstall zathura or try setting a READER environment variable.\nExample : 'export READER=your_pdf_reader'"
+}
+	#--------------# Due to different countries policy, we should
+	# Find Sci-Hub # make sure everyone can access SH easily.
+	#--------------# # TODO
+locate_website() {
+	# Check user URL if provided and return
+	[ -v user_url ] && \
+		if [[ ! $(echo "$user_url" | grep "https\?://") ]]; then
+			curl -s "https://$user_url" > /dev/null
+			if [ "$?" -eq 6 ]; then
+				curl -s "http://$user_url" > /dev/null
+				if [ "$?" -eq 6 ]; then
+					curl -s "$user_url" > /dev/null
+					if [ "$?" -eq 6 ]; then
+						echo "${_RED}Wrong provided URL${_RESET}"
+						exit
+					fi
+					url_is_fine=true
+					site="$user_url" && return
+				fi
+				url_is_fine=true
+				site="http://$user_url" && return
+			fi
+			url_is_fine=true
+			site="https://$user_url" && return
+		else
+			url_is_fine=true
+			site="$user_url" && return
+		fi
+	[[ -f "$sci_address" ]] && \
+		[[ ! $(cat "$sci_address") == "" ]] && \
+		site=$(cat "$sci_address") && \
+		return
+	[[ "$LANG" =~ ru_* ]] && \
+		site="https://sci-hub.ru" && \
+		return
+	site="https://sci-hub.st"
+}
+	#---------------#
+	# Check website # #TODO -> Find best alternative methods
+	#---------------#
+check_website() {
+	[[ "$url_is_fine" = true ]] && \
+		unset url_is_fine && \
+		echo "$site" > "$sci_address" && \
+		return
+	curl -s "$site" > /dev/null
+	if [ "$?" -eq 6 ]; then # If curl cannot resolve, use last know website address
+		[[ ! $quiet = true ]] && echo -e "${_YELLOW}Sci-Hub not reachable. Checking alternatives.\nFor manual setting, use the --url option.${_RESET}"
+		site=$(curl -s -LH "" "https://sci-hub.now.sh/" | grep -i https://sci-hub... | grep -i biglink | grep -io https://sci-hub... | head -n 1)
+		[[ "$LANG" =~ ru_* ]] && site="${site/sci-hub.st/sci-hub.ru}"
+		check_website
+		return
+	fi
+	echo "$site" > "$sci_address"
+}
+	#-----------------#
+	# Rolling headers # Might not be that useful, Crossref is quite
+	#-----------------# indulgent with requests.
+change_headers() {
+	[ ! -f "$headers_file" ] && touch "$headers_file"
+	if [[ $(cat "$headers_file") == "" ]]; then
+		echo "Mozilla/5.0 (x11; ubuntu; linux x86_64; rv:59.0) gecko/20100101 firefox/59.0
+	Mozilla/5.0 (iPad; CPU OS 8_1_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B466 Safari/600.1.4
+	Mozilla/5.0 (Linux; U; Android 4.0.3; en-us; KFTT Build/IML74K) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.68 like Chrome/39.0.2171.93 Safari/537.36
+	Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; rv:11.0) like Gecko
+	Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:40.0) Gecko/20100101 Firefox/40.0
+	Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0
+	Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0
+	Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/3.0.1
+	Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53 BingPreview/1.0b
+	Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; MAARJS; rv:11.0) like Gecko
+	Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0; SLCC2; .NET CLR 2.0.50727; .NET4.0C; .NET4.0E)
+	Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.130 Safari/537.36" | sed 's/\t//' >> "$headers_file"
+	fi
+	cat "$headers_file" | sed '1q' >> "$headers_file"
+	sed -i '1d' "$headers_file"
+	headers=$(echo $(cat "$headers_file" | head -n 1))
+}
+	#-------------------------#
+	# User search on Crossref #
+	#-------------------------#
+search_crossref() {
+	change_headers
+	if [[ $(echo $(curl -A "$headers" -s "https://search.crossref.org/?q=$user_search&from_ui=yes" | tee "$scitopdf_curl".txt) | grep -io "$user_search" | head -n 1) == "$user_search" ]]; then
+		doi="$(grep -io "https\?://doi.*" "$scitopdf_curl".txt | grep -io "doi.*" | sed 's/https\?:\/\///' | grep -io "/.*" | sed -e 's,/,,' -e 's,)$,,' | sed  "s/['<>]//g" | head -n 2 | tail -n 1)"
+		doi_search
+		download_link="$(curl -L -s "$site/$doi" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\/// ; s/^\///')"
+		check_website_url_inside_link
+	else
+		[[ ! $quiet = true ]] && echo "${_YELLOW}User search not found on Crossref.${_RESET}"
+		return
+	fi
+}
+	#--------------------------#
+	# Look for DOI on Crossref #
+	#--------------------------#
+doi_search() {
+	if [[ -n "$doi" ]]; then
+		if [[ $(echo "$doi" | grep -io "doi:") || $(echo $doi | grep -io "doi\.") ]]; then
+			doi=$(echo $doi | sed 's/http\?:\/\///' | grep -io "/.*" | sed "s/\///")
+			[[ ! $quiet = true ]] && echo "${_BOLD}DOI: ${_RESET}$doi"
+		fi
+		[[ ! $quiet = true ]] && echo "${_BOLD}DOI: ${_RESET}$doi"
+	else
+		[[ ! $quiet = true ]] && echo "${_RED}DOI not found.${_RESET}"
+		[[ "$listing" = false ]] && exit 1;
+	fi
+}
+	#----------------#
+	# Look for paper #
+	#----------------#
+paper_search() {
+	change_headers
+	url_without_http=$(echo $site | sed 's/https\?:\/\///')
+	[[ ! -v automatically_open ]] && automatically_open=true
+	if [[ -z "$concatenate" ]]; then
+		[[ ! $quiet = true ]] && echo "${_BOLD}Paper to search ${_RESET}[title, author, year, DOI, journal, URL...] : "
+		read concatenate
+		[[ $concatenate == "" ]] || paper_search
+	else
+		user_search=$(echo "$concatenate" | sed "s/'/\ / ; s/\ /+/g" | sed 's/\\//g ; s/^+// ; s/+$//' | iconv -f utf8 -t ascii//TRANSLIT)
+		# 	>> IF USER_SEARCH IS A VALID URL
+		if [[ $(echo "$concatenate" | grep -io "https\?://") && ! $(echo "$concatenate" | grep -io "doi") ]]; then
+			concatenate=$(echo "$concatenate" | sed "s/'//g ; s/\ //g" | sed 's/\\//g')
+			download_link="$(curl -L -s "$concatenate" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\/// ; s/^\///')"
+			[[ -z "$download_link" ]] && \
+				download_link="$(curl -L -s "$site/$concatenate" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\/// ; s/^\///')"
+			check_paper_found && return
+		fi
+		# 	>> IF USER_SEARCH CONTAINS "/" >> EITHER VALID URL (but previous test failed) or BADLY FORMATED URL or DOI
+		if [[ $(echo "$user_search" | grep -o "\/" | head -n 1) ]]; then
+			download_link="$(curl -L -s "$site/$user_search" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\///')"
+			[[ -z "$download_link" ]] && \
+				download_link="$(curl -L -s "$user_search" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\///')"
+			[[ -z "$download_link" ]] && \
+				download_link="$(curl -L -s "https://$user_search" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\///')"
+			[[ -z "$download_link" ]] && \
+				download_link="$(curl -L -s "http://$user_search" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\///')"
+			[[ -z "$download_link" ]] && \
+				transform_to_doi=$(echo "$user_search" | sed "s,$site/,, ; s,$url_without_http/,," | sed 's/https\?:\/\///' | sed "s/doi.org\///" ) && \
+				download_link="$(curl -L -s "$site/$transform_to_doi" | grep -ioP "(?<=src=\")[^'\"]+?.pdf" | head -n 1 | sed 's/^\/\/\/// ; s/^\/\///')"
+			check_paper_found && return
+		fi
+		# 	>> SIMPLE USER SEARCH ; NOT A URL (might have a DOI in there) >> SEARCH ON CROSSREF
+		if [[ ! $(echo "$user_search" | grep -io "https\?:") || $(echo "$user_search" | grep -io "doi") ]]; then
+			search_crossref
+			check_paper_found && return
+		fi
+		#	>> IF NOTHING WORKED :'(
+		[[ ! $quiet = true ]] && echo -e "${_RED}Paper not found.${_RESET}"
+		[[ "$listing" = true ]] && not_found=$(( $not_found + 1 ))
+
+	fi
+}
+	#---------------------------------# Scrapped links can be trunkated. If true :
+	# Add $site link to download_link # transform '/download/article.pdf' to
+	#---------------------------------# '${SH_URL}/download/article.pdf'
+check_website_url_inside_link() {
+	if ! [[ $(echo "$download_link" | grep -io "$site") || $(echo "$download_link" | grep -io "$url_without_http") ]]; then
+		download_link="$site/$download_link"
+	fi
+}
+	#-------------------------#
+	# Check if paper is found #
+	#-------------------------#
+check_paper_found() {
+	download_paper
+	[[ "$paper_found" = true ]] && \
+		unset paper_found && \
+		return
+}
+	#---------------------------------#
+	# Check download_link and proceed #
+	#---------------------------------#
+download_paper() {
+	check_website_url_inside_link
+	if [[ $download_link = "" ]]; then
+		rm "$scitopdf_curl".txt &>/dev/null
+		unset download_link
+		return
+	fi
+	filename=$(echo "$download_link" | sed 's:.*/::')
+	if [[ -z "$filename" ]]; then
+		[[ "$listing" = false ]] && exit 1;
+		return
+	else
+		cd $destination
+		[[ ! $quiet = true ]] && echo "${_BOLD}Downloading ...${_RESET}" && \
+			( curl -L "$download_link" --output "$filename" --progress-bar || \
+					curl -L "$site/$download_link" --output "$filename" )
+		[[ $quiet = true ]] && \
+			( curl -Ls "$download_link" --output "$filename" || \
+					curl -Ls "$site/$download_link" --output "$filename" )
+		[[ ! $quiet = true ]] && echo "${_GREEN}Done!${_RESET}"
+		rm "$scitopdf_curl".txt &>/dev/null
+		unset download_link
+		[[ "$automatically_open" = true ]] && setsid $READER "$destination/$filename"
+		paper_found=true
+		return
+	fi
+}
+	#-----------------------#
+	# Download bibliography #
+	#-----------------------#
+get_bibliography() {
+	if [[ ! -f "$bibliography_file" ]]; then
+		echo "${_YELLOW}Bibliography file not found. Trying something anyway.${_RESET}"
+		listing=false
+		paper_search
+	fi
+	automatically_open=false
+	ref_index=0
+	not_found=0
+	while read line; do concatenate=$(echo $line);
+		[[ "$concatenate" == "" ]] && continue;
+		ref_index=$(( ref_index + 1 ));
+		[[ ! $quiet = true ]] && echo -e "\n${_BOLD}[Reference $ref_index]${_RESET} ${_RED}$line${_RESET}";
+		paper_search "$line";
+	done < $bibliography_file
+	[[ ! $quiet = true ]] && echo -e "${_YELLOW}\n>> End of file \"$bibliography_file\"${_RESET}"
+	[[ ! $quiet = true ]] && echo -e "${_YELLOW}$(( $ref_index - $not_found )) out of $ref_index references found !${_RESET}" # TODO -> give a list of "not found" references
+	exit 1
+
+}
+
+################
+# Start script #
+################
+set_download_folder
+set_pdf_reader
+locate_website
+check_website
+[[ "$listing" = true ]] && get_bibliography
+paper_search
+exit
+
+# last modif : 2022 june 28
+# make code proper/simpler : lot of redundancies, incoherent formatting, spaghetti code...

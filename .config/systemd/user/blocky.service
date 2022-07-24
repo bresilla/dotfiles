@@ -1,0 +1,15 @@
+[Unit]
+Description="Proxy as AdBlocker service"
+Documentation="https://github.com/0xERR0R/blocky"
+Before=systemd-resolved.service lxd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/doas /env/bin/blocky --config /home/bresilla/.config/blocky/config.yaml
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+

@@ -1,5 +1,4 @@
 export HOSTNAME=$(uname -n)
-export OS=$(lsb_release -i | cut -d':' -f2 | xargs)
 
 export DOTS=$HOME/dots
 export SETS=$HOME/sets
@@ -14,7 +13,7 @@ export PATH=$PATH:/usr/local/go/bin
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
 [[ -d /opt/TurboVNC/bin/vncserver ]] && PATH="/opt/TurboVNC/bin/vncserver:$PATH"
-[[ -d "/env/bin" ]] && PATH="/env/bin:$PATH"
+[[ -d "/env/bin" ]] && PATH="$PATH:/env/bin"
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
 #NIX
@@ -30,8 +29,8 @@ export NIXPKGS_ALLOW_UNFREE=1
 # [[ -d "/opt/pio" ]]  && PATH="$PATH:/opt/pio/penv/bin"
 
 #NVIDIA
-[[ -d "/usr/local/cuda" ]] && PATH="/usr/local/cuda/bin:$PATH" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
-[[ -d "/opt/cuda" ]] && PATH="/opt/cuda/bin:$PATH" LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
+[[ -d "/usr/local/cuda" ]] && PATH="$PATH:/usr/local/cuda/bin" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
+[[ -d "/opt/cuda" ]] && PATH="$PATH:/opt/cuda/bin" LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
 
 export LD_LIBRARY_PATH="/usr/local/lib/:$LD_LIBRARY_PATH"
 #export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -122,10 +121,9 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
+#---------------------------            ROS             --------------------------
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export TURTLEBOT3_MODEL=burger
-
-
-
-#----------------------------------------------------------------------------
+export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+export ZEPHYR_SDK_INSTALL_DIR=/opt/ros/microros/firmware/zephyr-sdk
 
