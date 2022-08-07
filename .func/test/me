@@ -1,10 +1,16 @@
 #!/bin/bash
 
-printf "NAME:\t\tTrim Bresilla"
+printf "HOME:"
 echo
-printf "HOME:\t\tDubceksingel 6, 6716RG Ede"
-# echo
-# printf "WORK:\t\tDubceksingel 6, 6716RG Ede"
+printf "ADDRES:\t\tTrim Bresilla, Dubceksingel 6, 6716RG Ede"
 echo
 printf "PHONE:\t\t(+31) 6 280 22776"
+echo
+echo
+echo
+printf "WORK:"
+echo
+printf "ADDRES:\t\tWageningen Plant Research, BU Agro - Trim Bresilla, Bornsesteeg 48 A, 6708PE Wageningen"
+echo
+printf "PHONE:\t\t(+31) 3 174 80381"
 echo

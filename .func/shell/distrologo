@@ -1,16 +1,18 @@
 #!/bin/bash
 
-if_incontainer=$(systemd-detect-virt | xargs)
-if [[ $in_container == "lxc" ]]; then
-    printf ">>"
-    exit 0
-fi
+# if_incontainer=$(systemd-detect-virt | xargs)
+# if [[ $in_container == "lxc" ]]; then
+#     printf ">>"
+#     exit 0
+# fi
 
 distro_name=$(lsb_release -i | cut -d':' -f2 | xargs)
 if [[ $distro_name == "Arch" ]]; then
     printf 
 elif [[ $distro_name == "Ubuntu" ]]; then
     printf 
+elif [[ $distro_name == "ManjaroLinux" ]]; then
+    printf 
 else
     exit 1
 fi

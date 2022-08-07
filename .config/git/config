@@ -1,5 +1,5 @@
 [core]
-    pager = delta --dark --theme="OneHalfDark"
+    pager = delta --dark
     quotepath = false
     commitGraph = true
 

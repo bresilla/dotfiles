@@ -28,15 +28,6 @@
             "provider": "github",
             "package_path": ""
         },
-        "/env/bin/blocky": {
-            "path": "/env/bin/blocky",
-            "remote_name": "blocky",
-            "version": "v0.19",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/0xERR0R/blocky",
-            "provider": "github",
-            "package_path": "blocky"
-        },
         "/env/bin/bore": {
             "path": "/env/bin/bore",
             "remote_name": "bore",
@@ -45,15 +36,6 @@
             "url": "github.com/ekzhang/bore",
             "provider": "github",
             "package_path": "bore"
-        },
-        "/env/bin/bun": {
-            "path": "/env/bin/bun",
-            "remote_name": "bun",
-            "version": "bun-v0.1.2",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/oven-sh/bun",
-            "provider": "github",
-            "package_path": "bun-linux-x64/bun"
         },
         "/env/bin/cod": {
             "path": "/env/bin/cod",
@@ -70,15 +52,6 @@
             "version": "v1.02",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/Dr-Noob/cpufetch",
-            "provider": "github",
-            "package_path": ""
-        },
-        "/env/bin/dasel": {
-            "path": "/env/bin/dasel",
-            "remote_name": "dasel",
-            "version": "v1.25.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/TomWright/dasel",
             "provider": "github",
             "package_path": ""
         },

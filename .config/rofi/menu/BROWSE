@@ -5,6 +5,7 @@ BROWSER=org.mozilla.firefox
 
 srch=search
 mark=bookmarks
+loca=proxmox
 hist=history
 list=playlist
 pkgs=packages
@@ -12,6 +13,7 @@ pkgs=packages
 another=$(echo "\
 $hist
 $mark
+$loca
 $srch
 $list
 $pkgs\
@@ -25,7 +27,12 @@ elif [ "$another" == "$hist" ] ; then
     exec /home/bresilla/.config/rofi/menu/fox
 
 elif [ "$another" == "$mark" ] ; then
-    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/webmarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/webmarks_v0.1.json" list -g default| tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
+    [[ -z $LINK ]] && exit 1
+    $BROWSER $LINK
+
+elif [ "$another" == "$loca" ] ; then
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/webmarks_v0.1.json" list -g proxmox | tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
     [[ -z $LINK ]] && exit 1
     $BROWSER $LINK
 

@@ -2,4 +2,6 @@
 distro_name=$(systemd-detect-virt | xargs)
 if [[ $distro_name == "lxc" ]]; then
     printf " >> "
+if [[ $distro_name == "kvm" ]]; then
+    printf " :: "
 fi

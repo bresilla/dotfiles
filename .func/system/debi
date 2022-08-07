@@ -1,19 +1,19 @@
 #!/bin/bash
 
-# if ! [[ $(findmnt -M "/debi/sys") ]]; then doas mount --rbind /sys /debi/sys && doas mount --make-rslave /debi/sys; fi
-# if ! [[ $(findmnt -M "/debi/dev") ]]; then doas mount --rbind /dev /debi/dev && doas mount --make-rslave /debi/dev; fi
-# if ! [[ $(findmnt -M "/debi/proc") ]]; then doas mount --rbind /proc /debi/proc && doas mount --make-rslave /debi/proc; fi
-# if ! [[ $(findmnt -M "/debi/run") ]]; then doas mount --rbind /run /debi/run && doas mount --make-rslave /debi/run; fi
-# if ! [[ $(findmnt -M "/run/systemd/resolve") ]]; then doas mount --rbind /run/systemd/resolve /debi/run/systemd/resolve && doas mount --make-rslave /debi/run/systemd/resolve; fi
+if ! [[ $(findmnt -M "/debi/sys") ]]; then doas mount --rbind /sys /debi/sys && doas mount --make-rslave /debi/sys; fi
+if ! [[ $(findmnt -M "/debi/dev") ]]; then doas mount --rbind /dev /debi/dev && doas mount --make-rslave /debi/dev; fi
+if ! [[ $(findmnt -M "/debi/proc") ]]; then doas mount --rbind /proc /debi/proc && doas mount --make-rslave /debi/proc; fi
+if ! [[ $(findmnt -M "/debi/run") ]]; then doas mount --rbind /run /debi/run && doas mount --make-rslave /debi/run; fi
+if ! [[ $(findmnt -M "/run/systemd/resolve") ]]; then doas mount --rbind /run/systemd/resolve /debi/run/systemd/resolve && doas mount --make-rslave /debi/run/systemd/resolve; fi
 
 
-# if ! [[ $(findmnt -M "/debi/env") ]]; then doas mount --rbind /env /debi/env && doas mount --make-rslave /debi/env; fi
-# if ! [[ $(findmnt -M "/debi/con") ]]; then doas mount --rbind /con /debi/con && doas mount --make-rslave /debi/con; fi
-# if ! [[ $(findmnt -M "/debi/doc") ]]; then doas mount --rbind /doc /debi/doc && doas mount --make-rslave /debi/doc; fi
-# if ! [[ $(findmnt -M "/debi/nix") ]]; then doas mount --rbind /nix /debi/nix && doas mount --make-rslave /debi/nix; fi
+if ! [[ $(findmnt -M "/debi/env") ]]; then doas mount --rbind /env /debi/env && doas mount --make-rslave /debi/env; fi
+if ! [[ $(findmnt -M "/debi/con") ]]; then doas mount --rbind /con /debi/con && doas mount --make-rslave /debi/con; fi
+if ! [[ $(findmnt -M "/debi/doc") ]]; then doas mount --rbind /doc /debi/doc && doas mount --make-rslave /debi/doc; fi
+if ! [[ $(findmnt -M "/debi/nix") ]]; then doas mount --rbind /nix /debi/nix && doas mount --make-rslave /debi/nix; fi
 # if ! [[ $(findmnt -M "/debi/var") ]]; then doas mount --rbind /var /debi/var && doas mount --make-rslave /debi/var; fi
-# if ! [[ $(findmnt -M "/debi/home") ]]; then doas mount --rbind /home /debi/home && doas mount --make-rslave /debi/home; fi
+if ! [[ $(findmnt -M "/debi/home") ]]; then doas mount --rbind /home /debi/home && doas mount --make-rslave /debi/home; fi
 
-# xhost +local: > /dev/null 2>&1
-# echo $PWD > /debi/tmp/debi_pwd
-# doas chroot /debi /bin/bash -c "su -l bresilla"
+xhost +local: > /dev/null 2>&1
+echo $PWD > /debi/tmp/debi_pwd
+doas chroot /debi /bin/bash -c "su -l bresilla"
