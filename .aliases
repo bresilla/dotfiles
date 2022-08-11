@@ -72,8 +72,8 @@ alias clip='xclip -sel clip'
 alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
 
-alias k3='k3d'
-alias k8='kubectl'
+alias k3='doas k3d'
+alias k8='doas kubectl'
 
 ##PROGRAMS
 alias a='atool -D -x'
