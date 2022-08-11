@@ -65,12 +65,15 @@ alias la='exa -laiSHF --header --git --group-directories-first --tree -L1'
 alias lt='exa -liSHF --header --git --tree -L2'
 alias lu='dutree -d1 --usage -x .git -x .direnv'
 alias df='dfc -dTmw -p -/dev/loop,tmp,dev,run,one'
-alias lsblk='lsblk --output LABEL,NAME,VENDOR,MODEL,UUID,TRAN,TYPE,SIZE,FSTYPE,MOUNTPOINTS'
+alias lsblk='lsblk --output LABEL,NAME,VENDOR,MODEL,UUID,TRAN,TYPE,SIZE,FSTYPE,MOUNTPOINT'
 alias dd='dd status=progress'
 alias home='home-manager'
 alias clip='xclip -sel clip'
 alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
+
+alias k3='k3'
+alias k8='kubectl'
 
 ##PROGRAMS
 alias a='atool -D -x'

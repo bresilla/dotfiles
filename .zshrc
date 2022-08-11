@@ -173,6 +173,7 @@ alias \$=''
 [[ -x "$(command -v nostromo)" ]] && source <(nostromo completion zsh)
 
 ###STARSHIP
+# source ~/.config/promptline
 [[ -x "$(command -v starship)" ]] && eval "$(starship init zsh)" || source ~/.config/promptline
 
 ###XSHE
