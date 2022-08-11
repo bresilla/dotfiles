@@ -72,7 +72,7 @@ alias clip='xclip -sel clip'
 alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
 
-alias k3='k3'
+alias k3='k3d'
 alias k8='kubectl'
 
 ##PROGRAMS
