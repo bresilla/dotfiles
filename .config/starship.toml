@@ -37,6 +37,7 @@ format = "[ $ssh_symbol]($style)[$hostname ]($style)"
 [username]
 show_always = true
 style_user = "bg:1 fg:0"
+style_root = "bg:1 fg:0"
 format = '[$user ]($style)'
 
 [directory]
