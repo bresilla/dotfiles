@@ -37,7 +37,6 @@ format = "[ $ssh_symbol]($style)[$hostname ]($style)"
 [username]
 show_always = true
 style_user = "bg:1 fg:0"
-style_root = "bg:#9A348E"
 format = '[$user ]($style)'
 
 [directory]
@@ -117,7 +116,7 @@ disabled = false
 
 [sudo]
 style = "bg:6 bold fg:0"
-format = "[ as SUDO ]($style)"
+format = "[ ROOT ]($style)"
 disabled = false
 
 [c]
