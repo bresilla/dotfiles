@@ -11,6 +11,8 @@ if [[ $distro_name == "Arch" ]]; then
     printf 
 elif [[ $distro_name == "Ubuntu" ]]; then
     printf 
+elif [[ $distro_name == "Debian" ]]; then
+    printf 
 elif [[ $distro_name == "ManjaroLinux" ]]; then
     printf 
 else
