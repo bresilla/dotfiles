@@ -6,16 +6,16 @@ echo $screenshot_file > /tmp/screenshot_file;
 accent=$(cat /home/bresilla/.cache/wal/colors | head -2 | tail -1)
 
 if [[ $1 == "--flame" ]]; then
-    flameshot config -m "$accent"
-    flameshot gui -c -p /tmp --raw > $screenshot_file || exit
+    org.flameshot.Flameshot config -m "$accent"
+    org.flameshot.Flameshot gui -c -p /tmp --raw > $screenshot_file || exit
 elif [[ $1 == "--maim" ]]; then
     maim -u -s | tee $screenshot_file | xclip -sel clip -t image/png -i
 elif [[ $1 == "--ocr" ]]; then
     TEXT_FILE="/tmp/ocr.txt"
     IMAGE_FILE="/tmp/ocr.png"
 
-    flameshot config -m "$accent"
-    flameshot gui -c -p /tmp --raw > $IMAGE_FILE || exit
+    org.flameshot.Flameshot config -m "$accent"
+    org.flameshot.Flameshot gui -c -p /tmp --raw > $IMAGE_FILE || exit
 
     tesseract "$IMAGE_FILE" "${TEXT_FILE//\.txt/}" 2> /dev/null
     sed -i 's/\x0c//' "$TEXT_FILE"

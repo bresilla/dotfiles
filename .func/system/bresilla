@@ -44,7 +44,7 @@ def get_color(x, y, t):
     return t <= 0 and "\033[30m" or "\033[" +str(colors[0][-1]) +"m"
 
 
-IMG = open('/doc/docs/OTHER/BRAND/logo/ascii', 'r').read()
+IMG = open('/env/dot/bresilla/ascii', 'r').read()
 
 init()
 step = 6

@@ -75,4 +75,7 @@ opacity-rule = [
 wintypes:
 {
     tooltip = { fade = true; shadow = true; focus = true; blur = true; };
+    dropdown_menu = { shadow = false; };
+    popup_menu    = { shadow = false; };
+    utility       = { shadow = false; };
 };

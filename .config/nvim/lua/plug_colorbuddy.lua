@@ -669,7 +669,7 @@ function define_groups()
     Group.new("TSStructure"          , groups.Structure       , groups.Structure   , groups.Structure)
     Group.new("TSInclude"            , groups.Include         , groups.Include     , groups.Include)
     Group.new("TSAnnotation"         , colors.blue_nuanced_bg , colors.none)
-    Group.new("TSStrong"             , colors.fg              , colors.bg          , styles.bold)
+    -- Group.new("TSStrong"             , colors.fg              , colors.bg          , styles.bold)
     Group.new("TSTitle"              , colors.cyan_nuanced    , colors.none)
 
 

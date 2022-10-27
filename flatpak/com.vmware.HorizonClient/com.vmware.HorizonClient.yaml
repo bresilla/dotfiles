@@ -1,0 +1,62 @@
+---
+app-id: com.vmware.HorizonClient
+runtime: org.gnome.Platform
+runtime-version: '41'
+sdk: org.gnome.Sdk
+desktop-file-name-suffix: ' (Flatpak)'
+command: vmware-view
+build-options:
+  env:
+    TERM: dumb
+    VMWARE_EULAS_AGREED: yes
+finish-args:
+  - --share=network
+  - --socket=x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --env=GTK_THEME=Adwaita
+  - --device=all
+  - --persist=.vmware
+  - --filesystem=xdg-public-share
+
+modules:
+  - name: libudev1
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://github.com/gentoo/eudev/archive/v3.2.11.tar.gz
+        sha256: dcfc482099f3fdfcfdb9aeabbc4d609877cf4d2d0407f50ab0c59d43fff44f92
+
+  - name: vmware-horizon-client
+    buildsystem: simple
+    sources:
+      - type: file
+        url: https://download3.vmware.com/software/CART23FQ1_LIN_2203_TARBALL/VMware-Horizon-Client-Linux-2203-8.5.0-19586897.tar.gz
+        sha256: 27429dddaeedfa8b701d7aa7868f60ad58efa42687d7f27e84375fda9f5cd137
+        dest-filename: VMware-Horizon-Linux.tar.gz
+      - type: file
+        path: com.vmware.HorizonClient.appdata.xml
+    build-commands:
+      - mkdir MainFiles
+      - tar -xf "VMware-Horizon-Linux.tar.gz" -C MainFiles --strip-components 1
+      - cd MainFiles/x64/ && for f in *; do tar -xf "$f" -C /app/ --strip-components 1; done && cd ..
+      - mkdir -p "/app/share/icons/hicolor/64x64/apps/"
+      - mv "/app/share/icons/vmware-view.png" "/app/share/icons/hicolor/64x64/apps/com.vmware.HorizonClient.png"
+      - mv "/app/share/applications/vmware-view.desktop" "/app/share/applications/com.vmware.HorizonClient.desktop"
+      - sed -i 's+/usr/share/icons/vmware-view.png+com.vmware.HorizonClient+' "/app/share/applications/com.vmware.HorizonClient.desktop"
+      - sed -i 's+/usr+/app+' "/app/bin/vmware-view"
+      - sed -i 's+vm_append_to_library_path "$html5mmrlibPath"+vm_append_to_library_path "$html5mmrlibPath"\n   vm_append_to_library_path "/app/lib"+' "/app/bin/vmware-view"
+      - sed -i 's+/usr+/app+' "/app/bin/vmware-view-lib-scan"
+      - sed -i 's+/usr+/app+' "/app/bin/vmware-url-filter"
+      - sed -i 's/\/usr/\/app/' "/app/bin/vmware-view-log-collector"
+      - sed -i 's+/usr+/app+' "/app/lib/vmware/view/bin/vmware-view" # Relink the main binary
+      - sed -i 's+/usr+/app+' "/app/lib/vmware/view/env/env_utils.sh"
+      - sed -i 's+/usr+/app+' "/app/lib/vmware/view/dct/vmware-view-log-collector"
+      - sed -i 's+/usr+/app+' "/app/lib/vmware/view/dct/configFiles/Client.json"
+      - sed -i 's+/usr+/app+' "/app/lib/vmware/view/dct/configFiles/Virtual_Channel/VDPService.json"
+      - for f in `find /app/lib/vmware/ -not -type d`; do sed -i 's+/usr+/app+' "$f" && sed -i 's+/usr+/app+' "$f" && sed -i 's+/usr+/app+' "$f"; done
+      - for f in /app/lib/vmware/view/dct/configFiles/Remote_Features/*; do sed -i 's/\/usr/\/app/' "$f"; done
+      - chmod +775 "/app/lib/vmware/libjson_linux-gcc-4.1.1_libmt.so" # So flatpak can compress the .so
+      - cd /app/lib/ && ln -s libudev.so.1 libudev.so.0
+      - install -Dm644 com.vmware.HorizonClient.appdata.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.appdata.xml"
+

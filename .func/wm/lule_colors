@@ -56,15 +56,11 @@ colors_to_tty &
 
 #apply all colors (or specific command) to nvim needs 'pip install neovim-remote' and 'lsof'
 colors_to_nvim(){
-    if command -v nvr &> /dev/null ; then
-        for i in `pidof nvim`; do
-            for e in `lsof -p "$i" | grep LISTEN | awk -v N=$9 '{print $9}'`; do
-                nvr --nostart --servername $e -c ":lua mycolors(\"$(cat $HOME/.cache/wal/theme)\")" &
-            done
+    for i in `pidof nvim`; do
+        for e in `lsof -p "$i" | grep LISTEN | awk -v N=$9 '{print $9}'`; do
+            nvim --server $e --remote-send ':lua mycolors("$(cat $HOME/.cache/wal/theme)")<CR>' &
         done
-    else
-        1>&2 printf "executable nvr is not fond in your \$PATH, install it with 'pip install neovim-remote'\n"
-    fi
+    done
 }
 colors_to_nvim &
 
@@ -86,10 +82,11 @@ eww reload &
 python $HOME/.local/bin/pywalfox update &
 
 feh --no-fehbg --bg-scale $(cat $TEMP/lule_wallpaper) &
+gsettings set org.gnome.desktop.background picture-uri-dark file:///$(cat $TEMP/lule_wallpaper) &
 
-# if pgrep -x "glava" > /dev/null
-# then
-#     killall glava && echo $color1 | glava -i &
-# else
-#     echo $color1 | glava -i &
-# fi
+if pgrep -x "glava" > /dev/null
+then
+    killall glava && echo $color1 | glava -i &
+else
+    echo $color1 | glava -i &
+fi

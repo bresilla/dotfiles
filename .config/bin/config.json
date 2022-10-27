@@ -55,6 +55,15 @@
             "provider": "github",
             "package_path": ""
         },
+        "/env/bin/cpufetch_x86": {
+            "path": "/env/bin/cpufetch_x86",
+            "remote_name": "cpufetch_x86",
+            "version": "v1.02",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/Dr-Noob/cpufetch",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/direnv": {
             "path": "/env/bin/direnv",
             "remote_name": "direnv",
@@ -136,6 +145,15 @@
             "provider": "github",
             "package_path": "nostromo"
         },
+        "/env/bin/pacaptr": {
+            "path": "/env/bin/pacaptr",
+            "remote_name": "pacaptr",
+            "version": "v0.16.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/rami3l/pacaptr",
+            "provider": "github",
+            "package_path": "pacaptr"
+        },
         "/env/bin/posh": {
             "path": "/env/bin/posh",
             "remote_name": "posh",
@@ -169,6 +187,15 @@
             "version": "v0.3.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/marwanhawari/stew",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/sysget": {
+            "path": "/env/bin/sysget",
+            "remote_name": "sysget",
+            "version": "v2.3",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/emilengler/sysget",
             "provider": "github",
             "package_path": ""
         },

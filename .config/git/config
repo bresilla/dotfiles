@@ -51,7 +51,7 @@
     check = checkout
     clone = clone --recursive
     pubone = "!f(){ git push ${1:-origin} --follow-tags; }; f"
-    pub = "!f(){ for line in $(git remote -v | cut -f1 | sort -u); do git push $line --all --follow-tags; done; }; f"
+    #pub = "!f(){ for line in $(git remote -v | cut -f1 | sort -u); do git push $line --all --follow-tags; done; }; f"
     fuse = "!f(){ current=$(git branch --show-current); git checkout $1 && git merge $current && git checkout $current; }; f"
     sshify = "!f(){ [[ $(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '/com/ {print $1}') == "https:" ]] && gitname=$(git remote -v | awk 'NR==1{print $2}' | awk -F'/' '{print $4,$5}' | sed 's! !/!g') && git remote set-url origin git@github.com:$gitname.git; }; f"
     get = "!f(){ INPUT=${1:-$(xsel --clipboard)}; NAMEEE=$(echo $INPUT | cut -d/ -f1-5); git clone --recursive $NAMEEE; }; f"
@@ -59,8 +59,9 @@
     fuck = "!f(){ git reset --hard origin/`git rev-parse --abbrev-ref HEAD`; rm -fv `git status | grep ^? | cut -d' '  -f2-`; }; f"
     tree = log --graph --all --format=format:'%w(80,0,0)%C(bold magenta)%h%C(reset) %C(white)%ad%C(reset) %C(dim white)(%ar)%C(reset) %C(bold dim white)%aN%C(auto)%+D%C(reset)%n%C(bold white)%s%C(reset)%+b%n'
     open = "!f(){ hub browse; }; f"
+    commet = "!f(){ comet; }; f"
     remotes = remote -v
-    all = branch -a
+    branches = branch -a
     conflicts = !git diff --name-only --diff-filter=U
     fix = !git mergetool --tool=diffconflicts
     root = rev-parse --show-toplevel
@@ -71,10 +72,9 @@
 [gc]
     writeCommitGraph = true
 [commit]
-    gpgsign = true
+    gpgSign = true
 [init]
     defaultBranch = main
-
 [user]
     name = Trim Bresilla
     email = trim.bresilla@gmail.com

@@ -84,8 +84,6 @@ vim.o.listchars = "extends:›,precedes:‹,nbsp:␣,trail:·,tab:→\\ ,eol:¬"
 
 
 ---------------------------------------------- === PLUGINS === ----------------------------------------------
---
-
 require('plug_plugins')
 -- require('other_blame')
 

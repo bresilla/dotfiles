@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-[[ $(lxc info $1 | grep Status | choose 1) == "STOPPED" ]] && lxc start $1; lxc user $1

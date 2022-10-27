@@ -29,9 +29,9 @@ require'lspconfig'.rust_analyzer.setup{
     -- filetypes = { "rust" };
 -- }
 
-require'lspconfig'.sumneko_lua.setup{
-  cmd = {"lua-language-server"};
-}
+-- require'lspconfig'.sumneko_lua.setup{
+--   cmd = {"lua-language-server"};
+-- }
 require'lspconfig'.pylsp.setup{}
 -- require'lspconfig'.pyls.setup{}
 -- require'lspconfig'.pyls_ms.setup{}

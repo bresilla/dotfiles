@@ -167,7 +167,7 @@ alias \$=''
 [[ -x "$(command -v atuin)" ]] && eval "$(atuin init zsh)"
 
 ###COD
-[[ -x "$(command -v cod)" ]] && source <(cod init $$ zsh)
+# [[ -x "$(command -v cod)" ]] && source <(cod init $$ zsh)
 
 ###NOSTROMO
 [[ -x "$(command -v nostromo)" ]] && source <(nostromo completion zsh)
@@ -253,3 +253,9 @@ done
 #--------------------------------------------------------------------------------------------------------------------
 #TAB-RS (shotrcut: Ctrl + e)
 bindkey -s '^A' ' tab\n'
+
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# >>> xmake >>>
+[[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
+# <<< xmake <<<

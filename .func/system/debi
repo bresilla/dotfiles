@@ -1,19 +1,24 @@
 #!/bin/bash
+xhost +
 
-if ! [[ $(findmnt -M "/debi/sys") ]]; then doas mount --rbind /sys /debi/sys && doas mount --make-rslave /debi/sys; fi
-if ! [[ $(findmnt -M "/debi/dev") ]]; then doas mount --rbind /dev /debi/dev && doas mount --make-rslave /debi/dev; fi
-if ! [[ $(findmnt -M "/debi/proc") ]]; then doas mount --rbind /proc /debi/proc && doas mount --make-rslave /debi/proc; fi
-if ! [[ $(findmnt -M "/debi/run") ]]; then doas mount --rbind /run /debi/run && doas mount --make-rslave /debi/run; fi
-if ! [[ $(findmnt -M "/run/systemd/resolve") ]]; then doas mount --rbind /run/systemd/resolve /debi/run/systemd/resolve && doas mount --make-rslave /debi/run/systemd/resolve; fi
+MP=/debi
 
+if ! [[ $(findmnt -M "$MP/sys") ]]; then doas mount --rbind /sys $MP/sys && doas mount --make-rslave $MP/sys; fi
+if ! [[ $(findmnt -M "$MP/dev") ]]; then doas mount --rbind /dev $MP/dev && doas mount --make-rslave $MP/dev; fi
+if ! [[ $(findmnt -M "$MP/proc") ]]; then doas mount --rbind /proc $MP/proc && doas mount --make-rslave $MP/proc; fi
+if ! [[ $(findmnt -M "$MP/run") ]]; then doas mount --rbind /run $MP/run && doas mount --make-rslave $MP/run; fi
+if ! [[ $(findmnt -M "/run/systemd/resolve") ]]; then doas mount --rbind /run/systemd/resolve $MP/run/systemd/resolve && doas mount --make-rslave $MP/run/systemd/resolve; fi
 
-if ! [[ $(findmnt -M "/debi/env") ]]; then doas mount --rbind /env /debi/env && doas mount --make-rslave /debi/env; fi
-if ! [[ $(findmnt -M "/debi/con") ]]; then doas mount --rbind /con /debi/con && doas mount --make-rslave /debi/con; fi
-if ! [[ $(findmnt -M "/debi/doc") ]]; then doas mount --rbind /doc /debi/doc && doas mount --make-rslave /debi/doc; fi
-if ! [[ $(findmnt -M "/debi/nix") ]]; then doas mount --rbind /nix /debi/nix && doas mount --make-rslave /debi/nix; fi
-# if ! [[ $(findmnt -M "/debi/var") ]]; then doas mount --rbind /var /debi/var && doas mount --make-rslave /debi/var; fi
-if ! [[ $(findmnt -M "/debi/home") ]]; then doas mount --rbind /home /debi/home && doas mount --make-rslave /debi/home; fi
+if ! [[ $(findmnt -M "$MP/env") ]]; then doas mount --rbind /env $MP/env && doas mount --make-rslave $MP/env; fi
+if ! [[ $(findmnt -M "$MP/con") ]]; then doas mount --rbind /con $MP/con && doas mount --make-rslave $MP/con; fi
+if ! [[ $(findmnt -M "$MP/doc") ]]; then doas mount --rbind /doc $MP/doc && doas mount --make-rslave $MP/doc; fi
+if ! [[ $(findmnt -M "$MP/nix") ]]; then doas mount --rbind /nix $MP/nix && doas mount --make-rslave $MP/nix; fi
+if ! [[ $(findmnt -M "$MP/home") ]]; then doas mount --rbind /home $MP/home && doas mount --make-rslave $MP/home; fi
 
-xhost +local: > /dev/null 2>&1
-echo $PWD > /debi/tmp/debi_pwd
-doas chroot /debi /bin/bash -c "su -l bresilla"
+# Isolate the first GPU device along with basic utilities
+# doas nvidia-container-cli --load-kmods configure --ldconfig=@/sbin/ldconfig.real --no-cgroups --utility --device 0 $MP
+doas nvidia-container-cli --load-kmods configure --no-cgroups --utility --device 0 $MP
+
+doas chroot $MP /bin/bash -c "su -l bresilla"
+# doas chroot --userspec 1000:1000 $MP env -i bash
+# doas chroot $MP

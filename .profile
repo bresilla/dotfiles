@@ -64,6 +64,7 @@ export SSH_AGENT_PID=""
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export GPG_TTY=$(tty)
 export MONITOR1=eDP1
+export $(cat /etc/os-release | grep -m 1 ID)
 
 export CARGO_HOME="/var/cargo"
 export RUSTUP_HOME="/var/rust"
@@ -127,3 +128,5 @@ export TURTLEBOT3_MODEL=burger
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 export ZEPHYR_SDK_INSTALL_DIR=/opt/ros/microros/firmware/zephyr-sdk
 
+
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

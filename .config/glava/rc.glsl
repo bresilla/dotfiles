@@ -177,7 +177,7 @@
    smooth the data, as accuracy beyond this setting is mostly
    meaningless for visual purposes.
 */
-#request setsamplesize 2048
+#request setsamplesize 256
 
 /* Audio buffer size to be used for processing and shaders. 
    Increasing this value can have the effect of adding 'gravity'
@@ -186,7 +186,7 @@
 
    This value has a _massive_ effect on FFT performance and
    quality for some modules. */
-#request setbufsize 4096
+#request setbufsize 512
 
 /* PulseAudio sample rate. Lower values can add 'gravity' to
    FFT output, but can also reduce accuracy. Most hardware

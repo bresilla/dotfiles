@@ -8,7 +8,7 @@ ${custom.tab}\
 ${custom.tab2}\
 $status\
 ${custom.container2}\
-[| ](bg:0 fg:7)
+[| ](fg:7)
 """
 
 continuation_prompt = " > "
@@ -23,7 +23,7 @@ $julia\
 $nodejs\
 $nim\
 $conda\
-[|](bg:0 fg:7)
+[|](fg:7)
 $git_branch\
 $git_status\
 $directory\

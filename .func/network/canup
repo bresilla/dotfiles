@@ -6,12 +6,15 @@ if [ $# -eq 0 ]; then
 fi
 
 # Load the kernel module.
-modprobe vcan
+# modprobe vcan
 
 # Create the virtual CAN interface.
 ip link add name ${1} type ${2:-vcan}
 # For CAN-FD
 ip link set ${1} mtu 72
+# Set speed
+ip link set ${1} type vcan bitrate 500000
+
 # Bring the virutal CAN interface online
 ip link set dev ${1} up
 

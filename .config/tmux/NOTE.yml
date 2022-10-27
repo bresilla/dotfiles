@@ -10,7 +10,7 @@ windows:
     - taskwarrior-tui
     root: /home/bresilla
   - commands:
-    - rsmixer
+    - ncpamixer
     focus: true
     root: /home/bresilla
   - commands:

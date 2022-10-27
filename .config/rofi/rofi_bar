@@ -2,123 +2,123 @@
  * ROFI Color theme2
  * User: bresilla
  copy those lines to: ~/.conf/rofi/ or ~/.Xdefaults
-	rofi.fullscreen:true
-	rofi.theme: ~/.i3/rofi.rasi
+    rofi.fullscreen:true
+    rofi.theme: ~/.i3/rofi.rasi
     theme: "~/.cache/wal/colors-rofi-dark.rasi";
  */
 
 * {
-	accent: #FFFFFF;
-	bckgrd: #000000;
-	select: @accent;
+    accent: #FFFFFF;
+    bckgrd: #000000;
+    select: @accent;
 
-	foreground:         @accent;
-	foreground-alt:    	#ebebeb;
-	background:			@bckgrd;
-	background-alt: 	rgba(255, 255, 255, 0.1);
-	transparent:		rgba(0, 0, 0, 0);
-	urgentcolor:      	#e53714;
+    foreground:         @accent;
+    foreground-alt:     #ebebeb;
+    background:         @bckgrd;
+    background-alt:     rgba(255, 255, 255, 0.1);
+    transparent:        rgba(0, 0, 0, 0);
+    urgentcolor:        #e53714;
 
     fromtop: 20%;
-   font: 				"Iosevka Term SS01 20";
+   font:                "Iosevka Term SS01 20";
    border-color:        @background;
    separatorcolor:      @foreground;
-   background-color: 	@background;
+   background-color:    @background;
 }
 
 #window {
-   background-color: 	@background;
-   anchor: 				north;
-   location: 			north;
-   y-offset: 			@fromtop;
+   background-color:    @background;
+   anchor:              north;
+   location:            north;
+   y-offset:            @fromtop;
     /* border-radius:      8px; */
 }
 
 #mainbox {
-   background-color: 	@background;
+   background-color:    @background;
 }
 
 #listview {
-   fixed-height: 		false;
-   dynamic: 			true;
-   scrollbar: 			false;
-   padding: 			10px;
+   fixed-height:        false;
+   dynamic:             true;
+   scrollbar:           false;
+   padding:             10px;
    /* border:              5px; */
-   background: 			@background;
+   background:          @background;
 }
 
 #element {
-    padding: 			10px 25px 10px 25px;
+    padding:            10px 25px 10px 25px;
     /* border-radius:      4px; */
 }
 
 #element.normal.normal {
-   background-color: 	@background;
-   text-color: 			@foreground-alt;
+   background-color:    @background;
+   text-color:          @foreground-alt;
 }
 
 #element.normal.urgent {
-   background-color: 	@background;
-   text-color: 			@urgentcolor;
+   background-color:    @background;
+   text-color:          @urgentcolor;
 }
 
 #element.normal.active {
-   background-color: 	@background;
-   text-color: 			@foreground;
+   background-color:    @background;
+   text-color:          @foreground;
 }
 
 #element.selected.normal {
-    background-color: 	@background-alt;
-    text-color:       	@foreground;
+    background-color:   @background-alt;
+    text-color:         @foreground;
 }
 
 #element.selected.urgent {
-    background-color: 	@urgentcolor;
-    text-color:       	@background;
+    background-color:   @urgentcolor;
+    text-color:         @background;
 }
 
 #element.selected.active {
-    background-color: 	@foreground;
-    text-color:       	@thi;
+    background-color:   @foreground;
+    text-color:         @foreground-alt;
 }
 
 #element.alternate.normal {
-    background-color: 	@background;
-    text-color:       	@foreground-alt;
+    background-color:   @background;
+    text-color:         @foreground-alt;
 }
 
 #element.alternate.urgent {
-    background-color: 	@background;
-    text-color:       	@urgentcolor;
+    background-color:   @background;
+    text-color:         @urgentcolor;
 }
 
 #element.alternate.active {
-    background-color: 	@background;
-    text-color:       	@foreground;
+    background-color:   @background;
+    text-color:         @foreground;
 }
 
 #button {
-   background-color: 	@background;
-   text-color:       	@background;
+   background-color:    @background;
+   text-color:          @background;
 }
 
 
 #button.selected {
-    text-color:      	@foreground;
+    text-color:         @foreground;
 }
 #inputbar {
-   padding: 			0 -1% 0 0;
+   padding:             0 -1% 0 0;
 }
 
 #prompt {
-   background-color:	@foreground;
-   text-color:			@background;
-   padding: 			10 1% 10 1%;
+   background-color:    @foreground;
+   text-color:          @background;
+   padding:             10 1% 10 1%;
 }
 
 #entry {
-   background-color: 	@background-alt;
-   text-color:			@foreground;
+   background-color:    @background-alt;
+   text-color:          @foreground;
    /* border-radius:       4px; */
-   padding: 			10 0 10 10;
+   padding:             10 0 10 10;
 }

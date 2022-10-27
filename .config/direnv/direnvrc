@@ -66,13 +66,23 @@ layout_conda() {
     printf "\nenvironment path: \t${BLUE}${conda_env}${NC}\n\n";
 }
 
-layout_ros() {
-    source "/opt/ros/${1:-humble}/setup.sh"
-    if [[ -f "$PWD/devel/setup.sh" ]]; then source "$PWD/devel/setup.sh"; fi
-    if [[ -f "$PWD/install/setup.sh" ]]; then source "$PWD/install/setup.sh"; fi
+layout_mamba() {
+    export HASHER=`echo $PWD | md5sum | cut -d" " -f1`
+    export MAMBA_ROOT_PREFIX="/con";
+    export VENV=$MAMBA_ROOT_PREFIX/envs/$HASHER
+    eval "$(micromamba shell hook --shell=bash)"
+
+    if [[ -d $VENV/conda-meta ]]; then
+        micromamba activate $VENV
+        micromamba info
+    else
+        micromamba create -n $HASHER mamba libmambapy python=${1:-3.9} -c conda-forge
+        micromamba activate $VENV
+        micromamba info
+    fi
 }
 
-layout_mamba() {
+layout_localmamba() {
     export MAMBA_ROOT_PREFIX="$PWD/.direnv/mamba";
     export VENV=$MAMBA_ROOT_PREFIX/envs/`basename $PWD`
     eval "$(micromamba shell hook --shell=bash)"
@@ -82,11 +92,16 @@ layout_mamba() {
         micromamba info
     else
         micromamba create -n `basename $PWD` mamba libmambapy python=${1:-3.9} -c conda-forge
-        micromamba activate $MAMBA_ROOT_PREFIX
+        micromamba activate $VENV
         micromamba info
     fi
 }
 
+layout_ros() {
+    source "/opt/ros/${1:-humble}/setup.sh"
+    if [[ -f "$PWD/devel/setup.sh" ]]; then source "$PWD/devel/setup.sh"; fi
+    if [[ -f "$PWD/install/setup.sh" ]]; then source "$PWD/install/setup.sh"; fi
+}
 
 layout_go() {
   export GOPATH="$PWD/vendor/"

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+pactl set-default-source bluez_output.A4_77_58_38_60_EA.1.monitor
+
+pactl set-default-sink bluez_output.A4_77_58_38_60_EA.1

@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# This is a simple kernel hook to populate the systemd-boot entries whenever kernels are added or removed.
+
+ID=$(source /etc/os-release; echo $ID)
+
+# The UUID of your disk, subvols and boot dir
+if [ $ID == "arch" ]; then
+    ROOT="root=UUID=2a2545bf-ee68-40a2-9afe-a54de40f61c8"
+    SUB="rootflags=subvol=@roll"
+elif [ $ID == "ubuntu" ]; then
+    ROOT="root=UUID=05e5c9f8-d102-47a6-a742-847179e1d442"
+    SUB="rootflags=subvol=@roll"
+fi
+echo "DISTRO:" $ID
+echo "-----------"
+
+#BOOTDIRS
+# EFI=/boot/efi
+EFI=/boot/efi
+DIS=$EFI/$ID
+
+# Any rootflags you wish to set.
+OPTION_QUIET="resume=UUID=3086af27-e903-4e4b-90d7-7b7da6aee321 rw quiet loglevel=0 udev.log_level=0 i915.fastboot=1 splash ibt=off"
+OPTION_LOGS="resume=UUID=3086af27-e903-4e4b-90d7-7b7da6aee321 rw lsm=landlock,lockdown,yama,apparmor,bpf splash ibt=off"
+IOMMU="intel_iommu=on iommu=pt"
+
+# Perform a nuclear clean to ensure everything is always in perfect sync.
+rm -rf $DIS && mkdir $DIS
+
+for file in $(find /boot -maxdepth 1 -type f -print); do
+    cp $file $DIS/
+    echo "copying" $file "to" $DIS
+done
+echo "-----------"
+
+for ver in $(find $DIS -maxdepth 1 -name 'vmlinuz*' -type f -print); do
+    ver=$(basename "${ver}")
+    ver=${ver:8}
+    echo $ver
+
+    if [ $ID == "arch" ]; then
+        INIT="initramfs-${ver}.img"
+        LINUZ="vmlinuz-${ver}"
+        OPTION_ADD="lsm=landlock,lockdown,yama,apparmor,bpf"
+    elif [ $ID == "ubuntu" ]; then
+        INIT="initrd.img-${ver}"
+        LINUZ="vmlinuz-${ver}"
+        OPTION_ADD=""
+    fi
+
+    confile=$EFI/loader/entries/${ID}-${ver}.conf
+    [[ -f $confile ]] && rm $confile && touch $confile && chmod u+x $confile
+
+    echo "title   ${ID}-${ver}" >> $confile
+    echo "linux   /${ID}/${LINUZ}" >> $confile
+    echo "initrd  /${ID}/${INIT} ${IOMMU}" >> $confile
+    echo "options ${ROOT} ${SUB} ${OPTION_QUIET} ${OPTION_ADD}" >> $confile
+done

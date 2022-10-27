@@ -9,5 +9,9 @@ export SSH_AUTH_SOCK
 
 # eval "$(dbus-launch --sh-syntax --exit-with-session)"
 
+#gpg things
+# export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+# gpgconf --launch gpg-agent
+
 xmodmap $HOME/.Xmodmap &
 exec bspwm

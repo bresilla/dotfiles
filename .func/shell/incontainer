@@ -2,6 +2,8 @@
 distro_name=$(systemd-detect-virt | xargs)
 if [[ $distro_name == "lxc" ]]; then
     printf " >> "
+elif [[ $distro_name == "qemu" ]]; then
+    printf " :: "
 elif [[ $distro_name == "kvm" ]]; then
     printf " :: "
 fi

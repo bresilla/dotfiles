@@ -1,4 +1,21 @@
-vim.cmd [[packadd packer.nvim]]
+-- local os_name = vim.loop.os_getenv 'ID' or 'unknown'
+
+-- local pack_path = vim.fn.stdpath('data') .. '/' .. os_name .. '/site/pack/'
+-- local install_path = pack_path .. 'packer/opt/packer.nvim'
+
+-- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+--     vim.cmd('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+-- end
+
+-- vim.opt.packpath = pack_path
+
+-- require('packer').init({
+--     auto_clean = true,
+--     package_root = table.concat({vim.fn.stdpath('data'),  os_name, 'site', 'pack'}, '/'),
+--     compile_path = table.concat({vim.fn.stdpath('config'),  os_name, 'plugin', 'packer_compiled.lua'}, '/'),
+-- })
+
+vim.cmd('packadd packer.nvim')
 
 require('packer').startup(
     function()
@@ -178,16 +195,6 @@ require('packer').startup(
         use {
             'yamatsum/nvim-nonicons',
             requires = {'kyazdani42/nvim-web-devicons'}
-        }
-        -- disabling the cursor-line/column in unused win/buffer
-        use { 'Pocco81/NoCLC.nvim',
-            config = function()
-                require("no-clc").setup({
-                    load_at_startup = true,
-                    cursorline = true,
-                    cursorcolumn = true
-                })
-            end
         }
         use {
             "folke/todo-comments.nvim",

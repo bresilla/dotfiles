@@ -153,7 +153,11 @@ yoffset=${_arg_yoffset:-$(($m_heigh / 2 - $heigh / 2 ))}
 
 if [[ -z $win ]]; then
     /env/bin/tmass -l /home/bresilla/.config/tmux load $name 2> /dev/null
-    $term --name=$name sh -c "tmux attach -t $name" &
+    if [[ $term == "kitty" ]]; then
+        $term --name=$name sh -c "tmux attach -t $name" &
+    elif [[ $term == "alacritty" ]]; then
+        $term --class=$name sh -c "tmux attach -t $name" &
+    fi
     sleep 0.2
     win=$(xdotool search -classname $name)
     xdotool windowmap "$win" windowmove "$win" "$(( $xoffset + $x_pos))" "$(( $yoffset + $y_pos ))" windowsize "$win" "$width" "$heigh" 2> /dev/null

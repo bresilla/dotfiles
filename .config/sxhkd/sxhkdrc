@@ -67,17 +67,18 @@ mod3 + {Left,Right, space + mod2}
 mod3 + space
     /home/bresilla/.config/sxhkd/scripts/mpv cycle
 super + {F3, F2}
-    pamixer -{i,d} 2 && [[ $(pamixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
+    pamixer -{i,d} 2 && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1);
+    # pamixer -{i,d} 2 && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
     #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
 {super,mod1} + F4 
     playerctl {next,previous}
 super + F1 
-    pamixer -t && [[ $(pamixer --get-mute) == 1 ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
+    pamixer -t && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1);
+    # pamixer -t && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
     #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
 super + {F7, F6}
     light -{A,U} 2 && light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
     #; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
-
 
 super + mod1 + F4
     play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
