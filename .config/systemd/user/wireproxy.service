@@ -5,7 +5,7 @@ After=graphical.target
 
 [Service]
 Type=simple
-ExecStart=/env/bin/wireproxy -c /home/bresilla/.local/share/mlvd-it5.conf
+ExecStart=/env/bin/wireproxy -c /home/bresilla/.local/share/mlvd.conf
 ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
 Restart=always
 RestartSec=5

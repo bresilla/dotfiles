@@ -75,7 +75,7 @@ vim.o.updatetime = 100                                                  -- set f
 vim.o.timeoutlen = 500                                                  -- faster timeout wait time
 
 vim.o.encoding = "UTF-8"                                                -- set encoding
-vim.o.mouse = "a"                                                       -- enable mouse support
+vim.o.mouse = "a"                                                       -- enable mouse supportcomment
 vim.o.foldmethod = "marker"                                             -- foldmethod using marker
 vim.o.signcolumn = "yes"                                                -- enable sign column all the time, 4 column
 

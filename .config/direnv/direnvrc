@@ -68,7 +68,7 @@ layout_conda() {
 
 layout_mamba() {
     export HASHER=`echo $PWD | md5sum | cut -d" " -f1`
-    export MAMBA_ROOT_PREFIX="/con";
+    export MAMBA_ROOT_PREFIX="/pkg/mamba";
     export VENV=$MAMBA_ROOT_PREFIX/envs/$HASHER
     eval "$(micromamba shell hook --shell=bash)"
 

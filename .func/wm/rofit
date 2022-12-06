@@ -1,6 +1,6 @@
 #!/bin/bash
 source ~/.cache/wal/colors.sh
-ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:-#FFFFFF}; bckgrd: ${color0:-#000000};}")
+ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar)
 
 /home/bresilla/down/rofi-1.7.4.tar/rofi-1.7.4/build/rofi "${ROFI_OPTIONS[@]}" -dmenu -sep ${2:-'\n'} -eh ${1:-1} -i -p ">>>"
 

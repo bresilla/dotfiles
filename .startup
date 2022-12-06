@@ -42,7 +42,7 @@ eww daemon &
 #PICOM
 pkill picom
 while pgrep -x picom >/dev/null; do sleep 1; done
-picom --experimental-backends --config $HOME/.config/picom/config &
+picom --config $HOME/.config/picom/config &
 
 
 #KEYBOARD
@@ -65,3 +65,4 @@ pactl set-card-profile alsa_card.pci-0000_00_1f.3 off && pactl set-card-profile 
 #XHOSTS
 xhost +local:focal
 xhost +local:root
+xhost +local:core

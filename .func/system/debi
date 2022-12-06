@@ -1,5 +1,5 @@
 #!/bin/bash
-xhost +
+# xhost +
 
 MP=/debi
 
@@ -10,7 +10,7 @@ if ! [[ $(findmnt -M "$MP/run") ]]; then doas mount --rbind /run $MP/run && doas
 if ! [[ $(findmnt -M "/run/systemd/resolve") ]]; then doas mount --rbind /run/systemd/resolve $MP/run/systemd/resolve && doas mount --make-rslave $MP/run/systemd/resolve; fi
 
 if ! [[ $(findmnt -M "$MP/env") ]]; then doas mount --rbind /env $MP/env && doas mount --make-rslave $MP/env; fi
-if ! [[ $(findmnt -M "$MP/con") ]]; then doas mount --rbind /con $MP/con && doas mount --make-rslave $MP/con; fi
+if ! [[ $(findmnt -M "$MP/pkg") ]]; then doas mount --rbind /pkg $MP/pkg && doas mount --make-rslave $MP/pkg; fi
 if ! [[ $(findmnt -M "$MP/doc") ]]; then doas mount --rbind /doc $MP/doc && doas mount --make-rslave $MP/doc; fi
 if ! [[ $(findmnt -M "$MP/nix") ]]; then doas mount --rbind /nix $MP/nix && doas mount --make-rslave $MP/nix; fi
 if ! [[ $(findmnt -M "$MP/home") ]]; then doas mount --rbind /home $MP/home && doas mount --make-rslave $MP/home; fi

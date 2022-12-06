@@ -1,16 +1,19 @@
-/**
- * ROFI Color theme
- * User: bresilla
- copy those lines to: ~/.conf/rofi/ or ~/.Xdefaults
-    rofi.fullscreen:true
-    rofi.theme: ~/.i3/rofi.rasi
- */
+@import     "/home/bresilla/.cache/wal/colors.rasi"
+
+configuration {
+    show-icons:                 false;
+}
 
 * {
-    accent: #FFFFFF;
-    foreground:                 @accent;
-    background:                 rgba(0, 0, 0, 0.90);
-    transparent:                rgba(0, 0, 0, 0);
+    foreground:         @color1;
+    foreground-alt:     #ebebeb;
+    selected:           #61AFEFFF;
+    active:             #98C379FF;
+    urgent:             #E06C75FF;
+    background:         @color0;
+    background-alt:     rgba(255, 255, 255, 0.1);
+    transparent:        rgba(0, 0, 0, 0);
+    urgentcolor:        #e53714;
 
     normal-background:          @transparent;
     normal-foreground:          @foreground;
@@ -70,6 +73,19 @@
     border:                 0;
     padding:                10 10 10;
     border-radius: 4px;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      transparent;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        24px;
+    cursor:                      inherit;
 }
 #element.normal.normal {
     background-color:       @normal-background;

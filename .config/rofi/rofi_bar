@@ -1,29 +1,24 @@
-/**
- * ROFI Color theme2
- * User: bresilla
- copy those lines to: ~/.conf/rofi/ or ~/.Xdefaults
-    rofi.fullscreen:true
-    rofi.theme: ~/.i3/rofi.rasi
-    theme: "~/.cache/wal/colors-rofi-dark.rasi";
- */
+@import     "/home/bresilla/.cache/wal/colors.rasi"
+
+configuration {
+    show-icons:                 false;
+}
 
 * {
-    accent: #FFFFFF;
-    bckgrd: #000000;
-    select: @accent;
-
-    foreground:         @accent;
+    foreground:         @color1;
     foreground-alt:     #ebebeb;
-    background:         @bckgrd;
+    selected:           #61AFEFFF;
+    active:             #98C379FF;
+    urgent:             #E06C75FF;
+    background:         @color0;
     background-alt:     rgba(255, 255, 255, 0.1);
     transparent:        rgba(0, 0, 0, 0);
     urgentcolor:        #e53714;
 
     fromtop: 20%;
-   font:                "Iosevka Term SS01 20";
-   border-color:        @background;
-   separatorcolor:      @foreground;
-   background-color:    @background;
+    font:                "Iosevka Term SS01 20";
+    border-color:        @background;
+    background-color:    @background;
 }
 
 #window {
@@ -50,6 +45,20 @@
 #element {
     padding:            10px 25px 10px 25px;
     /* border-radius:      4px; */
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      transparent;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        24px;
+    cursor:                      inherit;
 }
 
 #element.normal.normal {

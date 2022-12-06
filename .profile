@@ -17,16 +17,19 @@ export PATH=$PATH:/usr/local/go/bin
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
 #NIX
-export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
-[[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
-export NIXPKGS_ALLOW_UNFREE=1
-
-#MAMBA and/or CONDA
-[[ -f "/con/etc/profile.d/conda.sh" ]]  && export CONDA_HOME="/con" && . "/con/etc/profile.d/conda.sh"
+# export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
+# [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
+# export NIXPKGS_ALLOW_UNFREE=1
+export NIX_STORE_DIR=/pkg/nix/store
+export NIX_LOG_DIR=/pkg/nix/var/log
+export NIX_STATE_DIR=/pkg/nix/var/nix
+export NIX_DATA_DIR=/pkg/nix/share
+export NIX_CONF_DIR=/pkg/nix/etc/nix
 
 #PLATFORMIO
-# export PLATFORMIO_CORE_DIR=/opt/pio
+export PLATFORMIO_CORE_DIR=/opt/pio
 # [[ -d "/opt/pio" ]]  && PATH="$PATH:/opt/pio/penv/bin"
+# export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME"/platformio
 
 #NVIDIA
 [[ -d "/usr/local/cuda" ]] && PATH="$PATH:/usr/local/cuda/bin" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
@@ -35,7 +38,6 @@ export NIXPKGS_ALLOW_UNFREE=1
 export LD_LIBRARY_PATH="/usr/local/lib/:$LD_LIBRARY_PATH"
 #export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
 export CUDA_TOOLKIT_ROOT_DIR="/opt/cuda"
-
 
 #FLATPAK
 FLATPAK_ENABLE_SDK_EXT=rust-nightly
@@ -66,17 +68,21 @@ export GPG_TTY=$(tty)
 export MONITOR1=eDP1
 export $(cat /etc/os-release | grep -m 1 ID)
 
+
+# RUST
 export CARGO_HOME="/var/cargo"
 export RUSTUP_HOME="/var/rust"
-export NIMBLE_DIR="/var/nimble"
+[[ -d "/var/cargo/bin" ]] && PATH="/var/cargo/bin:$PATH"
+# GO
 export GOPATH="/var/go"
 export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
+[[ -d "/var/go/bin" ]] && PATH="/var/go/bin:$PATH"
+
+export NIMBLE_DIR="/var/nimble"
 export DIRENV_WARN_TIMEOUT=1h
 export BAKE_HOME="/home/bresilla/.local/share/bake"
-
-export UBUNTU_PATH="/tent/ubuntu"
-export VIM="/usr/share/nvim/"
+export VCPKG_ROOT="/pkg/vcpkg"
 
 export PASTEL_COLOR_MODE=24bit
 export COLORTERM=truecolor
@@ -106,6 +112,8 @@ export XDG_DATA_PATH=/home/$USER/.local/share
 export XDG_CACHE_HOME=/home/$USER/.cache
 export XDG_CACHE_PATH=/home/$USER/.cache
 
+export SDL_JOYSTICK_DEVICE=/dev/input/js0
+
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export IPFS_PATH=/home/bresilla/sync/planetary/ipfs
@@ -127,6 +135,3 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export TURTLEBOT3_MODEL=burger
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 export ZEPHYR_SDK_INSTALL_DIR=/opt/ros/microros/firmware/zephyr-sdk
-
-
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

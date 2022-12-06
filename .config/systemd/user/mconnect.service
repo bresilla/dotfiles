@@ -1,0 +1,15 @@
+[Unit]
+Description="KDE Connect protocol"
+Documentation="https://github.com/bboozzoo/mconnect"
+Wants=network-online.target
+After=zerotier-one.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/mconnect -d
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
