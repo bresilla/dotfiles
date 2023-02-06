@@ -4,13 +4,12 @@ source /home/bresilla/.profile
 
 
 #MONITORS
-MONITOR1=eDP1
-MONITOR2=DVI-I-3-2
-MONITOR3=DVI-I-2-1
+MONITOR1=eDP-1
+MONITOR2=DVI-I-1-1
+MONITOR3=DVI-I-2-2
 MONITOR4=VIRTUAL1
-# xrandr --output $MONITOR1 --primary --mode 3840x2160 --pos 0x2160 --rotate normal --output $MONITOR2 --mode 3840x2160 --pos 0x0 --rotate normal --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off &
-# xrandr --output $MONITOR1 --primary --mode 3456x2160 --pos 0x1080 --rotate normal --output DP-1 --off --output HDMI-1 --off --output DP-2 --off --output HDMI-2 --off --output $MONITOR2 --mode 1920x1080 --pos 0x0 --rotate normal --output $MONITOR3 --mode 1920x1080 --pos 1920x0 --rotate normal &
-xrandr --output $MONITOR1 --primary --mode 3456x2160 --pos 186x1080 --rotate normal \
+
+xrandr --output $MONITOR1 --primary --mode 3456x2160 --pos 184x1080 --rotate normal \
     --output $MONITOR2 --mode 1920x1080 --pos 0x0 --rotate normal \
     --output $MONITOR3 --mode 1920x1080 --pos 1920x0 --rotate normal \
     --output $MONITOR4 --off --output DP1 --off --output DP2 --off --output DP3 --off &

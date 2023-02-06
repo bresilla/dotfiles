@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for tt in /dev/pts/*; do
+    re='^[0-9]+$'; [[ $(basename $tt) =~ $re ]] && cat $HOME/.cache/wal/sequences > $tt;
+done

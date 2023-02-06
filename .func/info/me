@@ -2,7 +2,9 @@
 
 printf "HOME:"
 echo
-printf "ADDRES:\t\tTrim Bresilla, Dubceksingel 6, 6716RG Ede"
+printf "ADDRES:\t\tTrim Bresilla, Dubceksingel 6, Ede Gld, Gelderland, 6716RG, NL"
+echo
+printf "PHONE:\t\t(+31) 6 214 36744"
 echo
 printf "PHONE:\t\t(+31) 6 280 22776"
 echo

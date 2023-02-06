@@ -351,7 +351,7 @@ function fileToList(file)
 end
 
 function lule_colors()
-    rainbow = fileToList('/home/bresilla/.cache/lule/colors')
+    rainbow = fileToList('/home/bresilla/.cache/wal/colors')
     Color.new('r0',         rainbow[0+1])
     Color.new('r1',         rainbow[1+1])
     Color.new('r2',         rainbow[2+1])

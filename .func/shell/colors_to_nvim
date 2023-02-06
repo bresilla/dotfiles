@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in `pidof nvim`; do
+    for e in `lsof -p "$i" | grep LISTEN | awk -v N=$9 '{print $9}'`; do
+        nvim --server $e --remote-send ':lua mycolors("$(cat $HOME/.cache/wal/theme)")<CR>' &
+    done
+done
+

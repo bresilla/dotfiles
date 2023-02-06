@@ -55,11 +55,13 @@ dnsmasq
 ufw
 tor
 mtr                         + 'traceroute' and 'ping' combines                                  + https://github.com/traviscross/mtr                    + cpp
+asn                         + IP lookup and tracer                                              + https://github.com/nitefood/asn                       + shell
 ipinfo                      + info about public IP                                              + https://github.com/Surendrajat/IPinfo                 + go
 subnetcalc                  + ip adress calculator                                              + https://github.com/dreibh/subnetcalc                  + c
 sipcalc                     + advanced subnet calculator                                        + https://github.com/sii/sipcalc                        + c
 wole                        + wake-on-lan packet generator                                      + https://github.com/ahmtcn123/wole                     + rust
 ------------------------------------------------------                  ADBLOCK                 --------------------------------------------------------------------
+privaxy                     + traceker and add blocker proxy                                    + https://github.com/Barre/privaxy                      + rust
 blocky                      + fast and lightweight DNS proxy as ad-blocker                      + https://github.com/0xERR0R/blocky                     + go
 maza                        + local ad blocker, like Pi-hole                                    + https://github.com/tanrax/maza-ad-blocking            + bash
 hblock                      + hosts adblocker                                                   + https://github.com/hectorm/hblock                     + bash
@@ -72,6 +74,7 @@ surfraw
 atuin                       + Magical shell history                                             + https://github.com/ellie/atuin                        + rust
 pet                         + CLI Snippet Manager                                               + https://github.com/knqyf263/pet                       + go
 mn       - tealdeer         + faster TLDR/MAN                                                   + https://github.com/dbrgn/tealdeer                     + rust
+carapace                    + multi-shell multi-command argument completer                      + https://github.com/rsteube/carapace-bin               + go
 cod                         + a completion daemon for bash/zsh                                  + https://github.com/dim-an/cod                         + go
 nostromo - aly              + CLI for building powerful aliases                                 + https://github.com/pokanop/nostromo                   + go
 pier                        + powerfull script management tool                                  + https://github.com/benschza/pier                      + rust

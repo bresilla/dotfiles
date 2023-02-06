@@ -22,7 +22,7 @@ $font
 $conf" | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
 if [ "$another" == "$apps" ] ; then
-	rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4
+    rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4
 
 elif [ "$another" == "$conf" ] ; then
     confile=$(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" -not -path "/home/bresilla/dots/.config/Code*" -not -path "/home/bresilla/dots/.config/nvim/plugged/*" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'locate:')
@@ -42,13 +42,13 @@ elif [ "$another" == "$sysd" ] ; then
     exec /home/bresilla/.config/rofi/menu/systemd
 
 elif [ "$another" == "$sodo" ] ; then
-	SUDO_ASKPASS=/env/dot/.func/wm/askpass rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4 -theme-str "*{accent: #e53714;}" -run-command 'sudo -A {cmd}'
+    SUDO_ASKPASS=/env/dot/.func/wm/askpass rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4 -theme-str "*{accent: #e53714;}" -run-command 'sudo -A {cmd}'
 
 elif [ "$another" == "$exce" ] ; then
-	exec urxvt -hold -e sh -c $(rofi -theme $HOME/.config/rofi/rofi_bar -m 0 -width 1500 -fuzzy  -lines 0 -show run -theme-str "*{accent: $FOREGROUND;}")
+    exec urxvt -hold -e sh -c $(rofi -theme $HOME/.config/rofi/rofi_bar -m 0 -width 1500 -fuzzy  -lines 0 -show run -theme-str "*{accent: $FOREGROUND;}")
 
 elif [ -z "$another" ] ; then
-	echo "variable empty" && exit 1
+    echo "variable empty" && exit 1
 
 else
   exec nohup $another > /dev/null 2>&1 &

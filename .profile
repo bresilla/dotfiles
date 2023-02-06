@@ -17,14 +17,16 @@ export PATH=$PATH:/usr/local/go/bin
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
 #NIX
+# export NIX_PATH=$NIX_PATH:$HOME/.nix-defexpr/channels
 # export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
-# [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
-# export NIXPKGS_ALLOW_UNFREE=1
-export NIX_STORE_DIR=/pkg/nix/store
-export NIX_LOG_DIR=/pkg/nix/var/log
-export NIX_STATE_DIR=/pkg/nix/var/nix
-export NIX_DATA_DIR=/pkg/nix/share
-export NIX_CONF_DIR=/pkg/nix/etc/nix
+[[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
+export NIX_PATH=$HOME/.nix-defexpr/channels:$NIX_PATH
+export NIXPKGS_ALLOW_UNFREE=1
+
+#XMAKE
+export XMAKE_GLOBALDIR=/pkg/xmake
+[[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
+export VCPKG_ROOT="/pkg/vcpkg"
 
 #PLATFORMIO
 export PLATFORMIO_CORE_DIR=/opt/pio
@@ -50,7 +52,7 @@ export PATH="$HOME/.local/alt/shims:$PATH"
 
 
 #DISPLAY
-# [[ -z "${DISPLAY}" ]] && export DISPLAY=:0
+[[ -z "${DISPLAY}" ]] && export DISPLAY=:0
 
 #PKGCONFIGS
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig
@@ -66,7 +68,7 @@ export SSH_AGENT_PID=""
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export GPG_TTY=$(tty)
 export MONITOR1=eDP1
-export $(cat /etc/os-release | grep -m 1 ID)
+export DISTRO=$(cat /etc/os-release | grep -m 1 ID)
 
 
 # RUST
@@ -79,10 +81,8 @@ export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
 [[ -d "/var/go/bin" ]] && PATH="/var/go/bin:$PATH"
 
+# NIM
 export NIMBLE_DIR="/var/nimble"
-export DIRENV_WARN_TIMEOUT=1h
-export BAKE_HOME="/home/bresilla/.local/share/bake"
-export VCPKG_ROOT="/pkg/vcpkg"
 
 export PASTEL_COLOR_MODE=24bit
 export COLORTERM=truecolor
@@ -132,6 +132,7 @@ export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
 #---------------------------            ROS             --------------------------
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export ROS_DOMAIN_ID=222
 export TURTLEBOT3_MODEL=burger
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 export ZEPHYR_SDK_INSTALL_DIR=/opt/ros/microros/firmware/zephyr-sdk

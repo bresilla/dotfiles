@@ -133,7 +133,7 @@ term=${_arg_term:-kitty}
 name=${_arg_class:-MAIN}
 iter=0
 
-main_mon=eDP1
+main_mon=eDP-1
 
 [[ "$_arg_m" == "true" ]] && bspc monitor --focus $main_mon
 

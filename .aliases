@@ -41,7 +41,6 @@ alias key='xev -event keyboard'
 
 
 ##PACKAGE_MANAGER
-alias box='blindspot'
 #alias pack='unset GOPATH; unset GOBIN && yay'
 alias pack='yay'
 alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
@@ -77,6 +76,7 @@ alias eject='udisksctl power-off -b'
 
 alias k3='doas k3d'
 alias k8='doas kubectl'
+alias box='distrobox'
 
 ##PROGRAMS
 alias a='atool -D -x'

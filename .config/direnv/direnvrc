@@ -24,6 +24,18 @@ use_flake() {
     eval "$(nix --verbose -L print-dev-env --profile "$(direnv_layout_dir)/flake-profile")"
 }
 
+use_devbox() {
+    watch_file devbox.json
+    eval $(devbox shell --print-env)
+}
+
+use_devenv() {
+    watch_file devenv.nix
+    watch_file devenv.yaml
+    watch_file devenv.lock
+    eval "$(devenv print-dev-env)"
+}
+
 use_nvidia() {
     export __NV_PRIME_RENDER_OFFLOAD=1
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
@@ -53,7 +65,7 @@ layout_conda() {
     else
         # conda create --prefix=$PWD/.venv python=3 -y
         printf "\n crating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
-        conda create -p $CONDALENV python=${1:-3.9};
+        conda create -p $CONDALENV python=${1:-3.11};
         conda install --yes pip;
         conda config --set pip_interop_enabled True;
         printf "\n activating environment: ${BLUE} "$CONDALENV" ${NC}\n\n";
@@ -76,7 +88,7 @@ layout_mamba() {
         micromamba activate $VENV
         micromamba info
     else
-        micromamba create -n $HASHER mamba libmambapy python=${1:-3.9} -c conda-forge
+        micromamba create -n $HASHER mamba libmambapy python=${1:-3.10} -c conda-forge
         micromamba activate $VENV
         micromamba info
     fi
@@ -99,6 +111,8 @@ layout_localmamba() {
 
 layout_ros() {
     source "/opt/ros/${1:-humble}/setup.sh"
+    eval "$(register-python-argcomplete3 ros2)
+    eval "$(register-python-argcomplete3 colcon)
     if [[ -f "$PWD/devel/setup.sh" ]]; then source "$PWD/devel/setup.sh"; fi
     if [[ -f "$PWD/install/setup.sh" ]]; then source "$PWD/install/setup.sh"; fi
 }

@@ -53,22 +53,22 @@ in {
     #     WantedBy = ["default.target"];
     #   };
     # };
-     services.syncthing = {
-       Unit = {
-         Description = "Open Source Continuous File Synchronization";
-         Documentation = "man:syncthing(1)";
-         After = ["network.target"];
-       };
-       Service = {
-         Type = "simple";
-         ExecStart = "${pkgs.syncthing}/bin/syncthing -no-browser -no-restart -logflags=0";
-         Restart = "on-failure";
-         RestartSec = "5";
-       };
-       Install = {
-         WantedBy = ["default.target"];
-       };
-     };
+     # services.syncthing = {
+     #   Unit = {
+     #     Description = "Open Source Continuous File Synchronization";
+     #     Documentation = "man:syncthing(1)";
+     #     After = ["network.target"];
+     #   };
+     #   Service = {
+     #     Type = "simple";
+     #     ExecStart = "${pkgs.syncthing}/bin/syncthing -no-browser -no-restart -logflags=0";
+     #     Restart = "on-failure";
+     #     RestartSec = "5";
+     #   };
+     #   Install = {
+     #     WantedBy = ["default.target"];
+     #   };
+     # };
     # services.onedrive = {
     #   Unit = {
     #     Description = "OneDrive with RCLONE deamon";
@@ -85,35 +85,32 @@ in {
     #     WantedBy = ["default.target"];
     #   };
     # };
-    services.vcan = {
-      Unit = {
-        Description = "Bring VCAN up";
-        After = ["network.target"];
-      };
-      Service = {
-        Type = "oneshot";
-        ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/canup";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    services.cannelloni = {
-      Unit = {
-        Description = "Send VCAN thorugh VPN";
-        After = ["network.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/usr/bin/cannelloni -I vcan0 -R 10.60.0.1 -r 20000 -l 20000";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-
-
-
+    # services.vcan = {
+    #   Unit = {
+    #     Description = "Bring VCAN up";
+    #     After = ["network.target"];
+    #   };
+    #   Service = {
+    #     Type = "oneshot";
+    #     ExecStart = "/usr/bin/doas /home/bresilla/dots/.func/network/canup";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
+    # services.cannelloni = {
+    #   Unit = {
+    #     Description = "Send VCAN thorugh VPN";
+    #     After = ["network.target"];
+    #   };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStart = "/usr/bin/cannelloni -I vcan0 -R 10.60.0.1 -r 20000 -l 20000";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
     # services.hotspot = {
     #   Unit = {
     #     Description = "Hotspot daemon";
@@ -164,33 +161,15 @@ in {
     #     WantedBy = ["default.target"];
     #   };
     # };
-
-    services.buckle = {
-      Unit = {
-        Description = " Nostalgia bucklespring keyboard sound";
-        Documentation = "https://github.com/zevv/bucklespring";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/usr/bin/buckle";
-        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
-        Restart = "always";
-        RestartSec = "5";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    # services.xob = {
+    # services.greenclip = {
     #   Unit = {
-    #     Description = "Bar overlay daemon";
-    #     Documentation = "https://github.com/florentc/xob";
+    #     Description = "Clipboard manager for ROFI";
+    #     Documentation = "https://github.com/erebe/greenclip";
     #     After = ["graphical.target"];
     #   };
     #   Service = {
     #     Type = "simple";
-    #     ExecStart = "/bin/sh -c 'tail -f /home/bresilla/.local/share/fifo/xob | /env/cpp/bin/xob'";
+    #     ExecStart = "/env/cpp/bin/greenclip daemon";
     #     ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
     #     Restart = "always";
     #     RestartSec = "5";
@@ -199,40 +178,6 @@ in {
     #     WantedBy = ["default.target"];
     #   };
     # };
-    services.greenclip = {
-      Unit = {
-        Description = "Clipboard manager for ROFI";
-        Documentation = "https://github.com/erebe/greenclip";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/env/cpp/bin/greenclip daemon";
-        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
-        Restart = "always";
-        RestartSec = "5";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-    services.espanso = {
-      Unit = {
-        Description = "Text Expander Daemon";
-        Documentation = "https://github.com/federico-terzi/espanso/";
-        After = ["graphical.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "/env/bin/espanso daemon";
-        ExecReload= "/usr/bin/kill -SIGUSR1 $MAINPID";
-        Restart = "always";
-        RestartSec = "5";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
     # services.picom = {
     #   Unit = {
     #     Description = "Compositor for X11";
@@ -280,24 +225,24 @@ in {
     #     WantedBy = ["default.target"];
     #   };
     # };
-    services.spotifyd = let
-      configFile = "${configs}/spotifyd/spotifyd.conf";
-      onevent = "${configs}/spotifyd/onevent.sh";
-    in {
-      Unit = {
-        Description = "A spotify playing daemon";
-        Documentation = "https://github.com/Spotifyd/spotifyd";
-        Wants = ["sound.target"];
-        After = ["network-online.target"];
-      };
-      Service = {
-        EnvironmentFile = "/home/bresilla/sets/variables";
-        ExecStart = "/env/bin/spotifyd --no-daemon --config-path ${configFile} --onevent ${onevent}";
-        Restart = "on-failure";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+    # services.spotifyd = let
+    #   configFile = "${configs}/spotifyd/spotifyd.conf";
+    #   onevent = "${configs}/spotifyd/onevent.sh";
+    # in {
+    #   Unit = {
+    #     Description = "A spotify playing daemon";
+    #     Documentation = "https://github.com/Spotifyd/spotifyd";
+    #     Wants = ["sound.target"];
+    #     After = ["network-online.target"];
+    #   };
+    #   Service = {
+    #     EnvironmentFile = "/home/bresilla/sets/variables";
+    #     ExecStart = "/env/bin/spotifyd --no-daemon --config-path ${configFile} --onevent ${onevent}";
+    #     Restart = "on-failure";
+    #   };
+    #   Install = {
+    #     WantedBy = ["default.target"];
+    #   };
+    # };
   };
 }

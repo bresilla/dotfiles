@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for i in borg;
+do
+    if [[ $(ssh -o BatchMode=yes -o ConnectTimeout=1 $5 echo ok 2>&1) == ok ]] ; then
+        scp -r ~/.cache/wal $i:~/.cache/ &
+        ssh $i 'bash -s' < /env/dot/.func/shell/colors_to_nvim &
+        ssh $i 'bash -s' < /env/dot/.func/shell/colors_to_tty &
+    fi
+done
