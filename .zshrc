@@ -255,3 +255,7 @@ done
 bindkey -s '^A' ' tab\n'
 
 if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+
+#---------------------------            EXTERNAL       --------------------------
+[[ -s "$HOME/.external" ]] && source "$HOME/.external"
