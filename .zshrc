@@ -259,3 +259,6 @@ if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresill
 
 #---------------------------            EXTERNAL       --------------------------
 [[ -s "$HOME/.external" ]] && source "$HOME/.external"
+
+if (( ${+CWD_VAR} )); then cd $CWD_VAR; fi
+

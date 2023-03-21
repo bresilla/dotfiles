@@ -873,22 +873,22 @@ __lxc_device_types () {
 }
 
 __lxc_containers_running () {
-  local -a _l=(${(@f)"$(_call_program containers lxc list --fast | tail -n +4 | awk '{print $2 $4}' | egrep 'RUNNING$' | sed -e "s/RUNNING//")"})
+  local -a _l=(${(@f)"$(_call_program containers lxc list --fast | tail -n +4 | awk '{print $2 $4}' | grep -E 'RUNNING$' | sed -e "s/RUNNING//")"})
   _describe -t containers 'Running Containers' _l
 }
 
 __lxc_containers_stopped () {
-  local -a _l=(${(@f)"$(_call_program containers lxc list --fast | tail -n +4 | awk '{print $2 $4}' | egrep 'STOPPED$' | sed -e "s/STOPPED//")"})
+  local -a _l=(${(@f)"$(_call_program containers lxc list --fast | tail -n +4 | awk '{print $2 $4}' | grep -E 'STOPPED$' | sed -e "s/STOPPED//")"})
   _describe -t containers 'Stopped containers' _l
 }
 
 __lxc_containers_all () {
-  local -a _l=(${(@f)"$(_call_program containers lxc list --fast | tail -n +4 | awk '{print $2}' | egrep -v '^(\||^$)')"})
+  local -a _l=(${(@f)"$(_call_program containers lxc list --fast | tail -n +4 | awk '{print $2}' | grep -E -v '^(\||^$)')"})
   _describe -t containers 'All containers' _l
 }
 
 __lxc_images_as_fingerprint () {
-  # local -a _l=(${(@f)"$(_call_program images lxc image list | tail -n +4 | egrep -e '^\|' | awk '{split($0,a,"|"); for(i in a){ sub(/^[ \t]+/,"",a[i]);sub(/[ \t]+$/,"",a[i]);}; (a[2]=="") ? b=" (not aliased)" : b=" (aliased as " a[2] ")" ; print a[3] ":" a[5] b }' )"})
+  # local -a _l=(${(@f)"$(_call_program images lxc image list | tail -n +4 | grep -E -e '^\|' | awk '{split($0,a,"|"); for(i in a){ sub(/^[ \t]+/,"",a[i]);sub(/[ \t]+$/,"",a[i]);}; (a[2]=="") ? b=" (not aliased)" : b=" (aliased as " a[2] ")" ; print a[3] ":" a[5] b }' )"})
 
   local -a _l
   _call_program images lxc image list --format=csv | sed -e 's/:/\\:/g' | while read line
@@ -906,7 +906,7 @@ __lxc_images_as_fingerprint () {
 }
 
 __lxc_images_as_alias () {
-  # local -a _l=(${(@f)"$(_call_program images lxc image alias list | tail -n +4 | egrep -e '^\|' | awk '{split($0,a,"|"); for(i in a){ sub(/^[ \t]+/,"",a[i]);sub(/[ \t]+$/,"",a[i]);}; (a[4]=="") ? b="" : b=" - " a[4] ;print a[2] ":" a[3] b }' )"})
+  # local -a _l=(${(@f)"$(_call_program images lxc image alias list | tail -n +4 | grep -E -e '^\|' | awk '{split($0,a,"|"); for(i in a){ sub(/^[ \t]+/,"",a[i]);sub(/[ \t]+$/,"",a[i]);}; (a[4]=="") ? b="" : b=" - " a[4] ;print a[2] ":" a[3] b }' )"})
 
   local -a _l
   _call_program images lxc image list --format=csv | sed -e 's/:/\\:/g' | while read line
@@ -925,17 +925,17 @@ __lxc_images () {
 }
 
 __lxc_aliases () {
-  local -a _l=(${(@f)"$(_call_program aliases lxc alias list | tail -n +4 | egrep '^\|' | awk '{print $2 ":" $4}')"})
+  local -a _l=(${(@f)"$(_call_program aliases lxc alias list | tail -n +4 | grep -E '^\|' | awk '{print $2 ":" $4}')"})
   _describe -t aliases 'Aliases' _l
 }
 
 __lxc_remotes () {
-  local -a _l=(${(@f)"$(_call_program remotes lxc remote list | tail -n +4 | egrep -e '^\|' | sed -e 's/(default)//' | awk '{print $2 ":" $4}')"})
+  local -a _l=(${(@f)"$(_call_program remotes lxc remote list | tail -n +4 | grep -E -e '^\|' | sed -e 's/(default)//' | awk '{print $2 ":" $4}')"})
   _describe -t remotes 'Remotes' _l
 }
 
 __lxc_profiles () {
-  local -a _l=(${(@f)"$(_call_program profiles lxc profile list | tail -n +4 | egrep -e '^\|' | awk '{print $2 ":used by " $4 " containers" }' )"})
+  local -a _l=(${(@f)"$(_call_program profiles lxc profile list | tail -n +4 | grep -E -e '^\|' | awk '{print $2 ":used by " $4 " containers" }' )"})
   _describe -t profiles 'Profiles' _l
 }
 
@@ -945,7 +945,7 @@ __lxc_projects() {
 }
 
 __lxc_storages () {
-  local -a _l=(${(@f)"$(_call_program profiles lxc storage list | tail -n +4 | egrep -e '^\|' | awk '{print $2 }')"})
+  local -a _l=(${(@f)"$(_call_program profiles lxc storage list | tail -n +4 | grep -E -e '^\|' | awk '{print $2 }')"})
   _describe -t storages 'Storages' _l
 }
 
@@ -964,11 +964,11 @@ __get_lxc_keys_by_device () {
 }
 
 __get_lxc_templates_by_container () {
-  lxc config template list $1 | tail -n +4 | egrep '^\|' | awk '{print $2}'
+  lxc config template list $1 | tail -n +4 | grep -E '^\|' | awk '{print $2}'
 }
 
 __get_lxc_profiles () {
-  lxc profile list | tail -n +4 | egrep -e '^\|' | awk '{print $2}' | paste -sd " "
+  lxc profile list | tail -n +4 | grep -E -e '^\|' | awk '{print $2}' | paste -sd " "
 }
 
 compdef _lxc lxc

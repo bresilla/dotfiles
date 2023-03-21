@@ -20,7 +20,7 @@ super + Insert
     /home/bresilla/.config/sxhkd/scripts/eww --open
 
 F10; {F10,F11,F9}
-    /env/dot/.func/wm/sshoot {--flame, --maim, --ocr}
+    /env/dot/.func/wm/sshoot {--show, --ocr, --maim}
 F11; {F11, F10}
     {pkill slop; slop -r boxzoom, /env/dot/.func/wm/colorpicker}
 

@@ -64,10 +64,11 @@ export CONSOLE=kitty
 export TZ='Europe/Berlin'
 export LC_ALL="en_US.UTF-8"
 
-export SSH_AGENT_PID=""
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-export GPG_TTY=$(tty)
-export MONITOR1=eDP1
+if [ "$HOSTNAME" = core ]; then
+    export SSH_AGENT_PID=""
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    export GPG_TTY=$(tty)
+fi
 export DISTRO=$(cat /etc/os-release | grep -m 1 ID)
 
 
@@ -116,7 +117,6 @@ export SDL_JOYSTICK_DEVICE=/dev/input/js0
 
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
-export IPFS_PATH=/home/bresilla/sync/planetary/ipfs
 export GRAVEYARD=/tmp/graveyard-$USER
 
 export WAKATIME_HOME="$XDG_CONFIG_HOME"/wakatime
@@ -132,7 +132,13 @@ export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
 #---------------------------            ROS             --------------------------
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>robs4crops</></></></>'
+#export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="robs4crops"/></></></></>'
 export ROS_DOMAIN_ID=222
+export WEBOTS_HOME=/usr/local/webots
+export LD_LIBRARY_PATH=/usr/local/webots/lib/controller:$LD_LIBRARY_PATH
+export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 export TURTLEBOT3_MODEL=burger
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 export ZEPHYR_SDK_INSTALL_DIR=/opt/ros/microros/firmware/zephyr-sdk
+export BLINKA_MCP2221=1

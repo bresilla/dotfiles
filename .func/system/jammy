@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $(lxc info jammy | grep Status | choose 1) == "STOPPED" ]; then
+    lxc start jammy
+    lxc exec jammy --cwd=$PWD -- sudo --user bresilla --shell
+else
+    lxc exec jammy --cwd=$PWD -- sudo --user bresilla --shell
+fi
