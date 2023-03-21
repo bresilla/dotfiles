@@ -7,7 +7,6 @@ export DOWN=$HOME/down
 export SYNC=$HOME/sync
 export TEMP=/tmp
 
-export PATH=$PATH:/usr/local/go/bin
 
 #USER BINARIES AND SCRIPTS
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
@@ -57,20 +56,18 @@ export PATH="$HOME/.local/alt/shims:$PATH"
 #PKGCONFIGS
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 
+#---------------------------         LOC & TERM          --------------------------
+export COLORTERM=truecolor
 export BROWSER=org.mozilla.firefox
 export EDITOR=nvim
 export TERMINAL=kitty
 export CONSOLE=kitty
 export TZ='Europe/Berlin'
 export LC_ALL="en_US.UTF-8"
-
-if [ "$HOSTNAME" = core ]; then
-    export SSH_AGENT_PID=""
-    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-    export GPG_TTY=$(tty)
-fi
 export DISTRO=$(cat /etc/os-release | grep -m 1 ID)
 
+
+#---------------------------         LANGUAGES          --------------------------
 
 # RUST
 export CARGO_HOME="/var/cargo"
@@ -81,28 +78,19 @@ export GOPATH="/var/go"
 export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
 [[ -d "/var/go/bin" ]] && PATH="/var/go/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
 
 # NIM
 export NIMBLE_DIR="/var/nimble"
 
-export PASTEL_COLOR_MODE=24bit
-export COLORTERM=truecolor
+#---------------------------              XDG           --------------------------
 export BAT_THEME="TwoDark"
 export LULE_W="/env/set/.wallpaper"
 export LULE_S="/env/dot/.func/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
 
-export SCREENSHOT_FILE="/tmp/screenshot_file"
 
-export GRAVEYARD="/tmp/graveyard-$USER"
-export BSPM_BIN_DIR="/env/bin"
-
-export WORDLIST="$HOME/.config/dict/wordlist.txt"
-export ADJECTIVELIST="$HOME/.config/dict/adjective.txt"
-export NOUNLIST="$HOME/.config/dict/noun.txt"
-export FANCY=$(printf "%s" $(shuf -n1 $ADJECTIVELIST) "_" $(shuf -n1 $NOUNLIST))
-export RANDOM_NAME=$FANCY
-
+#---------------------------              XDG           --------------------------
 export WINEPREFIX=/var/lib/wine
 export LIBVA_DRIVER_NAME=iHD
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
@@ -113,12 +101,11 @@ export XDG_DATA_PATH=/home/$USER/.local/share
 export XDG_CACHE_HOME=/home/$USER/.cache
 export XDG_CACHE_PATH=/home/$USER/.cache
 
-export SDL_JOYSTICK_DEVICE=/dev/input/js0
-
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export GRAVEYARD=/tmp/graveyard-$USER
 
+#---------------------------     HOME_CLEANUP          --------------------------
 export WAKATIME_HOME="$XDG_CONFIG_HOME"/wakatime
 export TASKDATA="$XDG_DATA_HOME"/task
 export TASKRC="$XDG_CONFIG_HOME"/task/taskrc
@@ -138,7 +125,15 @@ export ROS_DOMAIN_ID=222
 export WEBOTS_HOME=/usr/local/webots
 export LD_LIBRARY_PATH=/usr/local/webots/lib/controller:$LD_LIBRARY_PATH
 export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
-export TURTLEBOT3_MODEL=burger
-export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-export ZEPHYR_SDK_INSTALL_DIR=/opt/ros/microros/firmware/zephyr-sdk
 export BLINKA_MCP2221=1
+export SDL_JOYSTICK_DEVICE=/dev/input/js0
+
+#---------------------------            CORE            --------------------------
+if [ "$HOSTNAME" = core ]; then
+    export SSH_AGENT_PID=""
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    export GPG_TTY=$(tty)
+fi
+source /home/bresilla/.external
+#---------------------------            OTHER            --------------------------
+
