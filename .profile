@@ -119,7 +119,7 @@ export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
 #---------------------------            ROS             --------------------------
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>robs4crops</></></></>'
+export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>stargate</></></></>'
 #export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="robs4crops"/></></></></>'
 export ROS_DOMAIN_ID=222
 export WEBOTS_HOME=/usr/local/webots

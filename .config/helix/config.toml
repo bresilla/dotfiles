@@ -1,8 +1,12 @@
-theme = "bogster"
+theme = "trim"
 
 [editor]
 line-number = "relative"
+cursorline = true
+cursorcolumn = true
 mouse = false
+bufferline = "always"
+auto-save = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -11,3 +15,9 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
+
+[editor.lsp]
+display-inlay-hints = true
+
+[keys.normal]
+esc = ["collapse_selection", "keep_primary_selection"]

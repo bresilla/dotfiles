@@ -94,10 +94,10 @@
         "/env/bin/fx": {
             "path": "/env/bin/fx",
             "remote_name": "fx",
-            "version": "24.0.0",
+            "version": "24.1.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/antonmedv/fx",
-            "provider": "github",
+            "url": "https://github.com/antonmedv/fx/releases/tag/24.1.0",
+            "provider": "",
             "package_path": ""
         },
         "/env/bin/hck": {
@@ -139,10 +139,10 @@
         "/env/bin/nostromo": {
             "path": "/env/bin/nostromo",
             "remote_name": "nostromo",
-            "version": "v0.11.4",
+            "version": "v0.12.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/pokanop/nostromo",
-            "provider": "github",
+            "url": "https://github.com/pokanop/nostromo/releases/tag/v0.12.0",
+            "provider": "",
             "package_path": "nostromo"
         },
         "/env/bin/pacaptr": {
@@ -238,10 +238,10 @@
         "/env/bin/wireproxy": {
             "path": "/env/bin/wireproxy",
             "remote_name": "wireproxy",
-            "version": "v1.0.3",
+            "version": "v1.0.5",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/octeep/wireproxy",
-            "provider": "github",
+            "url": "https://github.com/pufferffish/wireproxy/releases/tag/v1.0.5",
+            "provider": "",
             "package_path": "wireproxy"
         },
         "/env/bin/xh": {
@@ -265,9 +265,9 @@
         "/env/bin/zoxide": {
             "path": "/env/bin/zoxide",
             "remote_name": "zoxide",
-            "version": "v0.8.2",
+            "version": "v0.9.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/ajeetdsouza/zoxide/releases/tag/v0.8.2",
+            "url": "https://github.com/ajeetdsouza/zoxide/releases/tag/v0.9.0",
             "provider": "",
             "package_path": "zoxide"
         }

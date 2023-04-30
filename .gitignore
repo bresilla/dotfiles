@@ -13,3 +13,4 @@ OSS/
 .config/nvim/plugin
 .Trash-1000/
 .config/himalaya/config.toml
+.config/helix/runtime/

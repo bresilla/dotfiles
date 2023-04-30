@@ -6,4 +6,6 @@ elif [[ $distro_name == "qemu" ]]; then
     printf " :: "
 elif [[ $distro_name == "kvm" ]]; then
     printf " :: "
+else
+    printf " :: "
 fi

@@ -1,0 +1,20 @@
+#[[language]]
+#name = "rust"
+
+#[language.language-server]
+#command = "rustup"
+#args = ["run", "stable", "rust-analyzer"]
+
+[[language]]
+name = "typst"
+scope = "source.typst"
+injection-regex = "^typst$"
+file-types = ["typ"]
+comment-token = "//"
+indent = { tab-width = 2, unit = "  " }
+roots = []
+language-server = { command = "typst-lsp" }
+
+#[[grammar]]
+#name = "typst"
+#source = { git = "https://github.com/frozolotl/tree-sitter-typst.git" }

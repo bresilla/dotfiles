@@ -6,4 +6,6 @@ elif [[ $distro_name == "qemu" ]]; then
     printf "qemu"
 elif [[ $distro_name == "kvm" ]]; then
     printf "kvm"
+else
+    printf "VM"
 fi

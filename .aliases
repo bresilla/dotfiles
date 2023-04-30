@@ -31,6 +31,7 @@ alias zero='doas zerotier-cli'
 alias sshm='doas manssh -f /etc/ssh/ssh_config'
 alias ssm='manssh'
 alias blue='bluetoothctl'
+alias vul="vultr-cli --config /home/bresilla/.config/vultr/vultr-cli.yaml"
 
 ##ALTERNATIVES
 alias vim='nvim'

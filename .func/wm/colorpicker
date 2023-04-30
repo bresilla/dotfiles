@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 slop -qr crosshair 2>&1 > /dev/null
-xcolor -n | tee /tmp/colorpick | xclip -sel clip &
+xcolor -n | tee /tmp/colorpick | xargs | xclip -sel clip &
 xdotool click 1
 
 cat /tmp/colorpick | xargs | pastel color
