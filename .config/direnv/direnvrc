@@ -69,7 +69,7 @@ layout_mamba() {
     fi
 }
 
-layout_mamba_id(){
+layout_mambaid(){
     export HASHER=${2:-c50e54e785a4b687578a7c854f5dccc9}
     export MAMBA_ROOT_PREFIX="/pkg/mamba";
     export VENV=$MAMBA_ROOT_PREFIX/envs/$HASHER
