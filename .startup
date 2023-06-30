@@ -33,15 +33,15 @@ sxhkd -c /home/bresilla/.config/sxhkd/sxhkdrc &
 
 
 #EWW
-pkill eww
-while pgrep -x eww >/dev/null; do sleep 1; done
-eww daemon &
+#pkill eww
+#while pgrep -x eww >/dev/null; do sleep 1; done
+#eww daemon &
 
 
 #PICOM
-pkill picom
-while pgrep -x picom >/dev/null; do sleep 1; done
-picom --config $HOME/.config/picom/config &
+#pkill picom
+#while pgrep -x picom >/dev/null; do sleep 1; done
+#picom --config $HOME/.config/picom/config &
 
 
 #KEYBOARD

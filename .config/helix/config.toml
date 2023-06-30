@@ -21,3 +21,6 @@ display-inlay-hints = true
 
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
+A-C-up = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+A-C-down = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+C-u = ["later"]

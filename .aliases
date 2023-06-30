@@ -1,3 +1,4 @@
+#!/bin/bash
 ##SUDO
 alias virsh="doas virsh"
 alias virt-viewer="doas virt-viewer"
@@ -35,6 +36,7 @@ alias vul="vultr-cli --config /home/bresilla/.config/vultr/vultr-cli.yaml"
 
 ##ALTERNATIVES
 alias vim='nvim'
+#alias hx='helix'
 alias mut='neomutt'
 
 ##WINDOW_MANAGER
@@ -54,9 +56,9 @@ alias aly='nostromo'
 alias hibernate="systemctl hibernate"
 alias path='echo "${PATH//:/\n}"'
 alias sys='procenv'
-alias cp='acp -g -r -p'
-# alias cp='xcp -r -g'
-alias mv='amv -g -u'
+# alias cp='acp -g -r -p'
+# alias mv='amv -g -u'
+alias cp="rsync -uahP --inplace --no-whole-file --info=progress2"
 alias rm='rm -rf'
 alias del='rip'
 alias cat='bat'

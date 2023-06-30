@@ -1,0 +1,5 @@
+LEARN
+**/__pycache__
+**/data
+**/runs
+**/logs

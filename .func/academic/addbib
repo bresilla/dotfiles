@@ -1,12 +1,13 @@
 #!/usr/bin/env sh
 
+INPUT=${1:-$(xsel --clipboard)};
 
 if [ -f $BIB ]; then
-    curl -s http://api.crossref.org/works/$1/transform/application/x-bibtex | bat;
+    curl -s http://api.crossref.org/works/$INPUT/transform/application/x-bibtex | bat;
     printf "\nDo you wish to add reference to "$BIB"?\n";
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) echo >> $BIB; curl -s "http://api.crossref.org/works/$1/transform/application/x-bibtex" >> $BIB; echo >> $BIB; echo "\n${GREEN}Reference added!"; echo ""; break;;
+            Yes ) echo >> $BIB; curl -s "http://api.crossref.org/works/$INPUT/transform/application/x-bibtex" >> $BIB; echo >> $BIB; echo "\n${GREEN}Reference added!"; echo ""; break;;
             No ) printf "\n${ORANGE}No changes made!"; echo ""; break;;
         esac
     done;

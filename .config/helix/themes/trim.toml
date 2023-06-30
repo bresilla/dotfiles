@@ -34,24 +34,24 @@ diagnostic = { modifiers = ["underlined"] }
 
 #LSP
 "attribute" = "#dc7759"
-"keyword" = { fg = "#dcb659", modifiers = ["bold"] }
+"keyword" = { fg = "246", modifiers = ["bold"] }
 "keyword.directive" = "#dcb659"
-"namespace" = "#d32c5d"
+"namespace" = "002"
 "punctuation" = "#dc7759"
 "punctuation.delimiter" = "#dc7759"
 "operator" = { fg = "#dc7759", modifiers = ["bold"] }
 "special" = "#7fdc59"
-"variable.other.member" = "#c6b8ad"
-"variable" = "#c6b8ad"
+"variable.other.member" = "004"
+"variable" = "035"
 "variable.parameter" = "#c6b8ad"
-"type" = "#dc597f"
-"type.builtin" = { fg = "#d32c5d", modifiers = ["bold"] }
-"constructor" = "#dc597f"
-"function" = "#59dcd8"
+"type" = "023"
+"type.builtin" = { fg = "011", modifiers = ["italic"] }
+"constructor" = "047"
+"function" = "009"
 "function.macro" = { fg = "#dc7759", modifiers = ["bold"] }
 "function.builtin" = { fg = "#59dcd8", modifiers = ["bold"] }
-"comment" = "#627d9d"
-"variable.builtin" = "#c6b8ad"
+"comment" = { fg = "240", modifiers = ["italic"] }
+"variable.builtin" = "059"
 "constant" = "#59dcb7"
 "constant.builtin" = "#59dcb7"
 "string" = "#59dcb7"

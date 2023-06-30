@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+clipp=$(xsel --clipboard)
+mpv --no-sub-auto --hwdec=vaapi --x11-name="youplay" --title="youplay" --keepaspect --speed=1.0 --ytdl-format='bestvideo[height<=?1080]+bestaudio/best' --load-unsafe-playlists --no-terminal "${1:-$clipp}" &

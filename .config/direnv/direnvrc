@@ -69,6 +69,22 @@ layout_mamba() {
     fi
 }
 
+layout_mamba_id(){
+    export HASHER=${2:-c50e54e785a4b687578a7c854f5dccc9}
+    export MAMBA_ROOT_PREFIX="/pkg/mamba";
+    export VENV=$MAMBA_ROOT_PREFIX/envs/$HASHER
+    eval "$(micromamba shell hook --shell=bash)"
+
+    if [[ -d $VENV/conda-meta ]]; then
+        micromamba activate $VENV
+        micromamba info
+    else
+        micromamba create -n $HASHER mamba libmambapy python=${1:-3.10} -c conda-forge
+        micromamba activate $VENV
+        micromamba info
+    fi
+}
+
 layout_localmamba() {
     export MAMBA_ROOT_PREFIX="$PWD/.direnv/mamba";
     export VENV=$MAMBA_ROOT_PREFIX/envs/`basename $PWD`

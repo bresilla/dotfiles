@@ -2,6 +2,7 @@
     pager = delta --dark
     quotepath = false
     commitGraph = true
+    excludesFile = ~/.config/git/ignore
 
 [credential]
     helper = cache
