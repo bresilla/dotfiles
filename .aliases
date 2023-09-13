@@ -23,7 +23,6 @@ alias dev='devenv'
 
 ##PACKAGE_MANAGER
 alias pack='yay'
-alias bin='devbox global'
 alias aly='nostromo'
 
 

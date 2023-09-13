@@ -1,0 +1,23 @@
+{
+    "default_path": "/env/bin",
+    "bins": {
+        "/env/bin/codegpt": {
+            "path": "/env/bin/codegpt",
+            "remote_name": "codegpt",
+            "version": "v0.4.3",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/appleboy/CodeGPT",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/git-gci": {
+            "path": "/env/bin/git-gci",
+            "remote_name": "git-gci",
+            "version": "v0.2.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/kubero-dev/GitGenie",
+            "provider": "github",
+            "package_path": "git-gci"
+        }
+    }
+}

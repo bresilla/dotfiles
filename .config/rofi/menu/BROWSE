@@ -47,7 +47,7 @@ elif [ "$another" == "$list" ] ; then
 elif [ "$another" == "$apps" ] ; then
     LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/climarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
     [[ -z $LINK ]] && exit 1
-    /env/dot/.func/media/play $LINK
+    $BROWSER $LINK
 
 elif [ "$another" == "$pkgs" ] ; then
     LINK=$(rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "package: ")
