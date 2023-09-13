@@ -2,6 +2,7 @@
 ##SUDO
 alias virsh="doas virsh"
 alias virt-viewer="doas virt-viewer"
+alias wgi="doas wg-quick"
 # alias chroot="doas schroot"
 alias mount="doas mount"
 alias umount="doas umount"
@@ -12,63 +13,49 @@ alias bandwhich="doas bandwhich"
 alias ufw="doas ufw"
 alias btrfs="doas btrfs"
 alias tent="doas tent"
-alias hexy="xargs -0 | head -n -1 | /env/cargo/bin/pastel format hex"
 alias argz="xargs -0 | head -n -1"
-alias vgl="vglconnect"
+
+
+##DEV
+alias box='devbox'
+alias dev='devenv'
+
+
+##PACKAGE_MANAGER
+alias pack='yay'
+alias bin='devbox global'
+alias aly='nostromo'
+
 
 ##NETWORK
 alias dnsinuse='nmcli dev show | grep IP4.DNS'
 alias findip='doas arp-scan --localnet'
 alias netspeed='wget --output-document=/dev/null http://speedtest.wdc01.softlayer.com/downloads/test500.zip'
-alias portgraph='doas lsof -n -F | ./lsofgraph | dot -Tjpg > /tmp/a.jpg'
 alias portmon='doas lsof -Pnl -i4'
 alias openports='doas netstat -tulpn'
-alias wifis='nmcli -t -f ssid dev wifi'
-alias ip='ip -c'
-alias ins='doas innernet-server'
-alias inn='doas innernet'
-alias scale='doas tailscale'
 alias zero='doas zerotier-cli'
-alias sshm='doas manssh -f /etc/ssh/ssh_config'
 alias ssm='manssh'
 alias blue='bluetoothctl'
-alias vul="vultr-cli --config /home/bresilla/.config/vultr/vultr-cli.yaml"
+alias ip="ip -c"
 
 ##ALTERNATIVES
 alias vim='nvim'
 #alias hx='helix'
 alias mut='neomutt'
 
-##WINDOW_MANAGER
-alias key='xev -event keyboard'
-
-
-##PACKAGE_MANAGER
-#alias pack='unset GOPATH; unset GOBIN && yay'
-alias pack='yay'
-alias mirror='doas pacman-mirrors --fasttrack 5 && doas pacman -Syyu'
-alias branch='doas pacman-mirrors --api -S'
-
-##shell
-alias aly='nostromo'
-
 ##SYSTEM
 alias hibernate="systemctl hibernate"
-alias path='echo "${PATH//:/\n}"'
-alias sys='procenv'
-# alias cp='acp -g -r -p'
-# alias mv='amv -g -u'
 alias cp="rsync -uahP --inplace --no-whole-file --info=progress2"
 alias rm='rm -rf'
 alias del='rip'
 alias cat='bat'
-alias ls='exa -F'
-alias ll='exa -liSHF --header --git --group-directories-first --tree -L1'
-alias la='exa -laiSHF --header --git --group-directories-first --tree -L1'
-alias lt='exa -liSHF --header --git --tree -L3'
+alias ls='eza -F'
+alias ll='eza -liSHF --header --git --group-directories-first --tree -L1'
+alias la='eza -laiSHF --header --git --group-directories-first --tree -L1'
+alias lt='eza -liSHF --header --git --tree -L3'
 alias lu='dutree -d1 --usage -x .git -x .direnv'
 alias df='dfc -dTmw -p -/dev/loop,tmp,dev,run,one'
-alias lsblk='lsblk --output LABEL,NAME,SIZE,FSUSE%,MODEL,TRAN,TYPE,FSTYPE,UUID,MOUNTPOINT,STATE'
+alias lsblk='lsblk --output NAME,SIZE,FSUSE%,MODEL,TRAN,TYPE,FSTYPE,UUID,LABEL,MOUNTPOINT,STATE,HOTPLUG'
 alias lsmnt='lsblk --output LABEL,NAME,SIZE,FSTYPE,MOUNTPOINTS'
 alias vols='doas lvm pvs && echo && doas lvm vgs && echo && doas lvm lvs'
 alias dd='dd status=progress'
@@ -76,15 +63,15 @@ alias home='home-manager'
 alias clip='xclip -sel clip'
 alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
-
-alias k3='doas k3d'
-alias k8='doas kubectl'
-alias box='distrobox'
+alias nvmecheck="diff -y <(doas nvme smart-log /dev/nvme0n1) <(doas nvme smart-log /dev/nvme1n1)"
 
 ##PROGRAMS
 alias a='atool -D -x'
 alias x='xplr'
 alias e="nvim"
+alias nums="dtool"
+alias mcon="mconnectctl"
+alias aks="ata"
 
 
 alias ari='aria2c'
@@ -93,7 +80,6 @@ alias note='dnote'
 alias font='fc-query'
 alias pomo='pomo -p /home/bresilla/.config/pomo'
 alias git='hub'
-alias dev='devenv'
 alias pro='proji'
 alias lines='tokei'
 alias search="rg"
@@ -108,7 +94,6 @@ alias dxe='chmod u-x'
 
 ##OTHER
 alias open='nohup mimeo $1 > /dev/null 2>&1 &!'
-alias headphones='pactl set-sink-port 0 analog-output-headphones'
 alias rn='renamer'
 alias rp='ruplacer'
 alias tk='tokei'
@@ -125,6 +110,7 @@ alias crux='horcrux'
 alias pass='gopass'
 alias todo='taskwarrior-tui'
 alias forge='conda'
+alias hosty="doas locdev"
 
 ##MEDIA
 alias color='pastel format hex'	

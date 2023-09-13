@@ -9,6 +9,7 @@ loca=proxmox
 hist=history
 list=playlist
 pkgs=packages
+apps=app-list
 
 another=$(echo "\
 $hist
@@ -16,6 +17,7 @@ $mark
 $loca
 $srch
 $list
+$apps
 $pkgs\
 " | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p "search: ")
 
@@ -38,6 +40,12 @@ elif [ "$another" == "$loca" ] ; then
 
 elif [ "$another" == "$list" ] ; then
     LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/playmarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
+    [[ -z $LINK ]] && exit 1
+    /env/dot/.func/media/play $LINK
+
+
+elif [ "$another" == "$apps" ] ; then
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/climarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | rofi "${ROFI_OPTIONS[@]}" -dmenu -i -p 'bookmarks: ' | /env/bin/choose 1)
     [[ -z $LINK ]] && exit 1
     /env/dot/.func/media/play $LINK
 

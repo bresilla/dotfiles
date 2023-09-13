@@ -5,13 +5,16 @@ source /home/bresilla/.profile
 
 #MONITORS
 MONITOR1=eDP-1
-MONITOR2=DVI-I-1-1
-MONITOR3=DVI-I-2-2
-MONITOR4=VIRTUAL1
+MONITOR2_1=DVI-I-2-2
+MONITOR2_2=DP-3-3
+MONITOR3_1=DVI-I-1-1
+MONITOR3_2=DP-3-1
 
-xrandr --output $MONITOR1 --primary --mode 3456x2160 --pos 184x1080 --rotate normal \
-    --output $MONITOR2 --mode 1920x1080 --pos 0x0 --rotate normal \
-    --output $MONITOR3 --mode 1920x1080 --pos 1920x0 --rotate normal \
+xrandr --output $MONITOR1 --primary --size 3456x2160 --pos 184x1080 --rotate normal \
+    --output $MONITOR2_1 --size 1920x1080 --pos 0x0 --rotate normal \
+    --output $MONITOR2_2 --size 1920x1080 --pos 0x0 --rotate normal \
+    --output $MONITOR3_1 --size 1920x1080 --pos 1920x0 --rotate normal \
+    --output $MONITOR3_2 --size 1920x1080 --pos 1920x0 --rotate normal \
     --output $MONITOR4 --off --output DP1 --off --output DP2 --off --output DP3 --off &
 
 #TASKBAR
@@ -39,9 +42,9 @@ sxhkd -c /home/bresilla/.config/sxhkd/sxhkdrc &
 
 
 #PICOM
-#pkill picom
-#while pgrep -x picom >/dev/null; do sleep 1; done
-#picom --config $HOME/.config/picom/config &
+pkill picom
+while pgrep -x picom >/dev/null; do sleep 1; done
+picom --config $HOME/.config/picom/config &
 
 
 #KEYBOARD
@@ -58,7 +61,7 @@ xset -r 49 &  #^
 
 #SOUND
 echo 0 > /home/bresilla/.local/share/fifo/xob
-pactl set-card-profile alsa_card.pci-0000_00_1f.3 off && pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo
+# pactl set-card-profile alsa_card.pci-0000_00_1f.3 off && pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo
 
 
 #XHOSTS

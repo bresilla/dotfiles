@@ -1,3 +1,0 @@
-#!/bin/sh
-
-iw dev wlp2s0 link | sed -n '2p; 3p; 6p;' | /env/bin/choose 0 1

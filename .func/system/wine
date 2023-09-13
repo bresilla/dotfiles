@@ -1,0 +1,3 @@
+#!/bin/bash
+
+flatpak run org.winehq.Wine "$@"

@@ -28,12 +28,16 @@ F11; {F11, F10}
 {super,mod1} + Escape
     bspc node -{c,k}
 {super, mod1, mod2} + Delete
-    {lule create -- set, lule create -- set, /home/bresilla/.startup}
+    {lule create -- set & pkill polybar && /home/bresilla/.config/polybar/poly &, lule create -- set, /home/bresilla/.startup}
 
 mod1 + space
     /env/dot/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1250 -m -n
 mod2 + space
     /env/dot/.func/wm/scratch --term=kitty --class=NOTE --width=3300 --height=2000 -m -n
+super + mod1 + l
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(flatpak list --columns=application | sort -u | fzy)'
+super + mod1 + k
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true xstarter'
 
 
 super + mod1 + {Left,Right}

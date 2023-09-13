@@ -101,9 +101,20 @@ layout_localmamba() {
 }
 
 layout_ros() {
-    source "/opt/ros/${1:-humble}/setup.sh"
-    eval "$(register-python-argcomplete3 ros2)
-    eval "$(register-python-argcomplete3 colcon)
+    source /etc/lsb-release
+    if [[ $DISTRIB_ID == "Arch" ]]; then
+        echo "IN ARCH - CANT USE ROS"
+        exit
+    fi
+    if [[ ${1} == "noetic" ]]; then
+        source "/opt/ros/${1:-neotic}/setup.sh"
+        echo "ROS1 ENV"
+    else
+        source "/opt/ros/${1:-humble}/setup.sh"
+        eval "$(register-python-argcomplete3 ros2)
+        # eval "$(register-python-argcomplete3 colcon)
+        echo "ROS2 ENV"
+    fi
     if [[ -f "$PWD/devel/setup.sh" ]]; then source "$PWD/devel/setup.sh"; fi
     if [[ -f "$PWD/install/setup.sh" ]]; then source "$PWD/install/setup.sh"; fi
 }

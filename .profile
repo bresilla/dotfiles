@@ -16,32 +16,18 @@ export TEMP=/tmp
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
 #NIX
-# export NIX_PATH=$NIX_PATH:$HOME/.nix-defexpr/channels
-# export NIX_PATH=${NIX_PATH:+$NIX_PATH:}/nix/channels  # move "~/.nix-defexpr/channels" to "/nix/channels"
-[[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh;
-export NIX_PATH=$HOME/.nix-defexpr/channels:$NIX_PATH
-export NIXPKGS_ALLOW_UNFREE=1
 
 #XMAKE
 export XMAKE_GLOBALDIR=/pkg/xmake
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
 export VCPKG_ROOT="/pkg/vcpkg"
 
-#PLATFORMIO
-export PLATFORMIO_CORE_DIR=/opt/pio
-# [[ -d "/opt/pio" ]]  && PATH="$PATH:/opt/pio/penv/bin"
-# export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME"/platformio
-
 #NVIDIA
 [[ -d "/usr/local/cuda" ]] && PATH="$PATH:/usr/local/cuda/bin" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 [[ -d "/opt/cuda" ]] && PATH="$PATH:/opt/cuda/bin" LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
-
 export LD_LIBRARY_PATH="/usr/local/lib/:$LD_LIBRARY_PATH"
 #export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
 export CUDA_TOOLKIT_ROOT_DIR="/opt/cuda"
-
-#FLATPAK
-FLATPAK_ENABLE_SDK_EXT=rust-nightly
 
 #SECRETS
 [[ -e "/env/set/variables" ]] && source /env/set/variables
@@ -51,7 +37,7 @@ export PATH="$HOME/.local/alt/shims:$PATH"
 
 
 #DISPLAY
-[[ -z "${DISPLAY}" ]] && export DISPLAY=:0
+# [[ -z "${DISPLAY}" ]] && export DISPLAY=:0
 
 #PKGCONFIGS
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig
@@ -79,11 +65,10 @@ export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
 [[ -d "/var/go/bin" ]] && PATH="/var/go/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
-
 # NIM
 export NIMBLE_DIR="/var/nimble"
 
-#---------------------------              XDG           --------------------------
+#---------------------------             LULE           --------------------------
 export BAT_THEME="TwoDark"
 export LULE_W="/env/set/.wallpaper"
 export LULE_S="/env/dot/.func/wm/lule_colors"
@@ -100,7 +85,7 @@ export XDG_DATA_HOME=/home/$USER/.local/share
 export XDG_DATA_PATH=/home/$USER/.local/share
 export XDG_CACHE_HOME=/home/$USER/.cache
 export XDG_CACHE_PATH=/home/$USER/.cache
-
+export XDG_CURRENT_DESKTOP=/usr/share/xdg-desktop-portal/portals/gtk.portal
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export GRAVEYARD=/tmp/graveyard-$USER
@@ -125,6 +110,9 @@ export ROS_DOMAIN_ID=222
 export WEBOTS_HOME=/usr/local/webots
 export LD_LIBRARY_PATH=/usr/local/webots/lib/controller:$LD_LIBRARY_PATH
 export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
+
+
+#---------------------------            IOT             --------------------------
 export BLINKA_MCP2221=1
 export SDL_JOYSTICK_DEVICE=/dev/input/js0
 
@@ -134,6 +122,8 @@ if [ "$HOSTNAME" = core ]; then
     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
     export GPG_TTY=$(tty)
 fi
-source /home/bresilla/.external
-#---------------------------            OTHER            --------------------------
+[[ -f "$HOME/.external" ]] && source /home/bresilla/.external
+#---------------------------           NETWORK            -------------------------
 
+
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

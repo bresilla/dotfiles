@@ -4,7 +4,8 @@ ROFI_OPTIONS=(-theme $HOME/.config/rofi/rofi_bar -theme-str "*{accent: ${color1:
 BROWSER=firefox
 
 
-PLACES_PATH="/home/bresilla/.mozilla/firefox/13kgbp7a.default/places.sqlite"
+# PLACES_PATH="/home/bresilla/.mozilla/firefox/dq7krxug.default-1630495882574/places.sqlite"
+PLACES_PATH="/home/bresilla/.var/app/org.mozilla.firefox/.mozilla/firefox/gxw08cft.default-release/places.sqlite"
 DB_PATH=$(mktemp /tmp/ffhist.XXXXX)
 cp -f $PLACES_PATH $DB_PATH
 
@@ -14,8 +15,8 @@ SELECT
 WHERE
     url NOT LIKE '%google%search%'
 ORDER BY
-    visit_count DESC,
-    last_visit_date DESC;
+    last_visit_date DESC,
+    visit_count DESC;
 "
 
 SEP="∙"

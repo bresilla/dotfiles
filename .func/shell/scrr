@@ -1,0 +1,31 @@
+#!/bin/bash
+
+screens=$(screen -ls | sed '1d; $d' | choose 0 | cut -d "." -f 2)
+words=($screens)
+
+selected_item=$(printf "%s\n" "${words[@]}" | fzy)
+if [ -z "$selected_item" ]; then
+    if [ -n "$STY" ]; then
+        screen -X detach
+        exit
+    else
+        exit
+    fi
+fi
+
+in_list=false
+for item in "${words[@]}"
+do
+    if [[ "$selected_item" == "$item" ]]; then
+        in_list=true
+        break
+    fi
+done
+
+if ! $in_list; then
+    screen -S $selected_item
+    exit
+else
+    screen -r $selected_item
+    exit
+fi

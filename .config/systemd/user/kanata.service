@@ -1,0 +1,14 @@
+[Unit]
+Description=Kanata keyboard remapper
+Documentation=https://github.com/jtroo/kanata
+
+[Service]
+Environment=PATH=/env/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
+Environment=DISPLAY=:0
+Environment=HOME=/home/bresilla
+Type=simple
+ExecStart=/env/bin/kanata --cfg /home/bresilla/.config/kanata/minial.kbd
+Restart=never
+
+[Install]
+WantedBy=default.target

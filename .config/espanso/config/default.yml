@@ -1,8 +1,0 @@
-keyboard_layout:
-  layout: "us"
-
-toggle_key: OFF
-
-#backend: Clipboard
-backend: Inject
-x11_use_xdotool_backend: true

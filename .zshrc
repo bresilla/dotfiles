@@ -163,21 +163,18 @@ alias \$=''
 ###DIRENV
 [[ -x "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
+##DEVBOX
+[[ -x "$(command -v devbox)" ]] && eval "$(devbox global shellenv --init-hook)"
+
 ###AUTIN
 [[ -x "$(command -v atuin)" ]] && eval "$(atuin init zsh)"
-
-###COD
-# [[ -x "$(command -v cod)" ]] && source <(cod init $$ zsh)
 
 ###NOSTROMO
 [[ -x "$(command -v nostromo)" ]] && source <(nostromo completion zsh)
 
 ###STARSHIP
-# source ~/.config/promptline
+#source ~/.config/promptline
 [[ -x "$(command -v starship)" ]] && eval "$(starship init zsh)" || source ~/.config/promptline
-
-###XSHE
-[[ -x "$(command -v xshe)" ]] && eval "$(xshe zsh)"
 
 ###MICROMAMBA
 [[ -x "$(command -v micromamba)" ]] && eval "$(micromamba shell hook --shell=zsh)"
@@ -252,7 +249,8 @@ done
 
 #--------------------------------------------------------------------------------------------------------------------
 #TAB-RS (shotrcut: Ctrl + e)
-bindkey -s '^A' ' tab\n'
+#bindkey -s '^A' ' tab\n'
+bindkey -s '^X' ' scrr\n'
 
 if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
@@ -261,4 +259,6 @@ if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresill
 [[ -s "$HOME/.external" ]] && source "$HOME/.external"
 
 if (( ${+CWD_VAR} )); then cd $CWD_VAR; fi
+
+bresilla
 
