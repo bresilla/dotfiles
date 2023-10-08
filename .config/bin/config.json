@@ -10,6 +10,33 @@
             "provider": "github",
             "package_path": ""
         },
+        "/env/bin/cyme": {
+            "path": "/env/bin/cyme",
+            "remote_name": "cyme",
+            "version": "v1.5.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/tuna-f1sh/cyme",
+            "provider": "github",
+            "package_path": "cyme-v1.5.0-x86_64-unknown-linux-gnu/cyme"
+        },
+        "/env/bin/daktilo": {
+            "path": "/env/bin/daktilo",
+            "remote_name": "daktilo",
+            "version": "v0.2.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/orhun/daktilo",
+            "provider": "github",
+            "package_path": "daktilo-x86_64-unknown-linux-gnu/daktilo"
+        },
+        "/env/bin/eza": {
+            "path": "/env/bin/eza",
+            "remote_name": "eza",
+            "version": "v0.11.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/eza-community/eza",
+            "provider": "github",
+            "package_path": "./eza"
+        },
         "/env/bin/git-gci": {
             "path": "/env/bin/git-gci",
             "remote_name": "git-gci",
@@ -18,6 +45,42 @@
             "url": "github.com/kubero-dev/GitGenie",
             "provider": "github",
             "package_path": "git-gci"
+        },
+        "/env/bin/gptcommit": {
+            "path": "/env/bin/gptcommit",
+            "remote_name": "gptcommit",
+            "version": "v0.5.13",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/zurawiki/gptcommit",
+            "provider": "github",
+            "package_path": "gptcommit"
+        },
+        "/env/bin/local-ai-avx": {
+            "path": "/env/bin/local-ai-avx",
+            "remote_name": "local-ai-avx",
+            "version": "v1.25.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/go-skynet/LocalAI",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/ollama": {
+            "path": "/env/bin/ollama",
+            "remote_name": "ollama",
+            "version": "v0.1.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/jmorganca/ollama",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/starship": {
+            "path": "/env/bin/starship",
+            "remote_name": "starship",
+            "version": "v1.16.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/starship/starship",
+            "provider": "github",
+            "package_path": "starship"
         }
     }
 }

@@ -1,0 +1,89 @@
+#!/bin/bash
+source /home/bresilla/.cache/wal/colors.sh
+BROWSER=org.mozilla.firefox
+runner=fzy
+
+foxy() {
+    # PLACES_PATH="/home/bresilla/.mozilla/firefox/dq7krxug.default-1630495882574/places.sqlite"
+    PLACES_PATH="/home/bresilla/.var/app/org.mozilla.firefox/.mozilla/firefox/gxw08cft.default-release/places.sqlite"
+    DB_PATH=$(mktemp /tmp/ffhist.XXXXX)
+    cp -f $PLACES_PATH $DB_PATH
+
+    QUERY="
+    SELECT
+        url, title FROM moz_places
+    WHERE
+        url NOT LIKE '%google%search%'
+    ORDER BY
+        last_visit_date DESC,
+        visit_count DESC;
+    "
+
+    SEP="∙"
+    ENTRY=$(sqlite3 "$DB_PATH" "$QUERY" | sed -E 's/^https?:\/\///' | sed -E "s/\\/?\\|/ $SEP /" | sed -E "s/$SEP $//" | $runner)
+    URL=$( echo "$ENTRY" | sed "s/$SEP.*//g" )
+
+    [[ "$URL" = "" ]] && exit
+
+    $BROWSER "https://$URL"
+}
+
+srch=search
+mark=bookmarks
+loca=proxmox
+hist=history
+list=playlist
+pkgs=packages
+apps=app-list
+
+another=$(echo "\
+$hist
+$mark
+$loca
+$srch
+$list
+$apps
+$pkgs\
+" | $runner)
+
+
+if [ "$another" == "$srch" ] ; then
+    surfraw -browser=$BROWSER $(sr -elvi | awk -F'-' '{print $1}' | sed '/:/d' | awk '{$1=$1};1' | $runner)
+
+elif [ "$another" == "$hist" ] ; then
+    foxy
+
+elif [ "$another" == "$mark" ] ; then
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/webmarks_v0.1.json" list -g default| tail -n+3 | sed 's/^\w*\s*//' | $runner | /env/bin/choose 1)
+    [[ -z $LINK ]] && exit 1
+    $BROWSER $LINK
+
+elif [ "$another" == "$loca" ] ; then
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/webmarks_v0.1.json" list -g proxmox | tail -n+3 | sed 's/^\w*\s*//' | $runner | /env/bin/choose 1)
+    [[ -z $LINK ]] && exit 1
+    $BROWSER $LINK
+
+elif [ "$another" == "$list" ] ; then
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/playmarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | $runner | /env/bin/choose 1)
+    [[ -z $LINK ]] && exit 1
+    /env/dot/.func/media/play $LINK
+
+elif [ "$another" == "$apps" ] ; then
+    LINK=$(/env/bin/bookmark --file "/home/bresilla/.local/share/bookmark/climarks_v0.1.json" list | tail -n+3 | sed 's/^\w*\s*//' | $runner | /env/bin/choose 1)
+    [[ -z $LINK ]] && exit 1
+    $BROWSER $LINK
+
+elif [ "$another" == "$pkgs" ] ; then
+    LINK=$runner
+    $BROWSER "https://pkgs.org/search/?q=$LINK"
+
+# elif [ -z "$another" ] ; then
+#     #https://github.com/BelkaDev/RofiFtw
+#     handler=$(dirname $0)/duckduck
+#     rofi "${ROFI_OPTIONS[@]}" -modi blocks -show blocks -blocks-wrap $handler -display-blocks "SEARCH" 2>/dev/null
+#     [ -f "/tmp/ddgrofi.tmp" ] && $BROWSER "https://duckduckgo.com/?q=$(cat "/tmp/ddgrofi.tmp")" || exit 0
+
+else
+    $BROWSER "https://duckduckgo.com/?q=$another"
+    #exec nohup $another > /dev/null 2>&1 &
+fi

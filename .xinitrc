@@ -8,6 +8,7 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=secrets)
 export SSH_AUTH_SOCK
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
+export GTK_USE_PORTAL=1
 # eval "$(dbus-launch --sh-syntax --exit-with-session)"
 
 #gpg things

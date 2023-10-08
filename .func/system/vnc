@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if [ $# -eq 0 ]; then
-    >&2 echo "No arguments provided"
-    exit 1
-fi
-
-vncviewer -SecurityTypes VncAuth -passwd /home/bresilla/.vnc/$1 $1:1 &

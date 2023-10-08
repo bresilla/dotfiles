@@ -1,0 +1,38 @@
+#!/bin/bash
+source /home/bresilla/.cache/wal/colors.sh
+edit_with="kitty --class=til"
+runner=fzy
+
+path=syspath
+font=sysfonts
+conf=configs
+clip=clipboard
+note=notes
+
+another=$(echo "$exce
+$path
+$font
+$clip
+$note
+$conf" | fzy)
+
+if [ "$another" == "$conf" ] ; then
+    confile=$(find /env/dot/ -type f -not -path "/home/bresilla/dots/.other/*" -not -path "/home/bresilla/dots/.config/Code*" -not -path "/home/bresilla/dots/.config/nvim/plugged/*" | $runner)
+    [[ $confile != "" ]] && kitty --class=til nvim $confile
+
+elif [ "$another" == "$path" ] ; then
+    echo $PATH | tr ':' '\n' | $runner
+
+elif [ "$another" == "$font" ] ; then
+    confile=$(fc-list | $runner)
+    fc-query $(echo $confile | cut -d: -f1) | $runner
+
+elif [ "$another" == "$clip" ] ; then
+    greenclip print | $runner
+
+elif [ "$another" == "$note" ] ; then
+    nnn /home/bresilla/.local/share/notes
+
+else
+  exec nohup $another > /dev/null 2>&1 &
+fi

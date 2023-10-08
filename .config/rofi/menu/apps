@@ -25,7 +25,7 @@ if [ "$another" == "$apps" ] ; then
     rofi "${ROFI_OPTIONS[@]}" -modi 'run,drun' -show drun -columns 4
 
 elif [ "$another" == "$conf" ] ; then
-    confile=$(find /home/bresilla/dots/ -type f -not -path "/home/bresilla/dots/.other/*" -not -path "/home/bresilla/dots/.config/Code*" -not -path "/home/bresilla/dots/.config/nvim/plugged/*" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'locate:')
+    confile=$(find /env/dot/ -type f -not -path "/home/bresilla/dots/.other/*" -not -path "/home/bresilla/dots/.config/Code*" -not -path "/home/bresilla/dots/.config/nvim/plugged/*" | rofi "${ROFI_OPTIONS[@]}" -threads 0 -dmenu -i -p 'locate:')
     [[ $confile != "" ]] && kitty --class=til nvim $confile
 
 elif [ "$another" == "$path" ] ; then

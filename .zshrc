@@ -252,7 +252,7 @@ done
 #bindkey -s '^A' ' tab\n'
 bindkey -s '^X' ' scrr\n'
 
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi
 
 
 #---------------------------            EXTERNAL       --------------------------

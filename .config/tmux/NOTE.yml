@@ -1,21 +1,21 @@
 name: NOTE
 windows:
-- name: spt
-  layout: a9a5,310x69,0,0{181x69,0,0[181x55,0,0,3,181x13,0,56,42],128x69,182,0[128x30,182,0,5,128x38,182,31,4]}
-  panes:
-  - commands:
-    - spt
-    root: /home/bresilla
-  - commands:
-    - taskwarrior-tui
-    root: /home/bresilla
-  - commands:
-    - ncpamixer
-    focus: true
-    root: /home/bresilla
-  - commands:
-    - tock -c
-    root: /home/bresilla
+# - name: spt
+#   layout: a9a5,310x69,0,0{181x69,0,0[181x55,0,0,3,181x13,0,56,42],128x69,182,0[128x30,182,0,5,128x38,182,31,4]}
+#   panes:
+#   - commands:
+#     - spt
+#     root: /home/bresilla
+#   - commands:
+#     - taskwarrior-tui
+#     root: /home/bresilla
+#   - commands:
+#     - ncpamixer
+#     focus: true
+#     root: /home/bresilla
+#   - commands:
+#     - tock -c
+#     root: /home/bresilla
 - name: top
   layout: a4ab,279x66,0,0{153x66,0,0,5,125x66,154,0[125x33,154,0,7,125x32,154,34,6]}
   panes:
@@ -27,5 +27,5 @@ windows:
     - battop
     root: /home/bresilla
   - commands:
-    - doas bandwhich
+    - taskwarrior-tui
     root: /home/bresilla

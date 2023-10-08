@@ -1,18 +1,14 @@
+super + mod1 + x
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true xstarter'
 super + mod1 + d
-    /home/bresilla/.config/rofi/menu/data
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(/env/dot/.func/run/runny)'
 super + mod1 + a
-    /home/bresilla/.config/rofi/menu/apps
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true nohup $(flatpak list --columns=application | sort -u | fzy)'
 super + mod1 + b
-    /home/bresilla/.config/rofi/menu/BROWSE
-super + mod1 + p
-    /home/bresilla/.config/rofi/menu/power
-super + mod1 + c
-    /home/bresilla/.config/rofi/menu/CONFIG
-super + mod1 + s
-    /home/bresilla/.config/rofi/menu/screens
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(/env/dot/.func/run/browsy)'
 
 super + mod1 + space; {space, Return}
-    {kitty --class=kittyled, alacritty -e tmux}
+    {kitty --class=kittyled, alacritty}
 
 {Insert, @Insert}
     /home/bresilla/.config/sxhkd/scripts/eww {--open, --close}
@@ -34,10 +30,6 @@ mod1 + space
     /env/dot/.func/wm/scratch --term=kitty --class=MAIN --width=3000 --height=1250 -m -n
 mod2 + space
     /env/dot/.func/wm/scratch --term=kitty --class=NOTE --width=3300 --height=2000 -m -n
-super + mod1 + l
-    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(flatpak list --columns=application | sort -u | fzy)'
-super + mod1 + k
-    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true xstarter'
 
 
 super + mod1 + {Left,Right}

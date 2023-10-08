@@ -15,8 +15,6 @@ export TEMP=/tmp
 [[ -d "/env/bin" ]] && PATH="$PATH:/env/bin"
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
 
-#NIX
-
 #XMAKE
 export XMAKE_GLOBALDIR=/pkg/xmake
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
@@ -75,6 +73,23 @@ export LULE_S="/env/dot/.func/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
 
 
+#---------------------------            LOCALE           --------------------------
+#export LANG=en_US.UTF-8
+#export LC_CTYPE="en_US.UTF-8"
+#export LC_NUMERIC="en_US.UTF-8"
+#export LC_TIME="en_US.UTF-8"
+#export LC_COLLATE="en_US.UTF-8"
+#export LC_MONETARY="en_US.UTF-8"
+#export LC_MESSAGES="en_US.UTF-8"
+#export LC_PAPER="en_US.UTF-8"
+#export LC_NAME="en_US.UTF-8"
+#export LC_ADDRESS="en_US.UTF-8"
+#export LC_TELEPHONE="en_US.UTF-8"
+#export LC_MEASUREMENT="en_US.UTF-8"
+#export LC_IDENTIFICATION="en_US.UTF-8"
+#export LC_ALL=en_US.UTF-8
+
+
 #---------------------------              XDG           --------------------------
 export WINEPREFIX=/var/lib/wine
 export LIBVA_DRIVER_NAME=iHD
@@ -86,6 +101,7 @@ export XDG_DATA_PATH=/home/$USER/.local/share
 export XDG_CACHE_HOME=/home/$USER/.cache
 export XDG_CACHE_PATH=/home/$USER/.cache
 export XDG_CURRENT_DESKTOP=/usr/share/xdg-desktop-portal/portals/gtk.portal
+export GTK_USE_PORTAL=1
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export GRAVEYARD=/tmp/graveyard-$USER
@@ -115,6 +131,7 @@ export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 #---------------------------            IOT             --------------------------
 export BLINKA_MCP2221=1
 export SDL_JOYSTICK_DEVICE=/dev/input/js0
+export OLLAMA_HOST=10.10.20.10:11434
 
 #---------------------------            CORE            --------------------------
 if [ "$HOSTNAME" = core ]; then
@@ -123,7 +140,3 @@ if [ "$HOSTNAME" = core ]; then
     export GPG_TTY=$(tty)
 fi
 [[ -f "$HOME/.external" ]] && source /home/bresilla/.external
-#---------------------------           NETWORK            -------------------------
-
-
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

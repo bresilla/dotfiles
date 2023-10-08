@@ -111,7 +111,7 @@ layout_ros() {
         echo "ROS1 ENV"
     else
         source "/opt/ros/${1:-humble}/setup.sh"
-        eval "$(register-python-argcomplete3 ros2)
+        # eval "$(register-python-argcomplete3 ros2)
         # eval "$(register-python-argcomplete3 colcon)
         echo "ROS2 ENV"
     fi
