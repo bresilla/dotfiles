@@ -7,6 +7,7 @@ $sudo\
 ${custom.tab}\
 ${custom.tab2}\
 $status\
+$nix_shell\
 ${custom.container2}\
 [| ](fg:7)
 """
@@ -59,6 +60,13 @@ format = '[[ $symbol $branch ]($style)]($style)'
 [git_status]
 style = "bg:1 fg:0"
 format = '[[($all_status$ahead_behind )]($style)]($style)'
+
+[nix_shell]
+disabled = true
+impure_msg = '[impure shell](bold red)'
+pure_msg = '[pure shell](bold green)'
+unknown_msg = '[unknown shell](bold yellow)'
+format = 'via [☃️ $state( \($name\))](bold blue) '
 
 [custom.env]
 style="fg:4"

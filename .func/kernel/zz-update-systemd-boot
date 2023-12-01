@@ -14,6 +14,7 @@ elif [ $ID == "ubuntu" ]; then
 fi
 echo "DISTRO:" $ID
 echo "-----------"
+echo "-----++++++++++------"
 
 #BOOTDIRS
 # EFI=/boot/efi

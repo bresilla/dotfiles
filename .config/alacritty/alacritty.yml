@@ -8,6 +8,9 @@ window:
 dynamic_padding: true
 draw_bold_text_with_bright_colors: true
 
+# selection:
+    # save_to_clipboard: true
+
 env:
   TERM: xterm-256color
 
@@ -30,7 +33,7 @@ font:
     # family: Iosevka Term SS08
     # family: Input Mono Compressed
     style: Italic
-  size: 10
+  size: 6
   offset:
     x: 0
     y: 0

@@ -49,7 +49,7 @@ export CONSOLE=kitty
 export TZ='Europe/Berlin'
 export LC_ALL="en_US.UTF-8"
 export DISTRO=$(cat /etc/os-release | grep -m 1 ID)
-
+export PIXI_DIR=/pkg/pixi/
 
 #---------------------------         LANGUAGES          --------------------------
 
@@ -100,8 +100,8 @@ export XDG_DATA_HOME=/home/$USER/.local/share
 export XDG_DATA_PATH=/home/$USER/.local/share
 export XDG_CACHE_HOME=/home/$USER/.cache
 export XDG_CACHE_PATH=/home/$USER/.cache
-export XDG_CURRENT_DESKTOP=/usr/share/xdg-desktop-portal/portals/gtk.portal
-export GTK_USE_PORTAL=1
+# export XDG_CURRENT_DESKTOP=/usr/share/xdg-desktop-portal/portals/gtk.portal
+# export GTK_USE_PORTAL=1
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export GRAVEYARD=/tmp/graveyard-$USER
@@ -131,7 +131,11 @@ export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 #---------------------------            IOT             --------------------------
 export BLINKA_MCP2221=1
 export SDL_JOYSTICK_DEVICE=/dev/input/js0
+
+
+#----------------------------        HIVE-SERVER        ---------------------------
 export OLLAMA_HOST=10.10.20.10:11434
+export DOCKER_HOST=tcp://hive:2375
 
 #---------------------------            CORE            --------------------------
 if [ "$HOSTNAME" = core ]; then

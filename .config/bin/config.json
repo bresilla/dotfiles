@@ -1,41 +1,86 @@
 {
     "default_path": "/env/bin",
     "bins": {
-        "/env/bin/codegpt": {
-            "path": "/env/bin/codegpt",
-            "remote_name": "codegpt",
-            "version": "v0.4.3",
+        "/env/bin/act": {
+            "path": "/env/bin/act",
+            "remote_name": "act",
+            "version": "v0.2.55",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/appleboy/CodeGPT",
+            "url": "https://github.com/nektos/act/releases/tag/v0.2.55",
+            "provider": "",
+            "package_path": "act"
+        },
+        "/env/bin/artem": {
+            "path": "/env/bin/artem",
+            "remote_name": "artem",
+            "version": "v2.0.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/FineFindus/artem",
+            "provider": "github",
+            "package_path": "artem"
+        },
+        "/env/bin/bin": {
+            "path": "/env/bin/bin",
+            "remote_name": "bin",
+            "version": "v0.17.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/marcosnils/bin",
             "provider": "github",
             "package_path": ""
         },
-        "/env/bin/cyme": {
-            "path": "/env/bin/cyme",
-            "remote_name": "cyme",
-            "version": "v1.5.0",
+        "/env/bin/bluetuith": {
+            "path": "/env/bin/bluetuith",
+            "remote_name": "bluetuith",
+            "version": "v0.1.9",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/tuna-f1sh/cyme",
+            "url": "github.com/darkhz/bluetuith",
             "provider": "github",
-            "package_path": "cyme-v1.5.0-x86_64-unknown-linux-gnu/cyme"
+            "package_path": "bluetuith"
+        },
+        "/env/bin/codegpt": {
+            "path": "/env/bin/codegpt",
+            "remote_name": "codegpt",
+            "version": "v0.7.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.7.0",
+            "provider": "",
+            "package_path": ""
         },
         "/env/bin/daktilo": {
             "path": "/env/bin/daktilo",
             "remote_name": "daktilo",
-            "version": "v0.2.0",
+            "version": "v0.5.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/orhun/daktilo",
             "provider": "github",
             "package_path": "daktilo-x86_64-unknown-linux-gnu/daktilo"
         },
-        "/env/bin/eza": {
-            "path": "/env/bin/eza",
-            "remote_name": "eza",
-            "version": "v0.11.1",
+        "/env/bin/devbox": {
+            "path": "/env/bin/devbox",
+            "remote_name": "devbox",
+            "version": "0.8.2",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/eza-community/eza",
+            "url": "https://github.com/jetpack-io/devbox/releases/tag/0.8.2",
+            "provider": "",
+            "package_path": "devbox"
+        },
+        "/env/bin/distant": {
+            "path": "/env/bin/distant",
+            "remote_name": "distant-unknown-musl",
+            "version": "v0.20.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/chipsenkbeil/distant",
             "provider": "github",
-            "package_path": "./eza"
+            "package_path": ""
+        },
+        "/env/bin/git-cliff": {
+            "path": "/env/bin/git-cliff",
+            "remote_name": "git-cliff",
+            "version": "v1.4.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/orhun/git-cliff",
+            "provider": "github",
+            "package_path": "git-cliff-1.4.0/git-cliff"
         },
         "/env/bin/git-gci": {
             "path": "/env/bin/git-gci",
@@ -49,27 +94,72 @@
         "/env/bin/gptcommit": {
             "path": "/env/bin/gptcommit",
             "remote_name": "gptcommit",
-            "version": "v0.5.13",
+            "version": "v0.5.14",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/zurawiki/gptcommit",
             "provider": "github",
             "package_path": "gptcommit"
         },
-        "/env/bin/local-ai-avx": {
-            "path": "/env/bin/local-ai-avx",
-            "remote_name": "local-ai-avx",
-            "version": "v1.25.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/go-skynet/LocalAI",
-            "provider": "github",
-            "package_path": ""
-        },
         "/env/bin/ollama": {
             "path": "/env/bin/ollama",
             "remote_name": "ollama",
-            "version": "v0.1.1",
+            "version": "v0.1.12",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/jmorganca/ollama",
+            "url": "https://github.com/jmorganca/ollama/releases/tag/v0.1.12",
+            "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/pixi": {
+            "path": "/env/bin/pixi",
+            "remote_name": "pixi-unknown-musl",
+            "version": "v0.9.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/prefix-dev/pixi",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/portal": {
+            "path": "/env/bin/portal",
+            "remote_name": "portal",
+            "version": "v1.2.3",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/SpatiumPortae/portal",
+            "provider": "github",
+            "package_path": "portal"
+        },
+        "/env/bin/presenterm": {
+            "path": "/env/bin/presenterm",
+            "remote_name": "presenterm",
+            "version": "v0.3.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/mfontanini/presenterm/releases/tag/v0.3.0",
+            "provider": "",
+            "package_path": "presenterm-0.3.0/presenterm"
+        },
+        "/env/bin/sd": {
+            "path": "/env/bin/sd",
+            "remote_name": "sd",
+            "version": "v1.0.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/chmln/sd",
+            "provider": "github",
+            "package_path": "sd-v1.0.0-x86_64-unknown-linux-musl/sd"
+        },
+        "/env/bin/ser": {
+            "path": "/env/bin/ser",
+            "remote_name": "servicer-unknown-gnu",
+            "version": "v0.1.13",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/servicer-labs/servicer",
+            "provider": "github",
+            "package_path": ""
+        },
+        "/env/bin/servicer-unknown-gnu": {
+            "path": "/env/bin/servicer-unknown-gnu",
+            "remote_name": "servicer-unknown-gnu",
+            "version": "v0.1.13",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/servicer-labs/servicer",
             "provider": "github",
             "package_path": ""
         },
@@ -81,6 +171,15 @@
             "url": "github.com/starship/starship",
             "provider": "github",
             "package_path": "starship"
+        },
+        "/env/bin/tai": {
+            "path": "/env/bin/tai",
+            "remote_name": "tai",
+            "version": "v0.0.8",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/mustafasalih1993/tai",
+            "provider": "github",
+            "package_path": "tai"
         }
     }
 }

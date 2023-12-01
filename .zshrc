@@ -164,7 +164,7 @@ alias \$=''
 [[ -x "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
 ##DEVBOX
-[[ -x "$(command -v devbox)" ]] && eval "$(devbox global shellenv --init-hook)"
+#[[ -x "$(command -v devbox)" ]] && eval "$(devbox global shellenv --init-hook)"
 
 ###AUTIN
 [[ -x "$(command -v atuin)" ]] && eval "$(atuin init zsh)"
@@ -195,6 +195,7 @@ n(){
   fi
 }
 bindkey -s '^W' ' n\n'
+bindkey -s '^B' 'just_build\n'
 
 #--------------------------------------------------------------------------------------------------------------------
 #RUN OR LS (shotrcut: Enter)
@@ -252,7 +253,7 @@ done
 #bindkey -s '^A' ' tab\n'
 bindkey -s '^X' ' scrr\n'
 
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi
+# if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi
 
 
 #---------------------------            EXTERNAL       --------------------------

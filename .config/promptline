@@ -106,7 +106,7 @@ function __battery() {
 }
 
 function __timenow() {
-    printf $(date +"%H:%M")
+    printf $(timedatectl | grep "RTC time:" | choose 4)
 }
 
 function __datetoday() {

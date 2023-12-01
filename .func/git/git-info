@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gh repo view $@ --json url,name,description,languages | jq '.name as $name | .description as $description | .url as $url | .languages | max_by(.size) | .node.name as $language_name | {name: $name, description: $description, url: $url, language_name: $language_name}'

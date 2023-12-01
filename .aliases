@@ -14,6 +14,7 @@ alias ufw="doas ufw"
 alias btrfs="doas btrfs"
 alias tent="doas tent"
 alias argz="xargs -0 | head -n -1"
+alias ser="doas ser"
 
 
 ##DEV
@@ -81,7 +82,7 @@ alias pomo='pomo -p /home/bresilla/.config/pomo'
 alias git='hub'
 alias pro='proji'
 alias lines='tokei'
-alias search="rg"
+alias search='rg --hidden'
 
 ##ROBO
 alias ros="ros2"

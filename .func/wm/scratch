@@ -97,6 +97,9 @@ parse_command() {
             --class=*)
                 _arg_class="${_key##--class=}"
                 ;;
+            -t)
+                _arg_t="true"
+                ;;
             -m)
                 _arg_m="true"
                 ;;
@@ -154,9 +157,17 @@ yoffset=${_arg_yoffset:-$(($m_heigh / 2 - $heigh / 2 ))}
 if [[ -z $win ]]; then
     /env/bin/tmass -l /home/bresilla/.config/tmux load $name 2> /dev/null
     if [[ $term == "kitty" ]]; then
-        $term --name=$name sh -c "tmux attach -t $name" &
+        if [[ "$_arg_t" == "true" ]]; then
+            $term --name=$name sh -c "tmux attach -t $name" &
+        else
+            $term --name=$name zsh &
+        fi
     elif [[ $term == "alacritty" ]]; then
-        $term --class=$name sh -c "tmux attach -t $name" &
+        if [[ "$_arg_t" == "true" ]]; then
+            $term --class=$name -e sh -c "tmux attach -t $name" &
+        else
+            $term --class=$name -e zsh &
+        fi
     fi
     sleep 0.2
     win=$(xdotool search -classname $name)
