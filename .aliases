@@ -15,6 +15,7 @@ alias btrfs="doas btrfs"
 alias tent="doas tent"
 alias argz="xargs -0 | head -n -1"
 alias ser="doas ser"
+alias rustdesk="doas rustdesk"
 
 
 ##DEV
@@ -31,7 +32,7 @@ alias aly='nostromo'
 alias dnsinuse='nmcli dev show | grep IP4.DNS'
 alias findip='doas arp-scan --localnet'
 alias netspeed='wget --output-document=/dev/null http://speedtest.wdc01.softlayer.com/downloads/test500.zip'
-alias portmon='doas lsof -Pnl -i4'
+alias portmon='doas lsof -nP -iTCP -sTCP:LISTEN'
 alias openports='doas netstat -tulpn'
 alias zero='doas zerotier-cli'
 alias ssm='manssh'
@@ -54,7 +55,7 @@ alias ll='eza -liSHF --header --git --group-directories-first --tree -L1'
 alias la='eza -laiSHF --header --git --group-directories-first --tree -L1'
 alias lt='eza -liSHF --header --git --tree -L3'
 alias lu='dutree -d1 --usage -x .git -x .direnv'
-alias df='dfc -dTmw -p -/dev/loop,tmp,dev,run,one'
+alias df='dfc -dTmw -p -/dev/loop,tmp,dev,run,one,efivarfs'
 alias lsblk='lsblk --output NAME,SIZE,FSUSE%,MODEL,TRAN,TYPE,FSTYPE,UUID,LABEL,MOUNTPOINT,STATE,HOTPLUG'
 alias lsmnt='lsblk --output LABEL,NAME,SIZE,FSTYPE,MOUNTPOINTS'
 alias vols='doas lvm pvs && echo && doas lvm vgs && echo && doas lvm lvs'
@@ -65,13 +66,14 @@ alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
 alias nvmecheck="diff -y <(doas nvme smart-log /dev/nvme0n1) <(doas nvme smart-log /dev/nvme1n1)"
 
-##PROGRAMS
+##APPS
 alias a='atool -D -x'
 alias x='xplr'
-alias e="nvim"
+alias e=$EDITOR
 alias nums="dtool"
 alias mcon="mconnectctl"
-alias aks="ata"
+alias ask="ata"
+alias code="pro code"
 
 
 alias ari='aria2c'
@@ -80,7 +82,6 @@ alias note='dnote'
 alias font='fc-query'
 alias pomo='pomo -p /home/bresilla/.config/pomo'
 alias git='hub'
-alias pro='proji'
 alias lines='tokei'
 alias search='rg --hidden'
 
@@ -115,3 +116,6 @@ alias hosty="doas locdev"
 ##MEDIA
 alias color='pastel format hex'	
 alias cal='cal -ymw'
+alias ser="doas ser"
+alias mul="mullvad"
+alias oat="oatmeal"

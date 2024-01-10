@@ -1,12 +1,29 @@
-nvim /home/bresilla/.config/nushell/config.nu
-lsblk
+starship init nu | save -f ~/.cache/starship/init.nu
+$nu.config-path
+hx /env/dot/.config/nushell/config.nu
+ll
+ls
+ll
 ls
 ls -la
+ipi
+ip a
+bash -c $"source ($env.HOME)/.profile && env" | lines 
+bash -c $"source ($env.HOME)/.profile && env" | lines  | parse "{n}={v}"
+bash -c $"source ($env.HOME)/.profile && env" | lines  | parse "{n}={v}" | filter { |x| (not $x.n in $env) or ($x.v) != ($env | get $x.n) }
+bash -c $"source ($env.HOME)/.profile && env" | lines  | parse "{n}={v}" | filter { |x| (not $x.n in $env) or ($x.v) != ($env | get $x.n) } | where not n in ["_", "LAST_EXIT_CODE", "DIRS_POSITION"]
+bash -c $"source ($env.HOME)/.profile && env" | lines  | parse "{n}={v}" | filter { |x| (not $x.n in $env) or ($x.v) != ($env | get $x.n) } | where not n in ["_", "LAST_EXIT_CODE", "DIRS_POSITION"] | transpose -r
+bash -c $"source ($env.HOME)/.profile && env" | lines  | parse "{n}={v}" | filter { |x| (not $x.n in $env) or ($x.v) != ($env | get $x.n) } | where not n in ["_", "LAST_EXIT_CODE", "DIRS_POSITION"] | transpose -r | into record
+bash -c $"source ($env.HOME)/.profile && env" | lines  | parse "{n}={v}" | filter { |x| (not $x.n in $env) or ($x.v) != ($env | get $x.n) } | where not n in ["_", "LAST_EXIT_CODE", "DIRS_POSITION"] | transpose -r | into record | load-env
+ls -la
+ll
+ls -la
 ls
-la
-exa
-la
-lsblk
 df
-dfc
-la
+bash /home/bresilla/.aliases
+df
+bash -c $"source ($env.HOME)/.aliases && env" | lines  | parse "{n}={v}"
+cat ($env.HOME)/.aliases | lines
+cat "($env.HOME)/.aliases" | lines
+cat "/home/bresilla/.aliases" | lines
+cat "/home/bresilla/.aliases" | lines  | parse "{n}={v}" | filter { |x| (not $x.n in $env) or ($x.v) != ($env | get $x.n) }

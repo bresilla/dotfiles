@@ -1,3 +1,6 @@
+super + l
+    slock
+
 super + mod1 + x
     kitty --class=LAUNCHER zsh -c 'LAUNCHER=true nohup $(flatpak list --columns=application | sort -u | fzy)'
 super + mod1 + a
@@ -27,7 +30,7 @@ F11; {F11, F10}
 {super,mod1} + Escape
     bspc node -{c,k}
 {super, mod1, mod2} + Delete
-    {lule create -- set & pkill polybar && /home/bresilla/.config/polybar/poly &, lule create -- set, /home/bresilla/.startup}
+    {lule create -- set & pkill polybar && /home/bresilla/.config/polybar/poly & systemctl --user restart xob.service &, lule create -- set, /home/bresilla/.startup}
 
 
 mod1 + space

@@ -105,13 +105,13 @@ when = true
 format = "[ $output ]($style)"
 
 [custom.container]
-style = "bg:5 bold fg:0"
+style = "bg:5 bold fg:15"
 command = "echo $(/env/dot/.func/shell/incontainer2)"
 when = """ [[ $(systemd-detect-virt) != "none" ]] """
 format = "[|](bg:0 fg:7)[ $output ]($style)[||](bg:0 fg:7)"
 
 [custom.container2]
-style = "bg:5 bold fg:0"
+style = "bg:5 bold fg:15"
 command = "echo $(/env/dot/.func/shell/incontainer)"
 when = """ [[ $(systemd-detect-virt) != "none" ]] """
 format = " [ $output ]($style)"

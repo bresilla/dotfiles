@@ -1,6 +1,8 @@
 function fish_mode_prompt; end
 function fish_greeting; end
 
+source /home/bresilla/.aliases
+
 function _shko
     shko -c --short 19 && cd (cat ~/.config/shko/settings/chdir)
 end
@@ -24,21 +26,6 @@ function n --wraps nnn --description 'support nnn quit and change directory'
     end
 end
 
-
-function sh_aliases \
-    --description 'import bash aliases to .fish function files.'
-    for a in (cat ~/dots/.aliases | grep "^alias")
-        set aname (echo $a | sed 's/alias \(.*\)=\(\'\|\"\).*/\1/')
-        set command (echo $a | sed 's/alias \(.*\)=\(\'\|\"\)\(.*\)\2/\3/')
-        if test -f ~/.config/fish/functions2/$aname.fish
-            echo "Overwriting alias $aname as $command"
-        else
-            echo "Creating alias $aname as $command"
-        end
-        alias $aname $command
-        funcsave $aname
-    end
-end
 
 ###DIRENV
 direnv hook fish | source

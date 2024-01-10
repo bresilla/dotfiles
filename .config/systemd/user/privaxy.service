@@ -1,0 +1,15 @@
+[Unit]
+Description="next generation tracker and advertisement blocker"
+Documentation="https://github.com/barre/privaxy"
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/env/bin/privaxy
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+

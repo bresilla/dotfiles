@@ -43,7 +43,8 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 #---------------------------         LOC & TERM          --------------------------
 export COLORTERM=truecolor
 export BROWSER=org.mozilla.firefox
-export EDITOR=nvim
+# export EDITOR=nvim
+export EDITOR=hx
 export TERMINAL=kitty
 export CONSOLE=kitty
 export TZ='Europe/Berlin'
@@ -121,7 +122,7 @@ export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 #---------------------------            ROS             --------------------------
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>stargate</></></></>'
-#export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="robs4crops"/></></></></>'
+#export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="stargate"/></></></></>'
 export ROS_DOMAIN_ID=222
 export WEBOTS_HOME=/usr/local/webots
 export LD_LIBRARY_PATH=/usr/local/webots/lib/controller:$LD_LIBRARY_PATH
@@ -134,8 +135,9 @@ export SDL_JOYSTICK_DEVICE=/dev/input/js0
 
 
 #----------------------------        HIVE-SERVER        ---------------------------
-export OLLAMA_HOST=10.10.20.10:11434
-export DOCKER_HOST=tcp://hive:2375
+export OLLAMA_HOST=10.10.22.176:11434
+export OATMEAL_OLLAMA_URL=http://10.10.22.176:11434
+export DOCKER_HOST=tcp://10.10.22.176:2375
 
 #---------------------------            CORE            --------------------------
 if [ "$HOSTNAME" = core ]; then

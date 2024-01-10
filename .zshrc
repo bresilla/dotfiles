@@ -205,7 +205,7 @@ runner () {
       if [[ -n $(echo $ENVNAME) ]]; then
         clear && run
       else
-        printf "\n" && exa -laiSHF --header --git --group-directories-first --tree -L1
+        printf "\n" && eza -laiSHF --header --git --group-directories-first --tree -L1
       fi
     fi
     zle accept-line
@@ -217,8 +217,8 @@ bindkey '^M' runner
 ###TMUX && CD && ZOXIDE
 [[ -x "$(command -v zoxide)" ]] && eval "$(zoxide init zsh)"
 cd() {
-    if [[ -z $1 ]] && [[ -x "$(command -v proji)" ]]; then
-        cd $(proji ls | head -n-1 | tail -n+4 | fzy -l 20 | cut -d "|" -f4)
+    if [[ -z $1 ]] && [[ -f "/env/dot/.func/code/pro" ]]; then
+        /env/dot/.func/code/pro
     elif [[ -d $1 ]] || [[ $date =~ ^[-]{1,2}+[a-z]* ]] ; then
         builtin cd $1
     elif [[ $1 == root ]] && [[ -d $(git rev-parse --show-toplevel) ]] ; then
