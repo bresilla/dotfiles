@@ -1,24 +1,6 @@
 {
     "default_path": "/env/bin",
     "bins": {
-        "/env/bin/act": {
-            "path": "/env/bin/act",
-            "remote_name": "act",
-            "version": "v0.2.60",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/nektos/act/releases/tag/v0.2.60",
-            "provider": "",
-            "package_path": "act"
-        },
-        "/env/bin/artem": {
-            "path": "/env/bin/artem",
-            "remote_name": "artem",
-            "version": "v2.0.6",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/FineFindus/artem/releases/tag/v2.0.6",
-            "provider": "",
-            "package_path": "artem"
-        },
         "/env/bin/atuin": {
             "path": "/env/bin/atuin",
             "remote_name": "atuin",
@@ -46,15 +28,6 @@
             "provider": "",
             "package_path": ""
         },
-        "/env/bin/bluetuith": {
-            "path": "/env/bin/bluetuith",
-            "remote_name": "bluetuith",
-            "version": "v0.2.1",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/darkhz/bluetuith/releases/tag/v0.2.1",
-            "provider": "",
-            "package_path": "bluetuith"
-        },
         "/env/bin/codegpt": {
             "path": "/env/bin/codegpt",
             "remote_name": "codegpt",
@@ -64,24 +37,6 @@
             "provider": "",
             "package_path": ""
         },
-        "/env/bin/croc": {
-            "path": "/env/bin/croc",
-            "remote_name": "croc",
-            "version": "v9.6.14",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/schollz/croc/releases/tag/v9.6.14",
-            "provider": "",
-            "package_path": "croc"
-        },
-        "/env/bin/daktilo": {
-            "path": "/env/bin/daktilo",
-            "remote_name": "daktilo",
-            "version": "v0.5.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/orhun/daktilo",
-            "provider": "github",
-            "package_path": "daktilo-x86_64-unknown-linux-gnu/daktilo"
-        },
         "/env/bin/devbox": {
             "path": "/env/bin/devbox",
             "remote_name": "devbox",
@@ -90,15 +45,6 @@
             "url": "https://github.com/jetpack-io/devbox/releases/tag/0.10.1",
             "provider": "",
             "package_path": "devbox"
-        },
-        "/env/bin/distant": {
-            "path": "/env/bin/distant",
-            "remote_name": "distant-unknown-musl",
-            "version": "v0.20.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/chipsenkbeil/distant",
-            "provider": "github",
-            "package_path": ""
         },
         "/env/bin/eza": {
             "path": "/env/bin/eza",
@@ -118,24 +64,6 @@
             "provider": "",
             "package_path": "git-cliff-2.1.2/git-cliff"
         },
-        "/env/bin/git-gci": {
-            "path": "/env/bin/git-gci",
-            "remote_name": "git-gci",
-            "version": "v0.2.2",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/kubero-dev/GitGenie",
-            "provider": "github",
-            "package_path": "git-gci"
-        },
-        "/env/bin/gpg-tui": {
-            "path": "/env/bin/gpg-tui",
-            "remote_name": "gpg-tui",
-            "version": "v0.11.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/orhun/gpg-tui/releases/tag/v0.11.0",
-            "provider": "",
-            "package_path": "gpg-tui-0.11.0/gpg-tui"
-        },
         "/env/bin/gptcommit": {
             "path": "/env/bin/gptcommit",
             "remote_name": "gptcommit",
@@ -144,15 +72,6 @@
             "url": "https://github.com/zurawiki/gptcommit/releases/tag/v0.5.16",
             "provider": "",
             "package_path": "gptcommit"
-        },
-        "/env/bin/httm.tmp0-stripped": {
-            "path": "/env/bin/httm.tmp0-stripped",
-            "remote_name": "httm.tmp0-stripped",
-            "version": "0.37.7",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/kimono-koans/httm/releases/tag/0.37.7",
-            "provider": "",
-            "package_path": ""
         },
         "/env/bin/lule": {
             "path": "/env/bin/lule",
@@ -190,44 +109,8 @@
             "provider": "",
             "package_path": ""
         },
-        "/env/bin/portal": {
-            "path": "/env/bin/portal",
-            "remote_name": "portal",
-            "version": "v1.2.3",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/SpatiumPortae/portal",
-            "provider": "github",
-            "package_path": "portal"
-        },
-        "/env/bin/rathole": {
-            "path": "/env/bin/rathole",
-            "remote_name": "rathole",
-            "version": "v0.5.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/rapiz1/rathole",
-            "provider": "github",
-            "package_path": "rathole"
-        },
-        "/env/bin/sd": {
-            "path": "/env/bin/sd",
-            "remote_name": "sd",
-            "version": "v1.0.0",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/chmln/sd",
-            "provider": "github",
-            "package_path": "sd-v1.0.0-x86_64-unknown-linux-musl/sd"
-        },
         "/env/bin/ser": {
             "path": "/env/bin/ser",
-            "remote_name": "servicer-unknown-gnu",
-            "version": "v0.1.13",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/servicer-labs/servicer",
-            "provider": "github",
-            "package_path": ""
-        },
-        "/env/bin/servicer-unknown-gnu": {
-            "path": "/env/bin/servicer-unknown-gnu",
             "remote_name": "servicer-unknown-gnu",
             "version": "v0.1.13",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -252,15 +135,6 @@
             "url": "github.com/austinjones/tab-rs",
             "provider": "github",
             "package_path": "tab"
-        },
-        "/env/bin/tai": {
-            "path": "/env/bin/tai",
-            "remote_name": "tai",
-            "version": "v0.0.8",
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/mustafasalih1993/tai",
-            "provider": "github",
-            "package_path": "tai"
         }
     }
 }
