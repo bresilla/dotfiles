@@ -60,7 +60,7 @@
     fuck = "!f(){ git reset --hard origin/`git rev-parse --abbrev-ref HEAD`; rm -fv `git status | grep ^? | cut -d' '  -f2-`; }; f"
     tree = log --graph --all --format=format:'%w(80,0,0)%C(bold magenta)%h%C(reset) %C(white)%ad%C(reset) %C(dim white)(%ar)%C(reset) %C(bold dim white)%aN%C(auto)%+D%C(reset)%n%C(bold white)%s%C(reset)%+b%n'
     open = "!f(){ hub browse; }; f"
-    gpt = "!f(){ gptcommit install }; f"
+    gpt = "!f(){ gptcommit $@; }; f"
     commet = "!f(){ comet; }; f"
     remotes = remote -v
     branches = branch -a
@@ -68,7 +68,7 @@
     fix = !git mergetool --tool=diffconflicts
     root = rev-parse --show-toplevel
     ignore = "!f(){ echo $@ >> .gitignore; }; f"
-    set = "!git add --all && git commit"
+    go = "!git add --all && git commit && git push --all"
     start = "!f(){ git flow feature start ${1:-feature}; }; f"
     finish = "!f(){ git flow feature finish; }; f"
 [gc]

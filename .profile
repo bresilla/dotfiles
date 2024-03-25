@@ -7,35 +7,17 @@ export DOWN=$HOME/down
 export SYNC=$HOME/sync
 export TEMP=/tmp
 
-
 #USER BINARIES AND SCRIPTS
+[[ -d "/env/bin" ]] && PATH="$PATH:/env/bin"
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/sbin" ]] && PATH="$HOME/.local/sbin:$PATH"
-[[ -d /opt/TurboVNC/bin/vncserver ]] && PATH="/opt/TurboVNC/bin/vncserver:$PATH"
-[[ -d "/env/bin" ]] && PATH="$PATH:/env/bin"
 [[ -d /env/dot/.func ]] && for file in /env/dot/.func/*; do [[ -d "$file" ]] && PATH="$file:$PATH"; done
-
-#XMAKE
-export XMAKE_GLOBALDIR=/pkg/xmake
-[[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
-export VCPKG_ROOT="/pkg/vcpkg"
-
-#NVIDIA
-[[ -d "/usr/local/cuda" ]] && PATH="$PATH:/usr/local/cuda/bin" LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
-[[ -d "/opt/cuda" ]] && PATH="$PATH:/opt/cuda/bin" LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
-export LD_LIBRARY_PATH="/usr/local/lib/:$LD_LIBRARY_PATH"
-#export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
-export CUDA_TOOLKIT_ROOT_DIR="/opt/cuda"
 
 #SECRETS
 [[ -e "/env/set/variables" ]] && source /env/set/variables
 
 #ALT
 export PATH="$HOME/.local/alt/shims:$PATH"
-
-
-#DISPLAY
-# [[ -z "${DISPLAY}" ]] && export DISPLAY=:0
 
 #PKGCONFIGS
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig
@@ -45,15 +27,15 @@ export COLORTERM=truecolor
 export BROWSER=org.mozilla.firefox
 # export EDITOR=nvim
 export EDITOR=hx
-export TERMINAL=kitty
-export CONSOLE=kitty
-export TZ='Europe/Berlin'
-export LC_ALL="en_US.UTF-8"
+# export TERMINAL=kitty
+# export CONSOLE=kitty
 export DISTRO=$(cat /etc/os-release | grep -m 1 ID)
-export PIXI_DIR=/pkg/pixi/
 
 #---------------------------         LANGUAGES          --------------------------
-
+#C++
+export XMAKE_GLOBALDIR=/pkg/xmake
+[[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile"
+export VCPKG_ROOT="/pkg/vcpkg"
 # RUST
 export CARGO_HOME="/var/cargo"
 export RUSTUP_HOME="/var/rust"
@@ -66,6 +48,10 @@ export GO111MODULE=on
 export PATH=$PATH:/usr/local/go/bin
 # NIM
 export NIMBLE_DIR="/var/nimble"
+# ZIG
+export ZIGY=zig
+# PYTHON
+export PIXI_DIR=/pkg/pixi/
 
 #---------------------------             LULE           --------------------------
 export BAT_THEME="TwoDark"
@@ -75,7 +61,9 @@ export LULE_C="/home/bresilla/.config/lule/configs.json"
 
 
 #---------------------------            LOCALE           --------------------------
-#export LANG=en_US.UTF-8
+export TZ='Europe/Berlin'
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
 #export LC_CTYPE="en_US.UTF-8"
 #export LC_NUMERIC="en_US.UTF-8"
 #export LC_TIME="en_US.UTF-8"
@@ -88,21 +76,16 @@ export LULE_C="/home/bresilla/.config/lule/configs.json"
 #export LC_TELEPHONE="en_US.UTF-8"
 #export LC_MEASUREMENT="en_US.UTF-8"
 #export LC_IDENTIFICATION="en_US.UTF-8"
-#export LC_ALL=en_US.UTF-8
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 
 #---------------------------              XDG           --------------------------
-export WINEPREFIX=/var/lib/wine
-export LIBVA_DRIVER_NAME=iHD
-export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 export XDG_CONFIG_HOME=/home/$USER/.config
 export XDG_CONFIG_PATH=/home/$USER/.config
 export XDG_DATA_HOME=/home/$USER/.local/share
 export XDG_DATA_PATH=/home/$USER/.local/share
 export XDG_CACHE_HOME=/home/$USER/.cache
 export XDG_CACHE_PATH=/home/$USER/.cache
-# export XDG_CURRENT_DESKTOP=/usr/share/xdg-desktop-portal/portals/gtk.portal
-# export GTK_USE_PORTAL=1
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export GRAVEYARD=/tmp/graveyard-$USER
@@ -129,11 +112,6 @@ export LD_LIBRARY_PATH=/usr/local/webots/lib/controller:$LD_LIBRARY_PATH
 export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 
 
-#---------------------------            IOT             --------------------------
-export BLINKA_MCP2221=1
-export SDL_JOYSTICK_DEVICE=/dev/input/js0
-
-
 #----------------------------        HIVE-SERVER        ---------------------------
 export OLLAMA_HOST=10.10.22.176:11434
 export OATMEAL_OLLAMA_URL=http://10.10.22.176:11434
@@ -146,3 +124,5 @@ if [ "$HOSTNAME" = core ]; then
     export GPG_TTY=$(tty)
 fi
 [[ -f "$HOME/.external" ]] && source /home/bresilla/.external
+
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

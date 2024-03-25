@@ -1,7 +1,13 @@
 #!/bin/bash
+
+if  [ "$1" == "fzf" ] || [ -z $1 ]; then
+    runner=fzy
+elif [ "$1" == "rofi" ]; then
+    runner=rofit
+fi
+
 source /home/bresilla/.cache/wal/colors.sh
-BROWSER=org.mozilla.firefox
-runner=fzy
+
 
 foxy() {
     # PLACES_PATH="/home/bresilla/.mozilla/firefox/dq7krxug.default-1630495882574/places.sqlite"

@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+
+function launch {
+    nohup $1 >/dev/null 2>/dev/null & disown; exit
+}
 #--------------------------------------------------------------------------------------------------------------------
 ###ALIASES
 [ -d ~/.alias ] && for file in ~/.alias/*; do source "$file" ; done

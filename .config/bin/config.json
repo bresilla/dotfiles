@@ -4,20 +4,29 @@
         "/env/bin/act": {
             "path": "/env/bin/act",
             "remote_name": "act",
-            "version": "v0.2.57",
+            "version": "v0.2.60",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/nektos/act/releases/tag/v0.2.57",
+            "url": "https://github.com/nektos/act/releases/tag/v0.2.60",
             "provider": "",
             "package_path": "act"
         },
         "/env/bin/artem": {
             "path": "/env/bin/artem",
             "remote_name": "artem",
-            "version": "v2.0.2",
+            "version": "v2.0.6",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/FineFindus/artem",
-            "provider": "github",
+            "url": "https://github.com/FineFindus/artem/releases/tag/v2.0.6",
+            "provider": "",
             "package_path": "artem"
+        },
+        "/env/bin/atuin": {
+            "path": "/env/bin/atuin",
+            "remote_name": "atuin",
+            "version": "v18.1.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/atuinsh/atuin/releases/tag/v18.1.0",
+            "provider": "",
+            "package_path": "atuin-v18.1.0-x86_64-unknown-linux-musl/atuin"
         },
         "/env/bin/bat": {
             "path": "/env/bin/bat",
@@ -31,29 +40,38 @@
         "/env/bin/bin": {
             "path": "/env/bin/bin",
             "remote_name": "bin",
-            "version": "v0.17.2",
+            "version": "v0.17.4",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/marcosnils/bin",
-            "provider": "github",
+            "url": "https://github.com/marcosnils/bin/releases/tag/v0.17.4",
+            "provider": "",
             "package_path": ""
         },
         "/env/bin/bluetuith": {
             "path": "/env/bin/bluetuith",
             "remote_name": "bluetuith",
-            "version": "v0.2.0",
+            "version": "v0.2.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/darkhz/bluetuith/releases/tag/v0.2.0",
+            "url": "https://github.com/darkhz/bluetuith/releases/tag/v0.2.1",
             "provider": "",
             "package_path": "bluetuith"
         },
         "/env/bin/codegpt": {
             "path": "/env/bin/codegpt",
             "remote_name": "codegpt",
-            "version": "v0.7.1",
+            "version": "v0.9.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.7.1",
+            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.9.0",
             "provider": "",
             "package_path": ""
+        },
+        "/env/bin/croc": {
+            "path": "/env/bin/croc",
+            "remote_name": "croc",
+            "version": "v9.6.14",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/schollz/croc/releases/tag/v9.6.14",
+            "provider": "",
+            "package_path": "croc"
         },
         "/env/bin/daktilo": {
             "path": "/env/bin/daktilo",
@@ -67,9 +85,9 @@
         "/env/bin/devbox": {
             "path": "/env/bin/devbox",
             "remote_name": "devbox",
-            "version": "0.8.5",
+            "version": "0.10.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/jetpack-io/devbox/releases/tag/0.8.5",
+            "url": "https://github.com/jetpack-io/devbox/releases/tag/0.10.1",
             "provider": "",
             "package_path": "devbox"
         },
@@ -85,20 +103,20 @@
         "/env/bin/eza": {
             "path": "/env/bin/eza",
             "remote_name": "eza",
-            "version": "v0.17.0",
+            "version": "v0.18.8",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/eza-community/eza/releases/tag/v0.17.0",
+            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.8",
             "provider": "",
-            "package_path": "eza"
+            "package_path": "./eza"
         },
         "/env/bin/git-cliff": {
             "path": "/env/bin/git-cliff",
             "remote_name": "git-cliff",
-            "version": "v1.4.0",
+            "version": "v2.1.2",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/orhun/git-cliff",
-            "provider": "github",
-            "package_path": "git-cliff-1.4.0/git-cliff"
+            "url": "https://github.com/orhun/git-cliff/releases/tag/v2.1.2",
+            "provider": "",
+            "package_path": "git-cliff-2.1.2/git-cliff"
         },
         "/env/bin/git-gci": {
             "path": "/env/bin/git-gci",
@@ -112,54 +130,63 @@
         "/env/bin/gpg-tui": {
             "path": "/env/bin/gpg-tui",
             "remote_name": "gpg-tui",
-            "version": "v0.10.0",
+            "version": "v0.11.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/orhun/gpg-tui",
-            "provider": "github",
-            "package_path": "gpg-tui-0.10.0/gpg-tui"
+            "url": "https://github.com/orhun/gpg-tui/releases/tag/v0.11.0",
+            "provider": "",
+            "package_path": "gpg-tui-0.11.0/gpg-tui"
         },
         "/env/bin/gptcommit": {
             "path": "/env/bin/gptcommit",
             "remote_name": "gptcommit",
-            "version": "v0.5.14",
+            "version": "v0.5.16",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "github.com/zurawiki/gptcommit",
-            "provider": "github",
+            "url": "https://github.com/zurawiki/gptcommit/releases/tag/v0.5.16",
+            "provider": "",
             "package_path": "gptcommit"
         },
         "/env/bin/httm.tmp0-stripped": {
             "path": "/env/bin/httm.tmp0-stripped",
             "remote_name": "httm.tmp0-stripped",
-            "version": "0.34.0",
+            "version": "0.37.7",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/kimono-koans/httm/releases/tag/0.34.0",
+            "url": "https://github.com/kimono-koans/httm/releases/tag/0.37.7",
             "provider": "",
             "package_path": ""
+        },
+        "/env/bin/lule": {
+            "path": "/env/bin/lule",
+            "remote_name": "lule",
+            "version": "v0.2.6",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/warpwm/lule",
+            "provider": "github",
+            "package_path": "lule"
         },
         "/env/bin/oatmeal": {
             "path": "/env/bin/oatmeal",
             "remote_name": "oatmeal",
-            "version": "v0.12.3",
+            "version": "v0.13.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/dustinblackman/oatmeal/releases/tag/v0.12.3",
+            "url": "https://github.com/dustinblackman/oatmeal/releases/tag/v0.13.0",
             "provider": "",
             "package_path": "oatmeal"
         },
         "/env/bin/ollama": {
             "path": "/env/bin/ollama",
             "remote_name": "ollama",
-            "version": "v0.1.18",
+            "version": "v0.1.29",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/jmorganca/ollama/releases/tag/v0.1.18",
+            "url": "https://github.com/ollama/ollama/releases/tag/v0.1.29",
             "provider": "",
             "package_path": ""
         },
         "/env/bin/pixi": {
             "path": "/env/bin/pixi",
             "remote_name": "pixi-unknown-musl",
-            "version": "v0.11.0",
+            "version": "v0.17.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.11.0",
+            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.17.1",
             "provider": "",
             "package_path": ""
         },
@@ -211,11 +238,20 @@
         "/env/bin/starship": {
             "path": "/env/bin/starship",
             "remote_name": "starship",
-            "version": "v1.17.1",
+            "version": "v1.18.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/starship/starship/releases/tag/v1.17.1",
+            "url": "https://github.com/starship/starship/releases/tag/v1.18.0",
             "provider": "",
             "package_path": "starship"
+        },
+        "/env/bin/tab": {
+            "path": "/env/bin/tab",
+            "remote_name": "tab",
+            "version": "v0.5.7",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/austinjones/tab-rs",
+            "provider": "github",
+            "package_path": "tab"
         },
         "/env/bin/tai": {
             "path": "/env/bin/tai",

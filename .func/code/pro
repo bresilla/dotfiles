@@ -1,5 +1,6 @@
 #!/bin/bash
 hostname=$(hostname)
+projects=/home/bresilla/.projects
 
 if [ "$1" = "add" ]; then
     name=$(gum input --placeholder "Name?")
@@ -24,23 +25,29 @@ if [ "$1" = "add" ]; then
     fi
 
     new_object=$(jq -n --arg uuid "$uuid" --arg name "$name" --arg path "$path" --arg remote "$remote" '{($uuid): {name: $name, remote: $remote, path: $path}}')
-    all_pro=$(jq --argjson new "$new_object" '. + $new' /home/bresilla/.projects)
+    all_pro=$(jq --argjson new "$new_object" '. + $new' $projects)
 
     if gum confirm; then
         echo "adding $name to project list"
-        jq --argjson new "$new_object" '. + $new' /home/bresilla/.projects > /tmp/tmpjson && mv /tmp/tmpjson /home/bresilla/.projects
+        jq --argjson new "$new_object" '. + $new' $projects > /tmp/tmpjson && mv /tmp/tmpjson $projects
     fi
 
     exit 0
 fi
 
 if [ "$1" = "ls" ]; then
-    jq -r 'to_entries[] | "\(.key) \t \(.value.name) \t \(.value.path) \t \(.value.remote)"' /home/bresilla/.projects | column -ts $'\t'
+    jq -r 'to_entries[] | "\(.key) \t \(.value.name) \t \(.value.path) \t \(.value.remote)"' $projects | column -ts $'\t'
     exit 0
 fi
 
+# chooser="gum choose"
+chooser="fzy"
 
-selected_entry=$(jq -r 'to_entries[] | "\(.key) \t \(.value.name) \t \(.value.path) \t \(.value.remote)"' /home/bresilla/.projects | column -ts $'\t' | gum choose)
+if [ "$1" = "code" ] && [ "$2" = "rofi" ]; then
+    chooser="rofit"
+fi
+
+selected_entry=$(jq -r 'to_entries[] | "\(.key) \t \(.value.name) \t \(.value.path) \t \(.value.remote)"' $projects | column -ts $'\t' | $chooser)
 uuid=$(echo "$selected_entry" | choose 0)
 name=$(echo "$selected_entry" | choose 1)
 path=$(echo "$selected_entry" | choose 2)
@@ -49,15 +56,15 @@ remote=$(echo "$selected_entry" | choose 3)
 if [ "$1" = "rm" ]; then
     if gum confirm; then
         echo "removing $name from project list"
-        jq --arg key "$uuid" 'del(.[$key])' /home/bresilla/.projects > /tmp/tmpjson && mv /tmp/tmpjson /home/bresilla/.projects
+        jq --arg key "$uuid" 'del(.[$key])' $projects > /tmp/tmpjson && mv /tmp/tmpjson $projects
         exit 0
     fi
 elif [ "$1" = "code" ]; then
     if [ $remote = $hostname ]; then
-        com.visualstudio.code $path
+        com.visualstudio.code $path &
         exit 0
     else
-        com.visualstudio.code --folder-uri "vscode-remote://ssh-remote+$remote$path"
+        com.visualstudio.code --folder-uri "vscode-remote://ssh-remote+$remote$path" &
         exit 0
     fi
 elif [ $# -eq 0 ] || [ "$1" = "cd" ]; then

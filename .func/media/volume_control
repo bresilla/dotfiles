@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 up|down|mute"
+fi
+
+
+if [ "$1" = "up" ]; then
+    pamixer -i 2
+elif [ "$1" = "down" ]; then
+    pamixer -d 2
+elif [ "$1" = "mute" ]; then
+    pamixer -t
+fi
+
+eww open volume
+sleep 2
+eww close volume
+
+# [[ $(pamixer --get-mute) == true ]] && mute='!' || mute="";
+# vol=$(pamixer --get-volume | cut -d " " -f1); 
+# echo $vol$mute >> /home/bresilla/.local/share/fifo/xob

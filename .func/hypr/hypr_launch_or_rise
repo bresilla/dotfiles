@@ -1,0 +1,40 @@
+#!/bin/sh
+hyprctl dispatch focusmonitor 0
+
+class=$1
+shift
+app=$@
+
+if [ -z "$class" ] || [ -z "$app" ]; then
+    echo "Usage: $0 class app"
+    exit 1
+fi
+
+
+#app is arguments 2 to the end
+
+curr_ws=$(hyprctl activeworkspace -j | jq '.id')
+
+win_id=$(hyprctl clients -j | jq -r --arg class_var "$class" '.[] | select(.class == $class_var) | .address' | head -n 1)
+win_ws=$(hyprctl clients -j | jq -r --arg class_var "$class" '.[] | select(.class == $class_var) | .workspace.id' | head -n 1)
+
+echo $win_ws
+echo $curr_ws
+
+
+if [ -z "$win_id" ]; then
+    # hyprctl --batch "dispatch exec [floating] $app; dispatch resizeactive exact 500 1300; dispatch centerwindow"
+    hyprctl --batch "dispatch exec [floating] $app"
+    printf "launching: %s\n" $app
+    exit 0
+fi
+
+# echo $win_id
+if [ "$win_ws" = "$curr_ws" ]; then
+    printf "hiding: %s" $class
+    hyprctl dispatch movetoworkspacesilent special:mini,$class
+else
+    printf "risiing: %s" $class
+    hyprctl dispatch movetoworkspacesilent $curr_ws,$class
+    hyprctl dispatch focuswindow "$class"
+fi

@@ -17,6 +17,10 @@ alias argz="xargs -0 | head -n -1"
 alias ser="doas ser"
 alias rustdesk="doas rustdesk"
 
+##WM
+alias sx="startx"
+alias sw="startw"
+
 
 ##DEV
 alias box='devbox'
@@ -36,7 +40,7 @@ alias portmon='doas lsof -nP -iTCP -sTCP:LISTEN'
 alias openports='doas netstat -tulpn'
 alias zero='doas zerotier-cli'
 alias ssm='manssh'
-alias blue='bluetoothctl'
+alias blue='bluetuith'
 alias ip="ip -c"
 
 ##ALTERNATIVES
@@ -73,7 +77,8 @@ alias e=$EDITOR
 alias nums="dtool"
 alias mcon="mconnectctl"
 alias ask="ata"
-alias code="pro code"
+alias code="com.visualstudio.code"
+alias hyp="hyprctl"
 
 
 alias ari='aria2c'

@@ -1,0 +1,9 @@
+* { 
+    all: unset;
+    font-family: "DaytonaW01-Light", monospace;
+}
+@import "/home/bresilla/.cache/wal/colors.scss";
+
+@import "styles/workspaces.scss";
+@import "styles/progressbar.scss";
+@import "styles/mainboard.scss";

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 up|down"
+fi
+
+
+if [ "$1" = "up" ]; then
+    light -A 2 
+elif [ "$1" = "down" ]; then
+    light -U 2
+fi
+
+eww open light
+sleep 2
+eww close light
+
+
+# light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob

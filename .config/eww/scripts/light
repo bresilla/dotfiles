@@ -1,0 +1,20 @@
+#!/bin/sh
+
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 up|down|mute"
+fi
+
+
+if [ "$1" = "up" ]; then
+    pamixer -i 2
+elif [ "$1" = "down" ]; then
+    pamixer -d 2
+elif [ "$1" = "mute" ]; then
+    pamixer -t
+fi
+
+eww open volume
+sleep 1
+eww close volume
+

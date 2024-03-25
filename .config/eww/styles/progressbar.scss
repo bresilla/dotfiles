@@ -1,0 +1,33 @@
+.progress_bar_box_out {
+    $width: 15px;
+    $main_color: $color245;
+    padding: 5px;
+    background-color: $color0;
+    .progress_bar_box {
+        padding: 2px;
+        background-color: $main_color;
+        .progress_bar_box_in {
+            progressbar trough {
+                min-width: 800px;
+                min-height: $width;
+                background: $color235;
+            }
+            progressbar trough progress {
+                background: $main_color;
+                min-height: $width;
+            }
+        }
+        
+        .mute {
+            progressbar trough {
+                background: $color8;
+            }
+            progressbar trough progress {
+                background: $color7;
+            }
+        }
+    }
+    .mute{
+        background-color: $color172;
+    }
+}

@@ -1,7 +1,12 @@
 #!/bin/bash
+
+if  [ "$1" == "fzf" ] || [ -z $1 ]; then
+    runner=fzy
+elif [ "$1" == "rofi" ]; then
+    runner=rofit
+fi
+
 source /home/bresilla/.cache/wal/colors.sh
-edit_with="kitty --class=til"
-runner=fzy
 
 path=syspath
 font=sysfonts
@@ -9,12 +14,12 @@ conf=configs
 clip=clipboard
 note=notes
 
-another=$(echo "$exce
+another=$(echo "\
 $path
 $font
 $clip
 $note
-$conf" | fzy)
+$conf" | $runner)
 
 if [ "$another" == "$conf" ] ; then
     confile=$(find /env/dot/ -type f -not -path "/home/bresilla/dots/.other/*" -not -path "/home/bresilla/dots/.config/Code*" -not -path "/home/bresilla/dots/.config/nvim/plugged/*" | $runner)

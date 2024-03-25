@@ -1,0 +1,41 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 left|right"
+    exit 1
+fi
+
+current_workspace=$(hyprctl activeworkspace -j | jq '.id')
+current_monitor=$(hyprctl activeworkspace -j | jq '.monitor' | tr -d '"')
+
+if [ "$current_monitor" = "eDP-1" ]; then
+    max_workspace=6
+    init_workspace=1
+elif [ "$current_monitor" = "DP-4" ]; then
+    max_workspace=12
+    init_workspace=7
+elif [ "$current_monitor" = "DP-6" ]; then
+    max_workspace=18
+    init_workspace=13
+fi
+
+if [ "$1" = "left" ]; then
+    if [ "$current_workspace" = $init_workspace ]; then
+        hyprctl dispatch movetoworkspace $max_workspace
+        printf "workspace: %s\n" $max_workspace
+    else
+        hyprctl dispatch movetoworkspace $(($current_workspace - 1))
+        printf "workspace: %s\n" $(($current_workspace - 1))
+    fi
+elif [ "$1" = "right" ]; then
+    if [ "$current_workspace" = $max_workspace ]; then
+        hyprctl dispatch movetoworkspace $init_workspace
+        printf "workspace: %s\n" $init_workspace
+    else
+        hyprctl dispatch movetoworkspace $(($current_workspace + 1))
+        printf "workspace: %s\n" $(($current_workspace + 1))
+    fi
+fi
+
+    
+

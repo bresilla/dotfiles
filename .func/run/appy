@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if  [ "$1" == "fzf" ] || [ -z $1 ]; then
+    runner=fzy
+elif [ "$1" == "rofi" ]; then
+    runner=rofit
+fi
+
+source /home/bresilla/.cache/wal/colors.sh
+
+applaunch=$(flatpak list --columns=application | sort -u | $runner)
+echo $applaunch
+
+if [ -z "$applaunch" ]; then
+    echo "No application found"
+    exit 1
+fi
+
+#nohup $applaunch &
+
+$applaunch &

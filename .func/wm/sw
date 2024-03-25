@@ -1,8 +1,0 @@
-#!/bin/sh
-
-export SDL_VIDEODRIVER=wayland
-export MOZ_ENABLE_WAYLAND=1
-export GTK_THEME=Catppuccin-blue:dark
-export XCURSOR_SIZE=32
-
-exec Hyprland

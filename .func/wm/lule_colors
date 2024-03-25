@@ -5,6 +5,7 @@ cp $TEMP/lule_colors $HOME/.cache/wal/colors
 cp $TEMP/lule_theme $HOME/.cache/wal/theme
 cp $TEMP/lule_wallpaper $HOME/.cache/wal/wallpaper
 
+
 create_files(){
     ### === PRINTING THINGS TO FILES === ###
     wallpaper="none"
@@ -44,9 +45,16 @@ create_files(){
     printf "foreground\t$fore\nbackground\t$back\ncursor\t$col1\n\n" > $HOME/.cache/wal/colors.conf
     awk '{print "color" NR-1 "\t " $0}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.conf
 
+    # COLORS_W.CONF (used by HYPR)
+    printf "\$foreground=rgb(${fore//#})\n\$background=rgb(${back//#})\n\n" > $HOME/.cache/wal/colors_hypr.conf
+    awk '{print "$color" NR-1 "=rgb("substr($0, 2)")"}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors_hypr.conf
+
     # SEQUENCES (escape codes sent to all '/dev/pts/*')
     printf "]10;$fore\\]11;$back\\]12;$col1\\]13;$back\\]17;$col1\\]19;$back\\" > $HOME/.cache/wal/sequences
     awk '{print "]4;" NR-1 ";" $0"\\"}' ORS='' $HOME/.cache/wal/colors >> $HOME/.cache/wal/sequences
+
+    #update logo colors
+    sed -i "s/fill=\"#\([^\"]*\)\"/fill=\"$col1\"/" /home/bresilla/.config/bresilla.svg
 }
 
 create_files
@@ -75,15 +83,8 @@ source $HOME/.cache/wal/colors.sh
 bspc config focused_border_color $color1 &
 bspc config normal_border_color $color239 &
 bspc config active_border_color $color239 &
-
 feh --no-fehbg --bg-scale $(cat $TEMP/lule_wallpaper) &
-gsettings set org.gnome.desktop.background picture-uri-dark file:///$(cat $TEMP/lule_wallpaper) &
 
-if pgrep -x "glava" > /dev/null
-then
-    killall glava && echo $color1 | glava -i &>/dev/null &
-    echo $color1 | glava -i &>/dev/null &
-fi
 
 for i in borg;
 do
@@ -93,3 +94,10 @@ do
         # ssh $i 'bash -s' < /env/dot/.func/shell/colors_to_tty &
     fi
 done
+
+eww reload
+swaykill(){
+    killall swaybg
+    swaybg -i $(cat $TEMP/lule_wallpaper) &
+}
+swaykill &

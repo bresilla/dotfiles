@@ -1,0 +1,96 @@
+(defpoll workspace 
+    :interval "0.1s"
+    :initial "1"
+    `hyprctl activeworkspace -j | jq '.id'`
+)
+
+(defpoll monitor 
+    :interval "0.1s"
+    :initial "1"
+    `hyprctl activeworkspace -j | jq '.monitor'`
+)
+
+
+(defwindow workspaces_zero
+    :monitor 0
+    :stacking "fg"
+    :windowtype "dock"
+    ; :windowtype "normal"
+    :wm-ignore true
+    :geometry (geometry
+        :x "50%"
+        :y "0px"
+        :width "100%"
+        :height "4px"
+        :anchor "top center")
+    (box :class "wrkspc_box"
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box" :spacing 10
+            (box :class {workspace=="1" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="2" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="3" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="4" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="5" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="6" ? "wrkspc_active" : "wrkspc"})
+        )
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box")
+    )
+)
+
+(defwindow workspaces_one
+    :monitor 1
+    :stacking "fg"
+    :windowtype "dock"
+    ; :windowtype "normal"
+    :wm-ignore true
+    :geometry (geometry
+        :x "50%"
+        :y "0px"
+        :width "100%"
+        :height "4px"
+        :anchor "top center")
+    (box :class "wrkspc_box"
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box" :spacing 10
+            (box :class {workspace=="7" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="8" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="9" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="10" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="11" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="12" ? "wrkspc_active" : "wrkspc"})
+        )
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box")
+    )
+)
+
+(defwindow workspaces_two
+    :monitor 2
+    :stacking "fg"
+    :windowtype "dock"
+    ; :windowtype "normal"
+    :wm-ignore true
+    :geometry (geometry
+        :x "50%"
+        :y "0px"
+        :width "100%"
+        :height "4px"
+        :anchor "top center")
+    (box :class "wrkspc_box"
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box" :spacing 10
+            (box :class {workspace=="13" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="14" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="15" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="16" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="17" ? "wrkspc_active" : "wrkspc"})
+            (box :class {workspace=="18" ? "wrkspc_active" : "wrkspc"})
+        )
+        (box :class "wrkspc_box")
+        (box :class "wrkspc_box")
+    )
+)

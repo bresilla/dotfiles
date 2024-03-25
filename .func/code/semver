@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Function to increment the version based on the specified type
+increment_version() {
+    local version=$1
+    local type=$2
+
+    # Split the version into major, minor, and patch components
+    IFS='.' read -r -a version_array <<< "$version"
+    major="${version_array[0]}"
+    minor="${version_array[1]}"
+    patch="${version_array[2]}"
+
+    # Increment the appropriate component based on the specified type
+    case $type in
+        major)
+            ((major++))
+            minor=0
+            patch=0
+            ;;
+        minor)
+            ((minor++))
+            patch=0
+            ;;
+        *)
+            ((patch++))
+            ;;
+    esac
+
+    # Print the incremented version
+    echo "$major.$minor.$patch"
+}
+
+# Check if both arguments are provided
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <version> <increment_type>"
+    exit 1
+fi
+
+# Assign command line arguments to variables
+version_input=$1
+increment_type=$2
+
+# Call the increment_version function with the provided arguments
+result=$(increment_version "$version_input" "$increment_type")
+
+if [ -z "$result" ]; then
+    exit -1
+fi
+# Print the result
+printf $result
+

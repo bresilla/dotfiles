@@ -27,3 +27,5 @@ cat ($env.HOME)/.aliases | lines
 cat "($env.HOME)/.aliases" | lines
 cat "/home/bresilla/.aliases" | lines
 cat "/home/bresilla/.aliases" | lines  | parse "{n}={v}" | filter { |x| (not $x.n in $env) or ($x.v) != ($env | get $x.n) }
+ls
+lsblk

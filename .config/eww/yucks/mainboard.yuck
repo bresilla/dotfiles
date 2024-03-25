@@ -1,0 +1,62 @@
+(defpoll timedatectl 
+    :interval "1s"
+    :initial "1"
+    `timedatectl | grep "RTC time:" | choose 4`
+)
+
+(defpoll calendar_day :interval "1h" "date '+%d'")
+(defpoll calendar_year :interval "24h" "date '+%Y'")
+
+(defpoll weekday :interval "1h" "date '+%A'")
+
+(defwidget mainwidget []
+    (box :class "mainwidget" :spacing 10 :orientation "vertical" :space-evenly false
+        (box :class "up" :spacing 10
+            (box :class "image" :spacing 10
+                (eventbox 
+                    :class "image_event"
+                    :onclick "xdg-open https://bresilla.com"
+                    (image :image-width "600" :path "/home/bresilla/.config/bresilla.svg")
+                )
+            )
+            (box :class "time" :spacing 10 :orientation "vertical" :space-evenly false
+                (box :class "calbox" :spacing 10
+                    (calendar 
+                        :class "cal" 
+                        :show-details false 
+                        :show-heading false
+                        :day calendar_day
+                        :year calendar_year
+                    )
+                )
+                (box :class "clock-clock" :spacing 10 :orientation "vertical"
+                    (label :text timedatectl)
+                )
+                (box :class "clock-weekday" :spacing 10
+                    (label :text weekday)
+                )
+            )
+        (box :class "media" :spacing 10)
+        )
+        (box :class "down" :spacing 10
+            (box :class "one" :spacing 10)
+            (box :class "two" :spacing 10)
+        )
+    )
+)
+
+(defwindow mainboard
+    :monitor 0
+    :stacking "fg"
+    :windowtype "normal"
+    :wm-ignore true
+    :geometry (geometry
+        :x "20%"
+        :y "20%"
+        :width "60%"
+        :height "60%"
+        :anchor "center center")
+    (box :class "mainboard"
+        (mainwidget)
+    )
+)

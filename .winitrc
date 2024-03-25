@@ -1,0 +1,27 @@
+#!/bin/sh
+
+systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=secrets)
+# eval $(/usr/bin/gnome-keyring-daemon --start)
+export SSH_AUTH_SOCK
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# eval "$(dbus-launch --sh-syntax --exit-with-session)"
+
+#gpg things
+# export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+# gpgconf --launch gpg-agent
+
+export GTK_USE_PORTAL=1
+export XDG_CURRENT_DESKTOP=Hyprland
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=Hyprland
+
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+exec Hyprland

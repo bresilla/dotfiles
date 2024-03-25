@@ -195,7 +195,8 @@ n(){
   fi
 }
 bindkey -s '^W' ' n\n'
-bindkey -s '^B' 'just_build\n'
+bindkey -s '^B' 'just\n'
+bindkey -s '^G' 'git go\n'
 
 #--------------------------------------------------------------------------------------------------------------------
 #RUN OR LS (shotrcut: Enter)
@@ -203,7 +204,7 @@ runner () {
     # check if the buffer does not contain any words
     if [ ${#${(z)BUFFER}} -eq 0 ]; then
       if [[ -n $(echo $ENVNAME) ]]; then
-        clear && run
+        printf "\n" && eza -laiSHF --header --git --group-directories-first --git-ignore --tree -L3
       else
         printf "\n" && eza -laiSHF --header --git --group-directories-first --tree -L1
       fi
@@ -212,6 +213,10 @@ runner () {
 }
 zle -N runner
 bindkey '^M' runner
+
+function launch {
+    nohup $1 >/dev/null 2>/dev/null & disown; exit
+}
 
 #--------------------------------------------------------------------------------------------------------------------
 ###TMUX && CD && ZOXIDE
@@ -250,16 +255,13 @@ done
 
 #--------------------------------------------------------------------------------------------------------------------
 #TAB-RS (shotrcut: Ctrl + e)
-#bindkey -s '^A' ' tab\n'
+bindkey -s '^A' ' tab\n'
 bindkey -s '^X' ' scrr\n'
-
-# if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi
-
 
 #---------------------------            EXTERNAL       --------------------------
 [[ -s "$HOME/.external" ]] && source "$HOME/.external"
-
 if (( ${+CWD_VAR} )); then cd $CWD_VAR; fi
 
 bresilla
 
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

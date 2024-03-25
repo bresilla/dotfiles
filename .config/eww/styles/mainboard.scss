@@ -1,0 +1,88 @@
+.mainboard {
+    $border-radius: 20px;
+    $bg_color: $color236;
+    $border_color: $color1;
+    $secondary_color: $color238;
+    $alpha: 0.96;
+    // background-color: rgba($color: $color1, $alpha: 1.0); 
+    border-radius: $border-radius;
+    .mainwidget{
+        // padding: 10px;
+        // margin: 1px;
+        border-radius: $border-radius;
+        // background-color: rgba($color: $color0, $alpha: 1.0);
+        .up{
+            min-height: 860px;
+            .image{
+                border-radius: $border-radius;
+                background-color: rgba($color: $bg_color, $alpha: $alpha);
+            }
+            .time{
+                .clock-weekday{
+                    min-height: 200px;
+                    border-radius: $border-radius;
+                    background-color: rgba($color: $bg_color, $alpha: $alpha);
+                    font-size: 100px;
+                    color: $color1;
+                }
+                .clock-clock{
+                    min-height: 200px;
+                    border-radius: $border-radius;
+                    background-color: rgba($color: $bg_color, $alpha: $alpha);
+                    font-size: 100px;
+                    color: $color1;
+                }
+                .calbox{
+                    min-height: 340px;
+                    border-radius: $border-radius;
+                    background-color: rgba($color: $bg_color, $alpha: $alpha);
+                    padding: 40px;
+                    padding-top: 80px;
+                    .cal {
+                        color: $color1;
+                        font-size: 30px;
+                        calender {
+                            color: #bfc9db;
+                        }
+                        calendar:selected {
+                            color: $color0;
+                            background-color: $color1;
+                            border-radius: $border-radius;
+                        }
+                        calendar.header {
+                            color:$secondary_color;
+                            font-weight: bold;
+                        }
+                        calendar.button {
+                            color: #afbea2;
+                        }
+                        calendar.highlight {
+                            color:$secondary_color;
+                            box-shadow: inset 0 -1px 0 0 $secondary_color;
+                            font-weight: bold;
+                        }
+                        calendar:indeterminate {
+                            color:$secondary_color;
+                        }
+                    }
+                }
+            }
+            .media{
+                border-radius: $border-radius;
+                background-color: rgba($color: $bg_color, $alpha: $alpha);
+            }
+        }
+        .down{
+            min-height: 360px;
+            .one{
+                border-radius: $border-radius;
+                background-color: rgba($color: $bg_color, $alpha: $alpha);
+            }
+            .two{
+                border-radius: $border-radius;
+                background-color: rgba($color: $bg_color, $alpha: $alpha);
+            }
+        }
+    }
+}
+

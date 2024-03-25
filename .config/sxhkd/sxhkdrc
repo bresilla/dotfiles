@@ -2,7 +2,7 @@ super + l
     slock
 
 super + mod1 + x
-    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true nohup $(flatpak list --columns=application | sort -u | fzy)'
+    /env/dot/.func/run/appy
 super + mod1 + a
     kitty --class=LAUNCHER zsh -c 'LAUNCHER=true xstarter'
     # alacritty --class=LAUNCHER -e zsh -c 'LAUNCHER=true xstarter'
@@ -11,7 +11,7 @@ super + mod1 + d
 super + mod1 + b
     kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(/env/dot/.func/run/browsy)'
 super + mod1 + p
-    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(/env/dot/.func/run/vsc)'
+    kitty --class=LAUNCHER zsh -c 'LAUNCHER=true $(/env/dot/.func/code/pro code)'
 
 super + mod1 + space; {space, Return}
     {kitty --class=kittyled, alacritty}
@@ -62,6 +62,9 @@ super + mod1 + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
 super + {w,f,t,s}
     bspc node {-t '~floating',-t '~fullscreen',-t '~tiled',-g sticky}
 
+super + p
+    doas chvt 2
+
 # mod3 + space
 mod3 + l
     youtube_play
@@ -71,21 +74,12 @@ mod3 + {Left,Right, space + mod2}
     /home/bresilla/.config/sxhkd/scripts/mpv {backwards 10,forewards 10,hide}
 mod3 + space
     /home/bresilla/.config/sxhkd/scripts/mpv cycle
-super + {F3, F2}
-    pamixer -{i,d} 2 && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
-    # pamixer -{i,d} 2 && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1);
-    #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
+super + {F1, F3, F2}
+    volume_control {mute, up,down}
 {super,mod1} + F4 
     playerctl {next,previous}
-super + F1 
-    pamixer -t && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1); echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
-    # pamixer -t && [[ $(pamixer --get-mute) == true ]] && mute='!' || mute=""; vol=$(pamixer --get-volume | cut -d " " -f1);
-    #; ([[ -z $(xdotool search -class volume) ]] && /env/cargo/bin/eww open volume && sleep 3 && /env/cargo/bin/eww close volume)&
 super + {F7, F6}
-    light -{A,U} 2 && light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
-    #; ([[ -z $(xdotool search -class light) ]] && /env/cargo/bin/eww open light && sleep 3 && /env/cargo/bin/eww close light)&
+    light_control {up,down}
 
 super + mod1 + F4
     play ~/.config/dunst/scripts/bleep.wav; systemctl --user restart spotifyd
-super + mod1 + F1
-    pactl set-card-profile alsa_card.pci-0000_00_1f.3 off && sleep 5 && pactl set-ca; play ~/.config/dunst/scripts/bleep.wav

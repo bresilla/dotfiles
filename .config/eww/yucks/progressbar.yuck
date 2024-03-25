@@ -1,0 +1,60 @@
+(defpoll volume 
+    :interval "0.1s"
+    `pamixer --get-volume`
+)
+
+(defpoll volume_mute 
+    :interval "0.1s"
+    `pamixer --get-mute`
+)
+
+(defpoll light 
+    :interval "0.1s"
+    `light -G | cut -d "." -f1`
+)
+
+(defwidget progress_bar [value muted]
+    (box :class "progress_bar_box_out"
+        (box :class {muted=="true" ? "progress_bar_box mute" : "progress_bar_box"}
+            (box :class {muted=="true" ? "progress_bar_box_in mute" : "progress_bar_box_in"}
+                :orientation "horizontal"
+                :halign "center"
+                (progress
+                    :min 0
+                    :max 101
+                    :value value
+                )
+            )
+        )
+    )
+)
+
+(defwindow volume
+    :monitor 0
+    :stacking "fg"
+    :windowtype "dialog"
+    :wm-ignore true
+    :geometry (geometry
+        :x "50%"
+        :y "90%"
+        :anchor "top center")
+    (progress_bar
+        :value volume
+        :muted volume_mute
+    )
+)
+
+(defwindow light
+    :monitor 0
+    :stacking "fg"
+    :windowtype "dialog"
+    :wm-ignore true
+    :geometry (geometry
+        :x "50%"
+        :y "90%"
+        :anchor "top center")
+    (progress_bar 
+        :value light 
+        :muted "false"
+    )
+)
