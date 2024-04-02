@@ -8,7 +8,7 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/atuinsh/atuin/releases/tag/v18.1.0",
             "provider": "",
-            "package_path": "atuin-v18.1.0-x86_64-unknown-linux-musl/atuin"
+            "package_path": ""
         },
         "/env/bin/bat": {
             "path": "/env/bin/bat",
@@ -16,24 +16,33 @@
             "version": "v0.24.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/sharkdp/bat",
-            "provider": "github",
-            "package_path": "bat-v0.24.0-x86_64-unknown-linux-musl/bat"
+            "provider": "",
+            "package_path": ""
         },
         "/env/bin/bin": {
             "path": "/env/bin/bin",
-            "remote_name": "bin",
+            "remote_name": "bin_0.17.4_linux_amd64",
             "version": "v0.17.4",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/marcosnils/bin/releases/tag/v0.17.4",
             "provider": "",
             "package_path": ""
         },
+        "/env/bin/choose": {
+            "path": "/env/bin/choose",
+            "remote_name": "choose-x86_64-unknown-linux-musl",
+            "version": "v1.3.4",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/theryangeary/choose",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/codegpt": {
             "path": "/env/bin/codegpt",
             "remote_name": "codegpt",
-            "version": "v0.9.0",
+            "version": "v0.10.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.9.0",
+            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.10.0",
             "provider": "",
             "package_path": ""
         },
@@ -44,14 +53,23 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/jetpack-io/devbox/releases/tag/0.10.1",
             "provider": "",
-            "package_path": "devbox"
+            "package_path": ""
+        },
+        "/env/bin/direnv": {
+            "path": "/env/bin/direnv",
+            "remote_name": "direnv.linux-amd64",
+            "version": "v2.34.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/direnv/direnv",
+            "provider": "github",
+            "package_path": ""
         },
         "/env/bin/eza": {
             "path": "/env/bin/eza",
             "remote_name": "eza",
-            "version": "v0.18.8",
+            "version": "v0.18.9",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.8",
+            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.9",
             "provider": "",
             "package_path": "./eza"
         },
@@ -62,7 +80,7 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/orhun/git-cliff/releases/tag/v2.1.2",
             "provider": "",
-            "package_path": "git-cliff-2.1.2/git-cliff"
+            "package_path": ""
         },
         "/env/bin/gptcommit": {
             "path": "/env/bin/gptcommit",
@@ -71,7 +89,25 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/zurawiki/gptcommit/releases/tag/v0.5.16",
             "provider": "",
-            "package_path": "gptcommit"
+            "package_path": ""
+        },
+        "/env/bin/hub": {
+            "path": "/env/bin/hub",
+            "remote_name": "hub",
+            "version": "v2.14.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/github/hub",
+            "provider": "github",
+            "package_path": "hub-linux-amd64-2.14.2/bin/hub"
+        },
+        "/env/bin/just": {
+            "path": "/env/bin/just",
+            "remote_name": "just",
+            "version": "1.25.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/casey/just",
+            "provider": "github",
+            "package_path": "just"
         },
         "/env/bin/lule": {
             "path": "/env/bin/lule",
@@ -79,8 +115,26 @@
             "version": "v0.2.6",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/warpwm/lule",
+            "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/micromamba": {
+            "path": "/env/bin/micromamba",
+            "remote_name": "micromamba",
+            "version": "1.5.8-0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/mamba-org/micromamba-releases",
+            "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/nostromo": {
+            "path": "/env/bin/nostromo",
+            "remote_name": "nostromo",
+            "version": "v0.12.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/pokanop/nostromo",
             "provider": "github",
-            "package_path": "lule"
+            "package_path": "nostromo"
         },
         "/env/bin/oatmeal": {
             "path": "/env/bin/oatmeal",
@@ -89,11 +143,11 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/dustinblackman/oatmeal/releases/tag/v0.13.0",
             "provider": "",
-            "package_path": "oatmeal"
+            "package_path": ""
         },
         "/env/bin/ollama": {
             "path": "/env/bin/ollama",
-            "remote_name": "ollama",
+            "remote_name": "ollama-linux-amd64",
             "version": "v0.1.29",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/ollama/ollama/releases/tag/v0.1.29",
@@ -102,28 +156,37 @@
         },
         "/env/bin/pixi": {
             "path": "/env/bin/pixi",
-            "remote_name": "pixi-unknown-musl",
+            "remote_name": "pixi-x86_64-unknown-linux-musl",
             "version": "v0.17.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.17.1",
             "provider": "",
             "package_path": ""
         },
+        "/env/bin/roc": {
+            "path": "/env/bin/roc",
+            "remote_name": "roc",
+            "version": "v0.1.33",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/bresilla/roc",
+            "provider": "github",
+            "package_path": "roc"
+        },
         "/env/bin/ser": {
             "path": "/env/bin/ser",
-            "remote_name": "servicer-unknown-gnu",
+            "remote_name": "servicer-x86_64-unknown-linux-gnu",
             "version": "v0.1.13",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/servicer-labs/servicer",
-            "provider": "github",
+            "provider": "",
             "package_path": ""
         },
         "/env/bin/starship": {
             "path": "/env/bin/starship",
             "remote_name": "starship",
-            "version": "v1.18.0",
+            "version": "v1.18.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/starship/starship/releases/tag/v1.18.0",
+            "url": "https://github.com/starship/starship/releases/tag/v1.18.1",
             "provider": "",
             "package_path": "starship"
         },
@@ -133,8 +196,17 @@
             "version": "v0.5.7",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/austinjones/tab-rs",
+            "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/zoxide": {
+            "path": "/env/bin/zoxide",
+            "remote_name": "zoxide",
+            "version": "v0.9.4",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/ajeetdsouza/zoxide",
             "provider": "github",
-            "package_path": "tab"
+            "package_path": "zoxide"
         }
     }
 }

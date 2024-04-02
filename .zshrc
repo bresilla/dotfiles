@@ -250,7 +250,8 @@ bindkey -s '^[j' ' jump\n'
 proj() { cd $(proji ls | head -n-1 | tail -n+4 | sed -n "$1"p | cut -d '|' -f4) }
 for i in 1 2 3 4 5 6 7 8 9
 do
-  bindkey -s "^[$i" "proj $i\n"
+  #bindkey -s "^[$i" "proj $i\n"
+  bindkey -s "^[$i" "$i\n"
 done
 
 #--------------------------------------------------------------------------------------------------------------------

@@ -7,6 +7,11 @@ export DOWN=$HOME/down
 export SYNC=$HOME/sync
 export TEMP=/tmp
 
+#export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda-12.1/lib64:$LD_LIBRARY_PATH
+#export RPATH=/usr/local/lib:/usr/local/cuda-12.1/lib64:$RPATH
+#export RUNPATH=/usr/local/lib:/usr/local/cuda-12.1/lib64:$RUNPATH
+#export PATH=/usr/local/bin:/usr/local/cuda-12.1/bin:$PATH
+
 #USER BINARIES AND SCRIPTS
 [[ -d "/env/bin" ]] && PATH="$PATH:/env/bin"
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"

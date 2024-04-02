@@ -79,7 +79,7 @@ alias mcon="mconnectctl"
 alias ask="ata"
 alias code="com.visualstudio.code"
 alias hyp="hyprctl"
-
+alias xfreerdp=xfreerdp3
 
 alias ari='aria2c'
 alias inxi='prime inxi -Fxxxz'

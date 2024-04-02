@@ -106,7 +106,8 @@ function __battery() {
 }
 
 function __timenow() {
-    printf $(timedatectl | grep "RTC time:" | choose 4)
+    #printf $(timedatectl | grep "RTC time:" | choose 4)
+    printf $(timedatectl | grep Local | xargs | cut -d" " -f5)
 }
 
 function __datetoday() {
