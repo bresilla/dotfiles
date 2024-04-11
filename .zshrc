@@ -195,7 +195,8 @@ n(){
   fi
 }
 bindkey -s '^W' ' n\n'
-bindkey -s '^B' 'just\n'
+bindkey -s '^B' 'just build\n'
+bindkey -s '^R' 'just run\n'
 bindkey -s '^G' 'git go\n'
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -263,6 +264,7 @@ bindkey -s '^X' ' scrr\n'
 [[ -s "$HOME/.external" ]] && source "$HOME/.external"
 if (( ${+CWD_VAR} )); then cd $CWD_VAR; fi
 
+if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
 bresilla
 
-if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
