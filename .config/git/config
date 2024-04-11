@@ -68,7 +68,7 @@
     ignore = "!f(){ echo $@ >> .gitignore; }; f"
     ai = "!f(){ codegpt $@; }; f"
     commet = "!f(){ codegpt commit; }; f"
-    go = "!git add --all && git commet && git push --all"
+    charge = "!git add --all && git commet;"
     up = "!f(){ git remotes | grep push | cut -f1 | xargs -I{} git push --all -u {}; }; f"
     start = "!f(){ git flow feature start ${1:-feature}; }; f"
     finish = "!f(){ git flow feature finish; }; f"
