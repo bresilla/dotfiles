@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[[ "$2" != "message" ]] && codegpt commit --file $1 --preview
+
