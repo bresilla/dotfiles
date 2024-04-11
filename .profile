@@ -36,6 +36,8 @@ export EDITOR=hx
 # export CONSOLE=kitty
 export DISTRO=$(cat /etc/os-release | grep -m 1 ID)
 
+[[ -v ${DISPLAY} ]] && export DISPLAY=:0
+
 #---------------------------         LANGUAGES          --------------------------
 #C++
 export XMAKE_GLOBALDIR=/pkg/xmake

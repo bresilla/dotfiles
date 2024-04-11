@@ -49,11 +49,11 @@
         "/env/bin/devbox": {
             "path": "/env/bin/devbox",
             "remote_name": "devbox",
-            "version": "0.10.1",
+            "version": "0.10.4",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/jetpack-io/devbox/releases/tag/0.10.1",
+            "url": "https://github.com/jetpack-io/devbox/releases/tag/0.10.4",
             "provider": "",
-            "package_path": ""
+            "package_path": "devbox"
         },
         "/env/bin/direnv": {
             "path": "/env/bin/direnv",
@@ -63,6 +63,15 @@
             "url": "https://github.com/direnv/direnv",
             "provider": "github",
             "package_path": ""
+        },
+        "/env/bin/dora": {
+            "path": "/env/bin/dora",
+            "remote_name": "dora",
+            "version": "v0.3.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/dora-rs/dora",
+            "provider": "github",
+            "package_path": "dora"
         },
         "/env/bin/eza": {
             "path": "/env/bin/eza",
@@ -76,11 +85,11 @@
         "/env/bin/git-cliff": {
             "path": "/env/bin/git-cliff",
             "remote_name": "git-cliff",
-            "version": "v2.1.2",
+            "version": "v2.2.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/orhun/git-cliff/releases/tag/v2.1.2",
+            "url": "https://github.com/orhun/git-cliff/releases/tag/v2.2.0",
             "provider": "",
-            "package_path": ""
+            "package_path": "git-cliff-2.2.0/git-cliff"
         },
         "/env/bin/gptcommit": {
             "path": "/env/bin/gptcommit",
@@ -147,19 +156,19 @@
         },
         "/env/bin/ollama": {
             "path": "/env/bin/ollama",
-            "remote_name": "ollama-linux-amd64",
-            "version": "v0.1.29",
+            "remote_name": "ollama",
+            "version": "v0.1.31",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/ollama/ollama/releases/tag/v0.1.29",
+            "url": "https://github.com/ollama/ollama/releases/tag/v0.1.31",
             "provider": "",
             "package_path": ""
         },
         "/env/bin/pixi": {
             "path": "/env/bin/pixi",
-            "remote_name": "pixi-x86_64-unknown-linux-musl",
-            "version": "v0.17.1",
+            "remote_name": "pixi-unknown-musl",
+            "version": "v0.18.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.17.1",
+            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.18.0",
             "provider": "",
             "package_path": ""
         },
@@ -184,11 +193,20 @@
         "/env/bin/starship": {
             "path": "/env/bin/starship",
             "remote_name": "starship",
-            "version": "v1.18.1",
+            "version": "v1.18.2",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/starship/starship/releases/tag/v1.18.1",
+            "url": "https://github.com/starship/starship/releases/tag/v1.18.2",
             "provider": "",
             "package_path": "starship"
+        },
+        "/env/bin/stew": {
+            "path": "/env/bin/stew",
+            "remote_name": "stew",
+            "version": "v0.4.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/marwanhawari/stew/releases/tag/v0.4.0",
+            "provider": "",
+            "package_path": "stew"
         },
         "/env/bin/tab": {
             "path": "/env/bin/tab",
