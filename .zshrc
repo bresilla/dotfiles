@@ -195,8 +195,8 @@ n(){
   fi
 }
 bindkey -s '^W' ' n\n'
-bindkey -s '^B' 'just build\n'
-bindkey -s '^R' 'just run\n'
+bindkey -s '^B' 'build\n'
+bindkey -s '^R' 'run\n'
 bindkey -s '^G' 'git go\n'
 
 #--------------------------------------------------------------------------------------------------------------------

@@ -43,11 +43,6 @@ alias ssm='manssh'
 alias blue='bluetuith'
 alias ip="ip -c"
 
-##ALTERNATIVES
-alias vim='nvim'
-#alias hx='helix'
-alias mut='neomutt'
-
 ##SYSTEM
 alias hibernate="systemctl hibernate"
 alias cp="rsync -uahP --inplace --no-whole-file --info=progress2"

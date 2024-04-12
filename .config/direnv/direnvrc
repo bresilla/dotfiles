@@ -157,7 +157,7 @@ export_function() {
   PATH_add "$alias_dir"
   local target="$alias_dir/$name"
   if declare -f "$name" >/dev/null; then
-    echo "#!$SHELL" > "$target"
+    echo "#!/bin/bash" > "$target"
     declare -f "$name" >> "$target" 2>/dev/null
     # Notice that we add shell variables to the function trigger.
     echo "$name \$*" >> "$target"

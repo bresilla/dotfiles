@@ -120,7 +120,7 @@ export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 
 
 #----------------------------        HIVE-SERVER        ---------------------------
-export OLLAMA_HOST=10.10.22.176:11434
+export OLLAMA_HOST=10.10.22.203:11434
 export OATMEAL_OLLAMA_URL=http://10.10.22.176:11434
 export DOCKER_HOST=tcp://10.10.22.176:2375
 
