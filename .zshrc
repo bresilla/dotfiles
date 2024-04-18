@@ -266,5 +266,13 @@ if (( ${+CWD_VAR} )); then cd $CWD_VAR; fi
 
 if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresilla/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
+# if [ -x "$(command -v tab)" ] && [ -x "$(command -v names)" ]; then
+#     if [[ ! -n $TAB ]]; then
+#         tab $(names)
+#     else
+#         bresilla
+#     fi
+# fi
+
 bresilla
 

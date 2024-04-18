@@ -110,8 +110,8 @@ export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
 #---------------------------            ROS             --------------------------
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>stargate</></></></>'
+#export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+#export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>stargate</></></></>'
 #export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="stargate"/></></></></>'
 export ROS_DOMAIN_ID=222
 export WEBOTS_HOME=/usr/local/webots

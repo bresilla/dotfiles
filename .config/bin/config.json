@@ -136,6 +136,15 @@
             "provider": "",
             "package_path": ""
         },
+        "/env/bin/names-unknown-musl": {
+            "path": "/env/bin/names-unknown-musl",
+            "remote_name": "names-unknown-musl",
+            "version": "v0.14.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/fnichol/names",
+            "provider": "github",
+            "package_path": "names-x86_64-unknown-linux-musl"
+        },
         "/env/bin/nostromo": {
             "path": "/env/bin/nostromo",
             "remote_name": "nostromo",
@@ -215,6 +224,15 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "github.com/austinjones/tab-rs",
             "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/tldr": {
+            "path": "/env/bin/tldr",
+            "remote_name": "tealdeer-musl",
+            "version": "v1.6.1",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "github.com/dbrgn/tealdeer",
+            "provider": "github",
             "package_path": ""
         },
         "/env/bin/zoxide": {
