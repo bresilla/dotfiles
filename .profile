@@ -44,17 +44,17 @@ export XMAKE_GLOBALDIR=/pkg/xmake
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile"
 export VCPKG_ROOT="/pkg/vcpkg"
 # RUST
-export CARGO_HOME="/var/cargo"
-export RUSTUP_HOME="/var/rust"
-[[ -d "/var/cargo/bin" ]] && PATH="/var/cargo/bin:$PATH"
+export CARGO_HOME="/pkg/cargo"
+export RUSTUP_HOME="$CARGO_HOME/rustup"
+[[ -d "$CARGO_HOME/bin" ]] && PATH="$CARGO_HOME/bin:$PATH"
 # GO
-export GOPATH="/var/go"
+export GOPATH="/pkg/go"
 export GOBIN="$GOPATH/bin"
 export GO111MODULE=on
-[[ -d "/var/go/bin" ]] && PATH="/var/go/bin:$PATH"
+[[ -d "$GOPATH/bin" ]] && PATH="$GOPATH/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 # NIM
-export NIMBLE_DIR="/var/nimble"
+export NIMBLE_DIR="/pkg/nimble"
 # ZIG
 export ZIGY=zig
 # PYTHON

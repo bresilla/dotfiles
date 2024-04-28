@@ -4,11 +4,11 @@
         "/env/bin/atuin": {
             "path": "/env/bin/atuin",
             "remote_name": "atuin",
-            "version": "v18.1.0",
+            "version": "v18.2.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/atuinsh/atuin/releases/tag/v18.1.0",
+            "url": "https://github.com/atuinsh/atuin/releases/tag/v18.2.0",
             "provider": "",
-            "package_path": ""
+            "package_path": "atuin-v18.2.0-x86_64-unknown-linux-musl/atuin"
         },
         "/env/bin/bat": {
             "path": "/env/bin/bat",
@@ -21,10 +21,10 @@
         },
         "/env/bin/bin": {
             "path": "/env/bin/bin",
-            "remote_name": "bin_0.17.4_linux_amd64",
-            "version": "v0.17.4",
+            "remote_name": "bin",
+            "version": "v0.17.5",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/marcosnils/bin/releases/tag/v0.17.4",
+            "url": "https://github.com/marcosnils/bin/releases/tag/v0.17.5",
             "provider": "",
             "package_path": ""
         },
@@ -40,18 +40,27 @@
         "/env/bin/codegpt": {
             "path": "/env/bin/codegpt",
             "remote_name": "codegpt",
-            "version": "v0.10.0",
+            "version": "v0.11.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.10.0",
+            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.11.1",
             "provider": "",
             "package_path": ""
+        },
+        "/env/bin/delta": {
+            "path": "/env/bin/delta",
+            "remote_name": "delta",
+            "version": "0.17.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/dandavison/delta",
+            "provider": "github",
+            "package_path": "delta-0.17.0-x86_64-unknown-linux-musl/delta"
         },
         "/env/bin/devbox": {
             "path": "/env/bin/devbox",
             "remote_name": "devbox",
-            "version": "0.10.4",
+            "version": "0.10.5",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/jetpack-io/devbox/releases/tag/0.10.4",
+            "url": "https://github.com/jetify-com/devbox/releases/tag/0.10.5",
             "provider": "",
             "package_path": "devbox"
         },
@@ -67,29 +76,29 @@
         "/env/bin/dora": {
             "path": "/env/bin/dora",
             "remote_name": "dora",
-            "version": "v0.3.2",
+            "version": "v0.3.3",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/dora-rs/dora",
-            "provider": "github",
+            "url": "https://github.com/dora-rs/dora/releases/tag/v0.3.3",
+            "provider": "",
             "package_path": "dora"
         },
         "/env/bin/eza": {
             "path": "/env/bin/eza",
             "remote_name": "eza",
-            "version": "v0.18.9",
+            "version": "v0.18.13",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.9",
+            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.13",
             "provider": "",
             "package_path": "./eza"
         },
         "/env/bin/git-cliff": {
             "path": "/env/bin/git-cliff",
             "remote_name": "git-cliff",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/orhun/git-cliff/releases/tag/v2.2.0",
+            "url": "https://github.com/orhun/git-cliff/releases/tag/v2.2.1",
             "provider": "",
-            "package_path": "git-cliff-2.2.0/git-cliff"
+            "package_path": "git-cliff-2.2.1/git-cliff"
         },
         "/env/bin/gptcommit": {
             "path": "/env/bin/gptcommit",
@@ -145,6 +154,15 @@
             "provider": "github",
             "package_path": "names-x86_64-unknown-linux-musl"
         },
+        "/env/bin/netbird": {
+            "path": "/env/bin/netbird",
+            "remote_name": "netbird",
+            "version": "v0.27.3",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/netbirdio/netbird",
+            "provider": "github",
+            "package_path": "netbird"
+        },
         "/env/bin/nostromo": {
             "path": "/env/bin/nostromo",
             "remote_name": "nostromo",
@@ -166,18 +184,18 @@
         "/env/bin/ollama": {
             "path": "/env/bin/ollama",
             "remote_name": "ollama",
-            "version": "v0.1.31",
+            "version": "v0.1.32",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/ollama/ollama/releases/tag/v0.1.31",
+            "url": "https://github.com/ollama/ollama/releases/tag/v0.1.32",
             "provider": "",
             "package_path": ""
         },
         "/env/bin/pixi": {
             "path": "/env/bin/pixi",
             "remote_name": "pixi-unknown-musl",
-            "version": "v0.18.0",
+            "version": "v0.20.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.18.0",
+            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.20.1",
             "provider": "",
             "package_path": ""
         },

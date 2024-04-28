@@ -275,4 +275,3 @@ if [ -e /home/bresilla/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bresill
 # fi
 
 bresilla
-

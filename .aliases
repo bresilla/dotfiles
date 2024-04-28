@@ -7,7 +7,6 @@ alias wgi="doas wg-quick"
 alias mount="doas mount"
 alias umount="doas umount"
 alias nmap="doas nmap"
-alias lxc="doas lxc"
 alias hotspot="doas hotspot"
 alias bandwhich="doas bandwhich"
 alias ufw="doas ufw"
@@ -118,3 +117,8 @@ alias cal='cal -ymw'
 alias ser="doas ser"
 alias mul="mullvad"
 alias oat="oatmeal"
+
+
+####         AKA
+alias aka='aka -f ~/.aliases' # Added by aka
+alias inc='incus' # Added by aka
