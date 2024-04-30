@@ -1,6 +1,15 @@
 {
     "default_path": "/env/bin",
     "bins": {
+        "/env/bin/argc": {
+            "path": "/env/bin/argc",
+            "remote_name": "argc",
+            "version": "v1.17.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/sigoden/argc",
+            "provider": "github",
+            "package_path": "argc"
+        },
         "/env/bin/atuin": {
             "path": "/env/bin/atuin",
             "remote_name": "atuin",

@@ -1,0 +1,159 @@
+#!/bin/bash
+
+hostnames=/etc/hosts
+sshfile=~/.ssh/config
+
+select_one() {
+    cat $hostnames | awk '$1 ~ /^[^;#]/' | tail -n +4 | gum choose --limit=1 --height=20
+}
+
+select_many() {
+    cat $hostnames | awk '$1 ~ /^[^;#]/' | tail -n +4 | gum choose --no-limit  --height=20
+}
+
+select_all() {
+    cat $hostnames | awk '$1 ~ /^[^;#]/' | tail -n +4
+}
+
+# @cmd Add a hostname to the list
+# @option --name   Name of the host
+# @option --ip     IP address of the host
+add() {
+    if [ -z $argc_name ]; then
+        name=$(gum input --placeholder "Name?")
+    else
+        name=$argc_name
+    fi
+    if [[ ! $name =~ ^[a-zA-Z0-9.]+$ ]]; then
+        gum log --structured --level error "Invalid name, must be alphanumeric with dots"
+        exit 1
+    elif grep -q "$name" $hostnames; then
+        gum log --structured --level error "Name already exists"
+        exit 1
+    fi
+
+    if [ -z $argc_ip ]; then
+        ip=$(gum input --placeholder "IP?")
+    else
+        ip=$argc_ip
+    fi
+    if [[ ! $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        gum log --structured --level error "Invalid IP address, must be in the form of x.x.x.x"
+        exit 1
+    elif grep -q "$ip" $hostnames; then
+        gum log --structured --level error "IP already exists"
+        exit 1
+    fi
+    new_object="$ip $name"
+    if gum confirm "are you sure you want to add $new_object"; then
+        echo $new_object | doas tee -a $hostnames
+    fi
+    gum log --structured --level info "added $new_object"
+    # echo "added successfully"
+    exit 0
+}
+
+# @cmd Edit a hostname
+edit() {
+    echo edit "$@"
+}
+
+# @cmd List all hostnames
+list() {
+    select_one
+}
+
+# @cmd Remove a hostname from the list
+# @option --name   Name of the host
+# @option --ip     IP address of the host
+remove() {
+    if [ -z $argc_name ] && [ -z $argc_ip ]; then
+        selected=$(select_many)
+        [ -z "$selected" ] && gum log --structured --level error "No host selected" && exit 1
+        while IFS= read -r line; do
+            if gum confirm "are you sure you want to remove $line"; then
+                doas sed -i "/$line/d" $hostnames
+                gum log --structured --level info "host $line removed"
+            fi
+        done <<< "$selected"
+        exit 0
+    fi
+
+    if [ -z $argc_ip ]; then
+        grep -q "$argc_name" $hostnames || { gum log --structured --level error "Name not found"; exit 1; }
+        line=$(grep "$argc_name" $hostnames)
+    elif [ -z $argc_name ]; then
+        grep -q "$argc_ip" $hostnames || { gum log --structured --level error "IP not found"; exit 1; }
+        line=$(grep "$argc_ip" $hostnames)
+    else
+        gum log --structured --level error "Invalid arguments"
+        exit 1
+    fi
+    echo
+    if gum confirm "are you sure you want to remove $line"; then
+        doas sed -i "/$line/d" $hostnames
+        gum log --structured --level info "host $line removed"
+    fi
+}
+
+# @cmd SSH into a hostname
+# @option --hostname   Name of the host
+# @option --ip         IP address of the host
+# @option --username   Username to use
+# @option --port       Port to use
+# @option --key        Key to use / IdentityFile
+# @arg num[=one|all]
+ssh() {
+    keytrigger=true
+    if [ $argc_num == "all" ]; then
+        selected=$(select_all)
+        keytrigger=false
+    elif [ ! -z $argc_hostname ] && [ ! -z $argc_ip ]; then
+        selected="$argc_ip $argc_hostname"
+    else
+        selected=$(select_many)
+    fi
+
+    [ -z "$selected" ] && gum log --structured --level error "No host selected" && exit 1
+
+    while IFS= read -r line; do
+        ip=$(echo $line | awk '{print $1}')
+        name=$(echo $line | awk '{print $2}')
+        string="Host $name\n\t# $ip\n\thostname $name\n"
+
+        if grep -q "Host $name" $sshfile; then
+            gum log --structured --level info "Host $name already exists in $sshfile"
+            continue
+        fi
+
+        if [ -z $argc_username ]; then
+            username=$(whoami)
+        else
+            username=$argc_username
+        fi
+        string+="\tuser $username\n"
+
+        if [ -z $argc_port ]; then
+            port=22
+        else
+            port=$argc_port
+        fi
+        string+="\tport $port\n"
+
+        if [ ! -z $argc_key ]; then
+            string+="\tidentityFile $argc_key\n"
+        elif $keytrigger; then
+            if gum confirm "do you want to add a key for $name"; then
+                key=$(gum input --placeholder "Key?")
+                [ ! -f $key ] && { gum log --structured --level error "Key not found"; exit 1; }
+                string+="\tidentityFile $key\n"
+            fi
+        fi
+
+        echo -e $string | doas tee -a $sshfile
+    done <<< "$selected"
+    exit 0
+
+}
+
+eval "$(argc --argc-eval "$0" "$@")"

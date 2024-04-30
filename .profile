@@ -65,6 +65,8 @@ export BAT_THEME="TwoDark"
 export LULE_W="/env/set/.wallpaper"
 export LULE_S="/env/dot/.func/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
+export GUM_CHOOSE_CURSOR_FOREGROUND="1"
+export GUM_CHOOSE_SELECTED_FOREGROUND="9"
 
 
 #---------------------------            LOCALE           --------------------------
@@ -120,9 +122,9 @@ export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 
 
 #----------------------------        HIVE-SERVER        ---------------------------
-export OLLAMA_HOST=10.10.22.203:11434
-export OATMEAL_OLLAMA_URL=http://10.10.22.176:11434
-export DOCKER_HOST=tcp://10.10.22.176:2375
+export OLLAMA_HOST=data:11434
+export OATMEAL_OLLAMA_URL=http://data:11434
+export DOCKER_HOST=tcp://data:2375
 
 #---------------------------            CORE            --------------------------
 if [ "$HOSTNAME" = core ]; then
