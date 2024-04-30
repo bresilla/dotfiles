@@ -67,7 +67,8 @@ export LULE_S="/env/dot/.func/wm/lule_colors"
 export LULE_C="/home/bresilla/.config/lule/configs.json"
 export GUM_CHOOSE_CURSOR_FOREGROUND="1"
 export GUM_CHOOSE_SELECTED_FOREGROUND="9"
-
+export GUM_CONFIRM_SELECTED_FOREGROUND="15"
+export GUM_CONFIRM_UNSELECTED_FOREGROUND="7"
 
 #---------------------------            LOCALE           --------------------------
 export TZ='Europe/Berlin'
