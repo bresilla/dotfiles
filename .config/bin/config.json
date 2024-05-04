@@ -262,6 +262,15 @@
             "provider": "github",
             "package_path": ""
         },
+        "/env/bin/vpncloud": {
+            "path": "/env/bin/vpncloud",
+            "remote_name": "vpncloud_static",
+            "version": "v2.3.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/dswd/vpncloud",
+            "provider": "github",
+            "package_path": ""
+        },
         "/env/bin/zoxide": {
             "path": "/env/bin/zoxide",
             "remote_name": "zoxide",

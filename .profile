@@ -123,9 +123,9 @@ export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 
 
 #----------------------------        HIVE-SERVER        ---------------------------
-export OLLAMA_HOST=data:11434
-export OATMEAL_OLLAMA_URL=http://data:11434
-export DOCKER_HOST=tcp://data:2375
+export OLLAMA_HOST=data.tailscale:11434
+export OATMEAL_OLLAMA_URL=http://data.tailscale:11434
+export DOCKER_HOST=tcp://data.tailscale:2375
 
 #---------------------------            CORE            --------------------------
 if [ "$HOSTNAME" = core ]; then

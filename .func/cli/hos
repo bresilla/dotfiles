@@ -52,9 +52,9 @@ add() {
     if [[ ! $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
         gum log --structured --level error "Invalid IP address, must be in the form of x.x.x.x"
         exit 1
-    elif grep -q "$ip" $hostnames; then
-        gum log --structured --level error "IP already exists in $hostnames"
-        exit 1
+    # elif grep -q "$ip" $hostnames; then
+        # gum log --structured --level error "IP already exists in $hostnames"
+        # exit 1
     fi
     # -------- USERNAME --------
     if [ -z $argc_username ]; then
@@ -179,14 +179,14 @@ choose() {
 # @meta default-subcommand
 list() {
     selected=$(select_all)
-    printf "┌───────────────────┬───────────────────────────┬────────────┬──────┬─────────────────────────────────────┐\n"
-    printf "│ IP                │ Name                      │ Username   │ Port │ Key                                 │\n"
-    printf "├───────────────────┼───────────────────────────┼────────────┼──────┼─────────────────────────────────────┤\n"
+    printf "┌───────────────────┬─────────────────────────────┬────────────┬──────┬─────────────────────────────────────┐\n"
+    printf "│ IP                │ Name                        │ Username   │ Port │ Key                                 │\n"
+    printf "├───────────────────┼─────────────────────────────┼────────────┼──────┼─────────────────────────────────────┤\n"
     while IFS= read -r line; do
         words=($line)
-        printf "│ %-17s │ %-25s │ %-10s │ %-4s │ %-35s │\n" ${words[0]} ${words[1]} ${words[2]:1} ${words[3]:1} ${words[4]:1}
+        printf "│ %-17s │ %-27s │ %-10s │ %-4s │ %-35s │\n" ${words[0]} ${words[1]} ${words[2]:1} ${words[3]:1} ${words[4]:1}
     done <<< "$selected"
-    printf "└───────────────────┴───────────────────────────┴────────────┴──────┴─────────────────────────────────────┘\n"
+    printf "└───────────────────┴─────────────────────────────┴────────────┴──────┴─────────────────────────────────────┘\n"
 }
 
 # @cmd Create a ssh config from hosts

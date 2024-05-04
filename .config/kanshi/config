@@ -1,0 +1,14 @@
+profile home {
+    output "Samsung Display Corp. 0x414D" {
+        mode 3456x2160@60Hz
+        position 199,1080
+    }
+    output "Samsung Electric Company C24F390 H4LT501038" {
+        mode 1920x1080@60Hz
+        position 199,0
+    }
+    output "Samsung Electric Company C24F390 H4ZT403391" {
+        mode 1920x1080@60Hz
+        position 0,0
+    }
+}
