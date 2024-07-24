@@ -1,3 +1,7 @@
 #!/bin/bash
 
-flatpak kill $(flatpak ps | fzy | choose 2)
+flatokill=$(flatpak ps | fzy | choose 2)
+
+if [ -n "$flatokill" ]; then
+  flatpak kill $flatokill
+fi

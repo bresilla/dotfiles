@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+
+
+# @cmd Select Network-Manager
+netm() {
+    echo "networkmanager"
+    doas rm /etc/resolv.conf
+    doas systemctl disable --now systemd-networkd.service
+
+    doas systemctl enable --now NetworkManager.service
+    doas systemctl restart systemd-resolved.service
+    doas systemctl restart iptables.service
+}
+
+# @cmd Slect SystemD-Network
+
+sysd() {
+    echo "systemdnetwork"
+    doas systemctl disable --now NetworkManager.service
+
+    doas rm /etc/resolv.conf
+    doas ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    doas systemctl restart systemd-resolved.service
+    doas systemctl enable --now systemd-networkd.service
+
+}
+
+eval "$(argc --argc-eval "$0" "$@")"

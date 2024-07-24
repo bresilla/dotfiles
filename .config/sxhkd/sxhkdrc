@@ -62,8 +62,8 @@ super + mod1 + Return; {Print,Insert,Delete,XF86MonBrightnessUp}
 super + {w,f,t,s}
     bspc node {-t '~floating',-t '~fullscreen',-t '~tiled',-g sticky}
 
-super + p
-    doas chvt 2
+super + mod1 + p
+    doas chvt 1
 
 # mod3 + space
 mod3 + l

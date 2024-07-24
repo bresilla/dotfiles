@@ -1,0 +1,80 @@
+#!/bin/bash
+hostname=$(hostname)
+projects=/home/bresilla/.work_projects
+
+if [ "$1" = "add" ]; then
+    name=$(gum input --placeholder "Name?")
+
+    if [[ ! $name =~ ^[a-zA-Z][a-zA-Z0-9_]*$ ]]; then
+        echo "does not respect pattern: ^[a-zA-Z][a-zA-Z0-9_]*$"; exit 1
+    fi
+
+    uuid=$(uuidgen)
+    path=$(gum input --placeholder "Path?")
+
+    echo "  hostname $hostname" > /tmp/tempssh
+    cat /home/bresilla/.ssh/config >> /tmp/tempssh
+
+    #remote=$(grep -E '^\s*hostname\s+[[:alpha:]_][[:alnum:]_-]*$' /tmp/tempssh | choose 1 | gum choose)
+    remote=$(grep "Host" /tmp/tempssh | choose 1 | grep -v "\*" | gum choose)
+    rm /tmp/tempssh
+
+    if [ $remote = $hostname ] && [ ! -d $path ]; then
+        echo "path does not exist locally"; exit 1
+    elif [ $remote != $hostname ] && ! ssh $remote "[ -d $path ]"; then
+        echo "path does not exist on $remote"; exit 1
+    fi
+
+    new_object=$(jq -n --arg uuid "$uuid" --arg name "$name" --arg path "$path" --arg remote "$remote" '{($uuid): {name: $name, remote: $remote, path: $path}}')
+    all_pro=$(jq --argjson new "$new_object" '. + $new' $projects)
+
+    if gum confirm; then
+        echo "adding $name to project list"
+        jq --argjson new "$new_object" '. + $new' $projects > /tmp/tmpjson && mv /tmp/tmpjson $projects
+    fi
+
+    exit 0
+fi
+
+if [ "$1" = "ls" ]; then
+    jq -r 'to_entries[] | "\(.key) \t \(.value.name) \t \(.value.path) \t \(.value.remote)"' $projects | column -ts $'\t'
+    exit 0
+fi
+
+# chooser="gum choose"
+chooser="fzy"
+
+if [ "$1" = "code" ] && [ "$2" = "rofi" ]; then
+    chooser="rofit"
+fi
+
+selected_entry=$(jq -r 'to_entries[] | "\(.key) \t \(.value.name) \t \(.value.path) \t \(.value.remote)"' $projects | column -ts $'\t' | $chooser)
+uuid=$(echo "$selected_entry" | choose 0)
+name=$(echo "$selected_entry" | choose 1)
+path=$(echo "$selected_entry" | choose 2)
+remote=$(echo "$selected_entry" | choose 3)
+
+if [ "$1" = "rm" ]; then
+    if gum confirm; then
+        echo "removing $name from project list"
+        jq --arg key "$uuid" 'del(.[$key])' $projects > /tmp/tmpjson && mv /tmp/tmpjson $projects
+        exit 0
+    fi
+elif [ "$1" = "code" ]; then
+    if [ $remote = $hostname ]; then
+        com.visualstudio.code $path &
+        exit 0
+    else
+        com.visualstudio.code --folder-uri "vscode-remote://ssh-remote+$remote$path" &
+        exit 0
+    fi
+elif [ $# -eq 0 ] || [ "$1" = "cd" ]; then
+    if [ $remote = $hostname ]; then
+        cd $path
+        $SHELL
+        exit 0
+    else
+        ssh $remote -t "cd $path; zsh -l"
+        exit 0
+    fi
+fi

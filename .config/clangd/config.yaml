@@ -1,0 +1,4 @@
+Diagnostics:
+  UnusedIncludes: None
+CompileFlags:
+    Add: [-std=c++17]

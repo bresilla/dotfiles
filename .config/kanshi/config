@@ -12,3 +12,18 @@ profile home {
         position 0,0
     }
 }
+
+profile home {
+    output "Samsung Display Corp. 0x414D" {
+        mode 3456x2160@60Hz
+        position 199,1080
+    }
+    output "desc:Philips Consumer Electronics Company 241PLY DL11203689984" {
+        mode 1920x1080@60Hz
+        position 199,0
+    }
+    output "desc:Philips Consumer Electronics Company 241PLY DL11209831384" {
+        mode 1920x1080@60Hz
+        position 0,0
+    }
+}

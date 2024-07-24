@@ -2,4 +2,4 @@
 
 confile=$(fd . /env/dot/ --hidden --type file | fzf)
 
-nvim $confile
+hx $confile

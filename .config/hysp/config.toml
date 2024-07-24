@@ -1,0 +1,10 @@
+
+[source]
+remote = "https://raw.githubusercontent.com/metis-os/hysp-pkgs/main/data/x86_64"
+metadata ="https://raw.githubusercontent.com/metis-os/hysp-pkgs/main/data/metadata.toml"
+aarch = "X86_64"
+
+[local]   
+home="/home/bresilla/.local/share/hysp"
+data="/home/bresilla/.local/share/hysp/data/" 
+bin="/env/bin/" 

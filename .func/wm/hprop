@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+EVENT_HANDLER="$(dirname "$0")/event_handler"
+
+prop() {
+    hypr_tree=$(hyprctl clients -j)
+
+    out_file=/tmp/hyprprop.out
+    error_file=/tmp/hyprprop.error
+    echo "$hypr_tree" | jq -r ".[] | select(.workspace.id == "$(hyprctl activewindow -j \
+                                                                | jq -r '.workspace.id')\)"" \
+                      | jq -r ".at,.size" | jq -s "add" | jq '_nwise(4)' \
+                      | jq -r '"\(.[0]),\(.[1]) \(.[2])x\(.[3])"' \
+                      | slurp -r > $out_file 2> $error_file &
+    PID=$!
+    wait $PID
+
+    error=$(cat $error_file)
+    rm $error_file
+
+    selection=$(cat $out_file)
+    rm $out_file
+
+    [ -n "$error" ] && prop # invalid box format: null,null nullxnull
+    [ -z "$selection" ] && cleanup && exit
+
+    x=$(echo "$selection" | awk -F'[, x]' '{print $1}')
+    y=$(echo "$selection" | awk -F'[, x]' '{print $2}')
+    w=$(echo "$selection" | awk -F'[, x]' '{print $3}')
+    h=$(echo "$selection" | awk -F'[, x]' '{print $4}')
+    workspace=$(hyprctl activewindow -j | jq -r '.workspace.id')
+
+    # Find the window matching the selection
+    echo "$hypr_tree" | jq -r --argjson i "$workspace" \
+                              --argjson x "$x" --argjson y "$y" \
+                              --argjson w "$w" --argjson h "$h" \
+             '.[] | select(.workspace.id == $i and
+                           .at[0] == $x and .at[1] == $y and
+                           .size[0] == $w and .size[1] == $h)'
+
+    cleanup
+    exit
+}
+
+cleanup() {
+    hyprevents -f "$EVENT_HANDLER" -k
+}
+
+event_handler() {
+    pkill slurp
+    wait $PID 2>/dev/null
+    prop
+}
+
+terminate() {
+    pkill slurp
+    wait $PID 2>/dev/null
+    cleanup
+    exit
+}
+
+# Capture events on hyprland window/workspace change events
+hyprevents -f "$EVENT_HANDLER" 2>/dev/null &
+trap event_handler USR1
+
+trap terminate SIGINT
+prop

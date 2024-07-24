@@ -15,6 +15,7 @@ alias tent="doas tent"
 alias argz="xargs -0 | head -n -1"
 alias ser="doas ser"
 alias rustdesk="doas rustdesk"
+alias moonlight="QT_QPA_PLATFORM=xcb moonlight"
 
 ##WM
 alias sx="startx"

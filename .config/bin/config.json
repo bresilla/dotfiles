@@ -4,20 +4,20 @@
         "/env/bin/argc": {
             "path": "/env/bin/argc",
             "remote_name": "argc",
-            "version": "v1.17.0",
+            "version": "v1.19.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/sigoden/argc",
-            "provider": "github",
+            "url": "https://github.com/sigoden/argc/releases/tag/v1.19.0",
+            "provider": "",
             "package_path": "argc"
         },
         "/env/bin/atuin": {
             "path": "/env/bin/atuin",
             "remote_name": "atuin",
-            "version": "v18.2.0",
+            "version": "v18.3.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/atuinsh/atuin/releases/tag/v18.2.0",
+            "url": "https://github.com/atuinsh/atuin/releases/tag/v18.3.0",
             "provider": "",
-            "package_path": "atuin-v18.2.0-x86_64-unknown-linux-musl/atuin"
+            "package_path": "atuin-x86_64-unknown-linux-musl/atuin"
         },
         "/env/bin/bat": {
             "path": "/env/bin/bat",
@@ -31,9 +31,9 @@
         "/env/bin/bin": {
             "path": "/env/bin/bin",
             "remote_name": "bin",
-            "version": "v0.17.5",
+            "version": "v0.17.6",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/marcosnils/bin/releases/tag/v0.17.5",
+            "url": "https://github.com/marcosnils/bin/releases/tag/v0.17.6",
             "provider": "",
             "package_path": ""
         },
@@ -49,9 +49,9 @@
         "/env/bin/codegpt": {
             "path": "/env/bin/codegpt",
             "remote_name": "codegpt",
-            "version": "v0.11.1",
+            "version": "v0.14.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.11.1",
+            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.14.0",
             "provider": "",
             "package_path": ""
         },
@@ -67,9 +67,9 @@
         "/env/bin/devbox": {
             "path": "/env/bin/devbox",
             "remote_name": "devbox",
-            "version": "0.10.5",
+            "version": "0.12.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/jetify-com/devbox/releases/tag/0.10.5",
+            "url": "https://github.com/jetify-com/devbox/releases/tag/0.12.0",
             "provider": "",
             "package_path": "devbox"
         },
@@ -85,29 +85,29 @@
         "/env/bin/dora": {
             "path": "/env/bin/dora",
             "remote_name": "dora",
-            "version": "v0.3.3",
+            "version": "v0.3.5",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/dora-rs/dora/releases/tag/v0.3.3",
+            "url": "https://github.com/dora-rs/dora/releases/tag/v0.3.5",
             "provider": "",
             "package_path": "dora"
         },
         "/env/bin/eza": {
             "path": "/env/bin/eza",
             "remote_name": "eza",
-            "version": "v0.18.13",
+            "version": "v0.18.21",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.13",
+            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.21",
             "provider": "",
-            "package_path": "./eza"
+            "package_path": "eza"
         },
         "/env/bin/git-cliff": {
             "path": "/env/bin/git-cliff",
             "remote_name": "git-cliff",
-            "version": "v2.2.1",
+            "version": "v2.4.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/orhun/git-cliff/releases/tag/v2.2.1",
+            "url": "https://github.com/orhun/git-cliff/releases/tag/v2.4.0",
             "provider": "",
-            "package_path": "git-cliff-2.2.1/git-cliff"
+            "package_path": "git-cliff-2.4.0/git-cliff"
         },
         "/env/bin/gptcommit": {
             "path": "/env/bin/gptcommit",
@@ -116,6 +116,15 @@
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "url": "https://github.com/zurawiki/gptcommit/releases/tag/v0.5.16",
             "provider": "",
+            "package_path": ""
+        },
+        "/env/bin/ha": {
+            "path": "/env/bin/ha",
+            "remote_name": "ha",
+            "version": "4.35.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/home-assistant/cli",
+            "provider": "github",
             "package_path": ""
         },
         "/env/bin/hub": {
@@ -127,13 +136,22 @@
             "provider": "github",
             "package_path": "hub-linux-amd64-2.14.2/bin/hub"
         },
+        "/env/bin/hysp": {
+            "path": "/env/bin/hysp",
+            "remote_name": "hysp",
+            "version": "v0.1.2",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "url": "https://github.com/pwnwriter/hysp",
+            "provider": "github",
+            "package_path": "hysp-0.1.2/hysp"
+        },
         "/env/bin/just": {
             "path": "/env/bin/just",
             "remote_name": "just",
-            "version": "1.25.2",
+            "version": "1.30.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/casey/just",
-            "provider": "github",
+            "url": "https://github.com/casey/just/releases/tag/1.30.1",
+            "provider": "",
             "package_path": "just"
         },
         "/env/bin/lule": {
@@ -166,10 +184,10 @@
         "/env/bin/netbird": {
             "path": "/env/bin/netbird",
             "remote_name": "netbird",
-            "version": "v0.27.3",
+            "version": "v0.28.4",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/netbirdio/netbird",
-            "provider": "github",
+            "url": "https://github.com/netbirdio/netbird/releases/tag/v0.28.4",
+            "provider": "",
             "package_path": "netbird"
         },
         "/env/bin/nostromo": {
@@ -193,18 +211,18 @@
         "/env/bin/ollama": {
             "path": "/env/bin/ollama",
             "remote_name": "ollama",
-            "version": "v0.1.32",
+            "version": "v0.2.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/ollama/ollama/releases/tag/v0.1.32",
+            "url": "https://github.com/ollama/ollama/releases/tag/v0.2.1",
             "provider": "",
             "package_path": ""
         },
         "/env/bin/pixi": {
             "path": "/env/bin/pixi",
             "remote_name": "pixi-unknown-musl",
-            "version": "v0.20.1",
+            "version": "v0.25.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.20.1",
+            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.25.0",
             "provider": "",
             "package_path": ""
         },
@@ -229,9 +247,9 @@
         "/env/bin/starship": {
             "path": "/env/bin/starship",
             "remote_name": "starship",
-            "version": "v1.18.2",
+            "version": "v1.19.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/starship/starship/releases/tag/v1.18.2",
+            "url": "https://github.com/starship/starship/releases/tag/v1.19.0",
             "provider": "",
             "package_path": "starship"
         },

@@ -259,6 +259,7 @@ done
 #TAB-RS (shotrcut: Ctrl + e)
 bindkey -s '^A' ' tab\n'
 bindkey -s '^X' ' scrr\n'
+[[ -n $TAB ]] && export DISPLAY=:0
 
 #---------------------------            EXTERNAL       --------------------------
 [[ -s "$HOME/.external" ]] && source "$HOME/.external"

@@ -12,11 +12,12 @@ if [ "$1" = "add" ]; then
     uuid=$(uuidgen)
     path=$(gum input --placeholder "Path?")
 
-    echo "  hostname $hostname" > /tmp/tempssh
+    printf "Host $hostname\n" > /tmp/tempssh
     cat /home/bresilla/.ssh/config >> /tmp/tempssh
 
-    remote=$(grep -E '^\s*hostname\s+[[:alpha:]_][[:alnum:]_-]*$' /tmp/tempssh | choose 1 | gum choose)
-    rm /tmp/tempssh
+    #remote=$(grep -E '^\s*hostname\s+[[:alpha:]_][[:alnum:]_-]*$' /tmp/tempssh | choose 1 | gum choose)
+    remote=$(grep "Host" /tmp/tempssh | choose 1 | grep -v "\*" | fzy)
+    # rm /tmp/tempssh
 
     if [ $remote = $hostname ] && [ ! -d $path ]; then
         echo "path does not exist locally"; exit 1

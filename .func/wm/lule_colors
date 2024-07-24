@@ -28,6 +28,10 @@ create_files(){
     printf "special:\n  background: \"$back\"\n  foreground: \"$fore\"\n  cursor: \"$col1\"\n\ncolors:\n" > $HOME/.cache/wal/colors.yml
     awk '{print "  color" NR-1 ": \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.yml
 
+    # COLORS.TOML (used by ALACRITY)
+    printf "[special]\nbackground = \"$back\"\nforeground = \"$fore\"\ncursor = \"$col1\"\n\n[colors]\n" > $HOME/.cache/wal/colors.toml
+    awk '{print "color" NR-1 " = \"" $0 "\""}' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.toml
+
     # COLORS.INI (used by POLYBAR)
     printf "[colors]\n\tforeground=$fore\n\tbackground=$back\n\tcursor=$col1\n" > $HOME/.cache/wal/colors.ini
     awk '{print "\tcolor" NR-1 "=" $0 }' $HOME/.cache/wal/colors >> $HOME/.cache/wal/colors.ini
@@ -94,6 +98,8 @@ do
         # ssh $i 'bash -s' < /env/dot/.func/shell/colors_to_tty &
     fi
 done
+
+zedtheme &
 
 eww reload
 swaykill(){

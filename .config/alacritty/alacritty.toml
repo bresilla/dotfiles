@@ -1,0 +1,52 @@
+#dynamic_padding = true
+#import = ["/home/bresilla/.cache/wal/colors.toml"]
+#ingnore-schemes = true
+live_config_reload = true
+
+[bell]
+animation = "EaseOutCubic"
+duration = 200
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 16
+
+[font.bold]
+family = "VictorMono Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "VictorMono Nerd Font Mono"
+style = "Italic"
+
+[font.normal]
+family = "VictorMono Nerd Font Mono"
+style = "Light"
+
+[font.offset]
+x = 0
+y = 0
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+
+[window.dimensions]
+columns = 0
+lines = 0
+
+[window.padding]
+x = 60
+y = 40

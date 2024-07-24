@@ -9,8 +9,8 @@ current_workspace=$(hyprctl activeworkspace -j | jq '.id')
 current_monitor=$(hyprctl activeworkspace -j | jq '.monitor' | tr -d '"')
 
 if [ "$current_monitor" = "eDP-1" ]; then
-    max_workspace=6
     init_workspace=1
+    max_workspace=6
 elif [ "$current_monitor" = "DP-4" ]; then
     max_workspace=12
     init_workspace=7

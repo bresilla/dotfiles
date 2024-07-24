@@ -112,6 +112,18 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export NOSTROMO_HOME="$XDG_DATA_HOME"/nostromo
 
+
+#---------------------------         HYPRLAND           --------------------------
+export GTK_USE_PORTAL=1
+export XDG_CURRENT_DESKTOP=Hyprland
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=Hyprland
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_QPA_PLATFORM=xcb
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+
 #---------------------------            ROS             --------------------------
 #export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 #export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>stargate</></></></>'
@@ -123,9 +135,9 @@ export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
 
 
 #----------------------------        HIVE-SERVER        ---------------------------
-export OLLAMA_HOST=data.tailscale:11434
-export OATMEAL_OLLAMA_URL=http://data.tailscale:11434
-export DOCKER_HOST=tcp://data.tailscale:2375
+export OLLAMA_HOST=atom.tailscale:11434
+export OATMEAL_OLLAMA_URL=http://atom.tailscale:11434
+export DOCKER_HOST=tcp://atom.tailscale:2375
 
 #---------------------------            CORE            --------------------------
 if [ "$HOSTNAME" = core ]; then

@@ -23,7 +23,7 @@ echo $curr_ws
 
 
 if [ -z "$win_id" ]; then
-    # hyprctl --batch "dispatch exec [floating] $app; dispatch resizeactive exact 500 1300; dispatch centerwindow"
+    # hyprctl --batch "dispatch exec [floating] $app ; dispatch resizeactive exact 60% 90% ; dispatch centerwindow"
     hyprctl --batch "dispatch exec [floating] $app"
     printf "launching: %s\n" $app
     exit 0
