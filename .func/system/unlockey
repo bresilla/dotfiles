@@ -3,9 +3,10 @@
 # @cmd Run script
 # @meta default-subcommand
 # @option   -p --password <PASS>        Set password
+# @flag        --rdp                    Applies the new pass to rdp
 run(){
   if [ -n "$argc_password" ]; then
-    _UNLOCK_PASSWORD='Password: '$argc_password
+    _UNLOCK_PASSWORD=$argc_password
   else
     echo -n 'Password: ' >&2
     read -s _UNLOCK_PASSWORD || return
@@ -13,8 +14,14 @@ run(){
   # echo $_UNLOCK_PASSWORD
   killall -q -u "$(whoami)" gnome-keyring-daemon
   eval $(echo -n "${_UNLOCK_PASSWORD}" | gnome-keyring-daemon --daemonize --login | sed -e 's/^/export /')
+
+  if [ -n "$argc_rdp" ]; then
+    grdctl rdp set-credentials bresilla "${_UNLOCK_PASSWORD}"
+  fi
+
   unset _UNLOCK_PASSWORD
   echo '' >&2
+  
 }
 
 eval "$(argc --argc-eval "$0" "$@")"
