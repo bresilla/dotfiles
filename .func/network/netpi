@@ -1,1 +1,0 @@
-doas arp-scan --localnet | grep -Pi "\s(b8:27:eb:|dc:a6:32:)"

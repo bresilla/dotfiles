@@ -1,3 +1,0 @@
-#!/bin/bash
-
-doas umount $@ && udisksctl power-off -b $@

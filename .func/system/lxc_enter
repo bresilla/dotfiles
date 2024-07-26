@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if [ $(lxc info focal | grep Status | choose 1) == "STOPPED" ]; then
-    lxc start focal
-    lxc exec focal --cwd=$PWD -- sudo --user bresilla --shell
-else
-    lxc exec focal --cwd=$PWD -- sudo --user bresilla --shell
-fi

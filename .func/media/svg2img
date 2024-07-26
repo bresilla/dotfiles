@@ -1,3 +1,0 @@
-#!/bin/sh
-
-convert -density 1200 $1.svg $1.png

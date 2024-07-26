@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+
+if [ "$1" == "cycle" ] ; then
+    adb shell input keyevent 85
+    echo "{ \"command\": [\"cycle\", \"pause\"] }" | socat - /home/bresilla/.config/mpv/control
+elif [ "$1" == "forewards" ] ; then
+    adb shell input tap 1600 600 &
+    echo "{ \"command\": [\"seek\", \"$2\"] }" | socat - /home/bresilla/.config/mpv/control
+elif [ "$1" == "backwards" ] ; then
+    adb shell input tap 600 600 &
+    echo "{ \"command\": [\"seek\", \"-$2\"] }" | socat - /home/bresilla/.config/mpv/control
+fi
+
+
+mon=$(bspc query --names --monitors --monitor)
+des=$(bspc query --names --desktops --desktop)
+win=$(xdotool search --name "youplay")
+[[ -z $win ]] && exit
+
+hide() {
+    bspc node $win --flag hidden=off
+    bspc node $win --to-monitor $mon
+    bspc node $wid --to-desktop $des
+    echo "{ \"command\": [\"set\", \"pause\", \"no\"] }" | socat - /home/bresilla/.config/mpv/control
+}
+unhide() {
+    bspc node $win --flag hidden -f
+    if [[ "$(bspc query --node $win --tree | jq -e '.hidden')" == "true" ]]; then
+        echo "{ \"command\": [\"set\", \"pause\", \"yes\"] }" | socat - /home/bresilla/.config/mpv/control
+    else
+        echo "{ \"command\": [\"set\", \"pause\", \"no\"] }" | socat - /home/bresilla/.config/mpv/control
+    fi
+}
+
+if [ "$1" == "hide" ] ; then
+    if [[ -z "$(bspc query --desktop focused -T | grep youplay)" ]]; then
+        hide
+    else
+        unhide
+    fi
+elif [ "$1" == "minimize" ] ; then
+    if [[ -z "$(bspc query --desktop focused -T | grep youplay)" ]]; then
+        bspc node $win --flag hidden=off
+        bspc node $win --to-monitor $mon
+        bspc node $wid --to-desktop $des
+    else
+        bspc node $win --flag hidden -f
+    fi
+elif [ "$1" == "state" ] ; then
+    info=$(bspc query --node $win --tree)
+    state=$(echo $info | jq ".client.state" | tr -d \")
+    hidden=$(bspc query --node $win --tree | jq -e '.hidden')
+
+    if [[ $hidden == "true" ]] && [[ $2 == "up" ]]; then 
+        echo "up & hidden";
+        unhide
+    elif [[ $state == "fullscreen" ]] && [[ $2 == "down" ]]; then
+        echo "down & full";
+        bspc node $win -t floating
+    elif [[ $2 == "down" ]]; then
+        bspc node $win -t floating
+        unhide
+        echo "down & normal";
+    elif [[ $2 == "up" ]]; then
+        bspc node $win -t fullscreen
+        echo "up & normal";
+    fi
+
+else
+    echo "WROONG"
+fi

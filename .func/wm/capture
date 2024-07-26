@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# @cmd Upload a file
+# @alias     i
+# @flag     -o --ocr                Override existing file
+image() {
+    screenshot_file=/tmp/$(date +%s).png;
+    echo $screenshot_file > /tmp/screenshot_file; 
+
+    grim -g "$(slurp)" $screenshot_file
+    wl-copy < $screenshot_file
+    sxiv $screenshot_file &
+
+    if [[ -n $argc_ocr ]]; then
+        TEXT_FILE="/tmp/ocr.txt"
+        tesseract "$screenshot_file" "${TEXT_FILE//\.txt/}" 2> /dev/null
+        sed -i 's/\x0c//' "$TEXT_FILE"
+        NUM_LINES=$(wc -l < $TEXT_FILE)
+        if [ "$NUM_LINES" -eq 0 ]; then
+            exit 1
+        fi
+        wl-copy < "$TEXT_FILE"
+        echo 0
+        rm "$TEXT_FILE"
+        rm "$screenshot_file"
+    fi
+}
+
+# @cmd Download a file
+# @alias    v
+video() {
+    screenrecord_file=/tmp/$(date +%s).mp4;
+    echo $screenrecord_file > /tmp/screenrecord_file;
+    wf-recorder -f $screenrecord_file -g "$(slurp)"
+}
+
+
+eval "$(argc --argc-eval "$0" "$@")"

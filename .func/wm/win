@@ -1,3 +1,0 @@
-#!/bin/bash
-
-bspc query --node $(xdotool search --classname $(xprop | grep "WM_CLASS(STRING)" | choose 2 | tr -d ,\")) --tree | jq

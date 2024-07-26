@@ -1,3 +1,0 @@
-#!/bin/sh
-
-convert -channel RGB -compress None $1 ppm:- | potrace -s --flat - -o $1.svg && doas rm -r $1
