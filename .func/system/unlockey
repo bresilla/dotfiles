@@ -1,10 +1,21 @@
 #!/bin/bash
 
-echo -n 'Password: ' >&2
-read -s _UNLOCK_PASSWORD || return
-# echo $_UNLOCK_PASSWORD
-killall -q -u "$(whoami)" gnome-keyring-daemon
-eval $(echo -n "${_UNLOCK_PASSWORD}" | gnome-keyring-daemon --daemonize --login | sed -e 's/^/export /')
-unset _UNLOCK_PASSWORD
-echo '' >&2
+# @cmd Run script
+# @meta default-subcommand
+# @option   -p --password <PASS>        Set password
+run(){
+  if [ -n "$argc_password" ]; then
+    _UNLOCK_PASSWORD='Password: '$argc_password
+  else
+    echo -n 'Password: ' >&2
+    read -s _UNLOCK_PASSWORD || return
+  fi
+  # echo $_UNLOCK_PASSWORD
+  killall -q -u "$(whoami)" gnome-keyring-daemon
+  eval $(echo -n "${_UNLOCK_PASSWORD}" | gnome-keyring-daemon --daemonize --login | sed -e 's/^/export /')
+  unset _UNLOCK_PASSWORD
+  echo '' >&2
+}
+
+eval "$(argc --argc-eval "$0" "$@")"
 
