@@ -5,6 +5,9 @@ rm $HOME/.lyxauth &
 rm $HOME/.wget-hstsr &
 rm $HOME/.Xauthority &
 rm $HOME/.wget-hsts &
+rm $HOME/.sudo_as_admin_successful
+rm $HOME/.bash_history
+
 rm -r $HOME/.lldb &
 rm -r $HOME/.fltk &
 rm -r $HOME/.dbus &

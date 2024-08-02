@@ -31,9 +31,9 @@
         "/env/bin/bin": {
             "path": "/env/bin/bin",
             "remote_name": "bin",
-            "version": "v0.17.6",
+            "version": "v0.18.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/marcosnils/bin/releases/tag/v0.17.6",
+            "url": "https://github.com/marcosnils/bin/releases/tag/v0.18.0",
             "provider": "",
             "package_path": ""
         },
@@ -49,9 +49,9 @@
         "/env/bin/codegpt": {
             "path": "/env/bin/codegpt",
             "remote_name": "codegpt",
-            "version": "v0.14.0",
+            "version": "v0.14.2",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.14.0",
+            "url": "https://github.com/appleboy/CodeGPT/releases/tag/v0.14.2",
             "provider": "",
             "package_path": ""
         },
@@ -94,11 +94,11 @@
         "/env/bin/eza": {
             "path": "/env/bin/eza",
             "remote_name": "eza",
-            "version": "v0.18.21",
+            "version": "v0.18.23",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.21",
+            "url": "https://github.com/eza-community/eza/releases/tag/v0.18.23",
             "provider": "",
-            "package_path": "eza"
+            "package_path": "./eza"
         },
         "/env/bin/git-cliff": {
             "path": "/env/bin/git-cliff",
@@ -145,14 +145,14 @@
             "provider": "github",
             "package_path": "hysp-0.1.2/hysp"
         },
-        "/env/bin/just": {
-            "path": "/env/bin/just",
-            "remote_name": "just",
-            "version": "1.30.1",
+        "/env/bin/ipinfo": {
+            "path": "/env/bin/ipinfo",
+            "remote_name": "ipinfo_3.3.1",
+            "version": "ipinfo-3.3.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/casey/just/releases/tag/1.30.1",
-            "provider": "",
-            "package_path": "just"
+            "url": "https://github.com/ipinfo/cli",
+            "provider": "github",
+            "package_path": "ipinfo_3.3.1_linux_amd64"
         },
         "/env/bin/lule": {
             "path": "/env/bin/lule",
@@ -202,18 +202,18 @@
         "/env/bin/ollama": {
             "path": "/env/bin/ollama",
             "remote_name": "ollama",
-            "version": "v0.2.1",
+            "version": "v0.3.2",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/ollama/ollama/releases/tag/v0.2.1",
+            "url": "https://github.com/ollama/ollama/releases/tag/v0.3.2",
             "provider": "",
             "package_path": ""
         },
         "/env/bin/pixi": {
             "path": "/env/bin/pixi",
             "remote_name": "pixi-unknown-musl",
-            "version": "v0.25.0",
+            "version": "v0.26.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.25.0",
+            "url": "https://github.com/prefix-dev/pixi/releases/tag/v0.26.1",
             "provider": "",
             "package_path": ""
         },
@@ -238,9 +238,9 @@
         "/env/bin/starship": {
             "path": "/env/bin/starship",
             "remote_name": "starship",
-            "version": "v1.19.0",
+            "version": "v1.20.1",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/starship/starship/releases/tag/v1.19.0",
+            "url": "https://github.com/starship/starship/releases/tag/v1.20.1",
             "provider": "",
             "package_path": "starship"
         },

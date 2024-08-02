@@ -1,21 +1,18 @@
 #!/bin/bash
 ##SUDO
-alias virsh="doas virsh"
-alias virt-viewer="doas virt-viewer"
-alias wgi="doas wg-quick"
-# alias chroot="doas schroot"
-alias mount="doas mount"
-alias umount="doas umount"
-alias nmap="doas nmap"
-alias hotspot="doas hotspot"
-alias bandwhich="doas bandwhich"
-alias ufw="doas ufw"
-alias btrfs="doas btrfs"
-alias tent="doas tent"
-alias argz="xargs -0 | head -n -1"
-alias ser="doas ser"
-alias rustdesk="doas rustdesk"
-alias moonlight="QT_QPA_PLATFORM=xcb moonlight"
+alias virsh="sudo virsh"
+alias virt-viewer="sudo virt-viewer"
+alias wgi="sudo wg-quick"
+# alias chroot="sudo schroot"
+alias mount="sudo mount"
+alias umount="sudo umount"
+alias nmap="sudo nmap"
+alias hotspot="sudo hotspot"
+alias bandwhich="sudo bandwhich"
+alias ufw="sudo ufw"
+alias btrfs="sudo btrfs"
+alias ser="sudo ser"
+alias rustdesk="sudo rustdesk"
 
 ##WM
 alias sx="startx"
@@ -34,16 +31,17 @@ alias aly='nostromo'
 
 ##NETWORK
 alias dnsinuse='nmcli dev show | grep IP4.DNS'
-alias findip='doas arp-scan --localnet'
+alias findip='sudo arp-scan --localnet'
 alias netspeed='wget --output-document=/dev/null http://speedtest.wdc01.softlayer.com/downloads/test500.zip'
-alias portmon='doas lsof -nP -iTCP -sTCP:LISTEN'
-alias openports='doas netstat -tulpn'
-alias zero='doas zerotier-cli'
+alias portmon='sudo lsof -nP -iTCP -sTCP:LISTEN'
+alias openports='sudo netstat -tulpn'
+alias zero='sudo zerotier-cli'
 alias ssm='manssh'
 alias blue='bluetuith'
 alias ip="ip -c"
 
 ##SYSTEM
+alias moonlight="QT_QPA_PLATFORM=xcb moonlight"
 alias hibernate="systemctl hibernate"
 alias cp="rsync -uahP --inplace --no-whole-file --info=progress2"
 alias rm='rm -rf'
@@ -56,13 +54,13 @@ alias lu='dutree -d1 --usage -x .git -x .direnv'
 alias df='dfc -dTmw -p -/dev/loop,tmp,dev,run,one,efivarfs'
 alias lsblk='lsblk --output NAME,SIZE,FSUSE%,MODEL,TRAN,TYPE,FSTYPE,UUID,LABEL,MOUNTPOINT,STATE,HOTPLUG'
 alias lsmnt='lsblk --output LABEL,NAME,SIZE,FSTYPE,MOUNTPOINTS'
-alias vols='doas lvm pvs && echo && doas lvm vgs && echo && doas lvm lvs'
+alias vols='sudo lvm pvs && echo && sudo lvm vgs && echo && sudo lvm lvs'
 alias dd='dd status=progress'
 alias home='home-manager'
 alias clip='xclip -sel clip'
 alias suspend='systemctl suspend'
 alias eject='udisksctl power-off -b'
-alias nvmecheck="diff -y <(doas nvme smart-log /dev/nvme0n1) <(doas nvme smart-log /dev/nvme1n1)"
+alias nvmecheck="diff -y <(sudo nvme smart-log /dev/nvme0n1) <(sudo nvme smart-log /dev/nvme1n1)"
 
 ##APPS
 alias a='atool -D -x'
@@ -88,7 +86,7 @@ alias search='rg --hidden'
 alias ros="ros2"
 
 ##FILES
-alias own='doas chown -R $USER:$USER'
+alias own='sudo chown -R $USER:$USER'
 alias exe='chmod u+x'
 alias dxe='chmod u-x'
 
@@ -103,19 +101,18 @@ alias fq='fselect'
 alias disco='diskonaut'
 alias band='bandwhich'
 alias tap='teip'
-alias get='doas sysget'
+alias get='sudo sysget'
 alias lzd='lazydocker'
 alias lzg='lazygit'
 alias crux='horcrux'
 alias pass='gopass'
 alias todo='taskwarrior-tui'
 alias forge='conda'
-alias hosty="doas locdev"
+alias hosty="sudo locdev"
 
 ##MEDIA
 alias color='pastel format hex'	
 alias cal='cal -ymw'
-alias ser="doas ser"
 alias mul="mullvad"
 alias oat="oatmeal"
 

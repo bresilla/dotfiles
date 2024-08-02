@@ -128,10 +128,13 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 #export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 #export CYCLONEDDS_URI='<CycloneDDS><Domain><General><NetworkInterfaceAddress>stargate</></></></>'
 #export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="stargate"/></></></></>'
-export ROS_DOMAIN_ID=222
+#export ROS_DOMAIN_ID=222
 export WEBOTS_HOME=/usr/local/webots
 export LD_LIBRARY_PATH=/usr/local/webots/lib/controller:$LD_LIBRARY_PATH
 export PYTHONPATH=/usr/local/webots/lib/controller/python:$PYTHONPATH
+
+#---------------------------         PLATFORMIO         --------------------------
+export PLATFORMIO_CORE_DIR=/pkg/pio/core
 
 
 #----------------------------        HIVE-SERVER        ---------------------------
