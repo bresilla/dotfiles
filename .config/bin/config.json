@@ -4,9 +4,9 @@
         "/env/bin/argc": {
             "path": "/env/bin/argc",
             "remote_name": "argc",
-            "version": "v1.19.0",
+            "version": "v1.20.0",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/sigoden/argc/releases/tag/v1.19.0",
+            "url": "https://github.com/sigoden/argc/releases/tag/v1.20.0",
             "provider": "",
             "package_path": "argc"
         },
@@ -109,14 +109,14 @@
             "provider": "",
             "package_path": "git-cliff-2.4.0/git-cliff"
         },
-        "/env/bin/gptcommit": {
-            "path": "/env/bin/gptcommit",
-            "remote_name": "gptcommit",
-            "version": "v0.5.16",
+        "/env/bin/gum": {
+            "path": "/env/bin/gum",
+            "remote_name": "gum",
+            "version": "v0.14.3",
             "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "url": "https://github.com/zurawiki/gptcommit/releases/tag/v0.5.16",
-            "provider": "",
-            "package_path": ""
+            "url": "https://github.com/charmbracelet/gum",
+            "provider": "github",
+            "package_path": "gum_0.14.3_Linux_x86_64/gum"
         },
         "/env/bin/ha": {
             "path": "/env/bin/ha",

@@ -16,4 +16,4 @@ sleep 2
 eww close light
 
 
-# light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/xob
+# light -G | cut -d "." -f1 >> /home/bresilla/.local/share/fifo/wob

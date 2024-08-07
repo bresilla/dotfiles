@@ -25,7 +25,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Catppuccin Frappé"
+    "dark": "Catppuccin Mocha"
   },
   "relative_line_numbers": true,
   "buffer_font_family": "Victor Mono",

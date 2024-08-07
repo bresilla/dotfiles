@@ -46,7 +46,7 @@ alias hibernate="systemctl hibernate"
 alias cp="rsync -uahP --inplace --no-whole-file --info=progress2"
 alias rm='rm -rf'
 alias del='rip'
-alias cat='bat'
+alias cat='bat --paging=never'
 alias ll='eza -liSHF --header --git --group-directories-first --tree -L1'
 alias la='eza -laiSHF --header --git --group-directories-first --tree -L1'
 alias lt='eza -liSHF --header --git --tree -L3'

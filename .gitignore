@@ -14,3 +14,4 @@ OSS/
 .Trash-1000/
 .config/himalaya/config.toml
 .config/helix/runtime/
+.config/zed/.tmp*

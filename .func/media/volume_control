@@ -19,4 +19,4 @@ eww close volume
 
 # [[ $(pamixer --get-mute) == true ]] && mute='!' || mute="";
 # vol=$(pamixer --get-volume | cut -d " " -f1); 
-# echo $vol$mute >> /home/bresilla/.local/share/fifo/xob
+# echo $vol$mute >> /home/bresilla/.local/share/fifo/wob

@@ -172,12 +172,6 @@ require("lazy").setup({
         { 'TimUntersberger/neogit',
             requires = 'nvim-lua/plenary.nvim'
         },
-        { 'lewis6991/gitsigns.nvim',
-            requires = { 'nvim-lua/plenary.nvim' },
-            config = function()
-                require('plug.gitsign')
-            end
-        },
         { 'kevinhwang91/nvim-hlslens',
             config = function()
                 require('plug.hlsearch')
@@ -193,11 +187,6 @@ require("lazy").setup({
                 require('plug.expressline')
             end
         },
-        -- { 'windwp/windline.nvim',
-        --     config = function()
-        --         require('plug.statusline')
-        --     end
-        -- },
         { 'tjdevries/colorbuddy.nvim',
             -- version = "1.0.0",
             lazy = false,

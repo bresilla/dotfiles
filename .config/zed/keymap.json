@@ -4,11 +4,14 @@
     "bindings": {
       "ctrl-left": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-right": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
-      "ctrl-alt-up": ["editor::MoveLineUp"],
-      "ctrl-alt-down": ["editor::MoveLineDown"],
-      "ctrl-/": "editor::ToggleComments"
+      "ctrl-up": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-down": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-alt-up": "editor::MoveLineUp",
+      "ctrl-alt-down": "editor::MoveLineDown",
+      // "ctrl-/": "editor::ToggleComments",
+      "#": "editor::ToggleComments",
+      "ctrl-b": "workspace::ToggleLeftDock",
+      "tab": "workspace::ToggleLeftDock"
     }
   },
   {
@@ -28,9 +31,7 @@
       "s s": "outline::Toggle",
       "s S": "project_symbols::Toggle",
       // File finder
-      "ctrl-f": "file_finder::Toggle",
-      // dock
-      "ctrl-b": "workspace::ToggleLeftDock"
+      "space f": "file_finder::Toggle"
     }
   },
   // Comment code
@@ -86,7 +87,8 @@
       "d": "project_panel::Delete",
       "x": "project_panel::Cut",
       "c": "project_panel::Copy",
-      "p": "project_panel::Paste"
+      "p": "project_panel::Paste",
+      "tab": "workspace::ToggleLeftDock"
     }
   }
 ]
